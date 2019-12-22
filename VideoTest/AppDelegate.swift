@@ -88,7 +88,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
   func userNotificationCenter(_ center: UNUserNotificationCenter,
                               willPresent notification: UNNotification,
                               withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-      print("userNotificationCenter willPresent")
       completionHandler([.alert,.sound])
   }
   
@@ -99,9 +98,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
   func userNotificationCenter(_ center: UNUserNotificationCenter,
   didReceive response: UNNotificationResponse,
   withCompletionHandler completionHandler: @escaping () -> Void) {
-    print("userNotificationCenter didReceive")
     if response.notification.request.identifier == "Local Notification" {
-      
+      UIApplication.shared.open(URL(string:"photos-redirect://")!)
     }
   }
 }
