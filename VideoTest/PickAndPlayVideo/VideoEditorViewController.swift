@@ -23,37 +23,8 @@ class VideoEditorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .black
-        playerView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.layer.addSublayer(bgLayer)
-        bgLayer.videoGravity = .resizeAspectFill
-        let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
-        self.view.addSubview(visualEffectView)
-        self.view.addSubview(playerView)
-        visualEffectView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            view.leftAnchor.constraint(equalTo: visualEffectView.leftAnchor),
-            view.rightAnchor.constraint(equalTo: visualEffectView.rightAnchor),
-            visualEffectView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            visualEffectView.topAnchor.constraint(equalTo: view.topAnchor)])
-        NSLayoutConstraint.activate ([
-        playerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-        playerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-        playerView.topAnchor.constraint(equalTo: self.view.topAnchor),
-        playerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)])
-        playerView.layer.addSublayer(playerLayer)
-        resumeImageView.translatesAutoresizingMaskIntoConstraints = false
-        playerView.addSubview(resumeImageView)
-        NSLayoutConstraint.activate([
-        resumeImageView.centerYAnchor.constraint(equalTo: playerView.centerYAnchor),
-        resumeImageView.centerXAnchor.constraint(equalTo: playerView.centerXAnchor),
-        resumeImageView.heightAnchor.constraint(equalToConstant: 70),
-        resumeImageView.widthAnchor.constraint(equalToConstant: 70)
-        ])
-        resumeImageView.tintColor = .white
-        resumeImageView.isUserInteractionEnabled = false
-        resumeImageView.isHidden = false
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
-        playerView.addGestureRecognizer(tap)
+        setUpBackgroundView()
+        setUpPlayerView()
         setUpPlayer()
     }
     
@@ -89,6 +60,43 @@ class VideoEditorViewController: UIViewController {
             guard let self = self else { return }
             self.resumeImageView.isHidden = self.player.rate > 0
         }
+    }
+    
+    func setUpPlayerView() {
+        playerView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(playerView)
+        NSLayoutConstraint.activate ([
+        playerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+        playerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+        playerView.topAnchor.constraint(equalTo: self.view.topAnchor),
+        playerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)])
+        playerView.layer.addSublayer(playerLayer)
+        resumeImageView.translatesAutoresizingMaskIntoConstraints = false
+        playerView.addSubview(resumeImageView)
+        NSLayoutConstraint.activate([
+        resumeImageView.centerYAnchor.constraint(equalTo: playerView.centerYAnchor),
+        resumeImageView.centerXAnchor.constraint(equalTo: playerView.centerXAnchor),
+        resumeImageView.heightAnchor.constraint(equalToConstant: 70),
+        resumeImageView.widthAnchor.constraint(equalToConstant: 70)
+        ])
+        resumeImageView.tintColor = .white
+        resumeImageView.isUserInteractionEnabled = false
+        resumeImageView.isHidden = false
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        playerView.addGestureRecognizer(tap)
+    }
+    
+    func setUpBackgroundView() {
+        self.view.layer.addSublayer(bgLayer)
+        bgLayer.videoGravity = .resizeAspectFill
+        let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+        self.view.addSubview(visualEffectView)
+        visualEffectView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            view.leftAnchor.constraint(equalTo: visualEffectView.leftAnchor),
+            view.rightAnchor.constraint(equalTo: visualEffectView.rightAnchor),
+            visualEffectView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            visualEffectView.topAnchor.constraint(equalTo: view.topAnchor)])
     }
     
     @objc func playerItemDidReachEnd(notification: Notification) {
