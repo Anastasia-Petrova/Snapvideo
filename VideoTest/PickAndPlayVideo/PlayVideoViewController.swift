@@ -35,10 +35,12 @@ extension PlayVideoViewController: UIImagePickerControllerDelegate {
         return
     }
     dismiss(animated: true) {
-      let player = AVPlayer(url: url)
-      let vcPlayer = AVPlayerViewController()
-      vcPlayer.player = player
-      self.present(vcPlayer, animated: true, completion: nil)
+        let vc = VideoEditorViewController(url: url)
+        self.present(vc, animated: true)
+//      let player = AVPlayer(url: url)
+//      let vcPlayer = AVPlayerViewController()
+//      vcPlayer.player = player
+//      self.present(vcPlayer, animated: true, completion: nil)
     }
   }
 }
