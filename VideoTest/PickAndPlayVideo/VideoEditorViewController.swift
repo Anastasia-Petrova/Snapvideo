@@ -7,6 +7,7 @@ class VideoEditorViewController: UIViewController {
     let playerView = UIView()
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
     let bgLayer: AVPlayerLayer
+    var playerRateObservation: NSKeyValueObservation?
     
     init(url: URL) {
         self.player = AVPlayer(url: url)
@@ -50,7 +51,10 @@ class VideoEditorViewController: UIViewController {
         ])
         resumeImageView.tintColor = .white
         resumeImageView.isUserInteractionEnabled = false
-        resumeImageView.isHidden = true
+        resumeImageView.isHidden = false
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        playerView.addGestureRecognizer(tap)
+        setUpPlayer()
     }
     
     override func viewDidLayoutSubviews() {
@@ -58,5 +62,38 @@ class VideoEditorViewController: UIViewController {
         playerLayer.frame = playerView.frame
         bgLayer.frame = view.frame
     }
-      
+    
+    @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
+        if player.rate == 0 {
+            player.play()
+        } else {
+            player.pause()
+        }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    func setUpPlayer() {
+        //1 Подписка на событие достижения конца видео
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(playerItemDidReachEnd(notification:)),
+            name: .AVPlayerItemDidPlayToEndTime,
+            object: player.currentItem
+        )
+        
+        //2 Подписка на изменение рейта плейера - (играю/не играю)
+        playerRateObservation = player.observe(\.rate) { [weak self] (_, _) in
+            guard let self = self else { return }
+            self.resumeImageView.isHidden = self.player.rate > 0
+        }
+    }
+    
+    @objc func playerItemDidReachEnd(notification: Notification) {
+        if let playerItem = notification.object as? AVPlayerItem {
+            playerItem.seek(to: CMTime.zero, completionHandler: nil)
+        }
+    }
 }
