@@ -8,6 +8,7 @@ class VideoEditorViewController: UIViewController {
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
     let bgLayer: AVPlayerLayer
     var playerRateObservation: NSKeyValueObservation?
+    var effectsButton = UIButton()
     
     init(url: URL) {
         self.player = AVPlayer(url: url)
@@ -26,6 +27,7 @@ class VideoEditorViewController: UIViewController {
         setUpBackgroundView()
         setUpPlayerView()
         setUpPlayer()
+        setUpEffectButton()
     }
     
     override func viewDidLayoutSubviews() {
@@ -97,6 +99,19 @@ class VideoEditorViewController: UIViewController {
             view.rightAnchor.constraint(equalTo: visualEffectView.rightAnchor),
             visualEffectView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             visualEffectView.topAnchor.constraint(equalTo: view.topAnchor)])
+    }
+    
+    func setUpEffectButton() {
+        effectsButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(effectsButton)
+        NSLayoutConstraint.activate ([
+            effectsButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+        effectsButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+        effectsButton.heightAnchor.constraint(equalToConstant: 44),
+        effectsButton.widthAnchor.constraint(equalToConstant: 44)
+        ])
+        effectsButton.setImage(UIImage(named: "effects")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        effectsButton.tintColor = .white
     }
     
     @objc func playerItemDidReachEnd(notification: Notification) {
