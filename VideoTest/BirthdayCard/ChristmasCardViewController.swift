@@ -2,7 +2,7 @@ import UIKit
 import MobileCoreServices
 import AVKit
 
-class BirthdayCardViewController: UIViewController {
+class ChristmasCardViewController: UIViewController {
   private let editor = Editor()
 
   @IBOutlet var image: UIImageView!
@@ -64,7 +64,7 @@ class BirthdayCardViewController: UIViewController {
   
 }
 
-extension BirthdayCardViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension ChristmasCardViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
     guard
       let url = info[.mediaURL] as? URL,
@@ -87,7 +87,7 @@ extension BirthdayCardViewController: UIImagePickerControllerDelegate, UINavigat
   }
 }
 
-extension BirthdayCardViewController: UITextFieldDelegate {
+extension ChristmasCardViewController: UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     return true
