@@ -5,10 +5,12 @@ class VideoEditorViewController: UIViewController {
     let player: AVPlayer
     let playerLayer: AVPlayerLayer
     let playerView = UIView()
+    let effectsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
     let bgLayer: AVPlayerLayer
     var playerRateObservation: NSKeyValueObservation?
     var effectsButton = UIButton()
+    var cancelButton = UIButton()
     var bottomCollectionViewconstraint = NSLayoutConstraint()
     
     init(url: URL) {
@@ -30,6 +32,8 @@ class VideoEditorViewController: UIViewController {
         setUpResumeButton()
         setUpPlayer()
         setUpEffectsButton()
+        setUpCollectionView()
+        setUpCancelButton()
     }
     
     override func viewDidLayoutSubviews() {
@@ -88,7 +92,13 @@ class VideoEditorViewController: UIViewController {
         playerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
         playerView.topAnchor.constraint(equalTo: self.view.topAnchor)])
         playerView.layer.addSublayer(playerLayer)
-        let effectsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        playerView.addGestureRecognizer(tap)
+    }
+    
+    func setUpCollectionView() {
+//        let effectsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         effectsCollectionView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(effectsCollectionView)
         bottomCollectionViewconstraint = effectsCollectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 150)
@@ -99,9 +109,7 @@ class VideoEditorViewController: UIViewController {
         effectsCollectionView.heightAnchor.constraint(equalToConstant: 150),
         playerView.bottomAnchor.constraint(equalTo: effectsCollectionView.topAnchor)
         ])
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
-        playerView.addGestureRecognizer(tap)
+        effectsCollectionView.backgroundColor = .blue
     }
     
     func setUpBackgroundView() {
@@ -131,6 +139,19 @@ class VideoEditorViewController: UIViewController {
         effectsButton.addTarget(self, action: #selector(self.openEffects), for: .touchUpInside)
     }
     
+    func setUpCancelButton() {
+        cancelButton.translatesAutoresizingMaskIntoConstraints = false
+        effectsCollectionView.addSubview(cancelButton)
+        NSLayoutConstraint.activate ([
+            cancelButton.leadingAnchor.constraint(equalTo: self.effectsCollectionView.leadingAnchor, constant: 8),
+        cancelButton.topAnchor.constraint(equalTo: self.effectsCollectionView.topAnchor, constant: 8),
+        cancelButton.heightAnchor.constraint(equalToConstant: 30),
+        cancelButton.widthAnchor.constraint(equalToConstant: 30)
+        ])
+        cancelButton.setImage(UIImage(named: "cancel")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        cancelButton.tintColor = .white
+        cancelButton.addTarget(self, action: #selector(self.closeEffects), for: .touchUpInside)
+    }
     @objc func playerItemDidReachEnd(notification: Notification) {
         if let playerItem = notification.object as? AVPlayerItem {
             playerItem.seek(to: CMTime.zero, completionHandler: nil)
@@ -140,5 +161,10 @@ class VideoEditorViewController: UIViewController {
     @objc func openEffects() {
         bottomCollectionViewconstraint.constant = 0
         effectsButton.isHidden = true
+    }
+    
+    @objc func closeEffects() {
+        bottomCollectionViewconstraint.constant = 150
+        effectsButton.isHidden = false
     }
 }
