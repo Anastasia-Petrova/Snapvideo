@@ -9,8 +9,10 @@ class VideoEditorViewController: UIViewController {
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
     let bgLayer: AVPlayerLayer
     var playerRateObservation: NSKeyValueObservation?
+    var slider = UISlider()
     var effectsButton = UIButton()
     var cancelButton = UIButton()
+    var doneButton = UIButton()
     var bottomCollectionViewconstraint = NSLayoutConstraint()
     
     init(url: URL) {
@@ -31,9 +33,11 @@ class VideoEditorViewController: UIViewController {
         setUpPlayerView()
         setUpResumeButton()
         setUpPlayer()
+        setUpSlider()
         setUpEffectsButton()
         setUpCollectionView()
         setUpCancelButton()
+//        setUpDoneButton()
     }
     
     override func viewDidLayoutSubviews() {
@@ -68,6 +72,10 @@ class VideoEditorViewController: UIViewController {
             guard let self = self else { return }
             self.resumeImageView.isHidden = self.player.rate > 0
         }
+        
+        player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 1), queue: .main) { [weak self] time in
+            self?.slider.value = Float(time.seconds)
+        }
     }
     
     func setUpResumeButton() {
@@ -82,6 +90,22 @@ class VideoEditorViewController: UIViewController {
         resumeImageView.tintColor = .white
         resumeImageView.isUserInteractionEnabled = false
         resumeImageView.isHidden = false
+    }
+    
+    func setUpSlider() {
+        slider.translatesAutoresizingMaskIntoConstraints = false
+        playerView.addSubview(slider)
+        NSLayoutConstraint.activate ([
+        slider.leadingAnchor.constraint(equalTo: playerView.leadingAnchor, constant: 50),
+        slider.trailingAnchor.constraint(equalTo: playerView.trailingAnchor, constant: -50),
+        slider.bottomAnchor.constraint(equalTo: playerView.bottomAnchor, constant: -50)])
+        slider.minimumValue = 0
+        guard let trackDuration = player.currentItem?.asset.duration else {
+            return
+        }
+        slider.maximumValue = Float(CMTimeGetSeconds(trackDuration))
+//        slider.value = {}
+        slider.addTarget(self, action: #selector(self.sliderAction), for: .valueChanged)
     }
     
     func setUpPlayerView() {
@@ -108,6 +132,7 @@ class VideoEditorViewController: UIViewController {
         bottomCollectionViewconstraint,
         effectsCollectionView.heightAnchor.constraint(equalToConstant: 150),
         playerView.bottomAnchor.constraint(equalTo: effectsCollectionView.topAnchor)
+//        effectsCollectionView.topAnchor.constraint(equalTo: playerView.bottomAnchor)
         ])
         effectsCollectionView.backgroundColor = .blue
     }
@@ -129,8 +154,8 @@ class VideoEditorViewController: UIViewController {
         effectsButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(effectsButton)
         NSLayoutConstraint.activate ([
-            effectsButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-        effectsButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            effectsButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+        effectsButton.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 50),
         effectsButton.heightAnchor.constraint(equalToConstant: 44),
         effectsButton.widthAnchor.constraint(equalToConstant: 44)
         ])
@@ -152,10 +177,36 @@ class VideoEditorViewController: UIViewController {
         cancelButton.tintColor = .white
         cancelButton.addTarget(self, action: #selector(self.closeEffects), for: .touchUpInside)
     }
+    
+//    func setUpDoneButton() {
+//        doneButton.translatesAutoresizingMaskIntoConstraints = false
+//        effectsCollectionView.addSubview(doneButton)
+//        NSLayoutConstraint.activate ([
+//        doneButton.trailingAnchor.constraint(equalTo: self.effectsCollectionView.trailingAnchor, constant: -8),
+//        doneButton.topAnchor.constraint(equalTo: self.effectsCollectionView.topAnchor, constant: 8),
+//        doneButton.heightAnchor.constraint(equalToConstant: 30),
+//        doneButton.widthAnchor.constraint(equalToConstant: 30)
+//        ])
+//        doneButton.setImage(UIImage(named: "done")?.withRenderingMode(.alwaysTemplate), for: .normal)
+//        doneButton.tintColor = .black
+//        doneButton.addTarget(self, action: #selector(self.saveChanges), for: .touchUpInside)
+//    }
+    
     @objc func playerItemDidReachEnd(notification: Notification) {
         if let playerItem = notification.object as? AVPlayerItem {
             playerItem.seek(to: CMTime.zero, completionHandler: nil)
         }
+    }
+    
+    @objc func sliderAction() {
+        player.seek(
+            to: CMTime(
+                seconds: Double(slider.value),
+                preferredTimescale: 1
+            ),
+            toleranceBefore: CMTime.zero,
+            toleranceAfter: CMTime.zero
+        )
     }
     
     @objc func openEffects() {
@@ -167,4 +218,9 @@ class VideoEditorViewController: UIViewController {
         bottomCollectionViewconstraint.constant = 150
         effectsButton.isHidden = false
     }
+    
+//    @objc func saveChanges() {
+//
+//    }
+    
 }
