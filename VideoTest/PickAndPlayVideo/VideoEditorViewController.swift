@@ -9,6 +9,7 @@ class VideoEditorViewController: UIViewController {
     let bgLayer: AVPlayerLayer
     var playerRateObservation: NSKeyValueObservation?
     var effectsButton = UIButton()
+    var bottomCollectionViewconstraint = NSLayoutConstraint()
     
     init(url: URL) {
         self.player = AVPlayer(url: url)
@@ -26,8 +27,9 @@ class VideoEditorViewController: UIViewController {
         self.view.backgroundColor = .black
         setUpBackgroundView()
         setUpPlayerView()
+        setUpResumeButton()
         setUpPlayer()
-        setUpEffectButton()
+        setUpEffectsButton()
     }
     
     override func viewDidLayoutSubviews() {
@@ -64,26 +66,40 @@ class VideoEditorViewController: UIViewController {
         }
     }
     
+    func setUpResumeButton() {
+        resumeImageView.translatesAutoresizingMaskIntoConstraints = false
+        playerView.addSubview(resumeImageView)
+        NSLayoutConstraint.activate([
+            resumeImageView.centerYAnchor.constraint(equalTo: playerView.centerYAnchor),
+            resumeImageView.centerXAnchor.constraint(equalTo: playerView.centerXAnchor),
+            resumeImageView.heightAnchor.constraint(equalToConstant: 70),
+            resumeImageView.widthAnchor.constraint(equalToConstant: 70)
+        ])
+        resumeImageView.tintColor = .white
+        resumeImageView.isUserInteractionEnabled = false
+        resumeImageView.isHidden = false
+    }
+    
     func setUpPlayerView() {
         playerView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(playerView)
         NSLayoutConstraint.activate ([
         playerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
         playerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-        playerView.topAnchor.constraint(equalTo: self.view.topAnchor),
-        playerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)])
+        playerView.topAnchor.constraint(equalTo: self.view.topAnchor)])
         playerView.layer.addSublayer(playerLayer)
-        resumeImageView.translatesAutoresizingMaskIntoConstraints = false
-        playerView.addSubview(resumeImageView)
-        NSLayoutConstraint.activate([
-        resumeImageView.centerYAnchor.constraint(equalTo: playerView.centerYAnchor),
-        resumeImageView.centerXAnchor.constraint(equalTo: playerView.centerXAnchor),
-        resumeImageView.heightAnchor.constraint(equalToConstant: 70),
-        resumeImageView.widthAnchor.constraint(equalToConstant: 70)
+        let effectsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        effectsCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(effectsCollectionView)
+        bottomCollectionViewconstraint = effectsCollectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 150)
+        NSLayoutConstraint.activate ([
+        effectsCollectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+        effectsCollectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+        bottomCollectionViewconstraint,
+        effectsCollectionView.heightAnchor.constraint(equalToConstant: 150),
+        playerView.bottomAnchor.constraint(equalTo: effectsCollectionView.topAnchor)
         ])
-        resumeImageView.tintColor = .white
-        resumeImageView.isUserInteractionEnabled = false
-        resumeImageView.isHidden = false
+        
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
         playerView.addGestureRecognizer(tap)
     }
@@ -101,7 +117,7 @@ class VideoEditorViewController: UIViewController {
             visualEffectView.topAnchor.constraint(equalTo: view.topAnchor)])
     }
     
-    func setUpEffectButton() {
+    func setUpEffectsButton() {
         effectsButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(effectsButton)
         NSLayoutConstraint.activate ([
@@ -112,11 +128,17 @@ class VideoEditorViewController: UIViewController {
         ])
         effectsButton.setImage(UIImage(named: "effects")?.withRenderingMode(.alwaysTemplate), for: .normal)
         effectsButton.tintColor = .white
+        effectsButton.addTarget(self, action: #selector(self.openEffects), for: .touchUpInside)
     }
     
     @objc func playerItemDidReachEnd(notification: Notification) {
         if let playerItem = notification.object as? AVPlayerItem {
             playerItem.seek(to: CMTime.zero, completionHandler: nil)
         }
+    }
+    
+    @objc func openEffects() {
+        bottomCollectionViewconstraint.constant = 0
+        effectsButton.isHidden = true
     }
 }
