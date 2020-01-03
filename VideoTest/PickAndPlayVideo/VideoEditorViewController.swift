@@ -11,6 +11,7 @@ class VideoEditorViewController: UIViewController {
     var playerRateObservation: NSKeyValueObservation?
     var slider = UISlider()
     var effectsButton = UIButton()
+    let timerLabel = UILabel()
     var cancelButton = UIButton()
     var doneButton = UIButton()
     var bottomCollectionViewconstraint = NSLayoutConstraint()
@@ -35,6 +36,7 @@ class VideoEditorViewController: UIViewController {
         setUpPlayer()
         setUpSlider()
         setUpEffectsButton()
+        setUpTimer()
         setUpCollectionView()
         setUpCancelButton()
 //        setUpDoneButton()
@@ -73,8 +75,9 @@ class VideoEditorViewController: UIViewController {
             self.resumeImageView.isHidden = self.player.rate > 0
         }
         
-        player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 1), queue: .main) { [weak self] time in
+        player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 100), queue: .main) { [weak self] time in
             self?.slider.value = Float(time.seconds)
+            self?.updateTimer()
         }
     }
     
@@ -119,6 +122,35 @@ class VideoEditorViewController: UIViewController {
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
         playerView.addGestureRecognizer(tap)
+    }
+    
+    func setUpTimer() {
+        timerLabel.translatesAutoresizingMaskIntoConstraints = false
+        playerView.addSubview(timerLabel)
+        NSLayoutConstraint.activate ([
+        timerLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+        timerLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 50),
+        timerLabel.heightAnchor.constraint(equalToConstant: 44)])
+        timerLabel.alpha = 0.5
+        timerLabel.textColor = .white
+        guard let trackDuration = player.currentItem?.asset.duration else {
+            return
+        }
+        let videoDuration = Int(CMTimeGetSeconds(trackDuration))
+        timerLabel.text = "\(formatMinuteSeconds(videoDuration))"
+    }
+    
+    func updateTimer() {
+        let duraion = Int(CMTimeGetSeconds(player.currentTime()))
+        let timeString = formatMinuteSeconds(duraion)
+        timerLabel.text = "\(timeString)"
+    }
+    
+    func formatMinuteSeconds(_ totalSeconds: Int) -> String {
+        let hours  = totalSeconds / 3600
+        let minutes = (totalSeconds / 60) % 60
+        let seconds = totalSeconds % 60
+        return String(format:"%02d:%02d:%02d", hours, minutes, seconds);
     }
     
     func setUpCollectionView() {
