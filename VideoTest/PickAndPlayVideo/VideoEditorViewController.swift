@@ -3,11 +3,12 @@ import AVFoundation
 import QuickLook
 
 class VideoEditorViewController: UIViewController {
+    let asset: AVAsset
     let player: AVPlayer
     let playerLayer: AVPlayerLayer
     let playerView = UIView()
     let effectsCollectionView: UICollectionView
-    let dataSource = EffectsCollectionViewDataSource()
+    let dataSource: EffectsCollectionViewDataSource
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
     let bgLayer: AVPlayerLayer
     var playerRateObservation: NSKeyValueObservation?
@@ -17,14 +18,21 @@ class VideoEditorViewController: UIViewController {
     var cancelButton = UIButton()
     var doneButton = UIButton()
     var bottomCollectionViewconstraint = NSLayoutConstraint()
+    var previewImage: UIImage? {
+        didSet {
+            dataSource.image = previewImage
+        }
+    }
     
     init(url: URL) {
-        self.player = AVPlayer(url: url)
+        self.asset = AVAsset(url: url)
+        self.player = AVPlayer(playerItem: AVPlayerItem(asset: asset))
         self.playerLayer = AVPlayerLayer(player: player)
         self.bgLayer = AVPlayerLayer(player: player)
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 60, height: 80)
         self.effectsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        self.dataSource = EffectsCollectionViewDataSource(collectionView: effectsCollectionView)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -35,7 +43,9 @@ class VideoEditorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .black
-        effectsCollectionView.dataSource = dataSource
+        AssetImageGenerator.getThumbnailImageFromVideoAsset(asset: asset, completion: { [ weak self ] image in
+            self?.previewImage = image
+        })
         effectsCollectionView.register(EffectsCollectionViewCell.self, forCellWithReuseIdentifier: "effectsCollectionViewCell")
         setUpBackgroundView()
         setUpPlayerView()
