@@ -1,11 +1,3 @@
-//
-//  PlayVideoViewController.swift
-//  VideoTest
-//
-//  Created by Anastasia Petrova on 19/12/2019.
-//  Copyright © 2019 Anastasia Petrova. All rights reserved.
-//
-
 import UIKit
 import AVKit
 import MobileCoreServices
