@@ -6,7 +6,7 @@ class VideoEditorViewController: UIViewController {
     let player: AVPlayer
     let playerLayer: AVPlayerLayer
     let playerView = UIView()
-    let effectsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    let effectsCollectionView: UICollectionView
     let dataSource = EffectsCollectionViewDataSource()
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
     let bgLayer: AVPlayerLayer
@@ -22,6 +22,9 @@ class VideoEditorViewController: UIViewController {
         self.player = AVPlayer(url: url)
         self.playerLayer = AVPlayerLayer(player: player)
         self.bgLayer = AVPlayerLayer(player: player)
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 60, height: 80)
+        self.effectsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -205,7 +208,7 @@ class VideoEditorViewController: UIViewController {
         effectsCollectionView.addSubview(cancelButton)
         NSLayoutConstraint.activate ([
             cancelButton.leadingAnchor.constraint(equalTo: self.effectsCollectionView.leadingAnchor, constant: 8),
-        cancelButton.topAnchor.constraint(equalTo: self.effectsCollectionView.topAnchor, constant: 8),
+        cancelButton.topAnchor.constraint(equalTo: self.effectsCollectionView.topAnchor, constant: 100),
         cancelButton.heightAnchor.constraint(equalToConstant: 30),
         cancelButton.widthAnchor.constraint(equalToConstant: 30)
         ])

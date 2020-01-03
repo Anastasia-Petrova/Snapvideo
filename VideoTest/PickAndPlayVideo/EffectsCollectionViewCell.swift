@@ -2,7 +2,7 @@ import UIKit
 
 class EffectsCollectionViewCell: UICollectionViewCell {
     let stackView = UIStackView()
-    let previewImageView = UIImageView(image: UIImage(named: "placeholder")?.withRenderingMode(.alwaysTemplate))
+    let previewImageView = UIImageView(image: UIImage(named: "placeholder"))
     let effectName = UILabel()
     
     
@@ -20,9 +20,15 @@ class EffectsCollectionViewCell: UICollectionViewCell {
             stackView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
             stackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
         ])
+        stackView.distribution = .fillProportionally
+        stackView.alignment = .center
         stackView.axis = .vertical
         stackView.spacing = 8
-        effectName.text = "Effect name"
+        
+        effectName.text = "WOW Effect"
+        effectName.font = UIFont.systemFont(ofSize: 10)
+        effectName.numberOfLines = 1
+        effectName.textColor = .green
     }
     
     required init?(coder: NSCoder) {
