@@ -1,11 +1,13 @@
 import UIKit
 import AVFoundation
+import QuickLook
 
 class VideoEditorViewController: UIViewController {
     let player: AVPlayer
     let playerLayer: AVPlayerLayer
     let playerView = UIView()
     let effectsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    let dataSource = EffectsCollectionViewDataSource()
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
     let bgLayer: AVPlayerLayer
     var playerRateObservation: NSKeyValueObservation?
@@ -30,6 +32,8 @@ class VideoEditorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .black
+        effectsCollectionView.dataSource = dataSource
+        effectsCollectionView.register(EffectsCollectionViewCell.self, forCellWithReuseIdentifier: "effectsCollectionViewCell")
         setUpBackgroundView()
         setUpPlayerView()
         setUpResumeButton()
@@ -254,5 +258,5 @@ class VideoEditorViewController: UIViewController {
 //    @objc func saveChanges() {
 //
 //    }
-    
 }
+

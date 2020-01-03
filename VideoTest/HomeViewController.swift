@@ -8,7 +8,6 @@ class HomeViewController: UIViewController {
       VideoHelper.startMediaBrowser(delegate: self, sourceType: .savedPhotosAlbum)
     }
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
