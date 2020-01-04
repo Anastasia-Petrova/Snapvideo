@@ -23,6 +23,7 @@
 		6D17A7FF23AD345800C70542 /* ChristmasCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D17A7FE23AD345800C70542 /* ChristmasCardViewController.swift */; };
 		6D17A80123AD408600C70542 /* PlayerVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D17A80023AD408600C70542 /* PlayerVideoViewController.swift */; };
 		6D17A80723AD4FC600C70542 /* Editor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D17A80623AD4FC600C70542 /* Editor.swift */; };
+		6DDE026323C11659002D7942 /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDE026223C11659002D7942 /* VideoView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		6D17A7FE23AD345800C70542 /* ChristmasCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChristmasCardViewController.swift; sourceTree = "<group>"; };
 		6D17A80023AD408600C70542 /* PlayerVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerVideoViewController.swift; sourceTree = "<group>"; };
 		6D17A80623AD4FC600C70542 /* Editor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Editor.swift; sourceTree = "<group>"; };
+		6DDE026223C11659002D7942 /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				6D05022523B9154100036D60 /* VideoEditorViewController.swift */,
+				6DDE026223C11659002D7942 /* VideoView.swift */,
 				6D01E03723BFA3D600B558E8 /* UICollectionViewDataSource.swift */,
 				6D01E03523BFA2F900B558E8 /* EffectsCollectionViewCell.swift */,
 				6D01E03923BFC2FE00B558E8 /* AssetImageGenerator.swift */,
@@ -216,6 +219,7 @@
 				6D17A80723AD4FC600C70542 /* Editor.swift in Sources */,
 				6D17A7FB23ABB8A400C70542 /* MergeVideoViewController.swift in Sources */,
 				6D01E03823BFA3D600B558E8 /* UICollectionViewDataSource.swift in Sources */,
+				6DDE026323C11659002D7942 /* VideoView.swift in Sources */,
 				6D17A7E323ABB39100C70542 /* SceneDelegate.swift in Sources */,
 				6D17A7FF23AD345800C70542 /* ChristmasCardViewController.swift in Sources */,
 				6D17A7F523ABB6E000C70542 /* HomeViewController.swift in Sources */,
