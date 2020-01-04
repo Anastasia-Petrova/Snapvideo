@@ -4,8 +4,8 @@ import AVFoundation
 class VideoEditorViewController: UIViewController {
     let asset: AVAsset
     let player: AVPlayer
-    let playerLayer: AVPlayerLayer
-    let playerView = UIView()
+//    let playerLayer: AVPlayerLayer
+    let playerView: VideoView
     let effectsCollectionView: UICollectionView
     let dataSource: EffectsCollectionViewDataSource
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
@@ -25,8 +25,12 @@ class VideoEditorViewController: UIViewController {
     
     init(url: URL) {
         self.asset = AVAsset(url: url)
-        self.player = AVPlayer(playerItem: AVPlayerItem(asset: asset))
-        self.playerLayer = AVPlayerLayer(player: player)
+        let playerItem = AVPlayerItem(asset: asset)
+        self.player = AVPlayer(playerItem: playerItem)
+        let output = AVPlayerItemVideoOutput(outputSettings: nil)
+        playerItem.add(output)
+        self.playerView = VideoView(videoOutput: output)
+//        self.playerLayer = AVPlayerLayer(player: player)
         self.bgLayer = AVPlayerLayer(player: player)
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 60, height: 80)
@@ -60,7 +64,7 @@ class VideoEditorViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        playerLayer.frame = playerView.frame
+//        playerLayer.frame = playerView.frame
         bgLayer.frame = view.frame
     }
     
@@ -88,7 +92,9 @@ class VideoEditorViewController: UIViewController {
         //2 Подписка на изменение рейта плейера - (играю/не играю)
         playerRateObservation = player.observe(\.rate) { [weak self] (_, _) in
             guard let self = self else { return }
-            self.resumeImageView.isHidden = self.player.rate > 0
+            let isPlaying = self.player.rate > 0
+            self.resumeImageView.isHidden = isPlaying
+            isPlaying ? self.playerView.play() :  self.playerView.pause()
         }
         
         player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 100), queue: .main) { [weak self] time in
@@ -134,7 +140,7 @@ class VideoEditorViewController: UIViewController {
         playerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
         playerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
         playerView.topAnchor.constraint(equalTo: self.view.topAnchor)])
-        playerView.layer.addSublayer(playerLayer)
+//        playerView.layer.addSublayer(playerLayer)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
         playerView.addGestureRecognizer(tap)
@@ -260,11 +266,13 @@ class VideoEditorViewController: UIViewController {
     @objc func openEffects() {
         bottomCollectionViewconstraint.constant = 0
         effectsButton.isHidden = true
+        self.playerView.filter = BlurFilter(blurRadius: 60)
     }
     
     @objc func closeEffects() {
         bottomCollectionViewconstraint.constant = 150
         effectsButton.isHidden = false
+        self.playerView.filter = PassthroughFilter()
     }
     
 //    @objc func saveChanges() {

@@ -23,6 +23,7 @@ class EffectsCollectionViewDataSource: NSObject, UICollectionViewDataSource {
         let reusableIdentifier = "effectsCollectionViewCell"
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reusableIdentifier, for: indexPath) as! EffectsCollectionViewCell
         cell.previewImageView.image = image
+        
         return cell
     }
     
