@@ -4,6 +4,8 @@ import MobileCoreServices
 
 class HomeViewController: UIViewController {
     
+    let app = App.shared
+    
     @IBAction func playVideo(_ sender: Any) {
       VideoHelper.startMediaBrowser(delegate: self, sourceType: .savedPhotosAlbum)
     }
@@ -27,7 +29,7 @@ extension HomeViewController: UIImagePickerControllerDelegate {
         return
     }
     dismiss(animated: true) {
-        let vc = VideoEditorViewController(url: url)
+        let vc = VideoEditorViewController(url: url, filters: self.app.filters)
         self.present(vc, animated: true)
 //      let player = AVPlayer(url: url)
 //      let vcPlayer = AVPlayerViewController()

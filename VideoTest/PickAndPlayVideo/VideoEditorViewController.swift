@@ -22,8 +22,14 @@ class VideoEditorViewController: UIViewController {
             dataSource.image = previewImage
         }
     }
+    var trackDuration: Float {
+        guard let trackDuration = player.currentItem?.asset.duration else {
+            return 0
+        }
+        return Float(CMTimeGetSeconds(trackDuration))
+    }
     
-    init(url: URL) {
+    init(url: URL, filters: [Filter]) {
         self.asset = AVAsset(url: url)
         let playerItem = AVPlayerItem(asset: asset)
         self.player = AVPlayer(playerItem: playerItem)
@@ -35,7 +41,7 @@ class VideoEditorViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 60, height: 80)
         self.effectsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        self.dataSource = EffectsCollectionViewDataSource(collectionView: effectsCollectionView)
+        self.dataSource = EffectsCollectionViewDataSource(collectionView: effectsCollectionView, filters: filters)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -49,7 +55,6 @@ class VideoEditorViewController: UIViewController {
         AssetImageGenerator.getThumbnailImageFromVideoAsset(asset: asset, completion: { [ weak self ] image in
             self?.previewImage = image
         })
-        effectsCollectionView.register(EffectsCollectionViewCell.self, forCellWithReuseIdentifier: "effectsCollectionViewCell")
         setUpBackgroundView()
         setUpPlayerView()
         setUpResumeButton()
@@ -59,7 +64,7 @@ class VideoEditorViewController: UIViewController {
         setUpTimer()
         setUpCollectionView()
         setUpCancelButton()
-//        setUpDoneButton()
+        effectsCollectionView.delegate = self
     }
     
     override func viewDidLayoutSubviews() {
@@ -125,10 +130,7 @@ class VideoEditorViewController: UIViewController {
         slider.trailingAnchor.constraint(equalTo: playerView.trailingAnchor, constant: -50),
         slider.bottomAnchor.constraint(equalTo: playerView.bottomAnchor, constant: -50)])
         slider.minimumValue = 0
-        guard let trackDuration = player.currentItem?.asset.duration else {
-            return
-        }
-        slider.maximumValue = Float(CMTimeGetSeconds(trackDuration))
+        slider.maximumValue = trackDuration
 //        slider.value = {}
         slider.addTarget(self, action: #selector(self.sliderAction), for: .valueChanged)
     }
@@ -155,10 +157,7 @@ class VideoEditorViewController: UIViewController {
         timerLabel.heightAnchor.constraint(equalToConstant: 44)])
         timerLabel.alpha = 0.5
         timerLabel.textColor = .white
-        guard let trackDuration = player.currentItem?.asset.duration else {
-            return
-        }
-        let videoDuration = Int(CMTimeGetSeconds(trackDuration))
+        let videoDuration = Int(trackDuration)
         timerLabel.text = "\(formatMinuteSeconds(videoDuration))"
     }
     
@@ -176,7 +175,6 @@ class VideoEditorViewController: UIViewController {
     }
     
     func setUpCollectionView() {
-//        let effectsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         effectsCollectionView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(effectsCollectionView)
         bottomCollectionViewconstraint = effectsCollectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 150)
@@ -188,7 +186,7 @@ class VideoEditorViewController: UIViewController {
         playerView.bottomAnchor.constraint(equalTo: effectsCollectionView.topAnchor)
 //        effectsCollectionView.topAnchor.constraint(equalTo: playerView.bottomAnchor)
         ])
-        effectsCollectionView.backgroundColor = .blue
+        effectsCollectionView.backgroundColor = .black
     }
     
     func setUpBackgroundView() {
@@ -232,20 +230,6 @@ class VideoEditorViewController: UIViewController {
         cancelButton.addTarget(self, action: #selector(self.closeEffects), for: .touchUpInside)
     }
     
-//    func setUpDoneButton() {
-//        doneButton.translatesAutoresizingMaskIntoConstraints = false
-//        effectsCollectionView.addSubview(doneButton)
-//        NSLayoutConstraint.activate ([
-//        doneButton.trailingAnchor.constraint(equalTo: self.effectsCollectionView.trailingAnchor, constant: -8),
-//        doneButton.topAnchor.constraint(equalTo: self.effectsCollectionView.topAnchor, constant: 8),
-//        doneButton.heightAnchor.constraint(equalToConstant: 30),
-//        doneButton.widthAnchor.constraint(equalToConstant: 30)
-//        ])
-//        doneButton.setImage(UIImage(named: "done")?.withRenderingMode(.alwaysTemplate), for: .normal)
-//        doneButton.tintColor = .black
-//        doneButton.addTarget(self, action: #selector(self.saveChanges), for: .touchUpInside)
-//    }
-    
     @objc func playerItemDidReachEnd(notification: Notification) {
         if let playerItem = notification.object as? AVPlayerItem {
             playerItem.seek(to: CMTime.zero, completionHandler: nil)
@@ -266,17 +250,18 @@ class VideoEditorViewController: UIViewController {
     @objc func openEffects() {
         bottomCollectionViewconstraint.constant = 0
         effectsButton.isHidden = true
-        self.playerView.filter = BlurFilter(blurRadius: 60)
+//        self.playerView.filter = ComicFilter()
     }
     
     @objc func closeEffects() {
         bottomCollectionViewconstraint.constant = 150
         effectsButton.isHidden = false
-        self.playerView.filter = PassthroughFilter()
+//        self.playerView.filter = PassthroughFilter()
     }
-    
-//    @objc func saveChanges() {
-//
-//    }
 }
 
+extension VideoEditorViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.playerView.filter = dataSource.filters[indexPath.row]
+    }
+}
