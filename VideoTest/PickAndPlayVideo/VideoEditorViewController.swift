@@ -4,7 +4,6 @@ import AVFoundation
 class VideoEditorViewController: UIViewController {
     let asset: AVAsset
     let player: AVPlayer
-//    let playerLayer: AVPlayerLayer
     let playerView: VideoView
     let effectsCollectionView: UICollectionView
     let dataSource: EffectsCollectionViewDataSource
@@ -36,10 +35,10 @@ class VideoEditorViewController: UIViewController {
         let output = AVPlayerItemVideoOutput(outputSettings: nil)
         playerItem.add(output)
         self.playerView = VideoView(videoOutput: output)
-//        self.playerLayer = AVPlayerLayer(player: player)
         self.bgLayer = AVPlayerLayer(player: player)
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 60, height: 80)
+        layout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 0, right: 8)
         self.effectsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         self.dataSource = EffectsCollectionViewDataSource(collectionView: effectsCollectionView, filters: filters)
         super.init(nibName: nil, bundle: nil)
@@ -69,7 +68,6 @@ class VideoEditorViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-//        playerLayer.frame = playerView.frame
         bgLayer.frame = view.frame
     }
     
@@ -131,7 +129,6 @@ class VideoEditorViewController: UIViewController {
         slider.bottomAnchor.constraint(equalTo: playerView.bottomAnchor, constant: -50)])
         slider.minimumValue = 0
         slider.maximumValue = trackDuration
-//        slider.value = {}
         slider.addTarget(self, action: #selector(self.sliderAction), for: .valueChanged)
     }
     
@@ -142,7 +139,6 @@ class VideoEditorViewController: UIViewController {
         playerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
         playerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
         playerView.topAnchor.constraint(equalTo: self.view.topAnchor)])
-//        playerView.layer.addSublayer(playerLayer)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
         playerView.addGestureRecognizer(tap)
@@ -184,7 +180,6 @@ class VideoEditorViewController: UIViewController {
         bottomCollectionViewconstraint,
         effectsCollectionView.heightAnchor.constraint(equalToConstant: 150),
         playerView.bottomAnchor.constraint(equalTo: effectsCollectionView.topAnchor)
-//        effectsCollectionView.topAnchor.constraint(equalTo: playerView.bottomAnchor)
         ])
         effectsCollectionView.backgroundColor = .black
     }
@@ -250,13 +245,11 @@ class VideoEditorViewController: UIViewController {
     @objc func openEffects() {
         bottomCollectionViewconstraint.constant = 0
         effectsButton.isHidden = true
-//        self.playerView.filter = ComicFilter()
     }
     
     @objc func closeEffects() {
         bottomCollectionViewconstraint.constant = 150
         effectsButton.isHidden = false
-//        self.playerView.filter = PassthroughFilter()
     }
 }
 

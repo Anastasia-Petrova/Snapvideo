@@ -3,7 +3,6 @@ import UIKit
 class EffectsCollectionViewCell: UICollectionViewCell {
     let stackView = UIStackView()
     let previewImageView = UIImageView(image: UIImage(named: "placeholder"))
-//    let previewImage: UIImage?
     let effectName = UILabel()
     
     
@@ -28,6 +27,8 @@ class EffectsCollectionViewCell: UICollectionViewCell {
         effectName.font = UIFont.systemFont(ofSize: 10)
         effectName.numberOfLines = 1
         effectName.textColor = .green
+        previewImageView.contentMode = .scaleAspectFill
+        previewImageView.clipsToBounds = true
         }
     
     required init?(coder: NSCoder) {
