@@ -6,6 +6,7 @@ class VideoView: UIView {
     var displayLink: CADisplayLink?
     var context: CIContext = CIContext(options: [CIContextOption.workingColorSpace : NSNull()])
     var filter: Filter
+    let videoOrientation: CGImagePropertyOrientation
     
     func play() {
 //        self.displayLink?.isPaused = false
@@ -17,15 +18,18 @@ class VideoView: UIView {
     
     init(
         videoOutput: AVPlayerItemVideoOutput,
+        videoOrientation: CGImagePropertyOrientation,
         preferredFramesPerSecond: Int = 30,
         filter: Filter = PassthroughFilter()
     ) {
+        self.videoOrientation = videoOrientation
         self.videoOutput = videoOutput
         self.filter = filter
         super.init(frame: .zero)
         self.displayLink = CADisplayLink(target: self, selector: #selector(displayLinkDidUpdate))
         self.displayLink?.preferredFramesPerSecond = preferredFramesPerSecond
         self.displayLink?.add(to: .main, forMode: .common)
+        self.layer.contentsGravity = .resizeAspect
     }
     
     required init?(coder: NSCoder) {
@@ -38,17 +42,14 @@ class VideoView: UIView {
     
     @objc func displayLinkDidUpdate() {
         let time = videoOutput.itemTime(forHostTime: CACurrentMediaTime())
-        guard videoOutput.hasNewPixelBuffer(forItemTime: time),
-            let pixBuf = videoOutput.copyPixelBuffer(forItemTime: time, itemTimeForDisplay: nil) else {
-                return
-        }
-        let baseImg = CIImage(cvPixelBuffer: pixBuf)
-
-        let filteredImg = self.filter.apply(image: baseImg)
-
-        guard let cgImg = context.createCGImage(filteredImg, from: filteredImg.extent) else { return }
-
-        self.layer.contents = cgImg
+        guard videoOutput.hasNewPixelBuffer(forItemTime: time) else { return }
+        
+        self.layer.contents = videoOutput
+            .copyPixelBuffer(forItemTime: time, itemTimeForDisplay: nil)
+            .map { CIImage(cvPixelBuffer: $0) }
+            .map { $0.oriented(self.videoOrientation) }
+            .map(filter.apply)
+            .flatMap { context.createCGImage($0, from: $0.extent) }
     }
 }
 

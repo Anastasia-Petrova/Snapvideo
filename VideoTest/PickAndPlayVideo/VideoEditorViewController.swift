@@ -34,7 +34,7 @@ class VideoEditorViewController: UIViewController {
         self.player = AVPlayer(playerItem: playerItem)
         let output = AVPlayerItemVideoOutput(outputSettings: nil)
         playerItem.add(output)
-        self.playerView = VideoView(videoOutput: output)
+        self.playerView = VideoView(videoOutput: output, videoOrientation: self.asset.videoOrientation)
         self.bgLayer = AVPlayerLayer(player: player)
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 60, height: 80)
