@@ -11,7 +11,8 @@ extension App {
         filters: [
             PassthroughFilter(),
             ComicFilter(),
-            BlurFilter(blurRadius: 50)
+            BlurFilter(blurRadius: 50),
+            OldFilmFilter()
         ]
     )
     

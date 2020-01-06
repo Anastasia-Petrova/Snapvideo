@@ -29,18 +29,18 @@ class VideoEditorViewController: UIViewController {
     }
     
     init( url: URL, filters: [Filter]) {
-        self.asset = AVAsset(url: url)
+        asset = AVAsset(url: url)
         let playerItem = AVPlayerItem(asset: asset)
-        self.player = AVPlayer(playerItem: playerItem)
+        player = AVPlayer(playerItem: playerItem)
         let output = AVPlayerItemVideoOutput(outputSettings: nil)
         playerItem.add(output)
-        self.playerView = VideoView(videoOutput: output, videoOrientation: self.asset.videoOrientation)
-        self.bgLayer = AVPlayerLayer(player: player)
+        playerView = VideoView(videoOutput: output, videoOrientation: self.asset.videoOrientation)
+        bgLayer = AVPlayerLayer(player: player)
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 60, height: 80)
         layout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 0, right: 8)
-        self.effectsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        self.dataSource = EffectsCollectionViewDataSource(collectionView: effectsCollectionView, filters: filters)
+        effectsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        dataSource = EffectsCollectionViewDataSource(collectionView: effectsCollectionView, filters: filters)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -51,7 +51,7 @@ class VideoEditorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .black
-        AssetImageGenerator.getThumbnailImageFromVideoAsset(asset: asset, completion: { [ weak self ] image in
+        AssetImageGenerator.getThumbnailImageFromVideoAsset(asset: asset, completion: { [weak self] image in
             self?.previewImage = image
         })
         setUpBackgroundView()
