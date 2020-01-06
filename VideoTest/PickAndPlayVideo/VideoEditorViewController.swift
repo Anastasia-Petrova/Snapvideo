@@ -28,7 +28,7 @@ class VideoEditorViewController: UIViewController {
         return Float(CMTimeGetSeconds(trackDuration))
     }
     
-    init(url: URL, filters: [Filter]) {
+    init( url: URL, filters: [Filter]) {
         self.asset = AVAsset(url: url)
         let playerItem = AVPlayerItem(asset: asset)
         self.player = AVPlayer(playerItem: playerItem)

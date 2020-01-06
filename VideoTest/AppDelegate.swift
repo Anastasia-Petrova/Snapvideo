@@ -8,7 +8,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PHPhotoLibraryChangeObser
     let center = UNUserNotificationCenter.current()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        UINavigationBar.appearance().backgroundColor = .black
+        
+//        UINavigationBar.appearance().backgroundColor = .black
         PHPhotoLibrary.shared().register(self)
         DispatchQueue.global().async {
             self.result = PHAsset.fetchAssets(with: .video, options: nil)
