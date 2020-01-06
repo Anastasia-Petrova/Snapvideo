@@ -23,7 +23,6 @@ class EffectsCollectionViewCell: UICollectionViewCell {
         stackView.axis = .vertical
         stackView.spacing = 8
         effectName.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
-        effectName.text = "WOW Effect"
         effectName.font = UIFont.systemFont(ofSize: 10)
         effectName.numberOfLines = 1
         effectName.textColor = .green

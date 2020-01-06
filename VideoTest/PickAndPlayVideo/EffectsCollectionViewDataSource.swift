@@ -25,6 +25,7 @@ class EffectsCollectionViewDataSource: NSObject, UICollectionViewDataSource {
         let reusableIdentifier = "effectsCollectionViewCell"
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reusableIdentifier, for: indexPath) as! EffectsCollectionViewCell
         cell.previewImageView.image = image
+        cell.effectName.text = filters[indexPath.row].name
         return cell
     }
 }
