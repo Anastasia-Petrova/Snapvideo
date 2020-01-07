@@ -25,7 +25,7 @@ class EffectsCollectionViewCell: UICollectionViewCell {
         effectName.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         effectName.font = UIFont.systemFont(ofSize: 10)
         effectName.numberOfLines = 1
-        effectName.textColor = .green
+//        effectName.textColor = .gray
         previewImageView.contentMode = .scaleAspectFill
         previewImageView.clipsToBounds = true
         }

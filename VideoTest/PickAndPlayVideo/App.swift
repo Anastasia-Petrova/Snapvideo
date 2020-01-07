@@ -14,7 +14,8 @@ extension App {
             BlurFilter(blurRadius: 50),
             OldFilmFilter(),
             SharpAndWarmFilter(inputSharpness: 0.7),
-            VignetteFilter()
+            VignetteFilter(),
+            ClampFilter()
         ]
     )
     

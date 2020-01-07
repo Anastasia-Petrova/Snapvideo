@@ -21,11 +21,20 @@ class EffectsCollectionViewDataSource: NSObject, UICollectionViewDataSource {
         return filters.count
     }
     
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let reusableIdentifier = "effectsCollectionViewCell"
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reusableIdentifier, for: indexPath) as! EffectsCollectionViewCell
         cell.previewImageView.image = image
         cell.effectName.text = filters[indexPath.row].name
+        if cell.isSelected {
+            cell.effectName.textColor = .blue
+        } else {
+            cell.effectName.textColor = .gray
+        }
         return cell
     }
 }

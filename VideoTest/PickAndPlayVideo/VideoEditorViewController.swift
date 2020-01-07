@@ -37,8 +37,9 @@ class VideoEditorViewController: UIViewController {
         playerView = VideoView(videoOutput: output, videoOrientation: self.asset.videoOrientation)
         bgLayer = AVPlayerLayer(player: player)
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 60, height: 80)
-        layout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 0, right: 8)
+        layout.itemSize = CGSize(width: 60, height: 90)
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 90, right: 10)
+        layout.scrollDirection = .horizontal
         effectsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         dataSource = EffectsCollectionViewDataSource(collectionView: effectsCollectionView, filters: filters)
         super.init(nibName: nil, bundle: nil)
@@ -173,15 +174,15 @@ class VideoEditorViewController: UIViewController {
     func setUpCollectionView() {
         effectsCollectionView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(effectsCollectionView)
-        bottomCollectionViewconstraint = effectsCollectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 150)
+        bottomCollectionViewconstraint = effectsCollectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 200)
         NSLayoutConstraint.activate ([
         effectsCollectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
         effectsCollectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
         bottomCollectionViewconstraint,
-        effectsCollectionView.heightAnchor.constraint(equalToConstant: 150),
+        effectsCollectionView.heightAnchor.constraint(equalToConstant: 200),
         playerView.bottomAnchor.constraint(equalTo: effectsCollectionView.topAnchor)
         ])
-        effectsCollectionView.backgroundColor = .black
+        effectsCollectionView.backgroundColor = .white
     }
     
     func setUpBackgroundView() {
@@ -215,13 +216,13 @@ class VideoEditorViewController: UIViewController {
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
         effectsCollectionView.addSubview(cancelButton)
         NSLayoutConstraint.activate ([
-            cancelButton.leadingAnchor.constraint(equalTo: self.effectsCollectionView.leadingAnchor, constant: 8),
-        cancelButton.topAnchor.constraint(equalTo: self.effectsCollectionView.topAnchor, constant: 100),
-        cancelButton.heightAnchor.constraint(equalToConstant: 30),
-        cancelButton.widthAnchor.constraint(equalToConstant: 30)
+            cancelButton.leadingAnchor.constraint(equalTo: self.effectsCollectionView.leadingAnchor, constant: 70),
+        cancelButton.topAnchor.constraint(equalTo: self.effectsCollectionView.topAnchor, constant: 140),
+        cancelButton.heightAnchor.constraint(equalToConstant: 20),
+        cancelButton.widthAnchor.constraint(equalToConstant: 20)
         ])
         cancelButton.setImage(UIImage(named: "cancel")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        cancelButton.tintColor = .white
+        cancelButton.tintColor = .gray
         cancelButton.addTarget(self, action: #selector(self.closeEffects), for: .touchUpInside)
     }
     
@@ -248,7 +249,7 @@ class VideoEditorViewController: UIViewController {
     }
     
     @objc func closeEffects() {
-        bottomCollectionViewconstraint.constant = 150
+        bottomCollectionViewconstraint.constant = 200
         effectsButton.isHidden = false
     }
 }
@@ -256,5 +257,14 @@ class VideoEditorViewController: UIViewController {
 extension VideoEditorViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.playerView.filter = dataSource.filters[indexPath.row]
+        if let cell = collectionView.cellForItem(at: indexPath) {
+            cell.isSelected = true
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) {
+            cell.isSelected = false
+        }
     }
 }

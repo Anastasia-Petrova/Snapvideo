@@ -3,7 +3,7 @@ import CoreImage
 
 
 struct OldFilmFilter: Filter {
-    let name: String = "OldFilmFilter"
+    let name: String = "OldFilm"
     
     func apply(image: CIImage) -> CIImage {
         

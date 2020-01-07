@@ -2,7 +2,7 @@ import Foundation
 import CoreImage
 
 struct SharpAndWarmFilter: Filter {
-    let name: String = "SharpAndWarm"
+    let name: String = "Warm"
     let inputSharpness: Double
     
     init(inputSharpness: Double) {

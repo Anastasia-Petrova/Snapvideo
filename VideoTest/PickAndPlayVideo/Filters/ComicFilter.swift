@@ -3,7 +3,7 @@ import CoreImage
 
 
 struct ComicFilter: Filter {
-    let name: String = "ComicFilter"
+    let name: String = "Comic"
     
     func apply(image: CIImage) -> CIImage {
         let optionalFilter = CIFilter(name: "CIComicEffect")

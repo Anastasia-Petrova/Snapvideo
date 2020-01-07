@@ -28,6 +28,7 @@ class HomeViewController: UIViewController {
             addVideoButton.widthAnchor.constraint(equalToConstant: 100)
         ])
         addVideoButton.setImage(UIImage(named: "addButton"), for: .normal)
+        addVideoButton.adjustsImageWhenHighlighted = false
         addVideoButton.addTarget(self, action: #selector(self.addVideo), for: .touchUpInside)
     }
     
