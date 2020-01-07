@@ -12,7 +12,9 @@ extension App {
             PassthroughFilter(),
             ComicFilter(),
             BlurFilter(blurRadius: 50),
-            OldFilmFilter()
+            OldFilmFilter(),
+            SharpAndWarmFilter(inputSharpness: 0.7),
+            VignetteFilter()
         ]
     )
     
