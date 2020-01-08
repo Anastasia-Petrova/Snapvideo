@@ -9,6 +9,8 @@ class EffectsCollectionViewDataSource: NSObject, UICollectionViewDataSource {
         }
     }
     
+    var context: CIContext = CIContext(options: [CIContextOption.workingColorSpace : NSNull()])
+    
     init(collectionView: UICollectionView, filters: [Filter]) {
         self.filters = filters
         self.collectionView = collectionView
@@ -28,13 +30,13 @@ class EffectsCollectionViewDataSource: NSObject, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let reusableIdentifier = "effectsCollectionViewCell"
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reusableIdentifier, for: indexPath) as! EffectsCollectionViewCell
+//        if let img = image, let ciImage = img.ciImage {
+//            let filteredCIImage = filters[indexPath.row].apply(image: ciImage)
+//            let uiImage = UIImage(ciImage: filteredCIImage)
+//            cell.previewImageView.image = uiImage
+//        }
         cell.previewImageView.image = image
         cell.effectName.text = filters[indexPath.row].name
-        if cell.isSelected {
-            cell.effectName.textColor = .blue
-        } else {
-            cell.effectName.textColor = .gray
-        }
         return cell
     }
 }

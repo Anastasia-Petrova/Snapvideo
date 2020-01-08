@@ -5,6 +5,15 @@ class EffectsCollectionViewCell: UICollectionViewCell {
     let previewImageView = UIImageView(image: UIImage(named: "placeholder"))
     let effectName = UILabel()
     
+    override var isSelected: Bool {
+        didSet {
+            if self.isSelected {
+                effectName.textColor = .blue
+            } else {
+                effectName.textColor = .gray
+            }
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,7 +34,6 @@ class EffectsCollectionViewCell: UICollectionViewCell {
         effectName.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         effectName.font = UIFont.systemFont(ofSize: 10)
         effectName.numberOfLines = 1
-//        effectName.textColor = .gray
         previewImageView.contentMode = .scaleAspectFill
         previewImageView.clipsToBounds = true
         }
