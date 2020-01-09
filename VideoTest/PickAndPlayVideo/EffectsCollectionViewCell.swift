@@ -22,12 +22,12 @@ class EffectsCollectionViewCell: UICollectionViewCell {
         stackView.addArrangedSubview(previewImageView)
         stackView.addArrangedSubview(effectName)
         NSLayoutConstraint.activate([
-            stackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
-            stackView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
+            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            previewImageView.heightAnchor.constraint(equalTo: previewImageView.widthAnchor)
         ])
-        stackView.distribution = .fill
         stackView.alignment = .center
         stackView.axis = .vertical
         stackView.spacing = 8
@@ -36,7 +36,7 @@ class EffectsCollectionViewCell: UICollectionViewCell {
         effectName.numberOfLines = 1
         previewImageView.contentMode = .scaleAspectFill
         previewImageView.clipsToBounds = true
-        }
+    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

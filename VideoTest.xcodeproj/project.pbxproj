@@ -98,6 +98,7 @@
 		6D17A7DF23ABB39100C70542 /* VideoTest */ = {
 			isa = PBXGroup;
 			children = (
+				6D0C29C023C28CA5006E7C40 /* App.swift */,
 				6D17A7E023ABB39100C70542 /* AppDelegate.swift */,
 				6D17A7E223ABB39100C70542 /* SceneDelegate.swift */,
 				6D17A7F423ABB6E000C70542 /* HomeViewController.swift */,
@@ -116,7 +117,6 @@
 			isa = PBXGroup;
 			children = (
 				6D05022523B9154100036D60 /* VideoEditorViewController.swift */,
-				6D0C29C023C28CA5006E7C40 /* App.swift */,
 				6DDE026223C11659002D7942 /* VideoView.swift */,
 				6D01E03723BFA3D600B558E8 /* EffectsCollectionViewDataSource.swift */,
 				6D01E03523BFA2F900B558E8 /* EffectsCollectionViewCell.swift */,

@@ -39,9 +39,12 @@ class VideoEditorViewController: UIViewController {
         bgLayer = AVPlayerLayer(player: player)
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 70, height: 90)
-//        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 90, right: 10)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         layout.scrollDirection = .horizontal
         effectsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        effectsCollectionView.showsHorizontalScrollIndicator = false
+        effectsCollectionView.allowsSelection = true
+        effectsCollectionView.bounces = false
         dataSource = EffectsCollectionViewDataSource(collectionView: effectsCollectionView, filters: filters)
         super.init(nibName: nil, bundle: nil)
     }
@@ -72,6 +75,7 @@ class VideoEditorViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         bgLayer.frame = view.frame
+//        bottomEffectsConstraint.constant = effectsView.frame.height
     }
     
     @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
@@ -184,38 +188,39 @@ class VideoEditorViewController: UIViewController {
         effectsView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
         effectsView.topAnchor.constraint(equalTo: playerView.bottomAnchor),
         bottomEffectsConstraint,
-        effectsView.heightAnchor.constraint(equalToConstant: 200)
+//        effectsView.heightAnchor.constraint(equalToConstant: 200)
         ])
         
         let collectionStackView = UIStackView()
         collectionStackView.translatesAutoresizingMaskIntoConstraints = false
-        let buttonsStackView = UIStackView()
-        buttonsStackView.translatesAutoresizingMaskIntoConstraints = false
-        effectsView.addSubview(collectionStackView)
         collectionStackView.axis = .vertical
+        effectsView.addSubview(collectionStackView)
         
         NSLayoutConstraint.activate ([
             collectionStackView.trailingAnchor.constraint(equalTo: effectsView.trailingAnchor),
-        collectionStackView.leadingAnchor.constraint(equalTo: effectsView.leadingAnchor),
-        collectionStackView.topAnchor.constraint(equalTo: effectsView.topAnchor),
-        collectionStackView.bottomAnchor.constraint(equalTo: effectsView.bottomAnchor)
+            collectionStackView.leadingAnchor.constraint(equalTo: effectsView.leadingAnchor),
+            collectionStackView.topAnchor.constraint(equalTo: effectsView.topAnchor),
+            collectionStackView.bottomAnchor.constraint(equalTo: effectsView.bottomAnchor)
         ])
         
-        effectsCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        let buttonsStackView = UIStackView()
+        
         effectsCollectionView.backgroundColor = .white
+        let spacer = UIView()
+        spacer.backgroundColor = .white
+            
         collectionStackView.addArrangedSubview(effectsCollectionView)
         collectionStackView.addArrangedSubview(buttonsStackView)
+        collectionStackView.addArrangedSubview(spacer)
+        
         buttonsStackView.addArrangedSubview(cancelButton)
         buttonsStackView.addArrangedSubview(doneButton)
         buttonsStackView.axis = .horizontal
-        buttonsStackView.distribution = .equalSpacing
-        buttonsStackView.alignment = .center
-        buttonsStackView.spacing = 60
+        buttonsStackView.distribution = .fillEqually
         
         NSLayoutConstraint.activate ([
-        effectsCollectionView.heightAnchor.constraint(equalToConstant: 120),
-        effectsCollectionView.leadingAnchor.constraint(equalTo: effectsView.leadingAnchor, constant: 8),
-        effectsCollectionView.trailingAnchor.constraint(equalTo: effectsView.trailingAnchor, constant: -8)
+//            spacer.heightAnchor.constraint(equalToConstant: self.parent?.view.safeAreaInsets.bottom ?? 0),
+            effectsCollectionView.heightAnchor.constraint(equalToConstant: 120)
         ])
     }
    
@@ -247,27 +252,20 @@ class VideoEditorViewController: UIViewController {
     }
     
     func setUpCancelButton() {
-        cancelButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate ([
-//        cancelButton.leadingAnchor.constraint(equalTo: effectsView.leadingAnchor, constant: 70),
-//        cancelButton.bottomAnchor.constraint(equalTo:
-//            effectsView.topAnchor, constant: 40),
-        cancelButton.heightAnchor.constraint(equalToConstant: 20),
-        cancelButton.widthAnchor.constraint(equalToConstant: 20)
+        cancelButton.widthAnchor.constraint(equalToConstant: 44)
         ])
+        cancelButton.imageView?.contentMode = .scaleAspectFit
         cancelButton.setImage(UIImage(named: "cancel")?.withRenderingMode(.alwaysTemplate), for: .normal)
         cancelButton.tintColor = .gray
         cancelButton.addTarget(self, action: #selector(self.closeEffects), for: .touchUpInside)
     }
     
     func setUpDoneButton() {
-        doneButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate ([
-//        doneButton.trailingAnchor.constraint(equalTo: effectsView.trailingAnchor, constant: -70),
-//        doneButton.topAnchor.constraint(equalTo: effectsView.bottomAnchor, constant: 40),
-        doneButton.heightAnchor.constraint(equalToConstant: 20),
-        doneButton.widthAnchor.constraint(equalToConstant: 20)
+        doneButton.heightAnchor.constraint(equalToConstant: 44)
         ])
+        doneButton.imageView?.contentMode = .scaleAspectFit
         doneButton.setImage(UIImage(named: "done")?.withRenderingMode(.alwaysTemplate), for: .normal)
         doneButton.tintColor = .gray
         doneButton.addTarget(self, action: #selector(self.saveVideo), for: .touchUpInside)
@@ -292,11 +290,17 @@ class VideoEditorViewController: UIViewController {
     
     @objc func openEffects() {
         bottomEffectsConstraint.constant = 0
+        UIView.animate(withDuration: 0.2) {
+            self.view.layoutIfNeeded()
+        }
         effectsButton.isHidden = true
     }
     
     @objc func closeEffects() {
         bottomEffectsConstraint.constant = 200
+        UIView.animate(withDuration: 0.2) {
+            self.view.layoutIfNeeded()
+        }
         effectsButton.isHidden = false
     }
     
@@ -308,7 +312,5 @@ class VideoEditorViewController: UIViewController {
 extension VideoEditorViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.playerView.filter = dataSource.filters[indexPath.row]
-            collectionView.reloadItems(at: [indexPath])
     }
-    
 }
