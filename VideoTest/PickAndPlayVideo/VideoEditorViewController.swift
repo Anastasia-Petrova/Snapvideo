@@ -330,14 +330,9 @@ class VideoEditorViewController: UIViewController {
         DispatchQueue.main.async {
           self.doneButton.isEnabled = false
         }
-        
         let choosenFilter = dataSource.filters[filterIndex]
-        guard let playerItem = player.currentItem else {
-            return
-        }
-        
+        guard let playerItem = player.currentItem else { return }
         VideoEditer.saveEditedVideo(choosenFilter: choosenFilter, asset: playerItem.asset)
-        
         DispatchQueue.main.async {
           self.doneButton.isEnabled = true
         }

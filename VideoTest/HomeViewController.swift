@@ -10,7 +10,8 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-        setUpAddVideoButton()
+        setUpView()
+//        setUpAddVideoButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -18,22 +19,55 @@ class HomeViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
-    func setUpAddVideoButton() {
-        addVideoButton.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(addVideoButton)
-        NSLayoutConstraint.activate([
-            addVideoButton.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-            addVideoButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            addVideoButton.heightAnchor.constraint(equalToConstant: 100),
-            addVideoButton.widthAnchor.constraint(equalToConstant: 100)
+//    func setUpAddVideoButton() {
+//        addVideoButton.translatesAutoresizingMaskIntoConstraints = false
+//        self.view.addSubview(addVideoButton)
+//        NSLayoutConstraint.activate([
+//            addVideoButton.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+//            addVideoButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+//            addVideoButton.heightAnchor.constraint(equalToConstant: 100),
+//            addVideoButton.widthAnchor.constraint(equalToConstant: 100)
+//        ])
+//        addVideoButton.setImage(UIImage(named: "addButton"), for: .normal)
+//        addVideoButton.adjustsImageWhenHighlighted = false
+//        addVideoButton.addTarget(self, action: #selector(self.addVideo), for: .touchUpInside)
+//    }
+    
+    func setUpView() {
+        let stackView = UIStackView()
+        self.view.addSubview(stackView)
+        let imageView = UIImageView(image: UIImage(named: "addButton"))
+        let label = UILabel()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.addArrangedSubview(imageView)
+        stackView.addArrangedSubview(label)
+        
+        NSLayoutConstraint.activate ([
+            stackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            stackView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
         ])
-        addVideoButton.setImage(UIImage(named: "addButton"), for: .normal)
-        addVideoButton.adjustsImageWhenHighlighted = false
-        addVideoButton.addTarget(self, action: #selector(self.addVideo), for: .touchUpInside)
+        
+        stackView.alignment = .center
+        stackView.distribution = .equalSpacing
+        stackView.axis = .vertical
+        stackView.spacing = 16
+        label.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
+        label.font = UIFont.systemFont(ofSize: 20)
+        label.numberOfLines = 1
+        label.text = "Tap anywhere to choose a video"
+        label.textColor = .black
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        self.view.addGestureRecognizer(tap)
     }
     
-    @objc func addVideo() {
-        VideoHelper.startMediaBrowser(delegate: self, sourceType: .savedPhotosAlbum)
+//    @objc func addVideo() {
+//        VideoHelper.startMediaBrowser(delegate: self, sourceType: .savedPhotosAlbum)
+//    }
+    
+    @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
+         VideoHelper.startMediaBrowser(delegate: self, sourceType: .savedPhotosAlbum)
     }
     
     func embed(_ videoEditorVC: UIViewController) {
