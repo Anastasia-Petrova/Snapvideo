@@ -1,5 +1,6 @@
 import UIKit
 import AVFoundation
+import Photos
 
 class VideoEditorViewController: UIViewController {
     let asset: AVAsset
@@ -18,6 +19,11 @@ class VideoEditorViewController: UIViewController {
     var doneButton = UIButton()
     var bottomEffectsConstraint = NSLayoutConstraint()
     var spacerHeight = CGFloat()
+    var filterIndex = 0 {
+        didSet {
+            doneButton.isEnabled = filterIndex != 0
+        }
+    }
     var previewImage: UIImage? {
         didSet {
             dataSource.image = previewImage
@@ -56,7 +62,7 @@ class VideoEditorViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .black
+        self.view.backgroundColor = .white
         AssetImageGenerator.getThumbnailImageFromVideoAsset(asset: asset, completion: { [weak self] image in
             self?.previewImage = image
         })
@@ -258,17 +264,18 @@ class VideoEditorViewController: UIViewController {
         ])
         cancelButton.imageView?.contentMode = .scaleAspectFit
         cancelButton.setImage(UIImage(named: "cancel")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        cancelButton.tintColor = .gray
+        cancelButton.tintColor = .darkGray
         cancelButton.addTarget(self, action: #selector(self.closeEffects), for: .touchUpInside)
     }
     
     func setUpDoneButton() {
+        doneButton.isEnabled = false
         NSLayoutConstraint.activate ([
         doneButton.heightAnchor.constraint(equalToConstant: 44)
         ])
         doneButton.imageView?.contentMode = .scaleAspectFit
         doneButton.setImage(UIImage(named: "done")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        doneButton.tintColor = .gray
+        doneButton.tintColor = .darkGray
         doneButton.addTarget(self, action: #selector(self.saveVideo), for: .touchUpInside)
     }
     
@@ -308,12 +315,56 @@ class VideoEditorViewController: UIViewController {
     }
     
     @objc func saveVideo() {
+        PHPhotoLibrary.requestAuthorization { [weak self] status in
+          switch status {
+          case .authorized:
+            self?.saveVideoToPhotos()
+          default:
+            print("Photos permissions not granted.")
+            return
+          }
+        }
+    }
+    
+    func saveVideoToPhotos() {
+        DispatchQueue.main.async {
+          self.doneButton.isEnabled = false
+        }
         
+        let choosenFilter = dataSource.filters[filterIndex]
+        guard let playerItem = player.currentItem else {
+            return
+        }
+        let composition = AVVideoComposition(asset: playerItem.asset) { (request) in
+            let source = request.sourceImage.clampedToExtent()
+            let filteredImage = choosenFilter.apply(image: source).cropped(to: request.sourceImage.extent)
+            request.finish(with: filteredImage, context: nil)
+        }
+        guard let export = AVAssetExportSession(asset: playerItem.asset, presetName: AVAssetExportPresetHighestQuality) else {
+            return
+        }
+        export.outputFileType = AVFileType.mov
+        let exportPath = NSTemporaryDirectory().appendingFormat("/\(UUID().uuidString).mov")
+        let exportUrl = URL(fileURLWithPath: exportPath)
+        export.outputURL = exportUrl
+        export.videoComposition = composition
+        export.exportAsynchronously(completionHandler: {
+        PHPhotoLibrary.shared().performChanges({
+            PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: exportUrl)
+            }) { [weak self] saved, error in
+                
+            }
+        })
+        
+        DispatchQueue.main.async {
+          self.doneButton.isEnabled = true
+        }
     }
 }
 
 extension VideoEditorViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.playerView.filter = dataSource.filters[indexPath.row]
+        filterIndex = indexPath.row
     }
 }

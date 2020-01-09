@@ -51,5 +51,6 @@ class VideoView: UIView {
             .map(filter.apply)
             .flatMap { context.createCGImage($0, from: $0.extent) }
     }
+     
 }
 
