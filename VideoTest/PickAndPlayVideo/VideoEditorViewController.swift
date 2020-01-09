@@ -335,26 +335,8 @@ class VideoEditorViewController: UIViewController {
         guard let playerItem = player.currentItem else {
             return
         }
-        let composition = AVVideoComposition(asset: playerItem.asset) { (request) in
-            let source = request.sourceImage.clampedToExtent()
-            let filteredImage = choosenFilter.apply(image: source).cropped(to: request.sourceImage.extent)
-            request.finish(with: filteredImage, context: nil)
-        }
-        guard let export = AVAssetExportSession(asset: playerItem.asset, presetName: AVAssetExportPresetHighestQuality) else {
-            return
-        }
-        export.outputFileType = AVFileType.mov
-        let exportPath = NSTemporaryDirectory().appendingFormat("/\(UUID().uuidString).mov")
-        let exportUrl = URL(fileURLWithPath: exportPath)
-        export.outputURL = exportUrl
-        export.videoComposition = composition
-        export.exportAsynchronously(completionHandler: {
-        PHPhotoLibrary.shared().performChanges({
-            PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: exportUrl)
-            }) { [weak self] saved, error in
-                
-            }
-        })
+        
+        VideoEditer.saveEditedVideo(choosenFilter: choosenFilter, asset: playerItem.asset)
         
         DispatchQueue.main.async {
           self.doneButton.isEnabled = true
