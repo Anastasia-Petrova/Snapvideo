@@ -3,7 +3,7 @@ import Foundation
 struct App {
     let filters: [Filter]
     
-    public static let shared = `default`
+    public static let shared = many//`default`
 }
 
 extension App {

@@ -17,6 +17,7 @@ class VideoEditorViewController: UIViewController {
     var cancelButton = UIButton()
     var doneButton = UIButton()
     var bottomEffectsConstraint = NSLayoutConstraint()
+    var spacerHeight = CGFloat()
     var previewImage: UIImage? {
         didSet {
             dataSource.image = previewImage
@@ -181,7 +182,7 @@ class VideoEditorViewController: UIViewController {
         effectsView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(effectsView)
         effectsView.backgroundColor = .white
-        bottomEffectsConstraint = effectsView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 200)
+        bottomEffectsConstraint = effectsView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 166)
         
         NSLayoutConstraint.activate ([
         effectsView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
@@ -206,12 +207,12 @@ class VideoEditorViewController: UIViewController {
         let buttonsStackView = UIStackView()
         
         effectsCollectionView.backgroundColor = .white
-        let spacer = UIView()
-        spacer.backgroundColor = .white
+//        let spacer = UIView()
+//        spacer.backgroundColor = .white
             
         collectionStackView.addArrangedSubview(effectsCollectionView)
         collectionStackView.addArrangedSubview(buttonsStackView)
-        collectionStackView.addArrangedSubview(spacer)
+//        collectionStackView.addArrangedSubview(spacer)
         
         buttonsStackView.addArrangedSubview(cancelButton)
         buttonsStackView.addArrangedSubview(doneButton)
@@ -219,7 +220,7 @@ class VideoEditorViewController: UIViewController {
         buttonsStackView.distribution = .fillEqually
         
         NSLayoutConstraint.activate ([
-//            spacer.heightAnchor.constraint(equalToConstant: self.parent?.view.safeAreaInsets.bottom ?? 0),
+//            spacer.heightAnchor.constraint(equalToConstant: self.parent?.view.safeAreaInsets.bottom ?? 34),
             effectsCollectionView.heightAnchor.constraint(equalToConstant: 120)
         ])
     }
@@ -233,7 +234,7 @@ class VideoEditorViewController: UIViewController {
         NSLayoutConstraint.activate([
             view.leftAnchor.constraint(equalTo: visualEffectView.leftAnchor),
             view.rightAnchor.constraint(equalTo: visualEffectView.rightAnchor),
-            visualEffectView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            visualEffectView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
             visualEffectView.topAnchor.constraint(equalTo: view.topAnchor)])
     }
     
@@ -289,15 +290,17 @@ class VideoEditorViewController: UIViewController {
     }
     
     @objc func openEffects() {
-        bottomEffectsConstraint.constant = 0
+        bottomEffectsConstraint.constant = 0 - self.view.safeAreaInsets.bottom
+        
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
         effectsButton.isHidden = true
+        
     }
     
     @objc func closeEffects() {
-        bottomEffectsConstraint.constant = 200
+        bottomEffectsConstraint.constant = 166
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
