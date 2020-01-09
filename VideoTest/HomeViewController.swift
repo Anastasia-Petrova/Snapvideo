@@ -55,16 +55,13 @@ class HomeViewController: UIViewController {
         label.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         label.font = UIFont.systemFont(ofSize: 20)
         label.numberOfLines = 1
-        label.text = "Tap anywhere to choose a video"
+        label.text = "Tap to choose a video"
         label.textColor = .black
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
-        self.view.addGestureRecognizer(tap)
+        stackView.addGestureRecognizer(tap)
     }
     
-//    @objc func addVideo() {
-//        VideoHelper.startMediaBrowser(delegate: self, sourceType: .savedPhotosAlbum)
-//    }
     
     @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
          VideoHelper.startMediaBrowser(delegate: self, sourceType: .savedPhotosAlbum)
