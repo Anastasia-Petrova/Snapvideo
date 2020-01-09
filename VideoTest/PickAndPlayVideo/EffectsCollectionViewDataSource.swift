@@ -3,7 +3,7 @@ import UIKit
 class EffectsCollectionViewDataSource: NSObject, UICollectionViewDataSource {
     weak var collectionView: UICollectionView?
     let filters: [Filter]
-    //var filteredImages: [String: UIImage]
+    var filteredImages: [String: UIImage] = [:]
     var image: UIImage? {
         didSet {
             collectionView?.reloadData()
@@ -31,14 +31,18 @@ class EffectsCollectionViewDataSource: NSObject, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let reusableIdentifier = "effectsCollectionViewCell"
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reusableIdentifier, for: indexPath) as! EffectsCollectionViewCell
-        
-        if let cgImage = image?.cgImage {
-            let ciImage = CIImage(cgImage: cgImage)
-            let filteredCIImage = filters[indexPath.row].apply(image: ciImage)
-            let uiImage = UIImage(ciImage: filteredCIImage)
-//            filteredImages[filters[indexPath.row].name] = uiimage
-            cell.previewImageView.image = uiImage
+        if let filteredImage = filteredImages[filters[indexPath.row].name] {
+            cell.previewImageView.image = filteredImage
+        } else {
+            if let cgImage = image?.cgImage {
+                let ciImage = CIImage(cgImage: cgImage)
+                let filteredCIImage = filters[indexPath.row].apply(image: ciImage)
+                let uiImage = UIImage(ciImage: filteredCIImage)
+                filteredImages[filters[indexPath.row].name] = uiImage
+                cell.previewImageView.image = uiImage
+            }
         }
+        
         cell.effectName.text = filters[indexPath.row].name
         return cell
     }
