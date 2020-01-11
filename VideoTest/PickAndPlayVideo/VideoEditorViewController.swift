@@ -82,7 +82,6 @@ class VideoEditorViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         bgLayer.frame = view.frame
-//        bottomEffectsConstraint.constant = effectsView.frame.height
     }
     
     @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
@@ -194,8 +193,7 @@ class VideoEditorViewController: UIViewController {
         effectsView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
         effectsView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
         effectsView.topAnchor.constraint(equalTo: playerView.bottomAnchor),
-        bottomEffectsConstraint,
-//        effectsView.heightAnchor.constraint(equalToConstant: 200)
+        bottomEffectsConstraint
         ])
         
         let collectionStackView = UIStackView()
@@ -213,12 +211,9 @@ class VideoEditorViewController: UIViewController {
         let buttonsStackView = UIStackView()
         
         effectsCollectionView.backgroundColor = .white
-//        let spacer = UIView()
-//        spacer.backgroundColor = .white
             
         collectionStackView.addArrangedSubview(effectsCollectionView)
         collectionStackView.addArrangedSubview(buttonsStackView)
-//        collectionStackView.addArrangedSubview(spacer)
         
         buttonsStackView.addArrangedSubview(cancelButton)
         buttonsStackView.addArrangedSubview(doneButton)
@@ -226,7 +221,6 @@ class VideoEditorViewController: UIViewController {
         buttonsStackView.distribution = .fillEqually
         
         NSLayoutConstraint.activate ([
-//            spacer.heightAnchor.constraint(equalToConstant: self.parent?.view.safeAreaInsets.bottom ?? 34),
             effectsCollectionView.heightAnchor.constraint(equalToConstant: 120)
         ])
     }

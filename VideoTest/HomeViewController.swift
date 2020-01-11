@@ -5,32 +5,55 @@ import MobileCoreServices
 class HomeViewController: UIViewController {
     var addVideoButton = UIButton()
     let app = App.shared
+    let tabBar = UITabBar(frame: .zero)
+    var previouslySelectedItem: UITabBarItem?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         setUpView()
-//        setUpAddVideoButton()
+        let item = UITabBarItem(title: "LOOKS", image: nil, selectedImage: nil)
+        item.setTitleTextAttributes(
+            [
+                NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .semibold),
+                NSAttributedString.Key.foregroundColor : UIColor.systemBlue
+            ],
+            for: .normal
+        )
+        item.titlePositionAdjustment = .init(horizontal: 0, vertical: -9)
+        let item2 = UITabBarItem(title: "TOOLS", image: nil, selectedImage: nil)
+        item2.setTitleTextAttributes(
+            [
+                NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .semibold),
+                NSAttributedString.Key.foregroundColor : UIColor.systemBlue
+            ],
+            for: .normal
+        )
+        item2.titlePositionAdjustment = .init(horizontal: 0, vertical: -9)
+        let item3 = UITabBarItem(title: "EXPORT", image: nil, selectedImage: nil)
+        item3.setTitleTextAttributes(
+            [
+                NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .semibold),
+                NSAttributedString.Key.foregroundColor : UIColor.systemBlue
+            ],
+            for: .normal
+        )
+        item3.titlePositionAdjustment = .init(horizontal: 0, vertical: -9)
+        tabBar.setItems([item, item2, item3], animated: false)
+        tabBar.translatesAutoresizingMaskIntoConstraints = false
+        tabBar.delegate = self
+        view.addSubview(tabBar)
+        NSLayoutConstraint.activate([
+            tabBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            tabBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tabBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
-    
-//    func setUpAddVideoButton() {
-//        addVideoButton.translatesAutoresizingMaskIntoConstraints = false
-//        self.view.addSubview(addVideoButton)
-//        NSLayoutConstraint.activate([
-//            addVideoButton.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-//            addVideoButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-//            addVideoButton.heightAnchor.constraint(equalToConstant: 100),
-//            addVideoButton.widthAnchor.constraint(equalToConstant: 100)
-//        ])
-//        addVideoButton.setImage(UIImage(named: "addButton"), for: .normal)
-//        addVideoButton.adjustsImageWhenHighlighted = false
-//        addVideoButton.addTarget(self, action: #selector(self.addVideo), for: .touchUpInside)
-//    }
     
     func setUpView() {
         let stackView = UIStackView()
@@ -99,4 +122,15 @@ extension HomeViewController: UIImagePickerControllerDelegate {
 
 extension HomeViewController: UINavigationControllerDelegate {
     
+}
+
+extension HomeViewController: UITabBarDelegate {
+    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        if previouslySelectedItem == item  {
+            tabBar.selectedItem = nil
+            previouslySelectedItem = nil
+        } else {
+            previouslySelectedItem = item
+        }
+    }
 }
