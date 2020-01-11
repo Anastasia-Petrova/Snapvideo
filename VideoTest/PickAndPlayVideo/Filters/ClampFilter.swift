@@ -1,7 +1,6 @@
 import Foundation
 import CoreImage
 
-
 struct ClampFilter: Filter {
     let name: String = "Clamp"
     

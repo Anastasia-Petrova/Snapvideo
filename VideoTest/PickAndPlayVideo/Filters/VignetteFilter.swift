@@ -4,11 +4,6 @@ import CoreImage
 struct VignetteFilter: Filter {
     let name: String = "Vignette"
     
-    
-    init() {
-        
-    }
-    
     func apply(image: CIImage) -> CIImage {
         let optionalFilter = CIFilter(name: "CIVignette",
                                       parameters: [

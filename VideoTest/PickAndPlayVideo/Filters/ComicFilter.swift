@@ -1,7 +1,6 @@
 import Foundation
 import CoreImage
 
-
 struct ComicFilter: Filter {
     let name: String = "Comic"
     

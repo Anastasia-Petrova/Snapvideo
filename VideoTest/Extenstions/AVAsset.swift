@@ -8,9 +8,7 @@ extension AVAsset {
     }
     
     var videoOrientation: CGImagePropertyOrientation {
-        let transform = self.videoTransform
-        
-        switch (transform.a, transform.b, transform.c, transform.d) {
+        switch (videoTransform.a, videoTransform.b, videoTransform.c, videoTransform.d) {
         case ( 0.0,  1.0, -1.0,  0.0): return .right
         case ( 0.0, -1.0,  1.0,  0.0): return .left
         case (-1.0,  0.0,  0.0, -1.0): return .down

@@ -6,7 +6,6 @@ class HomeViewController: UIViewController {
     var addVideoButton = UIButton()
     let app = App.shared
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white

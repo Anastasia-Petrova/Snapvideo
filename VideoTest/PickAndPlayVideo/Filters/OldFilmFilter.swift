@@ -1,25 +1,23 @@
 import Foundation
 import CoreImage
 
-
 struct OldFilmFilter: Filter {
     let name: String = "OldFilm"
     
     func apply(image: CIImage) -> CIImage {
-        
         return creareOldMovieFilter(image: image)
     }
     
     func creareOldMovieFilter(image: CIImage) -> CIImage {
-        guard let sepiaFilter = CIFilter(name:"CISepiaTone",
-                                         parameters:
-            [
-                  kCIInputImageKey: image,
-                  kCIInputIntensityKey: 1.0
-            ]) else {
-                  return image
-            }
-        guard let sepiaCIImage = sepiaFilter.outputImage else {
+        let sepiaFilter = CIFilter(
+            name:"CISepiaTone",
+            parameters: [
+                kCIInputImageKey: image,
+                kCIInputIntensityKey: 1.0
+            ]
+        )
+        guard let filter = sepiaFilter,
+            let sepiaCIImage = filter.outputImage else {
             return image
         }
         guard
