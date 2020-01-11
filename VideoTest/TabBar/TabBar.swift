@@ -1,7 +1,6 @@
-import Foundation
 import UIKit
 
-class TabBar: UITabBar {
+final class TabBar: UITabBar {
     var previouslySelectedItem: UITabBarItem?
     
     override var selectedItem: UITabBarItem? {
@@ -15,13 +14,9 @@ class TabBar: UITabBar {
         }
     }
     
-    init(items: [String]) {
-        let itemsArray = items.map { title in
-            TabBarItem(title: title)
-        }
+    init(items: String...) {
         super.init(frame: .zero)
-        self.setItems(itemsArray, animated: false)
-        self.translatesAutoresizingMaskIntoConstraints = false
+        self.setItems(items.map(TabBarItem.init), animated: false)
     }
     
     required init?(coder: NSCoder) {

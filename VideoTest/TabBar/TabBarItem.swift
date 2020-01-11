@@ -1,6 +1,6 @@
 import UIKit
 
-class TabBarItem: UITabBarItem {
+final class TabBarItem: UITabBarItem {
     init(title: String) {
         super.init()
         self.title = title

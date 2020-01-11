@@ -2,15 +2,20 @@ import UIKit
 import AVKit
 import MobileCoreServices
 
-class HomeViewController: UIViewController {
+final class HomeViewController: UIViewController {
     var addVideoButton = UIButton()
     let app = App.shared
-    let tabBar = TabBar(items: ["FILTERS", "TOOLS", "EXPORT"])
+    let tabBar = TabBar(items: "FILTERS", "TOOLS", "EXPORT")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         setUpView()
+        setUpTabBar()
+    }
+    
+    private func setUpTabBar() {
+        tabBar.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tabBar)
         NSLayoutConstraint.activate([
             tabBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
@@ -19,12 +24,7 @@ class HomeViewController: UIViewController {
         ])
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-    
-    func setUpView() {
+    private func setUpView() {
         let stackView = UIStackView()
         self.view.addSubview(stackView)
         let imageView = UIImageView(image: UIImage(named: "addButton"))
@@ -54,11 +54,11 @@ class HomeViewController: UIViewController {
     }
     
     
-    @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
+    @objc private func handleTap(_ sender: UITapGestureRecognizer? = nil) {
          VideoHelper.startMediaBrowser(delegate: self, sourceType: .savedPhotosAlbum)
     }
     
-    func embed(_ videoEditorVC: UIViewController) {
+    private func embed(_ videoEditorVC: UIViewController) {
         videoEditorVC.view.translatesAutoresizingMaskIntoConstraints = false
         addChild(videoEditorVC)
         view.addSubview(videoEditorVC.view)
@@ -89,6 +89,4 @@ extension HomeViewController: UIImagePickerControllerDelegate {
     }
 }
 
-extension HomeViewController: UINavigationControllerDelegate {
-    
-}
+extension HomeViewController: UINavigationControllerDelegate {}
