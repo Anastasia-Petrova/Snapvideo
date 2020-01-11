@@ -2,6 +2,19 @@ import Foundation
 import UIKit
 
 class TabBar: UITabBar {
+    var previouslySelectedItem: UITabBarItem?
+    
+    override var selectedItem: UITabBarItem? {
+        didSet {
+            if previouslySelectedItem == selectedItem  {
+                selectedItem = nil
+                previouslySelectedItem = nil
+            } else {
+                previouslySelectedItem = selectedItem
+            }
+        }
+    }
+    
     init() {
         let item = UITabBarItem(title: "LOOKS", image: nil, selectedImage: nil)
         item.setTitleTextAttributes(

@@ -6,13 +6,11 @@ class HomeViewController: UIViewController {
     var addVideoButton = UIButton()
     let app = App.shared
     let tabBar = TabBar()
-    var previouslySelectedItem: UITabBarItem?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         setUpView()
-        tabBar.delegate = self
         view.addSubview(tabBar)
         NSLayoutConstraint.activate([
             tabBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
@@ -93,15 +91,4 @@ extension HomeViewController: UIImagePickerControllerDelegate {
 
 extension HomeViewController: UINavigationControllerDelegate {
     
-}
-
-extension HomeViewController: UITabBarDelegate {
-    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        if previouslySelectedItem == item  {
-            tabBar.selectedItem = nil
-            previouslySelectedItem = nil
-        } else {
-            previouslySelectedItem = item
-        }
-    }
 }
