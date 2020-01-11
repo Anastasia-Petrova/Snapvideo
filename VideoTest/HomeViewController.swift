@@ -5,42 +5,13 @@ import MobileCoreServices
 class HomeViewController: UIViewController {
     var addVideoButton = UIButton()
     let app = App.shared
-    let tabBar = UITabBar(frame: .zero)
+    let tabBar = TabBar()
     var previouslySelectedItem: UITabBarItem?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         setUpView()
-        let item = UITabBarItem(title: "LOOKS", image: nil, selectedImage: nil)
-        item.setTitleTextAttributes(
-            [
-                NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .semibold),
-                NSAttributedString.Key.foregroundColor : UIColor.systemBlue
-            ],
-            for: .normal
-        )
-        item.titlePositionAdjustment = .init(horizontal: 0, vertical: -9)
-        let item2 = UITabBarItem(title: "TOOLS", image: nil, selectedImage: nil)
-        item2.setTitleTextAttributes(
-            [
-                NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .semibold),
-                NSAttributedString.Key.foregroundColor : UIColor.systemBlue
-            ],
-            for: .normal
-        )
-        item2.titlePositionAdjustment = .init(horizontal: 0, vertical: -9)
-        let item3 = UITabBarItem(title: "EXPORT", image: nil, selectedImage: nil)
-        item3.setTitleTextAttributes(
-            [
-                NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .semibold),
-                NSAttributedString.Key.foregroundColor : UIColor.systemBlue
-            ],
-            for: .normal
-        )
-        item3.titlePositionAdjustment = .init(horizontal: 0, vertical: -9)
-        tabBar.setItems([item, item2, item3], animated: false)
-        tabBar.translatesAutoresizingMaskIntoConstraints = false
         tabBar.delegate = self
         view.addSubview(tabBar)
         NSLayoutConstraint.activate([
