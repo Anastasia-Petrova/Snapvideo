@@ -22,6 +22,7 @@
 		6D19954623C7AA3C000A76B1 /* VideoEditer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D19954523C7AA3C000A76B1 /* VideoEditer.swift */; };
 		6D2E89FD23CA498300917E25 /* VideoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2E89FC23CA498300917E25 /* VideoHelper.swift */; };
 		6D2E89FF23CA5AC700917E25 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2E89FE23CA5AC700917E25 /* TabBar.swift */; };
+		6D2E8A0123CA5DEA00917E25 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2E8A0023CA5DEA00917E25 /* TabBarItem.swift */; };
 		6DB6C13D23C4D65D00E256A4 /* SharpFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB6C13C23C4D65D00E256A4 /* SharpFilter.swift */; };
 		6DB6C13F23C4D8A700E256A4 /* VignetteFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB6C13E23C4D8A700E256A4 /* VignetteFilter.swift */; };
 		6DB6C14123C4E82C00E256A4 /* ClampFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB6C14023C4E82C00E256A4 /* ClampFilter.swift */; };
@@ -51,6 +52,7 @@
 		6D19954523C7AA3C000A76B1 /* VideoEditer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoEditer.swift; sourceTree = "<group>"; };
 		6D2E89FC23CA498300917E25 /* VideoHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoHelper.swift; path = VideoTest/VideoHelperAndEditor/VideoHelper.swift; sourceTree = SOURCE_ROOT; };
 		6D2E89FE23CA5AC700917E25 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		6D2E8A0023CA5DEA00917E25 /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
 		6DB6C13C23C4D65D00E256A4 /* SharpFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharpFilter.swift; sourceTree = "<group>"; };
 		6DB6C13E23C4D8A700E256A4 /* VignetteFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VignetteFilter.swift; sourceTree = "<group>"; };
 		6DB6C14023C4E82C00E256A4 /* ClampFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClampFilter.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 				6D17A7E023ABB39100C70542 /* AppDelegate.swift */,
 				6D17A7E223ABB39100C70542 /* SceneDelegate.swift */,
 				6D17A7F423ABB6E000C70542 /* HomeViewController.swift */,
+				6D2E8A0023CA5DEA00917E25 /* TabBarItem.swift */,
 				6D2E89FE23CA5AC700917E25 /* TabBar.swift */,
 				6D0C29C223C2A8B5006E7C40 /* Extenstions */,
 				6D17A80523AD4EB100C70542 /* PickAndPlayVideo */,
@@ -220,6 +223,7 @@
 				6D01E03A23BFC2FE00B558E8 /* AssetImageGenerator.swift in Sources */,
 				6DDE026A23C12B2A002D7942 /* BlurFilter.swift in Sources */,
 				6D2E89FD23CA498300917E25 /* VideoHelper.swift in Sources */,
+				6D2E8A0123CA5DEA00917E25 /* TabBarItem.swift in Sources */,
 				6D0C29C123C28CA5006E7C40 /* App.swift in Sources */,
 				6DDE026523C12A44002D7942 /* Filter.swift in Sources */,
 				6D2E89FF23CA5AC700917E25 /* TabBar.swift in Sources */,

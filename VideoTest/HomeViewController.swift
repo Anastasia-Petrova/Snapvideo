@@ -5,7 +5,7 @@ import MobileCoreServices
 class HomeViewController: UIViewController {
     var addVideoButton = UIButton()
     let app = App.shared
-    let tabBar = TabBar()
+    let tabBar = TabBar(items: ["FILTERS", "TOOLS", "EXPORT"])
     
     override func viewDidLoad() {
         super.viewDidLoad()
