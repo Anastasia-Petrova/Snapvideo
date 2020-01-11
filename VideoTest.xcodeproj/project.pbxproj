@@ -102,16 +102,15 @@
 		6D17A7DF23ABB39100C70542 /* VideoTest */ = {
 			isa = PBXGroup;
 			children = (
+				6D2E8A0523CA6F9400917E25 /* Assets */,
+				6D0C29C223C2A8B5006E7C40 /* Extenstions */,
+				6DDE026823C12B0A002D7942 /* Filters */,
+				6D17A80523AD4EB100C70542 /* PickAndPlayVideo */,
+				6D2E8A0223CA65BD00917E25 /* TabBar */,
 				6D0C29C023C28CA5006E7C40 /* App.swift */,
 				6D17A7E023ABB39100C70542 /* AppDelegate.swift */,
-				6D17A7E223ABB39100C70542 /* SceneDelegate.swift */,
 				6D17A7F423ABB6E000C70542 /* HomeViewController.swift */,
-				6D2E8A0223CA65BD00917E25 /* TabBar */,
-				6D0C29C223C2A8B5006E7C40 /* Extenstions */,
-				6D17A80523AD4EB100C70542 /* PickAndPlayVideo */,
-				6D17A7E623ABB39100C70542 /* Main.storyboard */,
-				6D17A7E923ABB39600C70542 /* Assets.xcassets */,
-				6D17A7EB23ABB39600C70542 /* LaunchScreen.storyboard */,
+				6D17A7E223ABB39100C70542 /* SceneDelegate.swift */,
 				6D17A7EE23ABB39600C70542 /* Info.plist */,
 			);
 			path = VideoTest;
@@ -120,7 +119,6 @@
 		6D17A80523AD4EB100C70542 /* PickAndPlayVideo */ = {
 			isa = PBXGroup;
 			children = (
-				6DDE026823C12B0A002D7942 /* Filters */,
 				6D01E03923BFC2FE00B558E8 /* AssetImageGenerator.swift */,
 				6D01E03523BFA2F900B558E8 /* EffectsCollectionViewCell.swift */,
 				6D01E03723BFA3D600B558E8 /* EffectsCollectionViewDataSource.swift */,
@@ -139,6 +137,16 @@
 				6D2E8A0023CA5DEA00917E25 /* TabBarItem.swift */,
 			);
 			path = TabBar;
+			sourceTree = "<group>";
+		};
+		6D2E8A0523CA6F9400917E25 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				6D17A7E923ABB39600C70542 /* Assets.xcassets */,
+				6D17A7EB23ABB39600C70542 /* LaunchScreen.storyboard */,
+				6D17A7E623ABB39100C70542 /* Main.storyboard */,
+			);
+			path = Assets;
 			sourceTree = "<group>";
 		};
 		6DDE026823C12B0A002D7942 /* Filters */ = {

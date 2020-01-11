@@ -10,7 +10,8 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-        setUpView()
+        setUpStackView()
+        setUpAddVideoButton()
         setUpTabBar()
     }
     
@@ -24,37 +25,47 @@ final class HomeViewController: UIViewController {
         ])
     }
     
-    private func setUpView() {
-        let stackView = UIStackView()
-        self.view.addSubview(stackView)
-        let imageView = UIImageView(image: UIImage(named: "addButton"))
+    private func setUpStackView() {
+        let imageView = UIImageView(image: UIImage(named: "addButton")?.withRenderingMode(.alwaysTemplate))
+        imageView.tintColor = .lightGray
+        
         let label = UILabel()
-        stackView.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .systemFont(ofSize: 20, weight: .medium)
+        label.numberOfLines = 0
+        label.text = "Tap anywhere to choose a video"
+        label.textColor = .lightGray
+        label.textAlignment = .center
+        
+        let stackView = UIStackView()
+        stackView.alignment = .center
         stackView.axis = .vertical
+        stackView.spacing = 32
         stackView.addArrangedSubview(imageView)
         stackView.addArrangedSubview(label)
         
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(stackView)
         NSLayoutConstraint.activate ([
-            stackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            stackView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            view.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: 16),
+            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
-        
-        stackView.alignment = .center
-        stackView.distribution = .equalSpacing
-        stackView.axis = .vertical
-        stackView.spacing = 16
-        label.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
-        label.font = UIFont.systemFont(ofSize: 20)
-        label.numberOfLines = 1
-        label.text = "Tap to choose a video"
-        label.textColor = .black
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
-        stackView.addGestureRecognizer(tap)
     }
     
+    private func setUpAddVideoButton() {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(button)
+        NSLayoutConstraint.activate ([
+            button.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            button.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            button.topAnchor.constraint(equalTo: view.topAnchor),
+            button.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
+        button.addTarget(self, action: #selector(self.handleTap), for: .touchUpInside)
+    }
     
-    @objc private func handleTap(_ sender: UITapGestureRecognizer? = nil) {
+    @objc private func handleTap() {
          VideoHelper.startMediaBrowser(delegate: self, sourceType: .savedPhotosAlbum)
     }
     
