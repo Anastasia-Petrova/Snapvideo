@@ -60,7 +60,25 @@ extension App {
             BlurFilter(blurRadius: 20) + SharpAndWarmFilter(inputSharpness: 0.7),
             ClampFilter() + VignetteFilter(),
             ComicFilter() + VignetteFilter(),
-            OldFilmFilter() + ClampFilter() + ComicFilter() + VignetteFilter(),
         ]
     )
+    
+    private static let slowFilter = App(
+        filters: [
+            PassthroughFilter(),
+            ClampFilter() +
+            VignetteFilter() +
+            SharpAndWarmFilter(inputSharpness: 0.7) +
+            ClampFilter() +
+            VignetteFilter() +
+            SharpAndWarmFilter(inputSharpness: 0.7) +
+            ClampFilter() +
+            VignetteFilter() +
+            SharpAndWarmFilter(inputSharpness: 0.7) +
+            ClampFilter() +
+            VignetteFilter() +
+            SharpAndWarmFilter(inputSharpness: 0.7)
+        ]
+    )
+     
 }

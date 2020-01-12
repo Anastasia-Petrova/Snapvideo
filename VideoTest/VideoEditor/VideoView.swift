@@ -20,6 +20,7 @@ class VideoView: UIView {
         videoOutput: AVPlayerItemVideoOutput,
         videoOrientation: CGImagePropertyOrientation,
         preferredFramesPerSecond: Int = 30,
+        contentsGravity: CALayerContentsGravity = .resizeAspect,
         filter: Filter = PassthroughFilter()
     ) {
         self.videoOrientation = videoOrientation
@@ -29,7 +30,7 @@ class VideoView: UIView {
         self.displayLink = CADisplayLink(target: self, selector: #selector(displayLinkDidUpdate))
         self.displayLink?.preferredFramesPerSecond = preferredFramesPerSecond
         self.displayLink?.add(to: .main, forMode: .common)
-        self.layer.contentsGravity = .resizeAspect
+        self.layer.contentsGravity = contentsGravity
     }
     
     required init?(coder: NSCoder) {

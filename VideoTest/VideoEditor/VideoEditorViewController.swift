@@ -10,7 +10,7 @@ class VideoEditorViewController: UIViewController {
     let effectsCollectionView: UICollectionView
     let dataSource: EffectsCollectionViewDataSource
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
-    let bgLayer: AVPlayerLayer
+    let bgVideoView: VideoView
     var playerRateObservation: NSKeyValueObservation?
     var slider = UISlider()
     var effectsButton = UIButton()
@@ -43,9 +43,19 @@ class VideoEditorViewController: UIViewController {
         let playerItem = AVPlayerItem(asset: asset)
         player = AVPlayer(playerItem: playerItem)
         let output = AVPlayerItemVideoOutput(outputSettings: nil)
+        let outputBG = AVPlayerItemVideoOutput(outputSettings: nil)
         playerItem.add(output)
-        playerView = VideoView(videoOutput: output, videoOrientation: self.asset.videoOrientation)
-        bgLayer = AVPlayerLayer(player: player)
+        playerItem.add(outputBG)
+        playerView = VideoView(
+            videoOutput: output,
+            videoOrientation: self.asset.videoOrientation
+        )
+        bgVideoView = VideoView(
+            videoOutput: outputBG,
+            videoOrientation: self.asset.videoOrientation,
+            contentsGravity: .resizeAspectFill,
+            filter: BlurFilter(blurRadius: 100)
+        )
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 70, height: 90)
         layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
@@ -79,11 +89,6 @@ class VideoEditorViewController: UIViewController {
         setUpCancelButton()
         setUpDoneButton()
         effectsCollectionView.delegate = self
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        bgLayer.frame = view.frame
     }
     
     @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
@@ -228,16 +233,13 @@ class VideoEditorViewController: UIViewController {
     }
    
     func setUpBackgroundView() {
-        self.view.layer.addSublayer(bgLayer)
-        bgLayer.videoGravity = .resizeAspectFill
-        let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
-        self.view.addSubview(visualEffectView)
-        visualEffectView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(bgVideoView)
+        bgVideoView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            view.leftAnchor.constraint(equalTo: visualEffectView.leftAnchor),
-            view.rightAnchor.constraint(equalTo: visualEffectView.rightAnchor),
-            visualEffectView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
-            visualEffectView.topAnchor.constraint(equalTo: view.topAnchor)])
+            view.leftAnchor.constraint(equalTo: bgVideoView.leftAnchor),
+            view.rightAnchor.constraint(equalTo: bgVideoView.rightAnchor),
+            bgVideoView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            bgVideoView.topAnchor.constraint(equalTo: view.topAnchor)])
     }
     
     func setUpEffectsButton() {
@@ -337,7 +339,8 @@ class VideoEditorViewController: UIViewController {
 
 extension VideoEditorViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.playerView.filter = dataSource.filters[indexPath.row]
+        playerView.filter = dataSource.filters[indexPath.row]
+        bgVideoView.filter = dataSource.filters[indexPath.row] + BlurFilter(blurRadius: 100)
         filterIndex = indexPath.row
     }
 }
