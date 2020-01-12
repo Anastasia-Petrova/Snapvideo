@@ -22,6 +22,8 @@ class VideoEditorViewController: UIViewController {
     var filterIndex = 0 {
         didSet {
             doneButton.isEnabled = filterIndex != 0
+            guard filterIndex != oldValue else { return }
+            player.play()
         }
     }
     var previewImage: UIImage? {
