@@ -3,7 +3,7 @@ import Foundation
 struct App {
     let filters: [Filter]
     
-    public static let shared = many//`default`
+    public static let shared = `default`
 }
 
 extension App {
@@ -50,6 +50,17 @@ extension App {
         filters: [
             PassthroughFilter(),
             ComicFilter()
+        ]
+    )
+    
+    private static let composite = App(
+        filters: [
+            PassthroughFilter(),
+            OldFilmFilter() + VignetteFilter(),
+            BlurFilter(blurRadius: 20) + SharpAndWarmFilter(inputSharpness: 0.7),
+            ClampFilter() + VignetteFilter(),
+            ComicFilter() + VignetteFilter(),
+            OldFilmFilter() + ClampFilter() + ComicFilter() + VignetteFilter(),
         ]
     )
 }
