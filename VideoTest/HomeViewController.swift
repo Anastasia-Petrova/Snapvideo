@@ -66,7 +66,7 @@ final class HomeViewController: UIViewController {
     }
     
     @objc private func handleTap() {
-         VideoHelper.startMediaBrowser(delegate: self, sourceType: .savedPhotosAlbum)
+         VideoBrowser.startMediaBrowser(delegate: self, sourceType: .savedPhotosAlbum)
     }
     
     private func embed(_ videoEditorVC: UIViewController) {

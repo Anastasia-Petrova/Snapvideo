@@ -20,7 +20,7 @@
 		6D17A7ED23ABB39600C70542 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D17A7EB23ABB39600C70542 /* LaunchScreen.storyboard */; };
 		6D17A7F523ABB6E000C70542 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D17A7F423ABB6E000C70542 /* HomeViewController.swift */; };
 		6D19954623C7AA3C000A76B1 /* VideoEditer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D19954523C7AA3C000A76B1 /* VideoEditer.swift */; };
-		6D2E89FD23CA498300917E25 /* VideoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2E89FC23CA498300917E25 /* VideoHelper.swift */; };
+		6D2E89FD23CA498300917E25 /* VideoBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2E89FC23CA498300917E25 /* VideoBrowser.swift */; };
 		6D2E8A0323CA671A00917E25 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2E89FE23CA5AC700917E25 /* TabBar.swift */; };
 		6D2E8A0423CA673A00917E25 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2E8A0023CA5DEA00917E25 /* TabBarItem.swift */; };
 		6DB6C13D23C4D65D00E256A4 /* SharpFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB6C13C23C4D65D00E256A4 /* SharpFilter.swift */; };
@@ -50,7 +50,7 @@
 		6D17A7EE23ABB39600C70542 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6D17A7F423ABB6E000C70542 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		6D19954523C7AA3C000A76B1 /* VideoEditer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoEditer.swift; sourceTree = "<group>"; };
-		6D2E89FC23CA498300917E25 /* VideoHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoHelper.swift; path = VideoTest/VideoHelperAndEditor/VideoHelper.swift; sourceTree = SOURCE_ROOT; };
+		6D2E89FC23CA498300917E25 /* VideoBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoBrowser.swift; path = VideoTest/VideoEditingHelpers/VideoBrowser.swift; sourceTree = SOURCE_ROOT; };
 		6D2E89FE23CA5AC700917E25 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		6D2E8A0023CA5DEA00917E25 /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
 		6DB6C13C23C4D65D00E256A4 /* SharpFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharpFilter.swift; sourceTree = "<group>"; };
@@ -103,10 +103,12 @@
 			isa = PBXGroup;
 			children = (
 				6D2E8A0523CA6F9400917E25 /* Assets */,
+				6D9874AC23CB9DBA00EC83DC /* EffectsCollection */,
 				6D0C29C223C2A8B5006E7C40 /* Extenstions */,
 				6DDE026823C12B0A002D7942 /* Filters */,
-				6D17A80523AD4EB100C70542 /* PickAndPlayVideo */,
 				6D2E8A0223CA65BD00917E25 /* TabBar */,
+				6D9874AD23CB9F0100EC83DC /* VideoEditingHelpers */,
+				6D17A80523AD4EB100C70542 /* VideoEditor */,
 				6D0C29C023C28CA5006E7C40 /* App.swift */,
 				6D17A7E023ABB39100C70542 /* AppDelegate.swift */,
 				6D17A7F423ABB6E000C70542 /* HomeViewController.swift */,
@@ -116,18 +118,14 @@
 			path = VideoTest;
 			sourceTree = "<group>";
 		};
-		6D17A80523AD4EB100C70542 /* PickAndPlayVideo */ = {
+		6D17A80523AD4EB100C70542 /* VideoEditor */ = {
 			isa = PBXGroup;
 			children = (
-				6D01E03923BFC2FE00B558E8 /* AssetImageGenerator.swift */,
-				6D01E03523BFA2F900B558E8 /* EffectsCollectionViewCell.swift */,
-				6D01E03723BFA3D600B558E8 /* EffectsCollectionViewDataSource.swift */,
 				6D19954523C7AA3C000A76B1 /* VideoEditer.swift */,
 				6D05022523B9154100036D60 /* VideoEditorViewController.swift */,
 				6DDE026223C11659002D7942 /* VideoView.swift */,
-				6D2E89FC23CA498300917E25 /* VideoHelper.swift */,
 			);
-			path = PickAndPlayVideo;
+			path = VideoEditor;
 			sourceTree = "<group>";
 		};
 		6D2E8A0223CA65BD00917E25 /* TabBar */ = {
@@ -147,6 +145,24 @@
 				6D17A7E623ABB39100C70542 /* Main.storyboard */,
 			);
 			path = Assets;
+			sourceTree = "<group>";
+		};
+		6D9874AC23CB9DBA00EC83DC /* EffectsCollection */ = {
+			isa = PBXGroup;
+			children = (
+				6D01E03723BFA3D600B558E8 /* EffectsCollectionViewDataSource.swift */,
+				6D01E03523BFA2F900B558E8 /* EffectsCollectionViewCell.swift */,
+			);
+			path = EffectsCollection;
+			sourceTree = "<group>";
+		};
+		6D9874AD23CB9F0100EC83DC /* VideoEditingHelpers */ = {
+			isa = PBXGroup;
+			children = (
+				6D01E03923BFC2FE00B558E8 /* AssetImageGenerator.swift */,
+				6D2E89FC23CA498300917E25 /* VideoBrowser.swift */,
+			);
+			path = VideoEditingHelpers;
 			sourceTree = "<group>";
 		};
 		6DDE026823C12B0A002D7942 /* Filters */ = {
@@ -238,7 +254,7 @@
 				6DDE026723C12A9D002D7942 /* PassthroughFilter.swift in Sources */,
 				6D01E03A23BFC2FE00B558E8 /* AssetImageGenerator.swift in Sources */,
 				6DDE026A23C12B2A002D7942 /* BlurFilter.swift in Sources */,
-				6D2E89FD23CA498300917E25 /* VideoHelper.swift in Sources */,
+				6D2E89FD23CA498300917E25 /* VideoBrowser.swift in Sources */,
 				6D2E8A0423CA673A00917E25 /* TabBarItem.swift in Sources */,
 				6D0C29C123C28CA5006E7C40 /* App.swift in Sources */,
 				6DDE026523C12A44002D7942 /* Filter.swift in Sources */,
