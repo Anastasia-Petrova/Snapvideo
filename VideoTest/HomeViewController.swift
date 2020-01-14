@@ -6,6 +6,7 @@ final class HomeViewController: UIViewController {
     var addVideoButton = UIButton()
     let app = App.shared
     let tabBar = TabBar(items: "LOOKS", "TOOLS", "EXPORT")
+    var childViewController: UIViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +29,6 @@ final class HomeViewController: UIViewController {
     
     func setUpOpenButton() {
         let openButton = UIBarButtonItem(title: "OPEN", style: .plain, target: self, action: #selector(handleAddVideoTap))
-//        openButton.tintColor = .darkGray
         openButton.setTitleTextAttributes([NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor.gray], for: .normal)
         navigationItem.leftBarButtonItem = openButton
     }
@@ -78,8 +78,7 @@ final class HomeViewController: UIViewController {
     }
     
     private func embed(_ videoEditorVC: UIViewController) {
-        //Добавить опциональную проперти childViewController
-        //self.childViewController = videoEditorVC
+        self.childViewController = videoEditorVC
         videoEditorVC.view.translatesAutoresizingMaskIntoConstraints = false
         addChild(videoEditorVC)
         view.insertSubview(videoEditorVC.view, belowSubview: tabBar)
@@ -97,9 +96,9 @@ final class HomeViewController: UIViewController {
     }
     
     func removeEmbeddedViewController() {
-        //Реализовать
-        //self.childViewController.removeFromParent
-        //self.childViewController.view .....
+        guard let childVC = childViewController else { return }
+        childVC.removeFromParent()
+        childVC.view.removeFromSuperview()
     }
 }
 
@@ -111,8 +110,7 @@ extension HomeViewController: UIImagePickerControllerDelegate {
                 return
         }
         dismiss(animated: true) {
-            //Сперва нужно убрать текущий встроенный контроллер
-            // self.removeEmbeddedViewController()
+            self.removeEmbeddedViewController()
             self.embed(VideoEditorViewController(url: url, filters: self.app.filters))
         }
     }
