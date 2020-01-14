@@ -2,7 +2,7 @@ import UIKit
 import AVFoundation
 import Photos
 
-class VideoEditorViewController: UIViewController {
+final class VideoEditorViewController: UIViewController {
     let asset: AVAsset
     let player: AVPlayer
     let playerView: VideoView
@@ -38,7 +38,7 @@ class VideoEditorViewController: UIViewController {
         return Float(CMTimeGetSeconds(trackDuration))
     }
     
-    init( url: URL, filters: [Filter]) {
+    init(url: URL, filters: [Filter]) {
         asset = AVAsset(url: url)
         let playerItem = AVPlayerItem(asset: asset)
         player = AVPlayer(playerItem: playerItem)

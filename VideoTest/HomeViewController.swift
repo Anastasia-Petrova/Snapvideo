@@ -5,7 +5,7 @@ import MobileCoreServices
 final class HomeViewController: UIViewController {
     var addVideoButton = UIButton()
     let app = App.shared
-    let tabBar = TabBar(items: "FILTERS", "TOOLS", "EXPORT")
+    let tabBar = TabBar(items: "LOOKS", "TOOLS", "EXPORT")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -13,6 +13,7 @@ final class HomeViewController: UIViewController {
         setUpStackView()
         setUpAddVideoButton()
         setUpTabBar()
+        setUpOpenButton()
     }
     
     private func setUpTabBar() {
@@ -23,6 +24,13 @@ final class HomeViewController: UIViewController {
             tabBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tabBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
+    }
+    
+    func setUpOpenButton() {
+        let openButton = UIBarButtonItem(title: "OPEN", style: .plain, target: self, action: #selector(handleAddVideoTap))
+//        openButton.tintColor = .darkGray
+        openButton.setTitleTextAttributes([NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor.gray], for: .normal)
+        navigationItem.leftBarButtonItem = openButton
     }
     
     private func setUpStackView() {
@@ -62,20 +70,22 @@ final class HomeViewController: UIViewController {
             button.topAnchor.constraint(equalTo: view.topAnchor),
             button.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
-        button.addTarget(self, action: #selector(self.handleTap), for: .touchUpInside)
+        button.addTarget(self, action: #selector(self.handleAddVideoTap), for: .touchUpInside)
     }
     
-    @objc private func handleTap() {
+    @objc private func handleAddVideoTap() {
          VideoBrowser.startMediaBrowser(delegate: self, sourceType: .savedPhotosAlbum)
     }
     
     private func embed(_ videoEditorVC: UIViewController) {
+        //Добавить опциональную проперти childViewController
+        //self.childViewController = videoEditorVC
         videoEditorVC.view.translatesAutoresizingMaskIntoConstraints = false
         addChild(videoEditorVC)
-        view.addSubview(videoEditorVC.view)
+        view.insertSubview(videoEditorVC.view, belowSubview: tabBar)
         NSLayoutConstraint.activate([
-            videoEditorVC.view.topAnchor.constraint(equalTo: view.topAnchor),
-            videoEditorVC.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            videoEditorVC.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            videoEditorVC.view.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             videoEditorVC.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             videoEditorVC.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
@@ -84,6 +94,12 @@ final class HomeViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             videoEditorVC.view.isHidden = false
         }
+    }
+    
+    func removeEmbeddedViewController() {
+        //Реализовать
+        //self.childViewController.removeFromParent
+        //self.childViewController.view .....
     }
 }
 
@@ -95,6 +111,8 @@ extension HomeViewController: UIImagePickerControllerDelegate {
                 return
         }
         dismiss(animated: true) {
+            //Сперва нужно убрать текущий встроенный контроллер
+            // self.removeEmbeddedViewController()
             self.embed(VideoEditorViewController(url: url, filters: self.app.filters))
         }
     }

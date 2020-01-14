@@ -6,7 +6,7 @@ final class TabBarItem: UITabBarItem {
         self.title = title
         self.setTitleTextAttributes(
             [
-                NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .semibold),
+                NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .semibold),
                 NSAttributedString.Key.foregroundColor : UIColor.systemBlue
             ],
             for: .normal
