@@ -13,7 +13,6 @@ final class VideoEditorViewController: UIViewController {
     let bgVideoView: VideoView
     var playerRateObservation: NSKeyValueObservation?
     var slider = UISlider()
-    var effectsButton = UIButton()
     let timerLabel = UILabel()
     var cancelButton = UIButton()
     var doneButton = UIButton()
@@ -22,6 +21,8 @@ final class VideoEditorViewController: UIViewController {
     var presentedFilter: (Bool) -> Void
     var filterIndex = 0 {
         didSet {
+            playerView.filter = dataSource.filters[filterIndex]
+            bgVideoView.filter = dataSource.filters[filterIndex] + BlurFilter(blurRadius: 100)
             doneButton.isEnabled = filterIndex != 0
             presentedFilter(filterIndex != 0)
             guard filterIndex != oldValue else { return }
@@ -87,7 +88,6 @@ final class VideoEditorViewController: UIViewController {
         setUpResumeButton()
         setUpPlayer()
         setUpSlider()
-        setUpEffectsButton()
         setUpTimer()
         setUpCancelButton()
         setUpDoneButton()
@@ -245,20 +245,6 @@ final class VideoEditorViewController: UIViewController {
             bgVideoView.topAnchor.constraint(equalTo: view.topAnchor)])
     }
     
-    func setUpEffectsButton() {
-        effectsButton.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(effectsButton)
-        NSLayoutConstraint.activate ([
-            effectsButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -40),
-        effectsButton.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 50),
-        effectsButton.heightAnchor.constraint(equalToConstant: 44),
-        effectsButton.widthAnchor.constraint(equalToConstant: 44)
-        ])
-        effectsButton.setImage(UIImage(named: "effects")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        effectsButton.tintColor = .white
-        effectsButton.addTarget(self, action: #selector(self.openEffects), for: .touchUpInside)
-    }
-    
     func setUpCancelButton() {
         NSLayoutConstraint.activate ([
         cancelButton.widthAnchor.constraint(equalToConstant: 44)
@@ -266,7 +252,7 @@ final class VideoEditorViewController: UIViewController {
         cancelButton.imageView?.contentMode = .scaleAspectFit
         cancelButton.setImage(UIImage(named: "cancel")?.withRenderingMode(.alwaysTemplate), for: .normal)
         cancelButton.tintColor = .darkGray
-        cancelButton.addTarget(self, action: #selector(self.closeEffects), for: .touchUpInside)
+        cancelButton.addTarget(self, action: #selector(self.discardEffects), for: .touchUpInside)
     }
     
     func setUpDoneButton() {
@@ -297,28 +283,37 @@ final class VideoEditorViewController: UIViewController {
         )
     }
     
-    @objc func openEffects() {
+    public func openEffects() {
         bottomEffectsConstraint.constant = 0 - self.view.safeAreaInsets.bottom
-        
+
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
-        effectsButton.isHidden = true
-        
     }
     
-    @objc func closeEffects() {
-        playerView.filter = dataSource.filters[0]
+    private func resetToDefaultFilter() {
         filterIndex = 0
+    }
+    
+    public func closeEffects() {
+        bottomEffectsConstraint.constant = 166
+        resetToDefaultFilter()
+        UIView.animate(withDuration: 0.2) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    @objc func discardEffects() {
+        effectsCollectionView.deselectItem(at: IndexPath(row: filterIndex, section: 0), animated: false)
+        resetToDefaultFilter()
     }
     
     @objc func saveFilter() {
         bottomEffectsConstraint.constant = 166
-        filterIndex = 0
+        resetToDefaultFilter()
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
-        effectsButton.isHidden = false
     }
     
     @objc func saveVideo() {
@@ -348,8 +343,6 @@ final class VideoEditorViewController: UIViewController {
 
 extension VideoEditorViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        playerView.filter = dataSource.filters[indexPath.row]
-        bgVideoView.filter = dataSource.filters[indexPath.row] + BlurFilter(blurRadius: 100)
         filterIndex = indexPath.row
     }
 }

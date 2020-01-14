@@ -7,21 +7,29 @@ final class HomeViewController: UIViewController {
     let app = App.shared
     let tabBar = TabBar(items: "LOOKS", "TOOLS", "EXPORT")
     var childViewController: UIViewController?
-    var tabBarIsHidden = false {
+    var previouslySelectedIndex: Int?
+    
+    var isLooksButtonSelected: Bool = false {
         didSet {
-             tabBar.isHidden = tabBarIsHidden
+            guard let childVC = childViewController as? VideoEditorViewController else { return }
+            
+            if isLooksButtonSelected {
+                childVC.openEffects()
+            } else {
+                childVC.closeEffects()
+            }
         }
     }
-//    var tappedBarButton = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        tabBar.delegate = self
+        tabBar.delegate = self
         self.view.backgroundColor = .white
         setUpStackView()
         setUpAddVideoButton()
         setUpTabBar()
         setUpOpenButton()
+        tabBar.isHidden = true
     }
     
     private func setUpTabBar() {
@@ -97,8 +105,10 @@ final class HomeViewController: UIViewController {
         ])
         videoEditorVC.didMove(toParent: self)
         videoEditorVC.view.isHidden = true
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             videoEditorVC.view.isHidden = false
+            self.tabBar.isHidden = false
         }
     }
     
@@ -119,7 +129,7 @@ extension HomeViewController: UIImagePickerControllerDelegate {
         dismiss(animated: true) {
             self.removeEmbeddedViewController()
             self.embed(VideoEditorViewController(url: url, filters: self.app.filters, presentedFilter: { [weak self] pressedFilter in
-                self?.tabBarIsHidden = pressedFilter
+                self?.tabBar.isHidden = pressedFilter
             }))
         }
     }
@@ -127,15 +137,16 @@ extension HomeViewController: UIImagePickerControllerDelegate {
 
 extension HomeViewController: UINavigationControllerDelegate {}
 
-//extension HomeViewController: UITabBarDelegate {
-//    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-//        guard let items = tabBar.items else { return }
-//        if item == items[0] {
-//            tappedBarButton = true
-//        } else if item == items[1] {
-//
-//        } else if item == items[2] {
-//
-//        }
-//    }
-//}
+extension HomeViewController: UITabBarDelegate {
+    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        guard let selectedIndex = tabBar.items?.firstIndex(of: item) else { return }
+        
+        isLooksButtonSelected = selectedIndex == 0 && previouslySelectedIndex != selectedIndex
+        
+        if previouslySelectedIndex == selectedIndex {
+            previouslySelectedIndex = nil
+        } else {
+            previouslySelectedIndex = selectedIndex
+        }
+    }
+}
