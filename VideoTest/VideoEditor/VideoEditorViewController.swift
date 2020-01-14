@@ -19,9 +19,11 @@ final class VideoEditorViewController: UIViewController {
     var doneButton = UIButton()
     var bottomEffectsConstraint = NSLayoutConstraint()
     var spacerHeight = CGFloat()
+    var presentedFilter: (Bool) -> Void
     var filterIndex = 0 {
         didSet {
             doneButton.isEnabled = filterIndex != 0
+            presentedFilter(filterIndex != 0)
             guard filterIndex != oldValue else { return }
             player.play()
         }
@@ -38,7 +40,7 @@ final class VideoEditorViewController: UIViewController {
         return Float(CMTimeGetSeconds(trackDuration))
     }
     
-    init(url: URL, filters: [Filter]) {
+    init(url: URL, filters: [Filter], presentedFilter: @escaping (Bool) -> Void) {
         asset = AVAsset(url: url)
         let playerItem = AVPlayerItem(asset: asset)
         player = AVPlayer(playerItem: playerItem)
@@ -65,6 +67,7 @@ final class VideoEditorViewController: UIViewController {
         effectsCollectionView.allowsSelection = true
         effectsCollectionView.bounces = false
         dataSource = EffectsCollectionViewDataSource(collectionView: effectsCollectionView, filters: filters)
+        self.presentedFilter = presentedFilter
         super.init(nibName: nil, bundle: nil)
     }
     

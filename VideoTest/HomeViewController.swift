@@ -7,9 +7,16 @@ final class HomeViewController: UIViewController {
     let app = App.shared
     let tabBar = TabBar(items: "LOOKS", "TOOLS", "EXPORT")
     var childViewController: UIViewController?
+    var tabBarIsHidden = false {
+        didSet {
+             tabBar.isHidden = tabBarIsHidden
+        }
+    }
+//    var tappedBarButton = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        tabBar.delegate = self
         self.view.backgroundColor = .white
         setUpStackView()
         setUpAddVideoButton()
@@ -111,9 +118,24 @@ extension HomeViewController: UIImagePickerControllerDelegate {
         }
         dismiss(animated: true) {
             self.removeEmbeddedViewController()
-            self.embed(VideoEditorViewController(url: url, filters: self.app.filters))
+            self.embed(VideoEditorViewController(url: url, filters: self.app.filters, presentedFilter: { [weak self] pressedFilter in
+                self?.tabBarIsHidden = pressedFilter
+            }))
         }
     }
 }
 
 extension HomeViewController: UINavigationControllerDelegate {}
+
+//extension HomeViewController: UITabBarDelegate {
+//    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+//        guard let items = tabBar.items else { return }
+//        if item == items[0] {
+//            tappedBarButton = true
+//        } else if item == items[1] {
+//
+//        } else if item == items[2] {
+//
+//        }
+//    }
+//}
