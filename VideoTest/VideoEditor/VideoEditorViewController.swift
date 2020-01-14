@@ -277,7 +277,7 @@ final class VideoEditorViewController: UIViewController {
         doneButton.imageView?.contentMode = .scaleAspectFit
         doneButton.setImage(UIImage(named: "done")?.withRenderingMode(.alwaysTemplate), for: .normal)
         doneButton.tintColor = .darkGray
-        doneButton.addTarget(self, action: #selector(self.saveVideo), for: .touchUpInside)
+        doneButton.addTarget(self, action: #selector(self.saveFilter), for: .touchUpInside)
     }
     
     @objc func playerItemDidReachEnd(notification: Notification) {
@@ -308,7 +308,13 @@ final class VideoEditorViewController: UIViewController {
     }
     
     @objc func closeEffects() {
+        playerView.filter = dataSource.filters[0]
+        filterIndex = 0
+    }
+    
+    @objc func saveFilter() {
         bottomEffectsConstraint.constant = 166
+        filterIndex = 0
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
