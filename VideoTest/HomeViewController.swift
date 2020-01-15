@@ -21,6 +21,18 @@ final class HomeViewController: UIViewController {
         }
     }
     
+    var isExportButtonSelected: Bool = false {
+        didSet {
+            guard let childVC = childViewController as? VideoEditorViewController else { return }
+
+            if isExportButtonSelected {
+                childVC.openExportMenu()
+            } else {
+                childVC.closeExportMenu()
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tabBar.delegate = self
@@ -46,7 +58,7 @@ final class HomeViewController: UIViewController {
     
     func setUpOpenButton() {
         let openButton = UIBarButtonItem(title: "OPEN", style: .plain, target: self, action: #selector(handleAddVideoTap))
-        openButton.setTitleTextAttributes([NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor.gray], for: .normal)
+        openButton.setTitleTextAttributes([NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor.gray], for: .normal)
         navigationItem.leftBarButtonItem = openButton
     }
     
@@ -145,6 +157,8 @@ extension HomeViewController: UITabBarDelegate {
         
         isLooksButtonSelected = selectedIndex == 0 && previouslySelectedIndex != selectedIndex
         
+        isExportButtonSelected = selectedIndex == 2 && previouslySelectedIndex != selectedIndex
+        
         if previouslySelectedIndex == selectedIndex {
             previouslySelectedIndex = nil
         } else {
@@ -159,11 +173,7 @@ extension UINavigationController {
             hairline.isHidden = true
         }
     }
-    func restoreHairline() {
-        if let hairline = findHairlineImageViewUnder(navigationBar) {
-            hairline.isHidden = false
-        }
-    }
+
     func findHairlineImageViewUnder(_ view: UIView) -> UIImageView? {
         if view is UIImageView && view.bounds.size.height <= 1.0 {
             return view as? UIImageView

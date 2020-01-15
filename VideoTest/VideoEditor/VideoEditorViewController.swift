@@ -7,6 +7,9 @@ final class VideoEditorViewController: UIViewController {
     let player: AVPlayer
     let playerView: VideoView
     let effectsView = UIView()
+    var bottomEffectsConstraint = NSLayoutConstraint()
+    let exportView = UIView()
+    var bottomExportConstraint = NSLayoutConstraint()
     let effectsCollectionView: UICollectionView
     let dataSource: EffectsCollectionViewDataSource
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
@@ -16,9 +19,12 @@ final class VideoEditorViewController: UIViewController {
     let timerLabel = UILabel()
     var cancelButton = UIButton()
     var doneButton = UIButton()
-    var bottomEffectsConstraint = NSLayoutConstraint()
+    var saveButton = UIButton()
+    var saveCopyButton = UIButton()
     var spacerHeight = CGFloat()
     var presentedFilter: (Bool) -> Void
+    let saveStackView = UIStackView()
+    let saveCopyStackView = UIStackView()
     var filterIndex = 0 {
         didSet {
             playerView.filter = dataSource.filters[filterIndex]
@@ -91,6 +97,9 @@ final class VideoEditorViewController: UIViewController {
         setUpTimer()
         setUpCancelButton()
         setUpDoneButton()
+        setUpExportView()
+        setUpSaveStackView()
+        setUpSaveCopyStackView()
         effectsCollectionView.delegate = self
     }
     
@@ -149,7 +158,7 @@ final class VideoEditorViewController: UIViewController {
         NSLayoutConstraint.activate ([
         slider.leadingAnchor.constraint(equalTo: playerView.leadingAnchor, constant: 50),
         slider.trailingAnchor.constraint(equalTo: playerView.trailingAnchor, constant: -50),
-        slider.bottomAnchor.constraint(equalTo: playerView.safeAreaLayoutGuide.bottomAnchor, constant: -50)])
+        slider.bottomAnchor.constraint(equalTo: playerView.safeAreaLayoutGuide.bottomAnchor, constant: -60)])
         slider.minimumValue = 0
         slider.maximumValue = trackDuration
         slider.addTarget(self, action: #selector(self.sliderAction), for: .valueChanged)
@@ -234,6 +243,46 @@ final class VideoEditorViewController: UIViewController {
             effectsCollectionView.heightAnchor.constraint(equalToConstant: 120)
         ])
     }
+    
+    func setUpExportView() {
+        exportView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(exportView)
+        exportView.backgroundColor = .white
+        bottomExportConstraint = exportView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 140)
+
+        NSLayoutConstraint.activate ([
+        exportView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+        exportView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+        exportView.heightAnchor.constraint(equalToConstant: 100),
+        bottomExportConstraint
+        ])
+
+        let exportStackView = UIStackView()
+        exportStackView.translatesAutoresizingMaskIntoConstraints = false
+        exportStackView.axis = .vertical
+        exportStackView.distribution = .fillEqually
+        exportView.addSubview(exportStackView)
+
+        NSLayoutConstraint.activate ([
+            exportStackView.trailingAnchor.constraint(equalTo: exportView.trailingAnchor),
+            exportStackView.leadingAnchor.constraint(equalTo: exportView.leadingAnchor),
+            exportStackView.topAnchor.constraint(equalTo: exportView.topAnchor),
+            exportStackView.bottomAnchor.constraint(equalTo: exportView.bottomAnchor)
+        ])
+        saveStackView.translatesAutoresizingMaskIntoConstraints = false
+        saveStackView.axis = .horizontal
+        saveCopyStackView.translatesAutoresizingMaskIntoConstraints = false
+        saveCopyStackView.axis = .horizontal
+        exportStackView.addArrangedSubview(saveStackView)
+        exportStackView.addArrangedSubview(saveCopyStackView)
+        
+        
+//        saveCopyButton.translatesAutoresizingMaskIntoConstraints = false
+//        saveButton.translatesAutoresizingMaskIntoConstraints = false
+//        exportStackView.addArrangedSubview(saveButton)
+//        exportStackView.addArrangedSubview(saveCopyButton)
+//        saveCopyButton.addTarget(self, action: #selector(self.saveVideo), for: .touchUpInside)
+    }
    
     func setUpBackgroundView() {
         self.view.addSubview(bgVideoView)
@@ -266,6 +315,37 @@ final class VideoEditorViewController: UIViewController {
         doneButton.addTarget(self, action: #selector(self.saveFilter), for: .touchUpInside)
     }
     
+    func setUpSaveStackView() {
+        saveStackView.distribution = .fillEqually
+        let imageView = UIImageView(image: UIImage(named: "saveVideoImage")?.withRenderingMode(.alwaysTemplate))
+        imageView.tintColor = .darkGray
+        imageView.contentMode = .scaleAspectFit
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 22, weight: .medium)
+        label.numberOfLines = 0
+        label.text = "Save"
+        label.textColor = .darkGray
+        label.textAlignment = .left
+        saveStackView.addArrangedSubview(imageView)
+        saveStackView.addArrangedSubview(label)
+    }
+    
+    func setUpSaveCopyStackView() {
+        saveCopyStackView.distribution = .fillEqually
+        let imageView = UIImageView(image: UIImage(named: "saveVideoCopyImage")?.withRenderingMode(.alwaysTemplate))
+        imageView.tintColor = .darkGray
+        imageView.contentMode = .scaleAspectFit
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 22, weight: .medium)
+        label.numberOfLines = 0
+        label.text = "Save a copy"
+        label.textColor = .darkGray
+        label.textAlignment = .left
+        saveCopyStackView.addArrangedSubview(imageView)
+        saveCopyStackView.addArrangedSubview(label)
+       
+    }
+        
     @objc func playerItemDidReachEnd(notification: Notification) {
         if let playerItem = notification.object as? AVPlayerItem {
             playerItem.seek(to: CMTime.zero, completionHandler: nil)
@@ -291,16 +371,30 @@ final class VideoEditorViewController: UIViewController {
         }
     }
     
-    private func resetToDefaultFilter() {
-        filterIndex = 0
-    }
-    
     public func closeEffects() {
         bottomEffectsConstraint.constant = 166
         resetToDefaultFilter()
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
+    }
+    
+    public func openExportMenu() {
+        bottomExportConstraint.constant = 0 - self.view.safeAreaInsets.bottom - 49
+        UIView.animate(withDuration: 0.2) {
+            self.view.layoutIfNeeded()
+        }
+    }
+
+    public func closeExportMenu() {
+        bottomExportConstraint.constant = 140
+        UIView.animate(withDuration: 0.2) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    private func resetToDefaultFilter() {
+        filterIndex = 0
     }
     
     @objc func discardEffects() {
@@ -330,13 +424,13 @@ final class VideoEditorViewController: UIViewController {
     
     func saveVideoToPhotos() {
         DispatchQueue.main.async {
-          self.doneButton.isEnabled = false
+          self.saveCopyButton.isEnabled = false
         }
         let choosenFilter = dataSource.filters[filterIndex]
         guard let playerItem = player.currentItem else { return }
         VideoEditer.saveEditedVideo(choosenFilter: choosenFilter, asset: playerItem.asset)
         DispatchQueue.main.async {
-          self.doneButton.isEnabled = true
+          self.saveCopyButton.isEnabled = true
         }
     }
 }
