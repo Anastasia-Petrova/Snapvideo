@@ -17,6 +17,7 @@ final class TabBar: UITabBar {
     init(items: String...) {
         super.init(frame: .zero)
         self.setItems(items.map(TabBarItem.init), animated: false)
+        self.tintColor = .white
     }
     
     required init?(coder: NSCoder) {

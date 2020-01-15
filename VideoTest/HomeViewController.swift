@@ -25,6 +25,8 @@ final class HomeViewController: UIViewController {
         super.viewDidLoad()
         tabBar.delegate = self
         self.view.backgroundColor = .white
+        self.navigationController?.navigationBar.barTintColor = .white
+        self.navigationController?.hideHairline()
         setUpStackView()
         setUpAddVideoButton()
         setUpTabBar()
@@ -83,7 +85,7 @@ final class HomeViewController: UIViewController {
             button.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             button.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             button.topAnchor.constraint(equalTo: view.topAnchor),
-            button.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            button.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
         button.addTarget(self, action: #selector(self.handleAddVideoTap), for: .touchUpInside)
     }
@@ -148,5 +150,29 @@ extension HomeViewController: UITabBarDelegate {
         } else {
             previouslySelectedIndex = selectedIndex
         }
+    }
+}
+
+extension UINavigationController {
+    func hideHairline() {
+        if let hairline = findHairlineImageViewUnder(navigationBar) {
+            hairline.isHidden = true
+        }
+    }
+    func restoreHairline() {
+        if let hairline = findHairlineImageViewUnder(navigationBar) {
+            hairline.isHidden = false
+        }
+    }
+    func findHairlineImageViewUnder(_ view: UIView) -> UIImageView? {
+        if view is UIImageView && view.bounds.size.height <= 1.0 {
+            return view as? UIImageView
+        }
+        for subview in view.subviews {
+            if let imageView = self.findHairlineImageViewUnder(subview) {
+                return imageView
+            }
+        }
+        return nil
     }
 }
