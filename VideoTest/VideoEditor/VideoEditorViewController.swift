@@ -17,8 +17,8 @@ final class VideoEditorViewController: UIViewController {
     var playerRateObservation: NSKeyValueObservation?
     var slider = UISlider()
     let timerLabel = UILabel()
-    var cancelButton = UIButton()
-    var doneButton = UIButton()
+    var cancelButton = EffectsViewButton(imageName: "cancel")
+    var doneButton = EffectsViewButton(imageName: "done")
     var saveCopyButton = SaveCopyVideoButton()
     var spacerHeight = CGFloat()
     var presentedFilter: (Bool) -> Void
@@ -228,7 +228,6 @@ final class VideoEditorViewController: UIViewController {
         ])
         
         let buttonsStackView = UIStackView()
-        
         effectsCollectionView.backgroundColor = .white
             
         collectionStackView.addArrangedSubview(effectsCollectionView)
@@ -291,9 +290,6 @@ final class VideoEditorViewController: UIViewController {
         NSLayoutConstraint.activate ([
         cancelButton.widthAnchor.constraint(equalToConstant: 44)
         ])
-        cancelButton.imageView?.contentMode = .scaleAspectFit
-        cancelButton.setImage(UIImage(named: "cancel")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        cancelButton.tintColor = .darkGray
         cancelButton.addTarget(self, action: #selector(self.discardEffects), for: .touchUpInside)
     }
     
@@ -302,38 +298,23 @@ final class VideoEditorViewController: UIViewController {
         NSLayoutConstraint.activate ([
         doneButton.heightAnchor.constraint(equalToConstant: 44)
         ])
-        doneButton.imageView?.contentMode = .scaleAspectFit
-        doneButton.setImage(UIImage(named: "done")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        doneButton.tintColor = .darkGray
         doneButton.addTarget(self, action: #selector(self.saveFilter), for: .touchUpInside)
     }
     
     func setUpSaveStackView() {
         saveStackView.distribution = .fillEqually
-        let imageView = UIImageView(image: UIImage(named: "saveVideoImage")?.withRenderingMode(.alwaysTemplate))
-        imageView.tintColor = .darkGray
-        imageView.contentMode = .scaleAspectFit
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 22, weight: .medium)
-        label.numberOfLines = 0
+        let imageView = ExportImageView(imageName: "saveVideoImage")
+        let label = SaveOptionsLabel()
         label.text = "Save"
-        label.textColor = .darkGray
-        label.textAlignment = .left
         saveStackView.addArrangedSubview(imageView)
         saveStackView.addArrangedSubview(label)
     }
     
     func setUpSaveCopyStackView() {
         saveCopyStackView.distribution = .fillEqually
-        let imageView = UIImageView(image: UIImage(named: "saveVideoCopyImage")?.withRenderingMode(.alwaysTemplate))
-        imageView.tintColor = .darkGray
-        imageView.contentMode = .scaleAspectFit
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 22, weight: .medium)
-        label.numberOfLines = 0
+        let imageView = ExportImageView(imageName: "saveVideoCopyImage")
+        let label = SaveOptionsLabel()
         label.text = "Save a copy"
-        label.textColor = .darkGray
-        label.textAlignment = .left
         saveCopyStackView.addArrangedSubview(imageView)
         saveCopyStackView.addArrangedSubview(label)
     }
@@ -348,7 +329,6 @@ final class VideoEditorViewController: UIViewController {
         saveCopyButton.topAnchor.constraint(equalTo: saveCopyStackView.topAnchor),
         saveCopyButton.bottomAnchor.constraint(equalTo: saveCopyStackView.bottomAnchor)
         ])
-        
     }
         
     @objc func playerItemDidReachEnd(notification: Notification) {

@@ -24,6 +24,9 @@
 		6D2E8A0323CA671A00917E25 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2E89FE23CA5AC700917E25 /* TabBar.swift */; };
 		6D2E8A0423CA673A00917E25 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2E8A0023CA5DEA00917E25 /* TabBarItem.swift */; };
 		6D73068423D06BE300226C77 /* SaveCopyVideoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D73068323D06BE300226C77 /* SaveCopyVideoButton.swift */; };
+		6D96B85023D08E5E00C1C6D5 /* SaveOptionsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D96B84F23D08E5E00C1C6D5 /* SaveOptionsLabel.swift */; };
+		6D96B85323D090A300C1C6D5 /* ExportImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D96B85223D090A300C1C6D5 /* ExportImageView.swift */; };
+		6D96B85823D0969E00C1C6D5 /* LooksViewParts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D96B85723D0969E00C1C6D5 /* LooksViewParts.swift */; };
 		6DB6C13D23C4D65D00E256A4 /* SharpAndWarmFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB6C13C23C4D65D00E256A4 /* SharpAndWarmFilter.swift */; };
 		6DB6C13F23C4D8A700E256A4 /* VignetteFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB6C13E23C4D8A700E256A4 /* VignetteFilter.swift */; };
 		6DB6C14123C4E82C00E256A4 /* ClampFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB6C14023C4E82C00E256A4 /* ClampFilter.swift */; };
@@ -55,6 +58,9 @@
 		6D2E89FE23CA5AC700917E25 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		6D2E8A0023CA5DEA00917E25 /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
 		6D73068323D06BE300226C77 /* SaveCopyVideoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveCopyVideoButton.swift; sourceTree = "<group>"; };
+		6D96B84F23D08E5E00C1C6D5 /* SaveOptionsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveOptionsLabel.swift; sourceTree = "<group>"; };
+		6D96B85223D090A300C1C6D5 /* ExportImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportImageView.swift; sourceTree = "<group>"; };
+		6D96B85723D0969E00C1C6D5 /* LooksViewParts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LooksViewParts.swift; sourceTree = "<group>"; };
 		6DB6C13C23C4D65D00E256A4 /* SharpAndWarmFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharpAndWarmFilter.swift; sourceTree = "<group>"; };
 		6DB6C13E23C4D8A700E256A4 /* VignetteFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VignetteFilter.swift; sourceTree = "<group>"; };
 		6DB6C14023C4E82C00E256A4 /* ClampFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClampFilter.swift; sourceTree = "<group>"; };
@@ -125,8 +131,10 @@
 			children = (
 				6D19954523C7AA3C000A76B1 /* VideoEditer.swift */,
 				6D05022523B9154100036D60 /* VideoEditorViewController.swift */,
+				6D96B85423D0960000C1C6D5 /* LoooksViewParts */,
 				6D73068323D06BE300226C77 /* SaveCopyVideoButton.swift */,
 				6DDE026223C11659002D7942 /* VideoView.swift */,
+				6D96B85123D08FD600C1C6D5 /* ExportViewParts */,
 			);
 			path = VideoEditor;
 			sourceTree = "<group>";
@@ -148,6 +156,23 @@
 				6D17A7E623ABB39100C70542 /* Main.storyboard */,
 			);
 			path = Assets;
+			sourceTree = "<group>";
+		};
+		6D96B85123D08FD600C1C6D5 /* ExportViewParts */ = {
+			isa = PBXGroup;
+			children = (
+				6D96B84F23D08E5E00C1C6D5 /* SaveOptionsLabel.swift */,
+				6D96B85223D090A300C1C6D5 /* ExportImageView.swift */,
+			);
+			path = ExportViewParts;
+			sourceTree = "<group>";
+		};
+		6D96B85423D0960000C1C6D5 /* LoooksViewParts */ = {
+			isa = PBXGroup;
+			children = (
+				6D96B85723D0969E00C1C6D5 /* LooksViewParts.swift */,
+			);
+			path = LoooksViewParts;
 			sourceTree = "<group>";
 		};
 		6D9874AC23CB9DBA00EC83DC /* EffectsCollection */ = {
@@ -258,6 +283,7 @@
 				6D01E03A23BFC2FE00B558E8 /* AssetImageGenerator.swift in Sources */,
 				6DDE026A23C12B2A002D7942 /* BlurFilter.swift in Sources */,
 				6D2E89FD23CA498300917E25 /* VideoBrowser.swift in Sources */,
+				6D96B85023D08E5E00C1C6D5 /* SaveOptionsLabel.swift in Sources */,
 				6D2E8A0423CA673A00917E25 /* TabBarItem.swift in Sources */,
 				6D0C29C123C28CA5006E7C40 /* App.swift in Sources */,
 				6DDE026523C12A44002D7942 /* Filter.swift in Sources */,
@@ -272,8 +298,10 @@
 				6D17A7E323ABB39100C70542 /* SceneDelegate.swift in Sources */,
 				6D17A7F523ABB6E000C70542 /* HomeViewController.swift in Sources */,
 				6D05022623B9154100036D60 /* VideoEditorViewController.swift in Sources */,
+				6D96B85323D090A300C1C6D5 /* ExportImageView.swift in Sources */,
 				6D73068423D06BE300226C77 /* SaveCopyVideoButton.swift in Sources */,
 				6D01E03623BFA2F900B558E8 /* EffectsCollectionViewCell.swift in Sources */,
+				6D96B85823D0969E00C1C6D5 /* LooksViewParts.swift in Sources */,
 				6D2E8A0323CA671A00917E25 /* TabBar.swift in Sources */,
 				6DFF1AE023C3BEC7009BCAE2 /* OldFilmFilter.swift in Sources */,
 				6D0C29C423C2A8C1006E7C40 /* AVAsset.swift in Sources */,
