@@ -35,20 +35,26 @@ final class VideoEditorViewController: UIViewController {
         }
     }
     
-    var isExportViewShown = true {
+    var isExportViewShown: Bool = true {
         didSet {
             guard let parent = self.parent as? HomeViewController else {
                return
             }
-            parent.isExportButtonSelected = isExportViewShown
-            parent.tabBar.selectedItem = nil
+            
+            if parent.isExportButtonSelected &&  parent.isExportButtonSelected != isExportViewShown {
+                parent.isExportButtonSelected = isExportViewShown
+                parent.tabBar.selectedItem = nil
+                parent.previouslySelectedIndex = nil
+            }
         }
     }
+    
     var previewImage: UIImage? {
         didSet {
             dataSource.image = previewImage
         }
     }
+    
     var trackDuration: Float {
         guard let trackDuration = player.currentItem?.asset.duration else {
             return 0
@@ -375,6 +381,7 @@ final class VideoEditorViewController: UIViewController {
     }
     
     public func openExportMenu() {
+        isExportViewShown = true
         bottomExportConstraint.constant = 0 - self.view.safeAreaInsets.bottom - 49
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
