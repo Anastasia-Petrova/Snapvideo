@@ -19,8 +19,7 @@ final class VideoEditorViewController: UIViewController {
     let timerLabel = UILabel()
     var cancelButton = UIButton()
     var doneButton = UIButton()
-    var saveButton = UIButton()
-    var saveCopyButton = UIButton()
+    var saveCopyButton = SaveCopyVideoButton()
     var spacerHeight = CGFloat()
     var presentedFilter: (Bool) -> Void
     let saveStackView = UIStackView()
@@ -100,6 +99,7 @@ final class VideoEditorViewController: UIViewController {
         setUpExportView()
         setUpSaveStackView()
         setUpSaveCopyStackView()
+        setUpSaveCopyButton()
         effectsCollectionView.delegate = self
     }
     
@@ -275,13 +275,6 @@ final class VideoEditorViewController: UIViewController {
         saveCopyStackView.axis = .horizontal
         exportStackView.addArrangedSubview(saveStackView)
         exportStackView.addArrangedSubview(saveCopyStackView)
-        
-        
-//        saveCopyButton.translatesAutoresizingMaskIntoConstraints = false
-//        saveButton.translatesAutoresizingMaskIntoConstraints = false
-//        exportStackView.addArrangedSubview(saveButton)
-//        exportStackView.addArrangedSubview(saveCopyButton)
-//        saveCopyButton.addTarget(self, action: #selector(self.saveVideo), for: .touchUpInside)
     }
    
     func setUpBackgroundView() {
@@ -343,7 +336,19 @@ final class VideoEditorViewController: UIViewController {
         label.textAlignment = .left
         saveCopyStackView.addArrangedSubview(imageView)
         saveCopyStackView.addArrangedSubview(label)
-       
+    }
+    
+    func setUpSaveCopyButton() {
+        saveCopyButton.translatesAutoresizingMaskIntoConstraints = false
+        saveCopyButton.addTarget(self, action: #selector(self.saveVideoCopy), for: .touchUpInside)
+        saveCopyStackView.addSubview(saveCopyButton)
+        NSLayoutConstraint.activate ([
+        saveCopyButton.trailingAnchor.constraint(equalTo: saveCopyStackView.trailingAnchor),
+        saveCopyButton.leadingAnchor.constraint(equalTo: saveCopyStackView.leadingAnchor),
+        saveCopyButton.topAnchor.constraint(equalTo: saveCopyStackView.topAnchor),
+        saveCopyButton.bottomAnchor.constraint(equalTo: saveCopyStackView.bottomAnchor)
+        ])
+        
     }
         
     @objc func playerItemDidReachEnd(notification: Notification) {
@@ -410,7 +415,7 @@ final class VideoEditorViewController: UIViewController {
         }
     }
     
-    @objc func saveVideo() {
+    @objc func saveVideoCopy() {
         PHPhotoLibrary.requestAuthorization { [weak self] status in
           switch status {
           case .authorized:
