@@ -34,6 +34,16 @@ final class VideoEditorViewController: UIViewController {
             player.play()
         }
     }
+    
+    var isExportViewShown = true {
+        didSet {
+            guard let parent = self.parent as? HomeViewController else {
+               return
+            }
+            parent.isExportButtonSelected = isExportViewShown
+            parent.tabBar.selectedItem = nil
+        }
+    }
     var previewImage: UIImage? {
         didSet {
             dataSource.image = previewImage
@@ -409,14 +419,12 @@ final class VideoEditorViewController: UIViewController {
     
     func saveVideoToPhotos() {
         DispatchQueue.main.async {
-          self.saveCopyButton.isEnabled = false
+            self.isExportViewShown = false
         }
         let choosenFilter = dataSource.filters[filterIndex]
         guard let playerItem = player.currentItem else { return }
         VideoEditer.saveEditedVideo(choosenFilter: choosenFilter, asset: playerItem.asset)
-        DispatchQueue.main.async {
-          self.saveCopyButton.isEnabled = true
-        }
+        
     }
 }
 

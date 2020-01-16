@@ -129,12 +129,11 @@
 		6D17A80523AD4EB100C70542 /* VideoEditor */ = {
 			isa = PBXGroup;
 			children = (
-				6D19954523C7AA3C000A76B1 /* VideoEditer.swift */,
-				6D05022523B9154100036D60 /* VideoEditorViewController.swift */,
-				6D96B85423D0960000C1C6D5 /* LoooksViewParts */,
-				6D73068323D06BE300226C77 /* SaveCopyVideoButton.swift */,
-				6DDE026223C11659002D7942 /* VideoView.swift */,
 				6D96B85123D08FD600C1C6D5 /* ExportViewParts */,
+				6D96B85423D0960000C1C6D5 /* LoooksViewParts */,
+				6D05022523B9154100036D60 /* VideoEditorViewController.swift */,
+				6D19954523C7AA3C000A76B1 /* VideoEditer.swift */,
+				6DDE026223C11659002D7942 /* VideoView.swift */,
 			);
 			path = VideoEditor;
 			sourceTree = "<group>";
@@ -161,6 +160,7 @@
 		6D96B85123D08FD600C1C6D5 /* ExportViewParts */ = {
 			isa = PBXGroup;
 			children = (
+				6D73068323D06BE300226C77 /* SaveCopyVideoButton.swift */,
 				6D96B84F23D08E5E00C1C6D5 /* SaveOptionsLabel.swift */,
 				6D96B85223D090A300C1C6D5 /* ExportImageView.swift */,
 			);
