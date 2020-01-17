@@ -1,9 +1,9 @@
 import UIKit
 
-class SaveOptionsLabel: UILabel {
+final class SaveOptionsLabel: UILabel {
     init() {
         super.init(frame: .zero)
-        self.font = .systemFont(ofSize: 22, weight: .medium)
+        self.font = .systemFont(ofSize: 13, weight: .medium)
         self.numberOfLines = 0
         self.textColor = .darkGray
         self.textAlignment = .left

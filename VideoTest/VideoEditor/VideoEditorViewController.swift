@@ -318,21 +318,88 @@ final class VideoEditorViewController: UIViewController {
     }
     
     func setUpSaveStackView() {
-        saveStackView.distribution = .fillEqually
+        saveStackView.spacing = 16
+        saveStackView.alignment = .center
         let imageView = ExportImageView(imageName: "saveVideoImage")
-        let label = SaveOptionsLabel()
-        label.text = "Save"
+        let leftSpacer = UIView()
+        let rightSpacer = UIView()
+        let labelsStackView = UIStackView()
+        labelsStackView.translatesAutoresizingMaskIntoConstraints = false
+        labelsStackView.axis = .vertical
+        saveStackView.addArrangedSubview(leftSpacer)
         saveStackView.addArrangedSubview(imageView)
-        saveStackView.addArrangedSubview(label)
+        saveStackView.addArrangedSubview(labelsStackView)
+        saveStackView.addArrangedSubview(rightSpacer)
+        saveStackView.setCustomSpacing(0, after: leftSpacer)
+        saveStackView.setCustomSpacing(0, after: labelsStackView)
+        
+        NSLayoutConstraint.activate ([
+            leftSpacer.widthAnchor.constraint(equalToConstant: 16),
+            rightSpacer.widthAnchor.constraint(equalTo: leftSpacer.widthAnchor),
+            imageView.widthAnchor.constraint(equalToConstant: 20)
+        ])
+        
+        let header = SaveOptionsLabel()
+        header.text = "Save"
+        header.numberOfLines = 1
+        header.setContentCompressionResistancePriority(.required, for: .vertical)
+        header.setContentHuggingPriority(.required, for: .vertical)
+        
+        let body = UILabel()
+        body.font = .systemFont(ofSize: 10, weight: .medium)
+        body.numberOfLines = 0
+        body.textColor = .lightGray
+        body.textAlignment = .left
+        body.text = "Saves with chnges thta you can unde. IOS will ask for permission to modify this photo."
+        body.setContentCompressionResistancePriority(.required, for: .vertical)
+        
+        labelsStackView.addArrangedSubview(header)
+        labelsStackView.addArrangedSubview(body)
+        labelsStackView.layoutMargins = .init(top: 8, left: 0, bottom: 8, right: 0)
+        labelsStackView.isLayoutMarginsRelativeArrangement = true
     }
     
     func setUpSaveCopyStackView() {
-        saveCopyStackView.distribution = .fillEqually
+        saveCopyStackView.spacing = 16
+        saveCopyStackView.alignment = .center
         let imageView = ExportImageView(imageName: "saveVideoCopyImage")
-        let label = SaveOptionsLabel()
-        label.text = "Save a copy"
+        let leftSpacer = UIView()
+        let rightSpacer = UIView()
+        let labelsStackView = UIStackView()
+        labelsStackView.translatesAutoresizingMaskIntoConstraints = false
+        labelsStackView.axis = .vertical
+        
+        saveCopyStackView.addArrangedSubview(leftSpacer)
         saveCopyStackView.addArrangedSubview(imageView)
-        saveCopyStackView.addArrangedSubview(label)
+        saveCopyStackView.addArrangedSubview(labelsStackView)
+        saveCopyStackView.addArrangedSubview(rightSpacer)
+        
+        saveCopyStackView.setCustomSpacing(0, after: leftSpacer)
+        saveCopyStackView.setCustomSpacing(0, after: labelsStackView)
+        
+        NSLayoutConstraint.activate ([
+            leftSpacer.widthAnchor.constraint(equalToConstant: 16),
+            rightSpacer.widthAnchor.constraint(equalTo: leftSpacer.widthAnchor),
+            imageView.widthAnchor.constraint(equalToConstant: 20)
+        ])
+        
+        let header = SaveOptionsLabel()
+        header.text = "Save a copy"
+        header.numberOfLines = 1
+        header.setContentCompressionResistancePriority(.required, for: .vertical)
+        header.setContentHuggingPriority(.required, for: .vertical)
+        
+        let body = UILabel()
+        body.font = .systemFont(ofSize: 10, weight: .medium)
+        body.numberOfLines = 0
+        body.textColor = .lightGray
+        body.textAlignment = .left
+        body.text = "Creates a copy with changes that you can undo."
+        
+        labelsStackView.addArrangedSubview(header)
+        labelsStackView.addArrangedSubview(body)
+        labelsStackView.layoutMargins = .init(top: 8, left: 0, bottom: 8, right: 0)
+        labelsStackView.isLayoutMarginsRelativeArrangement = true
     }
     
     func setUpSaveCopyButton() {

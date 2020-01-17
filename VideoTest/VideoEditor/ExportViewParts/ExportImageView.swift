@@ -1,6 +1,6 @@
 import UIKit
 
-class ExportImageView: UIImageView {
+final class ExportImageView: UIImageView {
     init(imageName: String) {
         let image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
         super.init(image: image)

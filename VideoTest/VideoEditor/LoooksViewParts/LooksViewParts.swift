@@ -1,6 +1,6 @@
 import UIKit
 
-class EffectsViewButton: UIButton {
+final class EffectsViewButton: UIButton {
     init(imageName: String) {
         super.init(frame: .zero)
         self.imageView?.contentMode = .scaleAspectFit
