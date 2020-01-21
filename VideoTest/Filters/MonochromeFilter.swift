@@ -1,8 +1,8 @@
 import Foundation
 import CoreImage
 
-struct BlackAndWhiteFilter: Filter {
-    let name: String = "BlackAndWhite"
+struct MonochromeFilter: Filter {
+    let name: String = "Monochrome"
     
     func apply(image: CIImage) -> CIImage {
         let optionalFilter = CIFilter(name: "CIColorMonochrome")
@@ -10,7 +10,7 @@ struct BlackAndWhiteFilter: Filter {
             return image
         }
         filter.setValue(image, forKey: kCIInputImageKey)
-        filter.setValue(CIColor(red: 0.7, green: 0.7, blue: 0.7), forKey: "inputColor")
+        filter.setValue(CIColor(red: 0.5, green: 0.5, blue: 0.5), forKey: "inputColor")
         filter.setValue(1.0, forKey: "inputIntensity")
         return filter.outputImage ?? image
     }

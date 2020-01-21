@@ -1,11 +1,11 @@
 import Foundation
 import CoreImage
 
-struct ColorInvertFilter: Filter {
-    let name: String = "ColorInvert"
+struct TonalFilter: Filter {
+    let name: String = "Tonal"
     
     func apply(image: CIImage) -> CIImage {
-        let optionalFilter = CIFilter(name: "CIColorInvert")
+        let optionalFilter = CIFilter(name: "CIPhotoEffectTonal")
         guard let filter = optionalFilter else {
             return image
         }

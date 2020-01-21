@@ -1,11 +1,17 @@
 import Foundation
 import CoreImage
 
-struct ColorInvertFilter: Filter {
-    let name: String = "ColorInvert"
+struct SepiaFilter: Filter {
+    let name: String = "Sepia"
     
     func apply(image: CIImage) -> CIImage {
-        let optionalFilter = CIFilter(name: "CIColorInvert")
+        let optionalFilter = CIFilter(
+            name:"CISepiaTone",
+            parameters: [
+                kCIInputImageKey: image,
+                kCIInputIntensityKey: 0.5
+            ]
+        )
         guard let filter = optionalFilter else {
             return image
         }
