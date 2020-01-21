@@ -1,12 +1,14 @@
 import UIKit
 
-final class SaveOptionsLabel: UILabel {
+final class HeaderExportLabel: UILabel {
     init() {
         super.init(frame: .zero)
         self.font = .systemFont(ofSize: 13, weight: .medium)
-        self.numberOfLines = 0
+        self.numberOfLines = 1
         self.textColor = .darkGray
         self.textAlignment = .left
+        self.setContentCompressionResistancePriority(.required, for: .vertical)
+        self.setContentHuggingPriority(.required, for: .vertical)
     }
     
     required init?(coder: NSCoder) {

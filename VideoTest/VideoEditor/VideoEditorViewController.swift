@@ -339,19 +339,11 @@ final class VideoEditorViewController: UIViewController {
             imageView.widthAnchor.constraint(equalToConstant: 20)
         ])
         
-        let header = SaveOptionsLabel()
+        let header = HeaderExportLabel()
         header.text = "Save"
-        header.numberOfLines = 1
-        header.setContentCompressionResistancePriority(.required, for: .vertical)
-        header.setContentHuggingPriority(.required, for: .vertical)
         
-        let body = UILabel()
-        body.font = .systemFont(ofSize: 10, weight: .medium)
-        body.numberOfLines = 0
-        body.textColor = .lightGray
-        body.textAlignment = .left
+        let body = BodyExportLabel()
         body.text = "Saves with chnges thta you can unde. IOS will ask for permission to modify this photo."
-        body.setContentCompressionResistancePriority(.required, for: .vertical)
         
         labelsStackView.addArrangedSubview(header)
         labelsStackView.addArrangedSubview(body)
@@ -383,17 +375,10 @@ final class VideoEditorViewController: UIViewController {
             imageView.widthAnchor.constraint(equalToConstant: 20)
         ])
         
-        let header = SaveOptionsLabel()
+        let header = HeaderExportLabel()
         header.text = "Save a copy"
-        header.numberOfLines = 1
-        header.setContentCompressionResistancePriority(.required, for: .vertical)
-        header.setContentHuggingPriority(.required, for: .vertical)
-        
-        let body = UILabel()
-        body.font = .systemFont(ofSize: 10, weight: .medium)
-        body.numberOfLines = 0
-        body.textColor = .lightGray
-        body.textAlignment = .left
+
+        let body = BodyExportLabel()
         body.text = "Creates a copy with changes that you can undo."
         
         labelsStackView.addArrangedSubview(header)
