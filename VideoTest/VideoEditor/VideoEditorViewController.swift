@@ -326,6 +326,7 @@ final class VideoEditorViewController: UIViewController {
         let labelsStackView = UIStackView()
         labelsStackView.translatesAutoresizingMaskIntoConstraints = false
         labelsStackView.axis = .vertical
+        
         saveStackView.addArrangedSubview(leftSpacer)
         saveStackView.addArrangedSubview(imageView)
         saveStackView.addArrangedSubview(labelsStackView)
@@ -343,7 +344,7 @@ final class VideoEditorViewController: UIViewController {
         header.text = "Save"
         
         let body = BodyExportLabel()
-        body.text = "Saves with chnges thta you can unde. IOS will ask for permission to modify this photo."
+        body.text = "Saves with changes that you can undo. IOS will ask for permission to modify this photo."
         
         labelsStackView.addArrangedSubview(header)
         labelsStackView.addArrangedSubview(body)

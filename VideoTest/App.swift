@@ -10,12 +10,14 @@ extension App {
     private static let `default` = App(
         filters: [
             PassthroughFilter(),
-            ComicFilter(),
-            BlurFilter(blurRadius: 50),
             OldFilmFilter(),
             SharpAndWarmFilter(inputSharpness: 0.7),
             VignetteFilter(),
-            ClampFilter()
+            ClampFilter(),
+            ComicFilter(),
+            ColorInvertFilter(),
+            BlurFilter(blurRadius: 30),
+            BlackAndWhiteFilter()
         ]
     )
     
