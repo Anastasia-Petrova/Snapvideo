@@ -18,7 +18,9 @@ final class VideoEditorViewController: UIViewController {
     let bgVideoView: VideoView
     var playerRateObservation: NSKeyValueObservation?
     var slider = UISlider()
+    var bottomSliderConstraint = NSLayoutConstraint()
     let timerLabel = UILabel()
+    var bottomTimerConstraint = NSLayoutConstraint()
     var cancelButton = EffectsViewButton(imageName: "cancel")
     var doneButton = EffectsViewButton(imageName: "done")
     var saveCopyButton = SaveCopyVideoButton()
@@ -174,10 +176,11 @@ final class VideoEditorViewController: UIViewController {
     func setUpSlider() {
         slider.translatesAutoresizingMaskIntoConstraints = false
         playerView.addSubview(slider)
+        bottomSliderConstraint = slider.bottomAnchor.constraint(equalTo: playerView.bottomAnchor, constant: -40)
         NSLayoutConstraint.activate ([
         slider.leadingAnchor.constraint(equalTo: playerView.leadingAnchor, constant: 50),
         slider.trailingAnchor.constraint(equalTo: playerView.trailingAnchor, constant: -50),
-        slider.bottomAnchor.constraint(equalTo: playerView.safeAreaLayoutGuide.bottomAnchor, constant: -60)])
+        bottomSliderConstraint])
         slider.minimumValue = 0
         slider.maximumValue = trackDuration
         slider.addTarget(self, action: #selector(self.sliderAction), for: .valueChanged)
@@ -198,9 +201,10 @@ final class VideoEditorViewController: UIViewController {
     func setUpTimer() {
         timerLabel.translatesAutoresizingMaskIntoConstraints = false
         playerView.addSubview(timerLabel)
+        bottomTimerConstraint = timerLabel.topAnchor.constraint(equalTo: playerView.topAnchor, constant: 40)
         NSLayoutConstraint.activate ([
-        timerLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 40),
-        timerLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 50),
+        timerLabel.leadingAnchor.constraint(equalTo: playerView.leadingAnchor, constant: 40),
+        bottomTimerConstraint,
         timerLabel.heightAnchor.constraint(equalToConstant: 44)])
         timerLabel.alpha = 0.5
         timerLabel.textColor = .white
@@ -426,7 +430,8 @@ final class VideoEditorViewController: UIViewController {
     
     public func openEffects() {
         bottomEffectsConstraint.constant = 0 - self.view.safeAreaInsets.bottom
-
+        bottomSliderConstraint.constant *= 0.84
+        bottomTimerConstraint.constant *= 0.84
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
@@ -434,6 +439,8 @@ final class VideoEditorViewController: UIViewController {
     
     public func closeEffects() {
         bottomEffectsConstraint.constant = 100
+        bottomSliderConstraint.constant = -40
+        bottomTimerConstraint.constant = 40
         resetToDefaultFilter()
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()

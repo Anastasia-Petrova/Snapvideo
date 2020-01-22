@@ -130,9 +130,11 @@ final class HomeViewController: UIViewController {
         guard let childVC = childViewController else { return }
         childVC.removeFromParent()
         childVC.view.removeFromSuperview()
-        tabBar.selectedItem = nil
-        tabBar.previouslySelectedItem = nil
-        previouslySelectedIndex = nil
+        if previouslySelectedIndex != nil {
+            tabBar.selectedItem = nil
+            tabBar.previouslySelectedItem = nil
+            previouslySelectedIndex = nil
+        }
     }
 }
 
@@ -147,6 +149,9 @@ extension HomeViewController: UIImagePickerControllerDelegate {
             self.removeEmbeddedViewController()
             self.embed(VideoEditorViewController(url: url, filters: self.app.filters, presentedFilter: { [weak self] pressedFilter in
                 self?.tabBar.isHidden = pressedFilter
+//                self?.tabBar.selectedItem = nil
+//                self?.tabBar.previouslySelectedItem = nil
+//                self?.previouslySelectedIndex = nil
             }))
         }
     }
