@@ -225,7 +225,7 @@ final class VideoEditorViewController: UIViewController {
         effectsView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(effectsView)
         effectsView.backgroundColor = .white
-        bottomEffectsConstraint = effectsView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 146)
+        bottomEffectsConstraint = effectsView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 100)
         
         NSLayoutConstraint.activate ([
         effectsView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
@@ -433,7 +433,7 @@ final class VideoEditorViewController: UIViewController {
     }
     
     public func closeEffects() {
-        bottomEffectsConstraint.constant = 146
+        bottomEffectsConstraint.constant = 100
         resetToDefaultFilter()
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
@@ -498,5 +498,9 @@ final class VideoEditorViewController: UIViewController {
 extension VideoEditorViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         filterIndex = indexPath.row
+        
+        if indexPath.row < dataSource.filters.count - 3 || indexPath.row > 2 {
+            collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        }
     }
 }
