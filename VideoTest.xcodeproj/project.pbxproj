@@ -21,7 +21,6 @@
 		6D17A7F523ABB6E000C70542 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D17A7F423ABB6E000C70542 /* HomeViewController.swift */; };
 		6D19954623C7AA3C000A76B1 /* VideoEditer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D19954523C7AA3C000A76B1 /* VideoEditer.swift */; };
 		6D1D490B23D777F000ECACE5 /* BodyExportLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1D490A23D777F000ECACE5 /* BodyExportLabel.swift */; };
-		6D1D490D23D781B800ECACE5 /* ToolsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1D490C23D781B800ECACE5 /* ToolsCollectionViewController.swift */; };
 		6D1D490F23D7842F00ECACE5 /* MonochromeFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1D490E23D7842F00ECACE5 /* MonochromeFilter.swift */; };
 		6D1D491123D785FB00ECACE5 /* ColorInvertFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1D491023D785FB00ECACE5 /* ColorInvertFilter.swift */; };
 		6D1D491323D788B800ECACE5 /* HalfToneFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1D491223D788B800ECACE5 /* HalfToneFilter.swift */; };
@@ -67,7 +66,6 @@
 		6D17A7F423ABB6E000C70542 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		6D19954523C7AA3C000A76B1 /* VideoEditer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoEditer.swift; sourceTree = "<group>"; };
 		6D1D490A23D777F000ECACE5 /* BodyExportLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyExportLabel.swift; sourceTree = "<group>"; };
-		6D1D490C23D781B800ECACE5 /* ToolsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsCollectionViewController.swift; sourceTree = "<group>"; };
 		6D1D490E23D7842F00ECACE5 /* MonochromeFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonochromeFilter.swift; sourceTree = "<group>"; };
 		6D1D491023D785FB00ECACE5 /* ColorInvertFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorInvertFilter.swift; sourceTree = "<group>"; };
 		6D1D491223D788B800ECACE5 /* HalfToneFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfToneFilter.swift; sourceTree = "<group>"; };
@@ -156,7 +154,6 @@
 				6D96B85123D08FD600C1C6D5 /* ExportViewСomponents */,
 				6D96B85423D0960000C1C6D5 /* LooksViewСomponents */,
 				6D05022523B9154100036D60 /* VideoEditorViewController.swift */,
-				6D1D490C23D781B800ECACE5 /* ToolsCollectionViewController.swift */,
 				6D19954523C7AA3C000A76B1 /* VideoEditer.swift */,
 				6DDE026223C11659002D7942 /* VideoView.swift */,
 			);
@@ -352,7 +349,6 @@
 				6D2E8A0323CA671A00917E25 /* TabBar.swift in Sources */,
 				6DFF1AE023C3BEC7009BCAE2 /* OldFilmFilter.swift in Sources */,
 				6D0C29C423C2A8C1006E7C40 /* AVAsset.swift in Sources */,
-				6D1D490D23D781B800ECACE5 /* ToolsCollectionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

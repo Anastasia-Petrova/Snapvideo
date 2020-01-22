@@ -10,6 +10,8 @@ final class VideoEditorViewController: UIViewController {
     var bottomEffectsConstraint = NSLayoutConstraint()
     let exportView = UIView()
     var bottomExportConstraint = NSLayoutConstraint()
+    let toolsView = UIView()
+    var bottomToolsConstraint = NSLayoutConstraint()
     let effectsCollectionView: UICollectionView
     let dataSource: EffectsCollectionViewDataSource
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
@@ -81,8 +83,9 @@ final class VideoEditorViewController: UIViewController {
             filter: BlurFilter(blurRadius: 100)
         )
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 70, height: 90)
+        layout.itemSize = CGSize(width: 60, height: 76)
         layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        layout.minimumLineSpacing = 5
         layout.scrollDirection = .horizontal
         effectsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         effectsCollectionView.showsHorizontalScrollIndicator = false
@@ -222,7 +225,7 @@ final class VideoEditorViewController: UIViewController {
         effectsView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(effectsView)
         effectsView.backgroundColor = .white
-        bottomEffectsConstraint = effectsView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 166)
+        bottomEffectsConstraint = effectsView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 146)
         
         NSLayoutConstraint.activate ([
         effectsView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
@@ -255,8 +258,12 @@ final class VideoEditorViewController: UIViewController {
         buttonsStackView.distribution = .fillEqually
         
         NSLayoutConstraint.activate ([
-            effectsCollectionView.heightAnchor.constraint(equalToConstant: 120)
+            effectsCollectionView.heightAnchor.constraint(equalToConstant: 100)
         ])
+    }
+    
+    func setUpToolsView() {
+        toolsView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func setUpExportView() {
@@ -426,7 +433,7 @@ final class VideoEditorViewController: UIViewController {
     }
     
     public func closeEffects() {
-        bottomEffectsConstraint.constant = 166
+        bottomEffectsConstraint.constant = 146
         resetToDefaultFilter()
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
@@ -458,7 +465,7 @@ final class VideoEditorViewController: UIViewController {
     }
     
     @objc func saveFilter() {
-        bottomEffectsConstraint.constant = 166
+        bottomEffectsConstraint.constant = 146
         resetToDefaultFilter()
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()

@@ -30,9 +30,9 @@ class EffectsCollectionViewCell: UICollectionViewCell {
         ])
         stackView.alignment = .center
         stackView.axis = .vertical
-        stackView.spacing = 8
+        stackView.spacing = 6
         effectName.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
-        effectName.font = UIFont.systemFont(ofSize: 10)
+        effectName.font = UIFont.systemFont(ofSize: 9)
         effectName.numberOfLines = 1
         previewImageView.contentMode = .scaleAspectFill
         previewImageView.clipsToBounds = true
