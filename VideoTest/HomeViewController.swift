@@ -130,8 +130,9 @@ final class HomeViewController: UIViewController {
         guard let childVC = childViewController else { return }
         childVC.removeFromParent()
         childVC.view.removeFromSuperview()
-//        tabBar.selectedItem = nil
-//        previouslySelectedIndex = nil
+        tabBar.selectedItem = nil
+        tabBar.previouslySelectedItem = nil
+        previouslySelectedIndex = nil
     }
 }
 

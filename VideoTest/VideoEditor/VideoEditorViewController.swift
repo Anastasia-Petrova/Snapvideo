@@ -491,7 +491,6 @@ final class VideoEditorViewController: UIViewController {
         let choosenFilter = dataSource.filters[filterIndex]
         guard let playerItem = player.currentItem else { return }
         VideoEditer.saveEditedVideo(choosenFilter: choosenFilter, asset: playerItem.asset)
-        
     }
 }
 
