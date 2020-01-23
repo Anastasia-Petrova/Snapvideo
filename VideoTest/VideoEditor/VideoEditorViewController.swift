@@ -14,7 +14,7 @@ final class VideoEditorViewController: UIViewController {
     var bottomToolsConstraint = NSLayoutConstraint()
     let effectsCollectionView: UICollectionView
     let dataSource: EffectsCollectionViewDataSource
-    lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
+//    lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
     let bgVideoView: VideoView
     var playerRateObservation: NSKeyValueObservation?
     var slider = UISlider()
@@ -50,6 +50,15 @@ final class VideoEditorViewController: UIViewController {
                 parent.tabBar.selectedItem = nil
                 parent.previouslySelectedIndex = nil
             }
+        }
+    }
+    
+    var isVideoPlaying: Bool = false {
+        didSet {
+            guard let parent = self.parent as? HomeViewController else {
+               return
+            }
+            parent.isPlayButtonTapped = isVideoPlaying
         }
     }
     
@@ -111,7 +120,7 @@ final class VideoEditorViewController: UIViewController {
         setUpBackgroundView()
         setUpPlayerView()
         setUpEffectsView()
-        setUpResumeButton()
+//        setUpResumeButton()
         setUpPlayer()
         setUpSlider()
         setUpTimer()
@@ -124,7 +133,7 @@ final class VideoEditorViewController: UIViewController {
         effectsCollectionView.delegate = self
     }
     
-    @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
+    public func handleTap(_ sender: UITapGestureRecognizer? = nil) {
         if player.rate == 0 {
             player.play()
         } else {
@@ -149,7 +158,7 @@ final class VideoEditorViewController: UIViewController {
         playerRateObservation = player.observe(\.rate) { [weak self] (_, _) in
             guard let self = self else { return }
             let isPlaying = self.player.rate > 0
-            self.resumeImageView.isHidden = isPlaying
+            self.isVideoPlaying = isPlaying
             isPlaying ? self.playerView.play() :  self.playerView.pause()
         }
         
@@ -159,19 +168,19 @@ final class VideoEditorViewController: UIViewController {
         }
     }
     
-    func setUpResumeButton() {
-        resumeImageView.translatesAutoresizingMaskIntoConstraints = false
-        playerView.addSubview(resumeImageView)
-        NSLayoutConstraint.activate([
-            resumeImageView.centerYAnchor.constraint(equalTo: playerView.centerYAnchor),
-            resumeImageView.centerXAnchor.constraint(equalTo: playerView.centerXAnchor),
-            resumeImageView.heightAnchor.constraint(equalToConstant: 70),
-            resumeImageView.widthAnchor.constraint(equalToConstant: 70)
-        ])
-        resumeImageView.tintColor = .white
-        resumeImageView.isUserInteractionEnabled = false
-        resumeImageView.isHidden = false
-    }
+//    func setUpResumeButton() {
+//        resumeImageView.translatesAutoresizingMaskIntoConstraints = false
+//        playerView.addSubview(resumeImageView)
+//        NSLayoutConstraint.activate([
+//            resumeImageView.centerYAnchor.constraint(equalTo: playerView.centerYAnchor),
+//            resumeImageView.centerXAnchor.constraint(equalTo: playerView.centerXAnchor),
+//            resumeImageView.heightAnchor.constraint(equalToConstant: 70),
+//            resumeImageView.widthAnchor.constraint(equalToConstant: 70)
+//        ])
+//        resumeImageView.tintColor = .white
+//        resumeImageView.isUserInteractionEnabled = false
+//        resumeImageView.isHidden = false
+//    }
     
     func setUpSlider() {
         slider.translatesAutoresizingMaskIntoConstraints = false
@@ -194,8 +203,8 @@ final class VideoEditorViewController: UIViewController {
         playerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
         playerView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor)
         ])
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
-        playerView.addGestureRecognizer(tap)
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+//        playerView.addGestureRecognizer(tap)
     }
     
     func setUpTimer() {

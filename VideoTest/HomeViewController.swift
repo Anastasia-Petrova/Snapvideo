@@ -6,6 +6,7 @@ final class HomeViewController: UIViewController {
     var addVideoButton = UIButton()
     let app = App.shared
     let tabBar = TabBar(items: "LOOKS", "TOOLS", "EXPORT")
+    let playButton = UIBarButtonItem()
     var childViewController: UIViewController?
     var previouslySelectedIndex: Int?
     
@@ -33,6 +34,18 @@ final class HomeViewController: UIViewController {
         }
     }
     
+    var isPlayButtonTapped: Bool = false {
+        didSet {
+            if isPlayButtonTapped {
+                playButton.title = "PAUSE"
+                playButton.tintColor = .systemBlue
+            } else {
+                playButton.title = "PLAY"
+                playButton.tintColor = .gray
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tabBar.delegate = self
@@ -43,7 +56,9 @@ final class HomeViewController: UIViewController {
         setUpAddVideoButton()
         setUpTabBar()
         setUpOpenButton()
+        setUpPlayButton()
         tabBar.isHidden = true
+        playButton.isEnabled = false
     }
     
     private func setUpTabBar() {
@@ -60,6 +75,16 @@ final class HomeViewController: UIViewController {
         let openButton = UIBarButtonItem(title: "OPEN", style: .plain, target: self, action: #selector(handleAddVideoTap))
         openButton.setTitleTextAttributes([NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor.gray], for: .normal)
         navigationItem.leftBarButtonItem = openButton
+    }
+    
+    func setUpPlayButton() {
+        playButton.title  = "PLAY"
+        playButton.style = .plain
+        playButton.target = self
+        playButton.action = #selector(handlePlayTap)
+        playButton.setTitleTextAttributes([NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15, weight: .semibold)], for: .normal)
+        playButton.tintColor = .gray
+        navigationItem.rightBarButtonItem = playButton
     }
     
     private func setUpStackView() {
@@ -106,6 +131,12 @@ final class HomeViewController: UIViewController {
          VideoBrowser.startMediaBrowser(delegate: self, sourceType: .savedPhotosAlbum)
     }
     
+    @objc private func handlePlayTap() {
+        guard let childVC = childViewController as? VideoEditorViewController else { return }
+        childVC.handleTap()
+        isPlayButtonTapped = childVC.isVideoPlaying
+    }
+    
     private func embed(_ videoEditorVC: UIViewController) {
         self.childViewController = videoEditorVC
         videoEditorVC.view.translatesAutoresizingMaskIntoConstraints = false
@@ -123,6 +154,7 @@ final class HomeViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             videoEditorVC.view.isHidden = false
             self.tabBar.isHidden = false
+            self.playButton.isEnabled = true
         }
     }
     
@@ -149,9 +181,6 @@ extension HomeViewController: UIImagePickerControllerDelegate {
             self.removeEmbeddedViewController()
             self.embed(VideoEditorViewController(url: url, filters: self.app.filters, presentedFilter: { [weak self] pressedFilter in
                 self?.tabBar.isHidden = pressedFilter
-//                self?.tabBar.selectedItem = nil
-//                self?.tabBar.previouslySelectedItem = nil
-//                self?.previouslySelectedIndex = nil
             }))
         }
     }
