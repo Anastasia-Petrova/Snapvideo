@@ -17,7 +17,10 @@ class EffectsCollectionViewDataSource: NSObject, UICollectionViewDataSource {
         self.collectionView = collectionView
         super.init()
         collectionView.dataSource = self
-        collectionView.register(EffectsCollectionViewCell.self, forCellWithReuseIdentifier: "effectsCollectionViewCell")
+        collectionView.register(
+            EffectsCollectionViewCell.self,
+            forCellWithReuseIdentifier: "effectsCollectionViewCell"
+        )
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

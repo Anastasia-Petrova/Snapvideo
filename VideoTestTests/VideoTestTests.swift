@@ -25,12 +25,33 @@ final class VideoTestTests: XCTestCase {
         collectionView = nil
     }
 
-    func testInit() {
+    func test_init_propertyAssignment() {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
-        let filters = [AnyFilter(PassthroughFilter())]
+        let filters = [
+            AnyFilter(PassthroughFilter())
+        ]
         let sut = EffectsCollectionViewDataSource(collectionView: collectionView, filters: filters)
         
         
         XCTAssertEqual(sut.filters, filters)
+        XCTAssertEqual(sut.collectionView, collectionView)
+    }
+    
+    func test_init_sets_collectionView_dataSource_to_sut() {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
+        let sut = EffectsCollectionViewDataSource(collectionView: collectionView, filters: [])
+        
+        XCTAssertEqual(collectionView.dataSource?.isEqual(sut), true)
+    }
+    
+    func test_register_cell() {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
+        let _ = EffectsCollectionViewDataSource(collectionView: collectionView, filters: [])
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: "effectsCollectionViewCell",
+            for: .init()
+        )
+        
+        XCTAssertTrue(cell is EffectsCollectionViewCell)
     }
 }
