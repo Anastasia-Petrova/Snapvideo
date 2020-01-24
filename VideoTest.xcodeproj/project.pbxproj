@@ -31,6 +31,7 @@
 		6D1D491D23D7903C00ECACE5 /* VintageFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1D491C23D7903C00ECACE5 /* VintageFilter.swift */; };
 		6D1D491F23D791EC00ECACE5 /* MonoFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1D491E23D791EC00ECACE5 /* MonoFilter.swift */; };
 		6D1D492123D793C500ECACE5 /* SepiaFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1D492023D793C500ECACE5 /* SepiaFilter.swift */; };
+		6D1D492B23DB71EA00ECACE5 /* VideoTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1D492A23DB71EA00ECACE5 /* VideoTestTests.swift */; };
 		6D2E89FD23CA498300917E25 /* VideoBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2E89FC23CA498300917E25 /* VideoBrowser.swift */; };
 		6D2E8A0323CA671A00917E25 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2E89FE23CA5AC700917E25 /* TabBar.swift */; };
 		6D2E8A0423CA673A00917E25 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2E8A0023CA5DEA00917E25 /* TabBarItem.swift */; };
@@ -48,6 +49,16 @@
 		6DEA248D23C2038B00D7595A /* ComicFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEA248C23C2038B00D7595A /* ComicFilter.swift */; };
 		6DFF1AE023C3BEC7009BCAE2 /* OldFilmFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFF1ADF23C3BEC7009BCAE2 /* OldFilmFilter.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6D1D492D23DB71EA00ECACE5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6D17A7D523ABB39100C70542 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6D17A7DC23ABB39100C70542;
+			remoteInfo = VideoTest;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		6D01E03523BFA2F900B558E8 /* EffectsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectsCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -76,6 +87,9 @@
 		6D1D491C23D7903C00ECACE5 /* VintageFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VintageFilter.swift; sourceTree = "<group>"; };
 		6D1D491E23D791EC00ECACE5 /* MonoFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonoFilter.swift; sourceTree = "<group>"; };
 		6D1D492023D793C500ECACE5 /* SepiaFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SepiaFilter.swift; sourceTree = "<group>"; };
+		6D1D492823DB71EA00ECACE5 /* VideoTestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VideoTestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D1D492A23DB71EA00ECACE5 /* VideoTestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTestTests.swift; sourceTree = "<group>"; };
+		6D1D492C23DB71EA00ECACE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6D2E89FC23CA498300917E25 /* VideoBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoBrowser.swift; path = VideoTest/VideoEditingHelpers/VideoBrowser.swift; sourceTree = SOURCE_ROOT; };
 		6D2E89FE23CA5AC700917E25 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		6D2E8A0023CA5DEA00917E25 /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
@@ -102,6 +116,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6D1D492523DB71EA00ECACE5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -117,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				6D17A7DF23ABB39100C70542 /* VideoTest */,
+				6D1D492923DB71EA00ECACE5 /* VideoTestTests */,
 				6D17A7DE23ABB39100C70542 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -125,6 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				6D17A7DD23ABB39100C70542 /* VideoTest.app */,
+				6D1D492823DB71EA00ECACE5 /* VideoTestTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -158,6 +181,15 @@
 				6DDE026223C11659002D7942 /* VideoView.swift */,
 			);
 			path = VideoEditor;
+			sourceTree = "<group>";
+		};
+		6D1D492923DB71EA00ECACE5 /* VideoTestTests */ = {
+			isa = PBXGroup;
+			children = (
+				6D1D492A23DB71EA00ECACE5 /* VideoTestTests.swift */,
+				6D1D492C23DB71EA00ECACE5 /* Info.plist */,
+			);
+			path = VideoTestTests;
 			sourceTree = "<group>";
 		};
 		6D2E8A0223CA65BD00917E25 /* TabBar */ = {
@@ -261,6 +293,24 @@
 			productReference = 6D17A7DD23ABB39100C70542 /* VideoTest.app */;
 			productType = "com.apple.product-type.application";
 		};
+		6D1D492723DB71EA00ECACE5 /* VideoTestTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6D1D493123DB71EA00ECACE5 /* Build configuration list for PBXNativeTarget "VideoTestTests" */;
+			buildPhases = (
+				6D1D492423DB71EA00ECACE5 /* Sources */,
+				6D1D492523DB71EA00ECACE5 /* Frameworks */,
+				6D1D492623DB71EA00ECACE5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6D1D492E23DB71EA00ECACE5 /* PBXTargetDependency */,
+			);
+			name = VideoTestTests;
+			productName = VideoTestTests;
+			productReference = 6D1D492823DB71EA00ECACE5 /* VideoTestTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -273,6 +323,10 @@
 				TargetAttributes = {
 					6D17A7DC23ABB39100C70542 = {
 						CreatedOnToolsVersion = 11.3;
+					};
+					6D1D492723DB71EA00ECACE5 = {
+						CreatedOnToolsVersion = 11.3;
+						TestTargetID = 6D17A7DC23ABB39100C70542;
 					};
 				};
 			};
@@ -290,6 +344,7 @@
 			projectRoot = "";
 			targets = (
 				6D17A7DC23ABB39100C70542 /* VideoTest */,
+				6D1D492723DB71EA00ECACE5 /* VideoTestTests */,
 			);
 		};
 /* End PBXProject section */
@@ -302,6 +357,13 @@
 				6D17A7ED23ABB39600C70542 /* LaunchScreen.storyboard in Resources */,
 				6D17A7EA23ABB39600C70542 /* Assets.xcassets in Resources */,
 				6D17A7E823ABB39100C70542 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6D1D492623DB71EA00ECACE5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,7 +414,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6D1D492423DB71EA00ECACE5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6D1D492B23DB71EA00ECACE5 /* VideoTestTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6D1D492E23DB71EA00ECACE5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6D17A7DC23ABB39100C70542 /* VideoTest */;
+			targetProxy = 6D1D492D23DB71EA00ECACE5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		6D17A7E623ABB39100C70542 /* Main.storyboard */ = {
@@ -524,6 +602,46 @@
 			};
 			name = Release;
 		};
+		6D1D492F23DB71EA00ECACE5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LFG8A6E922;
+				INFOPLIST_FILE = VideoTestTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = petrova.VideoTestTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VideoTest.app/VideoTest";
+			};
+			name = Debug;
+		};
+		6D1D493023DB71EA00ECACE5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LFG8A6E922;
+				INFOPLIST_FILE = VideoTestTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = petrova.VideoTestTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VideoTest.app/VideoTest";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -541,6 +659,15 @@
 			buildConfigurations = (
 				6D17A7F223ABB39600C70542 /* Debug */,
 				6D17A7F323ABB39600C70542 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6D1D493123DB71EA00ECACE5 /* Build configuration list for PBXNativeTarget "VideoTestTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6D1D492F23DB71EA00ECACE5 /* Debug */,
+				6D1D493023DB71EA00ECACE5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
