@@ -2,7 +2,7 @@ import UIKit
 
 class EffectsCollectionViewDataSource: NSObject, UICollectionViewDataSource {
     weak var collectionView: UICollectionView?
-    let filters: [Filter]
+    let filters: [AnyFilter]
     var filteredImages: [String: UIImage] = [:]
     var image: UIImage? {
         didSet {
@@ -12,7 +12,7 @@ class EffectsCollectionViewDataSource: NSObject, UICollectionViewDataSource {
     
     var context: CIContext = CIContext(options: [CIContextOption.workingColorSpace : NSNull()])
     
-    init(collectionView: UICollectionView, filters: [Filter]) {
+    init(collectionView: UICollectionView, filters: [AnyFilter]) {
         self.filters = filters
         self.collectionView = collectionView
         super.init()
@@ -36,7 +36,7 @@ class EffectsCollectionViewDataSource: NSObject, UICollectionViewDataSource {
         } else {
             if let cgImage = image?.cgImage {
                 let ciImage = CIImage(cgImage: cgImage)
-                let filteredCIImage = filters[indexPath.row].apply(image: ciImage)
+                let filteredCIImage = filters[indexPath.row].apply(ciImage)
                 let uiImage = UIImage(ciImage: filteredCIImage)
                 filteredImages[filters[indexPath.row].name] = uiImage
                 cell.previewImageView.image = uiImage

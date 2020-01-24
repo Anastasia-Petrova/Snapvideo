@@ -4,10 +4,10 @@ import Photos
 
 struct VideoEditer {
     
-    static func saveEditedVideo(choosenFilter: Filter, asset: AVAsset ) {
+    static func saveEditedVideo(choosenFilter: AnyFilter, asset: AVAsset ) {
         let composition = AVVideoComposition(asset: asset) { (request) in
             let source = request.sourceImage.clampedToExtent()
-            let filteredImage = choosenFilter.apply(image: source).cropped(to: request.sourceImage.extent)
+            let filteredImage = choosenFilter.apply(source).cropped(to: request.sourceImage.extent)
             request.finish(with: filteredImage, context: nil)
         }
         guard let export = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetHighestQuality) else {

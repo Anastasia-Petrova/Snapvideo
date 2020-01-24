@@ -31,7 +31,7 @@ final class VideoEditorViewController: UIViewController {
     var filterIndex = 0 {
         didSet {
             playerView.filter = dataSource.filters[filterIndex]
-            bgVideoView.filter = dataSource.filters[filterIndex] + BlurFilter(blurRadius: 100)
+            bgVideoView.filter = dataSource.filters[filterIndex] + AnyFilter(BlurFilter(blurRadius: 100))
             doneButton.isEnabled = filterIndex != 0
             presentedFilter(filterIndex != 0)
             guard filterIndex != oldValue else { return }
@@ -66,7 +66,7 @@ final class VideoEditorViewController: UIViewController {
         return Float(CMTimeGetSeconds(trackDuration))
     }
     
-    init(url: URL, filters: [Filter], presentedFilter: @escaping (Bool) -> Void) {
+    init(url: URL, filters: [AnyFilter], presentedFilter: @escaping (Bool) -> Void) {
         asset = AVAsset(url: url)
         let playerItem = AVPlayerItem(asset: asset)
         player = AVPlayer(playerItem: playerItem)
@@ -82,7 +82,7 @@ final class VideoEditorViewController: UIViewController {
             videoOutput: outputBG,
             videoOrientation: self.asset.videoOrientation,
             contentsGravity: .resizeAspectFill,
-            filter: BlurFilter(blurRadius: 100)
+            filter: AnyFilter(BlurFilter(blurRadius: 100))
         )
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 60, height: 76)

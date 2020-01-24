@@ -5,7 +5,7 @@ class VideoView: UIView {
     let videoOutput: AVPlayerItemVideoOutput
     var displayLink: CADisplayLink?
     var context: CIContext = CIContext(options: [CIContextOption.workingColorSpace : NSNull()])
-    var filter: Filter
+    var filter: AnyFilter
     let videoOrientation: CGImagePropertyOrientation
     
     func play() {
@@ -21,7 +21,7 @@ class VideoView: UIView {
         videoOrientation: CGImagePropertyOrientation,
         preferredFramesPerSecond: Int = 30,
         contentsGravity: CALayerContentsGravity = .resizeAspect,
-        filter: Filter = PassthroughFilter()
+        filter: AnyFilter = AnyFilter(PassthroughFilter())
     ) {
         self.videoOrientation = videoOrientation
         self.videoOutput = videoOutput
