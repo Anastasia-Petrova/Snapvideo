@@ -1,6 +1,6 @@
 //
-//  SnapvideoTests.swift
-//  SnapvideoTests
+//  FilterCollectionDataSourceTests.swift
+//  FilterCollectionDataSourceTests
 //
 //  Created by Anastasia Petrova on 24/01/2020.
 //  Copyright © 2020 Anastasia Petrova. All rights reserved.
@@ -9,14 +9,14 @@
 import XCTest
 @testable import Snapvideo
 
-final class SnapvideoTests: XCTestCase {
-    var dataSource: EffectsCollectionViewDataSource!
+final class FilterCollectionDataSourceTests: XCTestCase {
+    var dataSource: FilterCollectionDataSource!
     var collectionView: UICollectionView!
 
     override func setUp() {
         super.setUp()
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
-        dataSource = EffectsCollectionViewDataSource(collectionView: collectionView, filters: [])
+        dataSource = FilterCollectionDataSource(collectionView: collectionView, filters: [])
     }
 
     override func tearDown() {
@@ -30,7 +30,7 @@ final class SnapvideoTests: XCTestCase {
         let filters = [
             AnyFilter(PassthroughFilter())
         ]
-        let sut = EffectsCollectionViewDataSource(collectionView: collectionView, filters: filters)
+        let sut = FilterCollectionDataSource(collectionView: collectionView, filters: filters)
         
         
         XCTAssertEqual(sut.filters, filters)
@@ -39,14 +39,14 @@ final class SnapvideoTests: XCTestCase {
     
     func test_init_sets_collectionView_dataSource() {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
-        let sut = EffectsCollectionViewDataSource(collectionView: collectionView, filters: [])
+        let sut = FilterCollectionDataSource(collectionView: collectionView, filters: [])
         
         XCTAssertEqual(collectionView.dataSource?.isEqual(sut), true)
     }
     
     func test_register_cell() {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
-        let _ = EffectsCollectionViewDataSource(collectionView: collectionView, filters: [])
+        let _ = FilterCollectionDataSource(collectionView: collectionView, filters: [])
         let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: "effectsCollectionViewCell",
             for: .init()

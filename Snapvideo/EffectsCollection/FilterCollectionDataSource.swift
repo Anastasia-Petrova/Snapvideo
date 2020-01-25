@@ -1,6 +1,6 @@
 import UIKit
 
-class EffectsCollectionViewDataSource: NSObject, UICollectionViewDataSource {
+class FilterCollectionDataSource: NSObject, UICollectionViewDataSource {
     weak var collectionView: UICollectionView?
     let filters: [AnyFilter]
     var filteredImages: [String: UIImage] = [:]

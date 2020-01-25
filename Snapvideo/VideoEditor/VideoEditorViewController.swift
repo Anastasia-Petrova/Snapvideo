@@ -13,7 +13,7 @@ final class VideoEditorViewController: UIViewController {
     let toolsView = UIView()
     var bottomToolsConstraint = NSLayoutConstraint()
     let effectsCollectionView: UICollectionView
-    let dataSource: EffectsCollectionViewDataSource
+    let dataSource: FilterCollectionDataSource
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
     let bgVideoView: VideoView
     var playerRateObservation: NSKeyValueObservation?
@@ -93,7 +93,7 @@ final class VideoEditorViewController: UIViewController {
         effectsCollectionView.showsHorizontalScrollIndicator = false
         effectsCollectionView.allowsSelection = true
         effectsCollectionView.bounces = false
-        dataSource = EffectsCollectionViewDataSource(collectionView: effectsCollectionView, filters: filters)
+        dataSource = FilterCollectionDataSource(collectionView: effectsCollectionView, filters: filters)
         self.presentedFilter = presentedFilter
         super.init(nibName: nil, bundle: nil)
     }
