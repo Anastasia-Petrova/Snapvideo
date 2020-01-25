@@ -110,4 +110,47 @@ final class FilterCollectionDataSourceTests: XCTestCase {
         
         XCTAssertTrue(cell is EffectsCollectionViewCell)
     }
+    
+    func test_when_has_noOriginalImage_cell_previewImage_is_placeholder() {
+        //Given
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
+        let filters = [
+            AnyFilter(PassthroughFilter())
+        ]
+        let placeholder = UIImage(named: "placeholder")!
+        //When
+        let sut = FilterCollectionDataSource(collectionView: collectionView, filters: filters)
+        sut.image = nil
+        //Then
+        let cell = sut.collectionView(collectionView, cellForItemAt: IndexPath(item: 0, section: 0))
+        
+        guard let filterCell = cell as? EffectsCollectionViewCell else {
+            XCTFail("expected EffectsCollectionViewCell, got \(cell.self)")
+            return
+        }
+        assertEqual(placeholder, filterCell.previewImageView.image!)
+    }
+    
+    func test_when_originalImage_cell_previewImage_is_filteredOriginalImage() {
+        //Given
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
+        let filter = AnyFilter(BlurFilter(blurRadius: 10))
+        let image = UIImage(named: "testImage", in: .testBundle, with: nil)!
+        let filteredImage = UIImage(ciImage: filter.apply(CIImage(cgImage: image.cgImage!)))
+        
+        //When
+        let sut = FilterCollectionDataSource(collectionView: collectionView, filters: [filter])
+        sut.image = image
+        
+        //Then
+        let cell = sut.collectionView(collectionView, cellForItemAt: IndexPath(item: 0, section: 0))
+        
+        guard let filterCell = cell as? EffectsCollectionViewCell else {
+            XCTFail("expected EffectsCollectionViewCell, got \(cell.self)")
+            return
+        }
+        assertEqual(filterCell.previewImageView.image!, filteredImage)
+    }
+    
+    
 }
