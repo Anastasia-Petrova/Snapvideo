@@ -4,4 +4,4 @@
 
 Video Editing Application for iOS
 
-![Preview](https://i.imgur.com/KtjeDRC.gif)
+![Preview](https://i.imgur.com/xSzgWu2.gif)
