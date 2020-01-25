@@ -1,15 +1,15 @@
 //
-//  VideoTestTests.swift
-//  VideoTestTests
+//  SnapvideoTests.swift
+//  SnapvideoTests
 //
 //  Created by Anastasia Petrova on 24/01/2020.
 //  Copyright © 2020 Anastasia Petrova. All rights reserved.
 //
 
 import XCTest
-@testable import VideoTest
+@testable import Snapvideo
 
-final class VideoTestTests: XCTestCase {
+final class SnapvideoTests: XCTestCase {
     var dataSource: EffectsCollectionViewDataSource!
     var collectionView: UICollectionView!
 
@@ -37,7 +37,7 @@ final class VideoTestTests: XCTestCase {
         XCTAssertEqual(sut.collectionView, collectionView)
     }
     
-    func test_init_sets_collectionView_dataSource_to_sut() {
+    func test_init_sets_collectionView_dataSource() {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
         let sut = EffectsCollectionViewDataSource(collectionView: collectionView, filters: [])
         

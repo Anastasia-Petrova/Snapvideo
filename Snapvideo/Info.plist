@@ -23,15 +23,15 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppleMusicUsageDescription</key>
-	<string>VideoTest would like to access to your Media Library.</string>
+	<string>Snapvideo would like to access to your Media Library.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>VideoTest would like to use your camera.</string>
+	<string>Snapvideo would like to use your camera.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>VideoTest would like to access your microphone.</string>
+	<string>Snapvideo would like to access your microphone.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>VideoTest would like to save to your Photo Library.</string>
+	<string>Snapvideo would like to save to your Photo Library.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>VideoTest would like to access to your Photo Library.</string>
+	<string>Snapvideo would like to access to your Photo Library.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

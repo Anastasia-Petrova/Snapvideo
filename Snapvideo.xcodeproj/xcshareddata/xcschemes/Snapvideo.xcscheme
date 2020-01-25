@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6D17A7DC23ABB39100C70542"
-               BuildableName = "VideoTest.app"
-               BlueprintName = "VideoTest"
-               ReferencedContainer = "container:VideoTest.xcodeproj">
+               BuildableName = "Snapvideo.app"
+               BlueprintName = "Snapvideo"
+               ReferencedContainer = "container:Snapvideo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -34,9 +34,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6D1D492723DB71EA00ECACE5"
-               BuildableName = "VideoTestTests.xctest"
-               BlueprintName = "VideoTestTests"
-               ReferencedContainer = "container:VideoTest.xcodeproj">
+               BuildableName = "SnapvideoTests.xctest"
+               BlueprintName = "SnapvideoTests"
+               ReferencedContainer = "container:Snapvideo.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -56,9 +56,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6D17A7DC23ABB39100C70542"
-            BuildableName = "VideoTest.app"
-            BlueprintName = "VideoTest"
-            ReferencedContainer = "container:VideoTest.xcodeproj">
+            BuildableName = "Snapvideo.app"
+            BlueprintName = "Snapvideo"
+            ReferencedContainer = "container:Snapvideo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -73,9 +73,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6D17A7DC23ABB39100C70542"
-            BuildableName = "VideoTest.app"
-            BlueprintName = "VideoTest"
-            ReferencedContainer = "container:VideoTest.xcodeproj">
+            BuildableName = "Snapvideo.app"
+            BlueprintName = "Snapvideo"
+            ReferencedContainer = "container:Snapvideo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
