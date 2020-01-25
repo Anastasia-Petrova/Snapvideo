@@ -1,0 +1,15 @@
+version: 2.1
+jobs: 
+
+  build:
+
+    macos: 
+      xcode: 11.3.0
+
+    steps: 
+      - checkout
+      - run:
+          name: Run Unit Tests
+          command: xcodebuild test -scheme Snapvideo -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.3'
+      - store_test_results:
+          path: test_output
