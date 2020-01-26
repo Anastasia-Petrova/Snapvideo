@@ -3,14 +3,14 @@ import UIKit
 class EffectsCollectionViewCell: UICollectionViewCell {
     let stackView = UIStackView()
     let previewImageView = UIImageView(image: UIImage(named: "placeholder"))
-    let effectName = UILabel()
+    let filterName = UILabel()
     
     override var isSelected: Bool {
         didSet {
             if self.isSelected {
-                effectName.textColor = .blue
+                filterName.textColor = .blue
             } else {
-                effectName.textColor = .gray
+                filterName.textColor = .gray
             }
         }
     }
@@ -25,7 +25,7 @@ class EffectsCollectionViewCell: UICollectionViewCell {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(stackView)
         stackView.addArrangedSubview(previewImageView)
-        stackView.addArrangedSubview(effectName)
+        stackView.addArrangedSubview(filterName)
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
@@ -36,9 +36,9 @@ class EffectsCollectionViewCell: UICollectionViewCell {
         stackView.alignment = .center
         stackView.axis = .vertical
         stackView.spacing = 6
-        effectName.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
-        effectName.font = UIFont.systemFont(ofSize: 9)
-        effectName.numberOfLines = 1
+        filterName.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
+        filterName.font = UIFont.systemFont(ofSize: 9)
+        filterName.numberOfLines = 1
         previewImageView.contentMode = .scaleAspectFill
         previewImageView.clipsToBounds = true
     }

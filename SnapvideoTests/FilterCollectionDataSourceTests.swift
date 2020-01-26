@@ -118,12 +118,13 @@ final class FilterCollectionDataSourceTests: XCTestCase {
             AnyFilter(PassthroughFilter())
         ]
         let placeholder = UIImage(named: "placeholder")!
-        //When
         let sut = FilterCollectionDataSource(collectionView: collectionView, filters: filters)
         sut.image = nil
-        //Then
+        
+        //When
         let cell = sut.collectionView(collectionView, cellForItemAt: IndexPath(item: 0, section: 0))
         
+        //Then
         guard let filterCell = cell as? EffectsCollectionViewCell else {
             XCTFail("expected EffectsCollectionViewCell, got \(cell.self)")
             return
@@ -137,14 +138,13 @@ final class FilterCollectionDataSourceTests: XCTestCase {
         let filter = AnyFilter(BlurFilter(blurRadius: 10))
         let image = UIImage(named: "testImage", in: .testBundle, with: nil)!
         let filteredImage = UIImage(ciImage: filter.apply(CIImage(cgImage: image.cgImage!)))
-        
-        //When
         let sut = FilterCollectionDataSource(collectionView: collectionView, filters: [filter])
         sut.image = image
         
-        //Then
+        //When
         let cell = sut.collectionView(collectionView, cellForItemAt: IndexPath(item: 0, section: 0))
         
+        //Then
         guard let filterCell = cell as? EffectsCollectionViewCell else {
             XCTFail("expected EffectsCollectionViewCell, got \(cell.self)")
             return
@@ -152,5 +152,21 @@ final class FilterCollectionDataSourceTests: XCTestCase {
         assertEqual(filterCell.previewImageView.image!, filteredImage)
     }
     
-    
+    func test_cell_name_is_filter_name() {
+        //Given
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
+        let filter = AnyFilter(BlurFilter(blurRadius: 10))
+        let sut = FilterCollectionDataSource(collectionView: collectionView, filters: [filter])
+        
+        //When
+        let cell = sut.collectionView(collectionView, cellForItemAt: IndexPath(item: 0, section: 0))
+        
+        //Then
+        guard let filterCell = cell as? EffectsCollectionViewCell else {
+            XCTFail("expected EffectsCollectionViewCell, got \(cell.self)")
+            return
+        }
+        
+        XCTAssertEqual(filter.name, filterCell.filterName.text)
+    }
 }

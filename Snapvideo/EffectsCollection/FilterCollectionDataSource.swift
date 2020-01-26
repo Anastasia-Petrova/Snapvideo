@@ -34,7 +34,7 @@ class FilterCollectionDataSource: NSObject, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let reusableIdentifier = "effectsCollectionViewCell"
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reusableIdentifier, for: indexPath) as! EffectsCollectionViewCell
-        cell.effectName.text = filters[indexPath.row].name
+        cell.filterName.text = filters[indexPath.row].name
         
         if let filteredImage = filteredImages[filters[indexPath.row].name] {
             cell.previewImageView.image = filteredImage
