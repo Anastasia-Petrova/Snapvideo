@@ -28,6 +28,7 @@ final class VideoEditorViewController: UIViewController {
     var presentedFilter: (Bool) -> Void
     let saveStackView = UIStackView()
     let saveCopyStackView = UIStackView()
+    let itemSize = CGSize(width: 60, height: 76)
     var filterIndex = 0 {
         didSet {
             playerView.filter = dataSource.filters[filterIndex]
@@ -85,7 +86,7 @@ final class VideoEditorViewController: UIViewController {
             filter: AnyFilter(BlurFilter(blurRadius: 100))
         )
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 60, height: 76)
+        layout.itemSize = itemSize
         layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         layout.minimumLineSpacing = 5
         layout.scrollDirection = .horizontal
@@ -105,9 +106,13 @@ final class VideoEditorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-        AssetImageGenerator.getThumbnailImageFromVideoAsset(asset: asset, completion: { [weak self] image in
-            self?.previewImage = image
-        })
+        AssetImageGenerator.getThumbnailImageFromVideoAsset(
+            asset: asset,
+            maximumSize: itemSize.applying(.init(scaleX: UIScreen.main.scale, y: UIScreen.main.scale)),
+            completion: { [weak self] image in
+                self?.previewImage = image
+            }
+        )
         setUpBackgroundView()
         setUpPlayerView()
         setUpEffectsView()

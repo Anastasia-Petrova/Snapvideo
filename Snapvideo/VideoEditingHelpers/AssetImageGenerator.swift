@@ -3,9 +3,10 @@ import AVFoundation
 import UIKit
 
 struct AssetImageGenerator {
-    static func getThumbnailImageFromVideoAsset(asset: AVAsset, completion: @escaping (UIImage?) -> Void) {
+    static func getThumbnailImageFromVideoAsset(asset: AVAsset, maximumSize: CGSize = .zero, completion: @escaping (UIImage?) -> Void) {
         DispatchQueue.global().async {
             let avAssetImageGenerator = AVAssetImageGenerator(asset: asset)
+            avAssetImageGenerator.maximumSize = maximumSize
             avAssetImageGenerator.appliesPreferredTrackTransform = true
             let thumnailTime = CMTimeMake(value: 2, timescale: 1)
             do {
