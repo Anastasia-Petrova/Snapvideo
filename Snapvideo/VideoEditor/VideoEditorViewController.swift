@@ -94,7 +94,11 @@ final class VideoEditorViewController: UIViewController {
         effectsCollectionView.showsHorizontalScrollIndicator = false
         effectsCollectionView.allowsSelection = true
         effectsCollectionView.bounces = false
-        dataSource = FilterCollectionDataSource(collectionView: effectsCollectionView, filters: filters)
+        dataSource = FilterCollectionDataSource(
+            collectionView: effectsCollectionView,
+            filters: filters,
+            context: CIContext(options: [CIContextOption.workingColorSpace : NSNull()])
+        )
         self.presentedFilter = presentedFilter
         super.init(nibName: nil, bundle: nil)
     }

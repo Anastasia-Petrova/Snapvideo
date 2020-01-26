@@ -10,11 +10,12 @@ class FilterCollectionDataSource: NSObject, UICollectionViewDataSource {
         }
     }
     
-    var context: CIContext = CIContext(options: [CIContextOption.workingColorSpace : NSNull()])
+    let context: CIContext
     
-    init(collectionView: UICollectionView, filters: [AnyFilter]) {
+    init(collectionView: UICollectionView, filters: [AnyFilter], context: CIContext) {
         self.filters = filters
         self.collectionView = collectionView
+        self.context = context
         super.init()
         collectionView.dataSource = self
         collectionView.register(
@@ -39,17 +40,25 @@ class FilterCollectionDataSource: NSObject, UICollectionViewDataSource {
         if let filteredImage = filteredImages[filters[indexPath.row].name] {
             cell.previewImageView.image = filteredImage
         } else {
-            if let cgImage = image?.cgImage {
-                let ciImage = CIImage(cgImage: cgImage)
-                let filteredCIImage = filters[indexPath.row].apply(ciImage)
-                if let filteredCGImage = context.createCGImage(filteredCIImage, from: filteredCIImage.extent) {
-                    let uiImage = UIImage(cgImage: filteredCGImage)
-                    filteredImages[filters[indexPath.row].name] = uiImage
-                    cell.previewImageView.image = uiImage
-                }
+            if let image = image {
+                let filteredImage = filter(image: image, indexPath: indexPath)
+                filteredImages[filters[indexPath.row].name] = filteredImage
+                cell.previewImageView.image = filteredImage
             }
         }
         
         return cell
+    }
+    
+    func filter(image: UIImage, indexPath: IndexPath) -> UIImage {
+        var uiImage = image
+        if let cgImage = image.cgImage {
+            let ciImage = CIImage(cgImage: cgImage)
+            let filteredCIImage = filters[indexPath.row].apply(ciImage)
+            if let filteredCGImage = context.createCGImage(filteredCIImage, from: filteredCIImage.extent) {
+                uiImage = UIImage(cgImage: filteredCGImage)
+            }
+        }
+        return uiImage
     }
 }

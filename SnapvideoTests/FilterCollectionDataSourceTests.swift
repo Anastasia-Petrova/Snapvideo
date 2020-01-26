@@ -6,22 +6,27 @@
 //  Copyright © 2020 Anastasia Petrova. All rights reserved.
 //
 
+import Foundation
+import UIKit
 import XCTest
 @testable import Snapvideo
 
 final class FilterCollectionDataSourceTests: XCTestCase {
     var dataSource: FilterCollectionDataSource!
     var collectionView: UICollectionView!
+    var context: CIContext!
 
     override func setUp() {
         super.setUp()
+        context = CIContext(options: [CIContextOption.workingColorSpace : NSNull()])
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
-        dataSource = FilterCollectionDataSource(collectionView: collectionView, filters: [])
+        dataSource = FilterCollectionDataSource(collectionView: collectionView, filters: [], context: context)
     }
 
     override func tearDown() {
         super.tearDown()
         dataSource = nil
+        context = nil
         collectionView = nil
     }
 
@@ -33,7 +38,7 @@ final class FilterCollectionDataSourceTests: XCTestCase {
         ]
         
         //When
-        let sut = FilterCollectionDataSource(collectionView: collectionView, filters: filters)
+        let sut = FilterCollectionDataSource(collectionView: collectionView, filters: filters, context: context)
         
         //Then
         XCTAssertEqual(sut.filters, filters)
@@ -45,7 +50,7 @@ final class FilterCollectionDataSourceTests: XCTestCase {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
         
         //When
-        let sut = FilterCollectionDataSource(collectionView: collectionView, filters: [])
+        let sut = FilterCollectionDataSource(collectionView: collectionView, filters: [], context: context)
         
         //Then
         XCTAssertEqual(collectionView.dataSource?.isEqual(sut), true)
@@ -56,7 +61,7 @@ final class FilterCollectionDataSourceTests: XCTestCase {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
         
         //When
-        let _ = FilterCollectionDataSource(collectionView: collectionView, filters: [])
+        let _ = FilterCollectionDataSource(collectionView: collectionView, filters: [], context: context)
         
         //Then 
         let cell = collectionView.dequeueReusableCell(
@@ -75,7 +80,7 @@ final class FilterCollectionDataSourceTests: XCTestCase {
         ]
         
         //When
-        let sut = FilterCollectionDataSource(collectionView: collectionView, filters: filters)
+        let sut = FilterCollectionDataSource(collectionView: collectionView, filters: filters, context: context)
         
         //Then
         let numberOfCells = sut.collectionView(collectionView, numberOfItemsInSection: 0)
@@ -87,7 +92,7 @@ final class FilterCollectionDataSourceTests: XCTestCase {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
         
         //When
-        let sut = FilterCollectionDataSource(collectionView: collectionView, filters: [])
+        let sut = FilterCollectionDataSource(collectionView: collectionView, filters: [], context: context)
         
         //Then
         let numberOfSections = sut.numberOfSections(in: collectionView)
@@ -103,7 +108,7 @@ final class FilterCollectionDataSourceTests: XCTestCase {
         ]
         
         //When
-        let sut = FilterCollectionDataSource(collectionView: collectionView, filters: filters)
+        let sut = FilterCollectionDataSource(collectionView: collectionView, filters: filters, context: context)
         
         //Then
         let cell = sut.collectionView(collectionView, cellForItemAt: IndexPath(item: 0, section: 0))
@@ -118,7 +123,7 @@ final class FilterCollectionDataSourceTests: XCTestCase {
             AnyFilter(PassthroughFilter())
         ]
         let placeholder = UIImage(named: "placeholder")!
-        let sut = FilterCollectionDataSource(collectionView: collectionView, filters: filters)
+        let sut = FilterCollectionDataSource(collectionView: collectionView, filters: filters, context: context)
         sut.image = nil
         
         //When
@@ -137,8 +142,12 @@ final class FilterCollectionDataSourceTests: XCTestCase {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
         let filter = AnyFilter(BlurFilter(blurRadius: 10))
         let image = UIImage(named: "testImage", in: .testBundle, with: nil)!
-        let filteredImage = UIImage(ciImage: filter.apply(CIImage(cgImage: image.cgImage!)))
-        let sut = FilterCollectionDataSource(collectionView: collectionView, filters: [filter])
+        
+        let filteredCIImage = filter.apply(CIImage(cgImage: image.cgImage!))
+        let filteredCGImage = context.createCGImage(filteredCIImage, from: filteredCIImage.extent)!
+        let filteredImage = UIImage(cgImage: filteredCGImage)
+        
+        let sut = FilterCollectionDataSource(collectionView: collectionView, filters: [filter], context: context)
         sut.image = image
         
         //When
@@ -156,7 +165,7 @@ final class FilterCollectionDataSourceTests: XCTestCase {
         //Given
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
         let filter = AnyFilter(BlurFilter(blurRadius: 10))
-        let sut = FilterCollectionDataSource(collectionView: collectionView, filters: [filter])
+        let sut = FilterCollectionDataSource(collectionView: collectionView, filters: [filter], context: context)
         
         //When
         let cell = sut.collectionView(collectionView, cellForItemAt: IndexPath(item: 0, section: 0))
