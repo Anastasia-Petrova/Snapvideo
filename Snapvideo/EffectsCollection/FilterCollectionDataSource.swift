@@ -41,9 +41,13 @@ class FilterCollectionDataSource: NSObject, UICollectionViewDataSource {
             cell.previewImageView.image = filteredImage
         } else {
             if let image = image {
-                let filteredImage = filter(image: image, indexPath: indexPath)
-                filteredImages[filters[indexPath.row].name] = filteredImage
-                cell.previewImageView.image = filteredImage
+                filterAsync(image: image, indexPath: indexPath) { [weak self] (filteredImage) in
+                    DispatchQueue.main.async {
+                        guard let self = self else { return }
+                        self.filteredImages[self.filters[indexPath.row].name] = filteredImage
+                        collectionView.reloadItems(at: [indexPath])
+                    }
+                }
             }
         }
         
@@ -60,5 +64,22 @@ class FilterCollectionDataSource: NSObject, UICollectionViewDataSource {
             }
         }
         return uiImage
+    }
+    
+    func filterAsync(image: UIImage, indexPath: IndexPath, callback: @escaping (UIImage?) -> Void) {
+        guard let cgImage = image.cgImage else {
+            callback(nil)
+            return
+        }
+        
+        DispatchQueue.global().async {
+            let ciImage = CIImage(cgImage: cgImage)
+            let filteredCIImage = self.filters[indexPath.row].apply(ciImage)
+            if let filteredCGImage = self.context.createCGImage(filteredCIImage, from: filteredCIImage.extent) {
+                callback(UIImage(cgImage: filteredCGImage))
+            } else {
+                callback(nil)
+            }
+        }
     }
 }
