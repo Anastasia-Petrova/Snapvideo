@@ -178,4 +178,29 @@ final class FilterCollectionDataSourceTests: XCTestCase {
         
         XCTAssertEqual(filter.name, filterCell.filterName.text)
     }
+    
+    func test_cellPreviewImage_is_taken_from_cache() {
+        //Given
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
+        let filter = AnyFilter(BlurFilter(blurRadius: 10))
+        let sut = FilterCollectionDataSource(collectionView: collectionView, filters: [filter], context: context)
+        sut.image = nil
+        let expectedImage = UIImage(named: "testImage", in: .testBundle, with: nil)!
+        sut.filteredImages["Blur"] = expectedImage
+        //When
+        let cell = sut.collectionView(collectionView, cellForItemAt: IndexPath(item: 0, section: 0))
+        //Then
+        guard let filterCell = cell as? EffectsCollectionViewCell else {
+            XCTFail("expected EffectsCollectionViewCell, got \(cell.self)")
+            return
+        }
+        
+        XCTAssertEqual(
+            filterCell.previewImageView.image,
+            expectedImage
+        )
+    }
+    
+    
+    
 }
