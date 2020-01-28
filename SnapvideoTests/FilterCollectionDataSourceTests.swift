@@ -201,6 +201,24 @@ final class FilterCollectionDataSourceTests: XCTestCase {
         )
     }
     
-    
+    func test_adding_filtered_images_to_cache() {
+        //Given
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
+        let filter = AnyFilter(BlurFilter(blurRadius: 10))
+        let image = UIImage(named: "testImage", in: .testBundle, with: nil)!
+        let filteredCIImage = filter.apply(CIImage(cgImage: image.cgImage!))
+        let filteredCGImage = context.createCGImage(filteredCIImage, from: filteredCIImage.extent)!
+        let expectedImage = UIImage(cgImage: filteredCGImage)
+        let sut = FilterCollectionDataSource(collectionView: collectionView, filters: [filter], context: context)
+        sut.image = UIImage(named: "testImage", in: .testBundle, with: nil)!
+        //When
+        let _ = sut.collectionView(collectionView, cellForItemAt: IndexPath(item: 0, section: 0))
+        //Then
+        guard let actualImage = sut.filteredImages["Blur"] else {
+            XCTFail("expected to get image from filteredImages cache")
+            return
+        }
+        assertEqual(expectedImage, actualImage)
+    }
     
 }
