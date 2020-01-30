@@ -221,4 +221,30 @@ final class FilterCollectionDataSourceTests: XCTestCase {
         assertEqual(expectedImage, actualImage)
     }
     
+    
+    func test_filterAsync() {
+        //Given
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
+        let filter = AnyFilter(BlurFilter(blurRadius: 10))
+        let image = UIImage(named: "testImage", in: .testBundle, with: nil)!
+        
+        let filteredCIImage = filter.apply(CIImage(cgImage: image.cgImage!))
+        let filteredCGImage = context.createCGImage(filteredCIImage, from: filteredCIImage.extent)!
+        let expectedImage = UIImage(cgImage: filteredCGImage)
+        
+        let sut = FilterCollectionDataSource(collectionView: collectionView, filters: [filter], context: context)
+        
+        //When
+        let expectation = XCTestExpectation(description: "finished filtering image")
+        sut.filterAsync(image: image, indexPath: IndexPath(row: 0, section: 0)) { (actualImage) in
+            //Then
+            guard let actualImage = actualImage else {
+                XCTFail("expected to get image with filterAsync callback")
+                return
+            }
+            assertEqual(expectedImage, actualImage)
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 1)
+    }
 }
