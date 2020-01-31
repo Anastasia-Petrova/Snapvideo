@@ -32,6 +32,8 @@ class FilterCollectionDataSource: NSObject, UICollectionViewDataSource {
         return 1
     }
     
+    var cellForItemCallback: (() -> Void)?
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let reusableIdentifier = "effectsCollectionViewCell"
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reusableIdentifier, for: indexPath) as! EffectsCollectionViewCell
@@ -46,24 +48,13 @@ class FilterCollectionDataSource: NSObject, UICollectionViewDataSource {
                         guard let self = self else { return }
                         self.filteredImages[self.filters[indexPath.row].name] = filteredImage
                         collectionView.reloadItems(at: [indexPath])
+                        self.cellForItemCallback?()
                     }
                 }
             }
         }
         
         return cell
-    }
-    
-    func filter(image: UIImage, indexPath: IndexPath) -> UIImage {
-        var uiImage = image
-        if let cgImage = image.cgImage {
-            let ciImage = CIImage(cgImage: cgImage)
-            let filteredCIImage = filters[indexPath.row].apply(ciImage)
-            if let filteredCGImage = context.createCGImage(filteredCIImage, from: filteredCIImage.extent) {
-                uiImage = UIImage(cgImage: filteredCGImage)
-            }
-        }
-        return uiImage
     }
     
     func filterAsync(image: UIImage, indexPath: IndexPath, callback: @escaping (UIImage?) -> Void) {

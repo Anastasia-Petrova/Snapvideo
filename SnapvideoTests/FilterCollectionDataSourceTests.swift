@@ -145,20 +145,27 @@ final class FilterCollectionDataSourceTests: XCTestCase {
         
         let filteredCIImage = filter.apply(CIImage(cgImage: image.cgImage!))
         let filteredCGImage = context.createCGImage(filteredCIImage, from: filteredCIImage.extent)!
-        let filteredImage = UIImage(cgImage: filteredCGImage)
+        let expectedImage = UIImage(cgImage: filteredCGImage)
         
         let sut = FilterCollectionDataSource(collectionView: collectionView, filters: [filter], context: context)
         sut.image = image
+        let expectation = XCTestExpectation(description: "finished filtering image")
         
         //When
-        let cell = sut.collectionView(collectionView, cellForItemAt: IndexPath(item: 0, section: 0))
+        let _ = sut.collectionView(collectionView, cellForItemAt: IndexPath(item: 0, section: 0))
         
-        //Then
-        guard let filterCell = cell as? EffectsCollectionViewCell else {
-            XCTFail("expected EffectsCollectionViewCell, got \(cell.self)")
-            return
+        sut.cellForItemCallback = {
+            //Then
+            let cell = sut.collectionView(collectionView, cellForItemAt: IndexPath(item: 0, section: 0))
+            guard let filterCell = cell as? EffectsCollectionViewCell else {
+                XCTFail("expected EffectsCollectionViewCell, got \(cell.self)")
+                return
+            }
+            assertEqual(filterCell.previewImageView.image!, expectedImage)
+            expectation.fulfill()
         }
-        assertEqual(filterCell.previewImageView.image!, filteredImage)
+        
+        wait(for: [expectation], timeout: 1)
     }
     
     func test_cell_name_is_filter_name() {
