@@ -165,7 +165,7 @@ final class FilterCollectionDataSourceTests: XCTestCase {
             expectation.fulfill()
         }
         
-        wait(for: [expectation], timeout: 1)
+        wait(for: [expectation], timeout: 5)
     }
     
     func test_cell_name_is_filter_name() {
@@ -233,7 +233,7 @@ final class FilterCollectionDataSourceTests: XCTestCase {
             assertEqual(expectedImage, actualImage)
             expectation.fulfill()
         }
-        wait(for: [expectation], timeout: 1)
+        wait(for: [expectation], timeout: 5)
     }
     
     
@@ -260,6 +260,6 @@ final class FilterCollectionDataSourceTests: XCTestCase {
             assertEqual(expectedImage, actualImage)
             expectation.fulfill()
         }
-        wait(for: [expectation], timeout: 1)
+        wait(for: [expectation], timeout: 5)
     }
 }
