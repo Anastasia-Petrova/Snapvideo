@@ -218,14 +218,22 @@ final class FilterCollectionDataSourceTests: XCTestCase {
         let expectedImage = UIImage(cgImage: filteredCGImage)
         let sut = FilterCollectionDataSource(collectionView: collectionView, filters: [filter], context: context)
         sut.image = UIImage(named: "testImage", in: .testBundle, with: nil)!
+
+        
         //When
+        let expectation = XCTestExpectation(description: "added filtered image to cache")
         let _ = sut.collectionView(collectionView, cellForItemAt: IndexPath(item: 0, section: 0))
-        //Then
-        guard let actualImage = sut.filteredImages["Blur"] else {
-            XCTFail("expected to get image from filteredImages cache")
-            return
+        
+        sut.cellForItemCallback = {
+            //Then
+            guard let actualImage = sut.filteredImages["Blur"] else {
+                XCTFail("expected to get image from filteredImages cache")
+                return
+            }
+            assertEqual(expectedImage, actualImage)
+            expectation.fulfill()
         }
-        assertEqual(expectedImage, actualImage)
+        wait(for: [expectation], timeout: 1)
     }
     
     
