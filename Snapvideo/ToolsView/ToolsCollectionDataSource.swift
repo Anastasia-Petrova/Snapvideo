@@ -14,6 +14,8 @@ class ToolsCollectionDataSource: NSObject, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return ToolsCollectionViewCell()
+        let cell = ToolsCollectionViewCell()
+        cell.toolName.text = "Crop"
+        return cell
     }
 }
