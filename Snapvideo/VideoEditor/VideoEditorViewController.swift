@@ -10,7 +10,6 @@ final class VideoEditorViewController: UIViewController {
     var bottomEffectsConstraint = NSLayoutConstraint()
     let exportView = UIView()
     var bottomExportConstraint = NSLayoutConstraint()
-    let toolsView = UIView()
     var bottomToolsConstraint = NSLayoutConstraint()
     let effectsCollectionView: UICollectionView
     let dataSource: FilterCollectionDataSource
@@ -273,10 +272,6 @@ final class VideoEditorViewController: UIViewController {
         NSLayoutConstraint.activate ([
             effectsCollectionView.heightAnchor.constraint(equalToConstant: 100)
         ])
-    }
-    
-    func setUpToolsView() {
-        toolsView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func setUpExportView() {
