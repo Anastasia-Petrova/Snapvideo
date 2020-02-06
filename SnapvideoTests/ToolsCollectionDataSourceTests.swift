@@ -55,7 +55,4 @@ final class ToolsCollectionDataSourceTests: XCTestCase {
         
         XCTAssertTrue(cell is ToolsCollectionViewCell)
     }
-    
-    
-    
 }
