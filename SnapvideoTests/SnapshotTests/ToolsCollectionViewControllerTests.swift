@@ -12,7 +12,7 @@ import SnapshotTesting
 
 class ToolsCollectionViewControllerTests: XCTestCase {
 
-    func testHomeViewController() {
+    func testCollectionViewController() {
       let vc = ToolsCollectionViewController()
 
       assertSnapshot(matching: vc, as: .image)
