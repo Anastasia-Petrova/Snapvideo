@@ -21,6 +21,6 @@ final class VideoEditorViewControllerTests: XCTestCase {
         let vc = VideoEditorViewController(url: url, filters: filters) { (presentedFilter) in
         }
         
-        assertSnapshot(matching: vc, as: .wait(for: 3, on: .image))
+        assertSnapshot(matching: vc, as: .wait(for: 5, on: .image))
     }
 }
