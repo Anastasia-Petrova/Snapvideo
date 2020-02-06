@@ -49,7 +49,7 @@
 		6DB6C13F23C4D8A700E256A4 /* VignetteFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB6C13E23C4D8A700E256A4 /* VignetteFilter.swift */; };
 		6DB6C14123C4E82C00E256A4 /* ClampFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB6C14023C4E82C00E256A4 /* ClampFilter.swift */; };
 		6DBA80CA23EC4433005A585E /* WaitExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBA80C923EC4433005A585E /* WaitExtension.swift */; };
-		6DBA80CE23EC4A90005A585E /* videoTest.MOV in Resources */ = {isa = PBXBuildFile; fileRef = 6DBA80CD23EC4A90005A585E /* videoTest.MOV */; };
+		6DBA80D223EC994A005A585E /* videoTest.MOV in Resources */ = {isa = PBXBuildFile; fileRef = 6DBA80D123EC994A005A585E /* videoTest.MOV */; };
 		6DC05F9723EC30FA00A96B76 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 6DC05F9623EC30FA00A96B76 /* SnapshotTesting */; };
 		6DC05F9923EC337C00A96B76 /* ToolsCollectionViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC05F9823EC337C00A96B76 /* ToolsCollectionViewControllerTests.swift */; };
 		6DC05F9C23EC350200A96B76 /* VideoEditorViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC05F9B23EC350200A96B76 /* VideoEditorViewControllerTests.swift */; };
@@ -120,7 +120,7 @@
 		6DB6C13E23C4D8A700E256A4 /* VignetteFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VignetteFilter.swift; sourceTree = "<group>"; };
 		6DB6C14023C4E82C00E256A4 /* ClampFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClampFilter.swift; sourceTree = "<group>"; };
 		6DBA80C923EC4433005A585E /* WaitExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitExtension.swift; sourceTree = "<group>"; };
-		6DBA80CD23EC4A90005A585E /* videoTest.MOV */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = videoTest.MOV; path = ../../../../../Downloads/videoTest.MOV; sourceTree = "<group>"; };
+		6DBA80D123EC994A005A585E /* videoTest.MOV */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = videoTest.MOV; sourceTree = "<group>"; };
 		6DC05F9823EC337C00A96B76 /* ToolsCollectionViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsCollectionViewControllerTests.swift; sourceTree = "<group>"; };
 		6DC05F9B23EC350200A96B76 /* VideoEditorViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoEditorViewControllerTests.swift; sourceTree = "<group>"; };
 		6DDE026223C11659002D7942 /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
@@ -312,7 +312,7 @@
 			isa = PBXGroup;
 			children = (
 				6D154AAD23DC72F900150E0A /* Media.xcassets */,
-				6DBA80CD23EC4A90005A585E /* videoTest.MOV */,
+				6DBA80D123EC994A005A585E /* videoTest.MOV */,
 				6D154AAF23DC7A2A00150E0A /* Bundle.swift */,
 			);
 			path = TestAssets;
@@ -440,7 +440,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6DBA80CE23EC4A90005A585E /* videoTest.MOV in Resources */,
+				6DBA80D223EC994A005A585E /* videoTest.MOV in Resources */,
 				6D154AAE23DC72F900150E0A /* Media.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
