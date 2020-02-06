@@ -149,9 +149,6 @@ extension HomeViewController: UIImagePickerControllerDelegate {
             self.removeEmbeddedViewController()
             self.embed(VideoEditorViewController(url: url, filters: self.app.filters, presentedFilter: { [weak self] pressedFilter in
                 self?.tabBar.isHidden = pressedFilter
-//                self?.tabBar.selectedItem = nil
-//                self?.tabBar.previouslySelectedItem = nil
-//                self?.previouslySelectedIndex = nil
             }))
         }
     }

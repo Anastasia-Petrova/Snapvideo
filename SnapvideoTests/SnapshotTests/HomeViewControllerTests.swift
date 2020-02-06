@@ -10,8 +10,7 @@ import XCTest
 import SnapshotTesting
 @testable import Snapvideo
 
-class HomeViewControllerTests: XCTestCase {
-
+final class HomeViewControllerTests: XCTestCase {
     func testHomeViewController() {
       let vc = HomeViewController()
 

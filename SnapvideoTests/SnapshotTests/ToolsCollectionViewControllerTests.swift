@@ -10,8 +10,7 @@ import XCTest
 import SnapshotTesting
 @testable import Snapvideo
 
-class ToolsCollectionViewControllerTests: XCTestCase {
-
+final class ToolsCollectionViewControllerTests: XCTestCase {
     func testCollectionViewController() {
       let vc = ToolsCollectionViewController()
 
