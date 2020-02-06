@@ -11,7 +11,7 @@ import SnapshotTesting
 @testable import Snapvideo
 
 final class VideoEditorViewControllerTests: XCTestCase {
-    func testVideoEditorViewController() {
+    func DISABLED_testVideoEditorViewController() {
         let filters = [AnyFilter(PassthroughFilter())]
         guard let path = Bundle.testBundle.path(forResource: "videoTest", ofType:"MOV") else {
             XCTFail("testVideo.MOV not found")
