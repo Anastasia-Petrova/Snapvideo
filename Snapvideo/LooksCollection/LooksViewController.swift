@@ -12,9 +12,13 @@ class LooksViewController: UIViewController {
     let dataSource: LooksCollectionDataSource
     let collectionView: UICollectionView
 
-    init(itemSize: CGSize, filters: [AnyFilter], context: CIContext ) {
+    init(itemSize: CGSize, filters: [AnyFilter]) {
        self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: LooksCollectionViewLayout(itemSize: itemSize))
-        self.dataSource = LooksCollectionDataSource(collectionView: collectionView, filters: filters, context: context)
+        self.dataSource = LooksCollectionDataSource(
+            collectionView: collectionView,
+            filters: filters,
+            context: CIContext(options: [CIContextOption.workingColorSpace : NSNull()])
+        )
        super.init(nibName: nil, bundle: nil)
    }
     

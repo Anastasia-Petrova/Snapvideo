@@ -89,5 +89,28 @@ extension App {
             AnyFilter(SharpAndWarmFilter(inputSharpness: 0.7))
         ]
     )
-     
 }
+
+extension App {
+    static let snapshotTests = App(
+        filters: [
+            AnyFilter(PassthroughFilter()),
+            AnyFilter(SharpAndWarmFilter(inputSharpness: 0.7)),
+            AnyFilter(VignetteFilter()),
+            AnyFilter(SepiaFilter()),
+            AnyFilter(VintageFilter()),
+            AnyFilter(ClampFilter()),
+            AnyFilter(RetroFilter()),
+            AnyFilter(ProcessFilter()),
+            AnyFilter(ComicFilter()),
+            AnyFilter(ColorInvertFilter()),
+            AnyFilter(HalfToneFilter()),
+            AnyFilter(BlurFilter(blurRadius: 30)),
+            AnyFilter(TonalFilter()),
+            AnyFilter(MonoFilter()),
+            AnyFilter(MonochromeFilter()),
+            AnyFilter(NoirFilter())
+        ]
+    )
+}
+

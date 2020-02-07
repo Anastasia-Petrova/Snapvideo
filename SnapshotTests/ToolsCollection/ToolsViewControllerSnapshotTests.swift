@@ -10,8 +10,8 @@ import XCTest
 import SnapshotTesting
 @testable import Snapvideo
 
-final class ToolsCollectionViewControllerSnapshotTests: XCTestCase {
-    func testCollectionViewController() {
+final class ToolsViewControllerSnapshotTests: XCTestCase {
+    func testToolsViewController() {
       let vc = ToolsViewController()
       assertSnapshot(matching: vc, as: .image)
     }
