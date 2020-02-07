@@ -7,12 +7,12 @@ final class VideoEditorViewController: UIViewController {
     let player: AVPlayer
     let playerView: VideoView
     let effectsView = UIView()
-    var bottomEffectsConstraint = NSLayoutConstraint()
+    var bottomLooksConstraint = NSLayoutConstraint()
     let exportView = UIView()
     var bottomExportConstraint = NSLayoutConstraint()
     var bottomToolsConstraint = NSLayoutConstraint()
     let effectsCollectionView: UICollectionView
-    let dataSource: FilterCollectionDataSource
+    let dataSource: LooksCollectionDataSource
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
     let bgVideoView: VideoView
     var playerRateObservation: NSKeyValueObservation?
@@ -20,8 +20,8 @@ final class VideoEditorViewController: UIViewController {
     var bottomSliderConstraint = NSLayoutConstraint()
     let timerLabel = UILabel()
     var bottomTimerConstraint = NSLayoutConstraint()
-    var cancelButton = EffectsViewButton(imageName: "cancel")
-    var doneButton = EffectsViewButton(imageName: "done")
+    var cancelButton = LooksViewButton(imageName: "cancel")
+    var doneButton = LooksViewButton(imageName: "done")
     var saveCopyButton = SaveCopyVideoButton()
     var spacerHeight = CGFloat()
     var presentedFilter: (Bool) -> Void
@@ -84,6 +84,9 @@ final class VideoEditorViewController: UIViewController {
             contentsGravity: .resizeAspectFill,
             filter: AnyFilter(BlurFilter(blurRadius: 100))
         )
+        
+        //TODO: Создать собственный тип лейаута - унаследоваться от UICollectionViewFlowLayout и задать все
+        // проперти в инициализаторе.
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = itemSize
         layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
@@ -93,7 +96,7 @@ final class VideoEditorViewController: UIViewController {
         effectsCollectionView.showsHorizontalScrollIndicator = false
         effectsCollectionView.allowsSelection = true
         effectsCollectionView.bounces = false
-        dataSource = FilterCollectionDataSource(
+        dataSource = LooksCollectionDataSource(
             collectionView: effectsCollectionView,
             filters: filters,
             context: CIContext(options: [CIContextOption.workingColorSpace : NSNull()])
@@ -118,7 +121,7 @@ final class VideoEditorViewController: UIViewController {
         )
         setUpBackgroundView()
         setUpPlayerView()
-        setUpEffectsView()
+        setUpLooksView()
         setUpResumeButton()
         setUpPlayer()
         setUpSlider()
@@ -233,17 +236,17 @@ final class VideoEditorViewController: UIViewController {
         return String(format:"%02d:%02d:%02d", hours, minutes, seconds);
     }
     
-    func setUpEffectsView() {
+    func setUpLooksView() {
         effectsView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(effectsView)
         effectsView.backgroundColor = .white
-        bottomEffectsConstraint = effectsView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 100)
+        bottomLooksConstraint = effectsView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 100)
         
         NSLayoutConstraint.activate ([
         effectsView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
         effectsView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
         effectsView.topAnchor.constraint(equalTo: playerView.bottomAnchor),
-        bottomEffectsConstraint
+        bottomLooksConstraint
         ])
         
         let collectionStackView = UIStackView()
@@ -321,7 +324,7 @@ final class VideoEditorViewController: UIViewController {
         NSLayoutConstraint.activate ([
         cancelButton.widthAnchor.constraint(equalToConstant: 44)
         ])
-        cancelButton.addTarget(self, action: #selector(self.discardEffects), for: .touchUpInside)
+        cancelButton.addTarget(self, action: #selector(self.discardLooks), for: .touchUpInside)
     }
     
     func setUpDoneButton() {
@@ -432,8 +435,8 @@ final class VideoEditorViewController: UIViewController {
         )
     }
     
-    public func openEffects() {
-        bottomEffectsConstraint.constant = 0 - self.view.safeAreaInsets.bottom
+    public func openLooks() {
+        bottomLooksConstraint.constant = 0 - self.view.safeAreaInsets.bottom
         bottomSliderConstraint.constant *= 0.84
         bottomTimerConstraint.constant *= 0.84
         UIView.animate(withDuration: 0.2) {
@@ -441,8 +444,8 @@ final class VideoEditorViewController: UIViewController {
         }
     }
     
-    public func closeEffects() {
-        bottomEffectsConstraint.constant = 100
+    public func closeLooks() {
+        bottomLooksConstraint.constant = 100
         bottomSliderConstraint.constant = -40
         bottomTimerConstraint.constant = 40
         resetToDefaultFilter()
@@ -470,13 +473,13 @@ final class VideoEditorViewController: UIViewController {
         filterIndex = 0
     }
     
-    @objc func discardEffects() {
+    @objc func discardLooks() {
         effectsCollectionView.deselectItem(at: IndexPath(row: filterIndex, section: 0), animated: false)
         resetToDefaultFilter()
     }
     
     @objc func saveFilter() {
-        bottomEffectsConstraint.constant = 146
+        bottomLooksConstraint.constant = 146
         resetToDefaultFilter()
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()

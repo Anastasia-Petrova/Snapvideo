@@ -9,6 +9,8 @@
 import UIKit
 
 class ToolsCollectionDataSource: NSObject, UICollectionViewDataSource {
+    //TODO: Параметризировать инициализатор с коллекций тулзов
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }

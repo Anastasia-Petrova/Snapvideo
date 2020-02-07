@@ -11,10 +11,10 @@ import UIKit
 //private let reuseIdentifier = "Cell"
 
 class ToolsCollectionViewController: UICollectionViewController {
-    
-    let dataSource = ToolsCollectionDataSource()
+    let dataSource: ToolsCollectionDataSource
 
-    init() {
+    init(dataSource: ToolsCollectionDataSource) {
+        self.dataSource = dataSource
         super.init(collectionViewLayout: UICollectionViewFlowLayout())
     }
     

@@ -14,9 +14,9 @@ final class HomeViewController: UIViewController {
             guard let childVC = childViewController as? VideoEditorViewController else { return }
             
             if isLooksButtonSelected {
-                childVC.openEffects()
+                childVC.openLooks()
             } else {
-                childVC.closeEffects()
+                childVC.closeLooks()
             }
         }
     }

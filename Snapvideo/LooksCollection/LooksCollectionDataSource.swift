@@ -1,6 +1,6 @@
 import UIKit
 
-class FilterCollectionDataSource: NSObject, UICollectionViewDataSource {
+class LooksCollectionDataSource: NSObject, UICollectionViewDataSource {
     weak var collectionView: UICollectionView?
     let filters: [AnyFilter]
     var filteredImages: [String: UIImage] = [:]
@@ -19,7 +19,7 @@ class FilterCollectionDataSource: NSObject, UICollectionViewDataSource {
         super.init()
         collectionView.dataSource = self
         collectionView.register(
-            EffectsCollectionViewCell.self,
+            LooksCollectionViewCell.self,
             forCellWithReuseIdentifier: "effectsCollectionViewCell"
         )
     }
@@ -36,7 +36,7 @@ class FilterCollectionDataSource: NSObject, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let reusableIdentifier = "effectsCollectionViewCell"
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reusableIdentifier, for: indexPath) as! EffectsCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reusableIdentifier, for: indexPath) as! LooksCollectionViewCell
         cell.filterName.text = filters[indexPath.row].name
         
         if let filteredImage = filteredImages[filters[indexPath.row].name] {
