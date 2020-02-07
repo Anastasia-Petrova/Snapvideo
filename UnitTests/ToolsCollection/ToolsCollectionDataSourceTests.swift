@@ -18,7 +18,7 @@ final class ToolsCollectionDataSourceTests: XCTestCase {
     override func setUp() {
         super.setUp()
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
-        dataSource = ToolsCollectionDataSource()
+        dataSource = ToolsCollectionDataSource(collectionView: collectionView)
     }
 
     override func tearDown() {
@@ -28,30 +28,18 @@ final class ToolsCollectionDataSourceTests: XCTestCase {
     }
     
     func test_numberOfSection() {
-        //When
-        let sut = ToolsCollectionDataSource()
-        
-        //Then
-        let numberOfSections = sut.numberOfSections(in: collectionView)
+        let numberOfSections = dataSource.numberOfSections(in: collectionView)
         
         XCTAssertEqual(1, numberOfSections)
     }
     
     func test_numberOfItemsInSection_isEqual_to_one() {
-        //When
-        let sut = ToolsCollectionDataSource()
-        
-        //Then
-        let numberOfCells = sut.collectionView(collectionView, numberOfItemsInSection: 0)
+        let numberOfCells = dataSource.collectionView(collectionView, numberOfItemsInSection: 0)
         XCTAssertEqual(1, numberOfCells)
     }
     
     func test_cellType() {
-        //When
-        let sut = ToolsCollectionDataSource()
-        
-        //Then
-        let cell = sut.collectionView(collectionView, cellForItemAt: IndexPath(item: 0, section: 0))
+        let cell = dataSource.collectionView(collectionView, cellForItemAt: IndexPath(item: 0, section: 0))
         
         XCTAssertTrue(cell is ToolsCollectionViewCell)
     }
