@@ -115,7 +115,7 @@
 		6D1D491C23D7903C00ECACE5 /* VintageFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VintageFilter.swift; sourceTree = "<group>"; };
 		6D1D491E23D791EC00ECACE5 /* MonoFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonoFilter.swift; sourceTree = "<group>"; };
 		6D1D492023D793C500ECACE5 /* SepiaFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SepiaFilter.swift; sourceTree = "<group>"; };
-		6D1D492823DB71EA00ECACE5 /* SnapvideoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SnapvideoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D1D492823DB71EA00ECACE5 /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D1D492A23DB71EA00ECACE5 /* LooksCollectionDataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LooksCollectionDataSourceTests.swift; sourceTree = "<group>"; };
 		6D1D492C23DB71EA00ECACE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6D1D493223DC687200ECACE5 /* VideoBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoBrowser.swift; sourceTree = "<group>"; };
@@ -201,7 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				6D17A7DD23ABB39100C70542 /* Snapvideo.app */,
-				6D1D492823DB71EA00ECACE5 /* SnapvideoTests.xctest */,
+				6D1D492823DB71EA00ECACE5 /* UnitTests.xctest */,
 				6D66486D23EDF9A5002AAF2E /* SnapshotTests.xctest */,
 			);
 			name = Products;
@@ -404,9 +404,9 @@
 			productReference = 6D17A7DD23ABB39100C70542 /* Snapvideo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		6D1D492723DB71EA00ECACE5 /* SnapvideoTests */ = {
+		6D1D492723DB71EA00ECACE5 /* UnitTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6D1D493123DB71EA00ECACE5 /* Build configuration list for PBXNativeTarget "SnapvideoTests" */;
+			buildConfigurationList = 6D1D493123DB71EA00ECACE5 /* Build configuration list for PBXNativeTarget "UnitTests" */;
 			buildPhases = (
 				6D1D492423DB71EA00ECACE5 /* Sources */,
 				6D1D492523DB71EA00ECACE5 /* Frameworks */,
@@ -417,12 +417,12 @@
 			dependencies = (
 				6D1D492E23DB71EA00ECACE5 /* PBXTargetDependency */,
 			);
-			name = SnapvideoTests;
+			name = UnitTests;
 			packageProductDependencies = (
 				6DC05F9623EC30FA00A96B76 /* SnapshotTesting */,
 			);
 			productName = VideoTestTests;
-			productReference = 6D1D492823DB71EA00ECACE5 /* SnapvideoTests.xctest */;
+			productReference = 6D1D492823DB71EA00ECACE5 /* UnitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		6D66486C23EDF9A5002AAF2E /* SnapshotTests */ = {
@@ -483,7 +483,7 @@
 			projectRoot = "";
 			targets = (
 				6D17A7DC23ABB39100C70542 /* Snapvideo */,
-				6D1D492723DB71EA00ECACE5 /* SnapvideoTests */,
+				6D1D492723DB71EA00ECACE5 /* UnitTests */,
 				6D66486C23EDF9A5002AAF2E /* SnapshotTests */,
 			);
 		};
@@ -885,7 +885,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6D1D493123DB71EA00ECACE5 /* Build configuration list for PBXNativeTarget "SnapvideoTests" */ = {
+		6D1D493123DB71EA00ECACE5 /* Build configuration list for PBXNativeTarget "UnitTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6D1D492F23DB71EA00ECACE5 /* Debug */,

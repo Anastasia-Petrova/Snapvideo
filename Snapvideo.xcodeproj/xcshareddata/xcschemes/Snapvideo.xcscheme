@@ -35,8 +35,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6D1D492723DB71EA00ECACE5"
-               BuildableName = "SnapvideoTests.xctest"
-               BlueprintName = "SnapvideoTests"
+               BuildableName = "UnitTests.xctest"
+               BlueprintName = "UnitTests"
                ReferencedContainer = "container:Snapvideo.xcodeproj">
             </BuildableReference>
          </TestableReference>
