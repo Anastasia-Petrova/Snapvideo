@@ -38,6 +38,7 @@
 		6D1D493323DC687200ECACE5 /* VideoBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1D493223DC687200ECACE5 /* VideoBrowser.swift */; };
 		6D2E8A0323CA671A00917E25 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2E89FE23CA5AC700917E25 /* TabBar.swift */; };
 		6D2E8A0423CA673A00917E25 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2E8A0023CA5DEA00917E25 /* TabBarItem.swift */; };
+		6D66487023EDF9A5002AAF2E /* SnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D66486F23EDF9A5002AAF2E /* SnapshotTests.swift */; };
 		6D73068423D06BE300226C77 /* SaveCopyVideoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D73068323D06BE300226C77 /* SaveCopyVideoButton.swift */; };
 		6D96B85023D08E5E00C1C6D5 /* HeaderExportLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D96B84F23D08E5E00C1C6D5 /* HeaderExportLabel.swift */; };
 		6D96B85323D090A300C1C6D5 /* ExportImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D96B85223D090A300C1C6D5 /* ExportImageView.swift */; };
@@ -74,6 +75,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 6D17A7DC23ABB39100C70542;
 			remoteInfo = VideoTest;
+		};
+		6D66487223EDF9A5002AAF2E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6D17A7D523ABB39100C70542 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6D17A7DC23ABB39100C70542;
+			remoteInfo = Snapvideo;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -113,6 +121,9 @@
 		6D1D493223DC687200ECACE5 /* VideoBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoBrowser.swift; sourceTree = "<group>"; };
 		6D2E89FE23CA5AC700917E25 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		6D2E8A0023CA5DEA00917E25 /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
+		6D66486D23EDF9A5002AAF2E /* SnapshotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SnapshotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D66486F23EDF9A5002AAF2E /* SnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotTests.swift; sourceTree = "<group>"; };
+		6D66487123EDF9A5002AAF2E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6D73068323D06BE300226C77 /* SaveCopyVideoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveCopyVideoButton.swift; sourceTree = "<group>"; };
 		6D96B84F23D08E5E00C1C6D5 /* HeaderExportLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderExportLabel.swift; sourceTree = "<group>"; };
 		6D96B85223D090A300C1C6D5 /* ExportImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportImageView.swift; sourceTree = "<group>"; };
@@ -157,6 +168,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6D66486A23EDF9A5002AAF2E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -173,6 +191,7 @@
 			children = (
 				6D17A7DF23ABB39100C70542 /* Snapvideo */,
 				6D1D492923DB71EA00ECACE5 /* SnapvideoTests */,
+				6D66486E23EDF9A5002AAF2E /* SnapshotTests */,
 				6D17A7DE23ABB39100C70542 /* Products */,
 				6DC05F9523EC30FA00A96B76 /* Frameworks */,
 			);
@@ -183,6 +202,7 @@
 			children = (
 				6D17A7DD23ABB39100C70542 /* Snapvideo.app */,
 				6D1D492823DB71EA00ECACE5 /* SnapvideoTests.xctest */,
+				6D66486D23EDF9A5002AAF2E /* SnapshotTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -249,6 +269,15 @@
 				6D17A7E623ABB39100C70542 /* Main.storyboard */,
 			);
 			path = Assets;
+			sourceTree = "<group>";
+		};
+		6D66486E23EDF9A5002AAF2E /* SnapshotTests */ = {
+			isa = PBXGroup;
+			children = (
+				6D66486F23EDF9A5002AAF2E /* SnapshotTests.swift */,
+				6D66487123EDF9A5002AAF2E /* Info.plist */,
+			);
+			path = SnapshotTests;
 			sourceTree = "<group>";
 		};
 		6D96B85123D08FD600C1C6D5 /* ExportViewСomponents */ = {
@@ -396,6 +425,24 @@
 			productReference = 6D1D492823DB71EA00ECACE5 /* SnapvideoTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		6D66486C23EDF9A5002AAF2E /* SnapshotTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6D66487623EDF9A5002AAF2E /* Build configuration list for PBXNativeTarget "SnapshotTests" */;
+			buildPhases = (
+				6D66486923EDF9A5002AAF2E /* Sources */,
+				6D66486A23EDF9A5002AAF2E /* Frameworks */,
+				6D66486B23EDF9A5002AAF2E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6D66487323EDF9A5002AAF2E /* PBXTargetDependency */,
+			);
+			name = SnapshotTests;
+			productName = SnapshotTests;
+			productReference = 6D66486D23EDF9A5002AAF2E /* SnapshotTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -410,6 +457,10 @@
 						CreatedOnToolsVersion = 11.3;
 					};
 					6D1D492723DB71EA00ECACE5 = {
+						CreatedOnToolsVersion = 11.3;
+						TestTargetID = 6D17A7DC23ABB39100C70542;
+					};
+					6D66486C23EDF9A5002AAF2E = {
 						CreatedOnToolsVersion = 11.3;
 						TestTargetID = 6D17A7DC23ABB39100C70542;
 					};
@@ -433,6 +484,7 @@
 			targets = (
 				6D17A7DC23ABB39100C70542 /* Snapvideo */,
 				6D1D492723DB71EA00ECACE5 /* SnapvideoTests */,
+				6D66486C23EDF9A5002AAF2E /* SnapshotTests */,
 			);
 		};
 /* End PBXProject section */
@@ -454,6 +506,13 @@
 			files = (
 				6DBA80D223EC994A005A585E /* videoTest.MOV in Resources */,
 				6D154AAE23DC72F900150E0A /* Media.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6D66486B23EDF9A5002AAF2E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -526,6 +585,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6D66486923EDF9A5002AAF2E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6D66487023EDF9A5002AAF2E /* SnapshotTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -533,6 +600,11 @@
 			isa = PBXTargetDependency;
 			target = 6D17A7DC23ABB39100C70542 /* Snapvideo */;
 			targetProxy = 6D1D492D23DB71EA00ECACE5 /* PBXContainerItemProxy */;
+		};
+		6D66487323EDF9A5002AAF2E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6D17A7DC23ABB39100C70542 /* Snapvideo */;
+			targetProxy = 6D66487223EDF9A5002AAF2E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -674,6 +746,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LFG8A6E922;
 				INFOPLIST_FILE = Snapvideo/Info.plist;
@@ -683,6 +756,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = petrova.Snapvideo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -692,6 +766,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LFG8A6E922;
 				INFOPLIST_FILE = Snapvideo/Info.plist;
@@ -701,6 +776,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = petrova.Snapvideo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -746,6 +822,46 @@
 			};
 			name = Release;
 		};
+		6D66487423EDF9A5002AAF2E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LFG8A6E922;
+				INFOPLIST_FILE = SnapshotTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = petrova.SnapshotTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Snapvideo.app/Snapvideo";
+			};
+			name = Debug;
+		};
+		6D66487523EDF9A5002AAF2E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LFG8A6E922;
+				INFOPLIST_FILE = SnapshotTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = petrova.SnapshotTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Snapvideo.app/Snapvideo";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -772,6 +888,15 @@
 			buildConfigurations = (
 				6D1D492F23DB71EA00ECACE5 /* Debug */,
 				6D1D493023DB71EA00ECACE5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6D66487623EDF9A5002AAF2E /* Build configuration list for PBXNativeTarget "SnapshotTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6D66487423EDF9A5002AAF2E /* Debug */,
+				6D66487523EDF9A5002AAF2E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

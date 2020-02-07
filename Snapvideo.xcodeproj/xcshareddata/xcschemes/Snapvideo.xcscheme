@@ -40,6 +40,16 @@
                ReferencedContainer = "container:Snapvideo.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "6D66486C23EDF9A5002AAF2E"
+               BuildableName = "SnapshotTests.xctest"
+               BlueprintName = "SnapshotTests"
+               ReferencedContainer = "container:Snapvideo.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
