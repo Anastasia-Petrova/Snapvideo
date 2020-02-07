@@ -190,6 +190,11 @@
 			isa = PBXGroup;
 			children = (
 				6D17A7DF23ABB39100C70542 /* Snapvideo */,
+				6D0C29C023C28CA5006E7C40 /* App.swift */,
+				6D17A7E023ABB39100C70542 /* AppDelegate.swift */,
+				6D17A7F423ABB6E000C70542 /* HomeViewController.swift */,
+				6D17A7EE23ABB39600C70542 /* Info.plist */,
+				6D17A7E223ABB39100C70542 /* SceneDelegate.swift */,
 				6D1D492923DB71EA00ECACE5 /* UnitTests */,
 				6D66486E23EDF9A5002AAF2E /* SnapshotTests */,
 				6D17A7DE23ABB39100C70542 /* Products */,
@@ -211,18 +216,13 @@
 			isa = PBXGroup;
 			children = (
 				6D2E8A0523CA6F9400917E25 /* Assets */,
-				6D9874AC23CB9DBA00EC83DC /* LooksCollection */,
 				6D0C29C223C2A8B5006E7C40 /* Extenstions */,
 				6DDE026823C12B0A002D7942 /* Filters */,
+				6D9874AC23CB9DBA00EC83DC /* LooksCollection */,
 				6D2E8A0223CA65BD00917E25 /* TabBar */,
 				6DA0B27E23E71A2600D23CAD /* ToolsView */,
 				6D9874AD23CB9F0100EC83DC /* VideoEditingHelpers */,
 				6D17A80523AD4EB100C70542 /* VideoEditor */,
-				6D0C29C023C28CA5006E7C40 /* App.swift */,
-				6D17A7E023ABB39100C70542 /* AppDelegate.swift */,
-				6D17A7F423ABB6E000C70542 /* HomeViewController.swift */,
-				6D17A7E223ABB39100C70542 /* SceneDelegate.swift */,
-				6D17A7EE23ABB39600C70542 /* Info.plist */,
 			);
 			path = Snapvideo;
 			sourceTree = "<group>";
