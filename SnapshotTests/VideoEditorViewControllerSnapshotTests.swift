@@ -1,5 +1,5 @@
 //
-//  VideoEditorViewControllerTests.swift
+//  VideoEditorViewControllerSnapshotTests.swift
 //  SnapvideoTests
 //
 //  Created by Anastasia Petrova on 06/02/2020.
@@ -10,7 +10,7 @@ import XCTest
 import SnapshotTesting
 @testable import Snapvideo
 
-final class VideoEditorViewControllerTests: XCTestCase {
+final class VideoEditorViewControllerSnapshotTests: XCTestCase {
     func DISABLED_testVideoEditorViewController() {
         let filters = [AnyFilter(PassthroughFilter())]
         guard let path = Bundle.snapshotTests.path(forResource: "videoTest", ofType:"MOV") else {

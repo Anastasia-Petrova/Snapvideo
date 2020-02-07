@@ -1,5 +1,5 @@
 //
-//  HomeViewControllerTests.swift
+//  VideoEditorViewControllerSnapshotTests.swift
 //  SnapvideoTests
 //
 //  Created by Anastasia Petrova on 06/02/2020.
@@ -10,10 +10,9 @@ import XCTest
 import SnapshotTesting
 @testable import Snapvideo
 
-final class HomeViewControllerTests: XCTestCase {
-    func testHomeViewController() {
-      let vc = HomeViewController()
-
+final class ToolsCollectionViewControllerSnapshotTests: XCTestCase {
+    func testCollectionViewController() {
+      let vc = ToolsCollectionViewController(dataSource: ToolsCollectionDataSource())
       assertSnapshot(matching: vc, as: .image)
     }
 }
