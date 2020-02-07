@@ -84,15 +84,7 @@ final class VideoEditorViewController: UIViewController {
             contentsGravity: .resizeAspectFill,
             filter: AnyFilter(BlurFilter(blurRadius: 100))
         )
-        
-        //TODO: Создать собственный тип лейаута - унаследоваться от UICollectionViewFlowLayout и задать все
-        // проперти в инициализаторе.
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = itemSize
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-        layout.minimumLineSpacing = 5
-        layout.scrollDirection = .horizontal
-        effectsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        effectsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: LooksCollectionViewLayout(itemSize: itemSize))
         effectsCollectionView.showsHorizontalScrollIndicator = false
         effectsCollectionView.allowsSelection = true
         effectsCollectionView.bounces = false

@@ -65,7 +65,7 @@ final class LooksCollectionDataSourceTests: XCTestCase {
         
         //Then 
         let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: "effectsCollectionViewCell",
+            withReuseIdentifier: "LooksCollectionViewCell",
             for: .init()
         )
         

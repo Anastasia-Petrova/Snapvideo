@@ -20,7 +20,7 @@ class LooksCollectionDataSource: NSObject, UICollectionViewDataSource {
         collectionView.dataSource = self
         collectionView.register(
             LooksCollectionViewCell.self,
-            forCellWithReuseIdentifier: "effectsCollectionViewCell"
+            forCellWithReuseIdentifier: "LooksCollectionViewCell"
         )
     }
     
@@ -35,7 +35,7 @@ class LooksCollectionDataSource: NSObject, UICollectionViewDataSource {
     var cellForItemCallback: (() -> Void)?
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let reusableIdentifier = "effectsCollectionViewCell"
+        let reusableIdentifier = "LooksCollectionViewCell"
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reusableIdentifier, for: indexPath) as! LooksCollectionViewCell
         cell.filterName.text = filters[indexPath.row].name
         
