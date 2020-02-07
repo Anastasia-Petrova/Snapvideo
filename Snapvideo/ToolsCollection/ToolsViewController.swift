@@ -39,5 +39,4 @@ final class ToolsViewController: UIViewController {
         collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
     }
-    
 }

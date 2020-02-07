@@ -11,7 +11,7 @@ final class VideoEditorViewController: UIViewController {
     let exportView = UIView()
     var bottomExportConstraint = NSLayoutConstraint()
     var bottomToolsConstraint = NSLayoutConstraint()
-    let effectsCollectionView: UICollectionView
+    let looksCollectionView: UICollectionView
     let dataSource: LooksCollectionDataSource
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
     let bgVideoView: VideoView
@@ -84,12 +84,12 @@ final class VideoEditorViewController: UIViewController {
             contentsGravity: .resizeAspectFill,
             filter: AnyFilter(BlurFilter(blurRadius: 100))
         )
-        effectsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: LooksCollectionViewLayout(itemSize: itemSize))
-        effectsCollectionView.showsHorizontalScrollIndicator = false
-        effectsCollectionView.allowsSelection = true
-        effectsCollectionView.bounces = false
+        looksCollectionView = UICollectionView(frame: .zero, collectionViewLayout: LooksCollectionViewLayout(itemSize: itemSize))
+        looksCollectionView.showsHorizontalScrollIndicator = false
+        looksCollectionView.allowsSelection = true
+        looksCollectionView.bounces = false
         dataSource = LooksCollectionDataSource(
-            collectionView: effectsCollectionView,
+            collectionView: looksCollectionView,
             filters: filters,
             context: CIContext(options: [CIContextOption.workingColorSpace : NSNull()])
         )
@@ -124,7 +124,7 @@ final class VideoEditorViewController: UIViewController {
         setUpSaveStackView()
         setUpSaveCopyStackView()
         setUpSaveCopyButton()
-        effectsCollectionView.delegate = self
+        looksCollectionView.delegate = self
     }
     
     @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
@@ -254,9 +254,9 @@ final class VideoEditorViewController: UIViewController {
         ])
         
         let buttonsStackView = UIStackView()
-        effectsCollectionView.backgroundColor = .white
+        looksCollectionView.backgroundColor = .white
             
-        collectionStackView.addArrangedSubview(effectsCollectionView)
+        collectionStackView.addArrangedSubview(looksCollectionView)
         collectionStackView.addArrangedSubview(buttonsStackView)
         
         buttonsStackView.addArrangedSubview(cancelButton)
@@ -265,7 +265,7 @@ final class VideoEditorViewController: UIViewController {
         buttonsStackView.distribution = .fillEqually
         
         NSLayoutConstraint.activate ([
-            effectsCollectionView.heightAnchor.constraint(equalToConstant: 100)
+            looksCollectionView.heightAnchor.constraint(equalToConstant: 100)
         ])
     }
     
@@ -466,7 +466,7 @@ final class VideoEditorViewController: UIViewController {
     }
     
     @objc func discardLooks() {
-        effectsCollectionView.deselectItem(at: IndexPath(row: filterIndex, section: 0), animated: false)
+        looksCollectionView.deselectItem(at: IndexPath(row: filterIndex, section: 0), animated: false)
         resetToDefaultFilter()
     }
     
