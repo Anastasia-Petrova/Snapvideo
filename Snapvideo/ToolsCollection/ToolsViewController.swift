@@ -30,7 +30,7 @@ final class ToolsViewController: UIViewController {
     func setUpCollectionView() {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(collectionView)
-//        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .white
         
         NSLayoutConstraint.activate ([
         collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
