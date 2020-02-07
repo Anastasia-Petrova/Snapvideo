@@ -15,7 +15,7 @@ class ToolsCollectionViewController: UICollectionViewController {
 
     init(dataSource: ToolsCollectionDataSource) {
         self.dataSource = dataSource
-        super.init(collectionViewLayout: UICollectionViewFlowLayout())
+        super.init(collectionViewLayout: ToolsCollectionViewLayout())
     }
     
     required init?(coder: NSCoder) {
