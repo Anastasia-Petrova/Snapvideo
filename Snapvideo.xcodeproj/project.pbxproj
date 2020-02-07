@@ -242,12 +242,12 @@
 		6D1D492923DB71EA00ECACE5 /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
-				6D1D492A23DB71EA00ECACE5 /* LooksCollectionDataSourceTests.swift */,
-				6D154AAF23DC7A2A00150E0A /* Bundle.swift */,
-				6DDFFB6923E9CF2000093675 /* ToolsCollectionDataSourceTests.swift */,
 				6DC05F9F23EC3B7400A96B76 /* Assets */,
-				6D154AB123DC817100150E0A /* TestHelpers.swift */,
+				6D154AAF23DC7A2A00150E0A /* Bundle.swift */,
 				6D1D492C23DB71EA00ECACE5 /* Info.plist */,
+				6D1D492A23DB71EA00ECACE5 /* LooksCollectionDataSourceTests.swift */,
+				6D154AB123DC817100150E0A /* TestHelpers.swift */,
+				6DDFFB6923E9CF2000093675 /* ToolsCollectionDataSourceTests.swift */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -274,14 +274,14 @@
 		6D66486E23EDF9A5002AAF2E /* SnapshotTests */ = {
 			isa = PBXGroup;
 			children = (
-				6DDFFB6D23EC281D00093675 /* HomeViewControllerTests.swift */,
 				6D66487D23EDFD34002AAF2E /* Bundle.swift */,
-				6DBA80D523EDA155005A585E /* ToolsCollectionViewCellTests.swift */,
+				6DDFFB6D23EC281D00093675 /* HomeViewControllerTests.swift */,
+				6D66487123EDF9A5002AAF2E /* Info.plist */,
 				6DBA80D923EDA839005A585E /* LooksCollectionViewCellTests.swift */,
+				6DBA80D523EDA155005A585E /* ToolsCollectionViewCellTests.swift */,
+				6DC05F9823EC337C00A96B76 /* ToolsCollectionViewControllerTests.swift */,
 				6DC05F9B23EC350200A96B76 /* VideoEditorViewControllerTests.swift */,
 				6DBA80C923EC4433005A585E /* WaitExtension.swift */,
-				6DC05F9823EC337C00A96B76 /* ToolsCollectionViewControllerTests.swift */,
-				6D66487123EDF9A5002AAF2E /* Info.plist */,
 			);
 			path = SnapshotTests;
 			sourceTree = "<group>";
