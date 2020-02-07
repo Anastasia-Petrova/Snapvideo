@@ -13,7 +13,7 @@ import SnapshotTesting
 final class VideoEditorViewControllerTests: XCTestCase {
     func DISABLED_testVideoEditorViewController() {
         let filters = [AnyFilter(PassthroughFilter())]
-        guard let path = Bundle.testBundle.path(forResource: "videoTest", ofType:"MOV") else {
+        guard let path = Bundle.snapshotTests.path(forResource: "videoTest", ofType:"MOV") else {
             XCTFail("testVideo.MOV not found")
             return
         }

@@ -141,7 +141,7 @@ final class LooksCollectionDataSourceTests: XCTestCase {
         //Given
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
         let filter = AnyFilter(BlurFilter(blurRadius: 10))
-        let image = UIImage(named: "testImage", in: .testBundle, with: nil)!
+        let image = UIImage(named: "testImage", in: .unitTests, with: nil)!
         
         let filteredCIImage = filter.apply(CIImage(cgImage: image.cgImage!))
         let filteredCGImage = context.createCGImage(filteredCIImage, from: filteredCIImage.extent)!
@@ -192,7 +192,7 @@ final class LooksCollectionDataSourceTests: XCTestCase {
         let filter = AnyFilter(BlurFilter(blurRadius: 10))
         let sut = LooksCollectionDataSource(collectionView: collectionView, filters: [filter], context: context)
         sut.image = nil
-        let expectedImage = UIImage(named: "testImage", in: .testBundle, with: nil)!
+        let expectedImage = UIImage(named: "testImage", in: .unitTests, with: nil)!
         sut.filteredImages["Blur"] = expectedImage
         //When
         let cell = sut.collectionView(collectionView, cellForItemAt: IndexPath(item: 0, section: 0))
@@ -212,12 +212,12 @@ final class LooksCollectionDataSourceTests: XCTestCase {
         //Given
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
         let filter = AnyFilter(BlurFilter(blurRadius: 10))
-        let image = UIImage(named: "testImage", in: .testBundle, with: nil)!
+        let image = UIImage(named: "testImage", in: .unitTests, with: nil)!
         let filteredCIImage = filter.apply(CIImage(cgImage: image.cgImage!))
         let filteredCGImage = context.createCGImage(filteredCIImage, from: filteredCIImage.extent)!
         let expectedImage = UIImage(cgImage: filteredCGImage)
         let sut = LooksCollectionDataSource(collectionView: collectionView, filters: [filter], context: context)
-        sut.image = UIImage(named: "testImage", in: .testBundle, with: nil)!
+        sut.image = UIImage(named: "testImage", in: .unitTests, with: nil)!
 
         
         //When
@@ -241,7 +241,7 @@ final class LooksCollectionDataSourceTests: XCTestCase {
         //Given
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
         let filter = AnyFilter(BlurFilter(blurRadius: 10))
-        let image = UIImage(named: "testImage", in: .testBundle, with: nil)!
+        let image = UIImage(named: "testImage", in: .unitTests, with: nil)!
         
         let filteredCIImage = filter.apply(CIImage(cgImage: image.cgImage!))
         let filteredCGImage = context.createCGImage(filteredCIImage, from: filteredCIImage.extent)!

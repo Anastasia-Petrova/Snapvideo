@@ -1,7 +1,7 @@
 import Foundation
 
 extension Bundle {
-    static let testBundle = Bundle(for: Fake.self)
+    static let unitTests = Bundle(for: Fake.self)
 }
 
 private class Fake {}
