@@ -190,7 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				6D17A7DF23ABB39100C70542 /* Snapvideo */,
-				6D1D492923DB71EA00ECACE5 /* SnapvideoTests */,
+				6D1D492923DB71EA00ECACE5 /* UnitTests */,
 				6D66486E23EDF9A5002AAF2E /* SnapshotTests */,
 				6D17A7DE23ABB39100C70542 /* Products */,
 				6DC05F9523EC30FA00A96B76 /* Frameworks */,
@@ -239,7 +239,7 @@
 			path = VideoEditor;
 			sourceTree = "<group>";
 		};
-		6D1D492923DB71EA00ECACE5 /* SnapvideoTests */ = {
+		6D1D492923DB71EA00ECACE5 /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
 				6D1D492A23DB71EA00ECACE5 /* LooksCollectionDataSourceTests.swift */,
@@ -249,7 +249,7 @@
 				6D154AB123DC817100150E0A /* TestHelpers.swift */,
 				6D1D492C23DB71EA00ECACE5 /* Info.plist */,
 			);
-			path = SnapvideoTests;
+			path = UnitTests;
 			sourceTree = "<group>";
 		};
 		6D2E8A0223CA65BD00917E25 /* TabBar */ = {
@@ -788,13 +788,13 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = SnapvideoTests/Info.plist;
+				INFOPLIST_FILE = UnitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = petrova.SnapvideoTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.petrova.anastasia.UnitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -808,13 +808,13 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = SnapvideoTests/Info.plist;
+				INFOPLIST_FILE = UnitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = petrova.SnapvideoTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.petrova.anastasia.UnitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -835,7 +835,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = petrova.SnapshotTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.petrova.anastasia.SnapshotTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -856,7 +856,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = petrova.SnapshotTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.petrova.anastasia.SnapshotTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
