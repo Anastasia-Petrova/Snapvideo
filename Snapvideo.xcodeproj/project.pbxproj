@@ -190,11 +190,6 @@
 			isa = PBXGroup;
 			children = (
 				6D17A7DF23ABB39100C70542 /* Snapvideo */,
-				6D0C29C023C28CA5006E7C40 /* App.swift */,
-				6D17A7E023ABB39100C70542 /* AppDelegate.swift */,
-				6D17A7F423ABB6E000C70542 /* HomeViewController.swift */,
-				6D17A7EE23ABB39600C70542 /* Info.plist */,
-				6D17A7E223ABB39100C70542 /* SceneDelegate.swift */,
 				6D1D492923DB71EA00ECACE5 /* UnitTests */,
 				6D66486E23EDF9A5002AAF2E /* SnapshotTests */,
 				6D17A7DE23ABB39100C70542 /* Products */,
@@ -220,9 +215,14 @@
 				6DDE026823C12B0A002D7942 /* Filters */,
 				6D9874AC23CB9DBA00EC83DC /* LooksCollection */,
 				6D2E8A0223CA65BD00917E25 /* TabBar */,
-				6DA0B27E23E71A2600D23CAD /* ToolsView */,
+				6DA0B27E23E71A2600D23CAD /* ToolsCollection */,
 				6D9874AD23CB9F0100EC83DC /* VideoEditingHelpers */,
 				6D17A80523AD4EB100C70542 /* VideoEditor */,
+				6D0C29C023C28CA5006E7C40 /* App.swift */,
+				6D17A7E023ABB39100C70542 /* AppDelegate.swift */,
+				6D17A7F423ABB6E000C70542 /* HomeViewController.swift */,
+				6D17A7EE23ABB39600C70542 /* Info.plist */,
+				6D17A7E223ABB39100C70542 /* SceneDelegate.swift */,
 			);
 			path = Snapvideo;
 			sourceTree = "<group>";
@@ -243,11 +243,11 @@
 			isa = PBXGroup;
 			children = (
 				6DC05F9F23EC3B7400A96B76 /* Assets */,
+				6D66488223EE01DF002AAF2E /* LooksCollection */,
+				6D66488323EE0204002AAF2E /* ToolsCollection */,
 				6D154AAF23DC7A2A00150E0A /* Bundle.swift */,
 				6D1D492C23DB71EA00ECACE5 /* Info.plist */,
-				6D1D492A23DB71EA00ECACE5 /* LooksCollectionDataSourceTests.swift */,
 				6D154AB123DC817100150E0A /* TestHelpers.swift */,
-				6DDFFB6923E9CF2000093675 /* ToolsCollectionDataSourceTests.swift */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -274,16 +274,56 @@
 		6D66486E23EDF9A5002AAF2E /* SnapshotTests */ = {
 			isa = PBXGroup;
 			children = (
+				6D66488423EE02CC002AAF2E /* LooksCollection */,
+				6D66488523EE02DA002AAF2E /* ToolsCollection */,
+				6D66488623EE02EC002AAF2E /* VideoEditor */,
 				6D66487D23EDFD34002AAF2E /* Bundle.swift */,
 				6DDFFB6D23EC281D00093675 /* HomeViewControllerSnapshotTests.swift */,
 				6D66487123EDF9A5002AAF2E /* Info.plist */,
-				6DBA80D923EDA839005A585E /* LooksCollectionViewCellSnapshotTests.swift */,
-				6DBA80D523EDA155005A585E /* ToolsCollectionViewCellSnapshotTests.swift */,
-				6DC05F9823EC337C00A96B76 /* ToolsCollectionViewControllerSnapshotTests.swift */,
-				6DC05F9B23EC350200A96B76 /* VideoEditorViewControllerSnapshotTests.swift */,
 				6DBA80C923EC4433005A585E /* WaitExtension.swift */,
 			);
 			path = SnapshotTests;
+			sourceTree = "<group>";
+		};
+		6D66488223EE01DF002AAF2E /* LooksCollection */ = {
+			isa = PBXGroup;
+			children = (
+				6D1D492A23DB71EA00ECACE5 /* LooksCollectionDataSourceTests.swift */,
+			);
+			path = LooksCollection;
+			sourceTree = "<group>";
+		};
+		6D66488323EE0204002AAF2E /* ToolsCollection */ = {
+			isa = PBXGroup;
+			children = (
+				6DDFFB6923E9CF2000093675 /* ToolsCollectionDataSourceTests.swift */,
+			);
+			path = ToolsCollection;
+			sourceTree = "<group>";
+		};
+		6D66488423EE02CC002AAF2E /* LooksCollection */ = {
+			isa = PBXGroup;
+			children = (
+				6DBA80D923EDA839005A585E /* LooksCollectionViewCellSnapshotTests.swift */,
+			);
+			path = LooksCollection;
+			sourceTree = "<group>";
+		};
+		6D66488523EE02DA002AAF2E /* ToolsCollection */ = {
+			isa = PBXGroup;
+			children = (
+				6DBA80D523EDA155005A585E /* ToolsCollectionViewCellSnapshotTests.swift */,
+				6DC05F9823EC337C00A96B76 /* ToolsCollectionViewControllerSnapshotTests.swift */,
+			);
+			path = ToolsCollection;
+			sourceTree = "<group>";
+		};
+		6D66488623EE02EC002AAF2E /* VideoEditor */ = {
+			isa = PBXGroup;
+			children = (
+				6DC05F9B23EC350200A96B76 /* VideoEditorViewControllerSnapshotTests.swift */,
+			);
+			path = VideoEditor;
 			sourceTree = "<group>";
 		};
 		6D96B85123D08FD600C1C6D5 /* ExportViewСomponents */ = {
@@ -324,7 +364,7 @@
 			path = VideoEditingHelpers;
 			sourceTree = "<group>";
 		};
-		6DA0B27E23E71A2600D23CAD /* ToolsView */ = {
+		6DA0B27E23E71A2600D23CAD /* ToolsCollection */ = {
 			isa = PBXGroup;
 			children = (
 				6DA0B27A23E719AC00D23CAD /* ToolsCollectionViewController.swift */,
@@ -332,7 +372,7 @@
 				6DA0B27C23E71A1000D23CAD /* ToolsCollectionDataSource.swift */,
 				6DA0B27F23E71A8900D23CAD /* ToolsCollectionViewCell.swift */,
 			);
-			path = ToolsView;
+			path = ToolsCollection;
 			sourceTree = "<group>";
 		};
 		6DC05F9523EC30FA00A96B76 /* Frameworks */ = {
