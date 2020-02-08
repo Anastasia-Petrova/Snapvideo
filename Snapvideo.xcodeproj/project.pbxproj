@@ -337,10 +337,10 @@
 		6D96B85123D08FD600C1C6D5 /* ExportViewСomponents */ = {
 			isa = PBXGroup;
 			children = (
-				6D73068323D06BE300226C77 /* SaveCopyVideoButton.swift */,
-				6D96B84F23D08E5E00C1C6D5 /* HeaderExportLabel.swift */,
 				6D1D490A23D777F000ECACE5 /* BodyExportLabel.swift */,
 				6D96B85223D090A300C1C6D5 /* ExportImageView.swift */,
+				6D96B84F23D08E5E00C1C6D5 /* HeaderExportLabel.swift */,
+				6D73068323D06BE300226C77 /* SaveCopyVideoButton.swift */,
 			);
 			path = "ExportViewСomponents";
 			sourceTree = "<group>";
@@ -357,8 +357,8 @@
 			isa = PBXGroup;
 			children = (
 				6D01E03723BFA3D600B558E8 /* LooksCollectionDataSource.swift */,
-				6DBA80D323ED931B005A585E /* LooksCollectionViewLayout.swift */,
 				6D01E03523BFA2F900B558E8 /* LooksCollectionViewCell.swift */,
+				6DBA80D323ED931B005A585E /* LooksCollectionViewLayout.swift */,
 				6DB0698923EE0EAE0088F4B7 /* LooksViewController.swift */,
 			);
 			path = LooksCollection;
@@ -376,10 +376,10 @@
 		6DA0B27E23E71A2600D23CAD /* ToolsCollection */ = {
 			isa = PBXGroup;
 			children = (
-				6DA0B27A23E719AC00D23CAD /* ToolsViewController.swift */,
-				6DBA80D723EDA2AC005A585E /* ToolsCollectionViewLayout.swift */,
 				6DA0B27C23E71A1000D23CAD /* ToolsCollectionDataSource.swift */,
 				6DA0B27F23E71A8900D23CAD /* ToolsCollectionViewCell.swift */,
+				6DBA80D723EDA2AC005A585E /* ToolsCollectionViewLayout.swift */,
+				6DA0B27A23E719AC00D23CAD /* ToolsViewController.swift */,
 			);
 			path = ToolsCollection;
 			sourceTree = "<group>";
