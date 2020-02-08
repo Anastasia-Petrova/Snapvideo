@@ -11,8 +11,9 @@ final class VideoEditorViewController: UIViewController {
     let exportView = UIView()
     var bottomExportConstraint = NSLayoutConstraint()
     var bottomToolsConstraint = NSLayoutConstraint()
-    let looksCollectionView: UICollectionView
-    let dataSource: LooksCollectionDataSource
+//    let looksCollectionView: UICollectionView
+    let looksViewController: LooksViewController
+//    let dataSource: LooksCollectionDataSource
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
     let bgVideoView: VideoView
     var playerRateObservation: NSKeyValueObservation?
@@ -28,16 +29,16 @@ final class VideoEditorViewController: UIViewController {
     let saveStackView = UIStackView()
     let saveCopyStackView = UIStackView()
     let itemSize = CGSize(width: 60, height: 76)
-    var filterIndex = 0 {
-        didSet {
-            playerView.filter = dataSource.filters[filterIndex]
-            bgVideoView.filter = dataSource.filters[filterIndex] + AnyFilter(BlurFilter(blurRadius: 100))
-            doneButton.isEnabled = filterIndex != 0
-            presentedFilter(filterIndex != 0)
-            guard filterIndex != oldValue else { return }
-            player.play()
-        }
-    }
+//    var filterIndex = 0 {
+//        didSet {
+//            playerView.filter = dataSource.filters[filterIndex]
+//            bgVideoView.filter = dataSource.filters[filterIndex] + AnyFilter(BlurFilter(blurRadius: 100))
+//            doneButton.isEnabled = filterIndex != 0
+//            presentedFilter(filterIndex != 0)
+//            guard filterIndex != oldValue else { return }
+//            player.play()
+//        }
+//    }
     
     var isExportViewShown: Bool = true {
         didSet {
@@ -55,7 +56,8 @@ final class VideoEditorViewController: UIViewController {
     
     var previewImage: UIImage? {
         didSet {
-            dataSource.image = previewImage
+            looksViewController.dataSource.image = previewImage
+//            dataSource.image = previewImage
         }
     }
     
@@ -84,17 +86,29 @@ final class VideoEditorViewController: UIViewController {
             contentsGravity: .resizeAspectFill,
             filter: AnyFilter(BlurFilter(blurRadius: 100))
         )
-        looksCollectionView = UICollectionView(frame: .zero, collectionViewLayout: LooksCollectionViewLayout(itemSize: itemSize))
-        looksCollectionView.showsHorizontalScrollIndicator = false
-        looksCollectionView.allowsSelection = true
-        looksCollectionView.bounces = false
-        dataSource = LooksCollectionDataSource(
-            collectionView: looksCollectionView,
-            filters: filters,
-            context: CIContext(options: [CIContextOption.workingColorSpace : NSNull()])
-        )
+//        looksCollectionView = UICollectionView(frame: .zero, collectionViewLayout: LooksCollectionViewLayout(itemSize: itemSize))
+//        looksCollectionView.showsHorizontalScrollIndicator = false
+//        looksCollectionView.allowsSelection = true
+//        looksCollectionView.bounces = false
+//        dataSource = LooksCollectionDataSource(
+//            collectionView: looksCollectionView,
+//            filters: filters,
+//            context: CIContext(options: [CIContextOption.workingColorSpace : NSNull()])
+//        )
+        looksViewController = LooksViewController(itemSize: itemSize, filters: filters)
         self.presentedFilter = presentedFilter
         super.init(nibName: nil, bundle: nil)
+        addChild(looksViewController)
+        looksViewController.didMove(toParent: self)
+        
+        looksViewController.filterIndexChangeCallback = { [weak self] newIndex, previousIndex in
+            self?.playerView.filter = filters[newIndex]
+            self?.bgVideoView.filter = filters[newIndex] + AnyFilter(BlurFilter(blurRadius: 100))
+            self?.doneButton.isEnabled = newIndex != 0
+            presentedFilter(newIndex != 0)
+            guard newIndex != previousIndex && newIndex != 0 else { return }
+            self?.player.play()
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -124,7 +138,7 @@ final class VideoEditorViewController: UIViewController {
         setUpSaveStackView()
         setUpSaveCopyStackView()
         setUpSaveCopyButton()
-        looksCollectionView.delegate = self
+//        looksCollectionView.delegate = self
     }
     
     @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
@@ -254,9 +268,9 @@ final class VideoEditorViewController: UIViewController {
         ])
         
         let buttonsStackView = UIStackView()
-        looksCollectionView.backgroundColor = .white
+//        looksCollectionView.backgroundColor = .white
             
-        collectionStackView.addArrangedSubview(looksCollectionView)
+        collectionStackView.addArrangedSubview(looksViewController.view)
         collectionStackView.addArrangedSubview(buttonsStackView)
         
         buttonsStackView.addArrangedSubview(cancelButton)
@@ -265,7 +279,7 @@ final class VideoEditorViewController: UIViewController {
         buttonsStackView.distribution = .fillEqually
         
         NSLayoutConstraint.activate ([
-            looksCollectionView.heightAnchor.constraint(equalToConstant: 100)
+            looksViewController.view.heightAnchor.constraint(equalToConstant: 100)
         ])
     }
     
@@ -462,11 +476,12 @@ final class VideoEditorViewController: UIViewController {
     }
     
     private func resetToDefaultFilter() {
-        filterIndex = 0
+        looksViewController.selectedFilterIndex = 0
     }
     
     @objc func discardLooks() {
-        looksCollectionView.deselectItem(at: IndexPath(row: filterIndex, section: 0), animated: false)
+        looksViewController.deselectFilter()
+//        looksCollectionView.deselectItem(at: IndexPath(row: filterIndex, section: 0), animated: false)
         resetToDefaultFilter()
     }
     
@@ -494,18 +509,22 @@ final class VideoEditorViewController: UIViewController {
         DispatchQueue.main.async {
             self.isExportViewShown = false
         }
-        let choosenFilter = dataSource.filters[filterIndex]
+//        let choosenFilter = dataSource.filters[filterIndex]
+//        let choosenFilter = looksViewController.selectedFilter
         guard let playerItem = player.currentItem else { return }
-        VideoEditer.saveEditedVideo(choosenFilter: choosenFilter, asset: playerItem.asset)
+        VideoEditer.saveEditedVideo(
+            choosenFilter: looksViewController.selectedFilter,
+            asset: playerItem.asset
+        )
     }
 }
 
-extension VideoEditorViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        filterIndex = indexPath.row
-        
-        if indexPath.row < dataSource.filters.count - 3 || indexPath.row > 2 {
-            collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        }
-    }
-}
+//extension VideoEditorViewController: UICollectionViewDelegate {
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        filterIndex = indexPath.row
+//        
+//        if indexPath.row < dataSource.filters.count - 3 || indexPath.row > 2 {
+//            collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+//        }
+//    }
+//}
