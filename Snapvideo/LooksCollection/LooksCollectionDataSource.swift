@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LooksCollectionDataSource: NSObject, UICollectionViewDataSource {
+final class LooksCollectionDataSource: NSObject, UICollectionViewDataSource {
     weak var collectionView: UICollectionView?
     let filters: [AnyFilter]
     var filteredImages: [String: UIImage] = [:]

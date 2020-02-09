@@ -11,7 +11,6 @@ import AVFoundation
 import Photos
 
 struct VideoEditer {
-    
     static func saveEditedVideo(choosenFilter: AnyFilter, asset: AVAsset ) {
         let composition = AVVideoComposition(asset: asset) { (request) in
             let source = request.sourceImage.clampedToExtent()

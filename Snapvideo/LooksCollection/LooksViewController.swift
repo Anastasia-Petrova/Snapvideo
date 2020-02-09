@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LooksViewController: UIViewController {
+final class LooksViewController: UIViewController {
     let dataSource: LooksCollectionDataSource
     let collectionView: UICollectionView
     var filterIndexChangeCallback: ((Int, Int) -> Void)?

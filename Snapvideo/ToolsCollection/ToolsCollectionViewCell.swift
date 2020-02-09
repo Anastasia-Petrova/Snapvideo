@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ToolsCollectionViewCell: UICollectionViewCell {
+final class ToolsCollectionViewCell: UICollectionViewCell {
     let stackView = UIStackView()
     let toolImageView = UIImageView(image: UIImage(named: "placeholder"))
     let toolName = UILabel()

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ToolsCollectionViewLayout: UICollectionViewFlowLayout {
+final class ToolsCollectionViewLayout: UICollectionViewFlowLayout {
     override init() {
         super.init()
         self.itemSize = CGSize(width: 60, height: 76)

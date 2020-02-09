@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LooksCollectionViewLayout: UICollectionViewFlowLayout {
+final class LooksCollectionViewLayout: UICollectionViewFlowLayout {
     init(itemSize: CGSize) {
         super.init()
         self.itemSize = itemSize

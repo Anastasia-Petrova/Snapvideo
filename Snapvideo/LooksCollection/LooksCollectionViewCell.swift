@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LooksCollectionViewCell: UICollectionViewCell {
+final class LooksCollectionViewCell: UICollectionViewCell {
     let stackView = UIStackView()
     let previewImageView = UIImageView(image: UIImage(named: "placeholder"))
     let filterName = UILabel()

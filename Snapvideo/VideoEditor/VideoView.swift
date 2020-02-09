@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class VideoView: UIView {
+final class VideoView: UIView {
     let videoOutput: AVPlayerItemVideoOutput
     var displayLink: CADisplayLink?
     var context: CIContext = CIContext(options: [CIContextOption.workingColorSpace : NSNull()])

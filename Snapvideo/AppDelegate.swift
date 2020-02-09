@@ -11,7 +11,7 @@ import Photos
 import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, PHPhotoLibraryChangeObserver {
+final class AppDelegate: UIResponder, UIApplicationDelegate, PHPhotoLibraryChangeObserver {
     var result: PHFetchResult<PHAsset>?
     let center = UNUserNotificationCenter.current()
     
