@@ -18,7 +18,10 @@ final class LooksViewController: UIViewController {
     }
 
     init(itemSize: CGSize, filters: [AnyFilter]) {
-        self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: LooksCollectionViewLayout(itemSize: itemSize))
+        self.collectionView = UICollectionView(
+            frame: .zero,
+            collectionViewLayout: LooksCollectionViewLayout(itemSize: itemSize)
+        )
         self.dataSource = LooksCollectionDataSource(
             collectionView: collectionView,
             filters: filters,
