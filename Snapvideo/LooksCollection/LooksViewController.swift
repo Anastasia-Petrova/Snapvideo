@@ -9,9 +9,11 @@
 import UIKit
 
 final class LooksViewController: UIViewController {
+    typealias Callback = ((Int, Int) -> Void)
+    
     let dataSource: LooksCollectionDataSource
     let collectionView: UICollectionView
-    var filterIndexChangeCallback: ((Int, Int) -> Void)?
+    var filterIndexChangeCallback: Callback? = nil
     var selectedFilterIndex = 0
     var selectedFilter: AnyFilter {
         dataSource.filters[selectedFilterIndex]
