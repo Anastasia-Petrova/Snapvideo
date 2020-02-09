@@ -25,6 +25,8 @@ final class LooksViewController: UIViewController {
             context: CIContext(options: [CIContextOption.workingColorSpace : NSNull()])
         )
         super.init(nibName: nil, bundle: nil)
+        collectionView.dataSource = dataSource
+        collectionView.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -33,8 +35,6 @@ final class LooksViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView.dataSource = dataSource
-        collectionView.delegate = self
         setUpCollectionView()
     }
     
@@ -56,24 +56,20 @@ final class LooksViewController: UIViewController {
     
     func deselectFilter() {
         collectionView.deselectItem(at: IndexPath(item: selectedFilterIndex, section: 0), animated: false)
-//        let currentOffset = collectionView.contentOffset
         let indexPath = IndexPath(row: 0, section: 0)
         collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .top)
         collectionView(collectionView, didSelectItemAt: indexPath)
-//        collectionView.contentOffset = currentOffset
     }
-    
 }
 
 extension LooksViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let previousIndex = selectedFilterIndex
-        let newIndex = indexPath.row
+        selectedFilterIndex = indexPath.row
         
-        filterIndexChangeCallback?(newIndex, previousIndex)
+        filterIndexChangeCallback?(selectedFilterIndex, previousIndex)
         
-        self.selectedFilterIndex = indexPath.row
-        if indexPath.row < dataSource.filters.count - 3 || indexPath.row > 2 {
+        if selectedFilterIndex != 0 {
             collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         }
     }
