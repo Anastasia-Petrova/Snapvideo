@@ -19,11 +19,16 @@ final class LooksViewController: UIViewController {
         dataSource.filters[selectedFilterIndex]
     }
 
-    init(itemSize: CGSize, filters: [AnyFilter]) {
-        self.collectionView = UICollectionView(
+    convenience init(itemSize: CGSize, filters: [AnyFilter]) {
+        let collectionView = UICollectionView(
             frame: .zero,
             collectionViewLayout: LooksCollectionViewLayout(itemSize: itemSize)
         )
+        self.init(itemSize: itemSize, filters: filters, collectionView: collectionView)
+    }
+    
+    init(itemSize: CGSize, filters: [AnyFilter], collectionView: UICollectionView) {
+        self.collectionView = collectionView
         self.dataSource = LooksCollectionDataSource(
             collectionView: collectionView,
             filters: filters,
@@ -63,7 +68,7 @@ final class LooksViewController: UIViewController {
         collectionView.deselectItem(at: IndexPath(item: selectedFilterIndex, section: 0), animated: false)
         let indexPath = IndexPath(row: 0, section: 0)
         collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .top)
-        collectionView(collectionView, didSelectItemAt: indexPath)
+        collectionView.delegate?.collectionView?(collectionView, didSelectItemAt: indexPath)
     }
 }
 

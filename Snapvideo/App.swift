@@ -120,5 +120,13 @@ extension App {
             AnyFilter(NoirFilter())
         ]
     )
+    
+    static let unitTests = App(
+        filters: [
+            AnyFilter(PassthroughFilter()),
+            AnyFilter(SharpAndWarmFilter(inputSharpness: 0.7)),
+            AnyFilter(VignetteFilter()),
+        ]
+    )
 }
 

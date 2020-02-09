@@ -52,7 +52,7 @@ class LooksViewControllerTests: XCTestCase {
         XCTAssertEqual(0, actualPreviousIndex)
     }
     
-    func test_didSelect_calls_collectionView_scrollToItem() {
+    func test_didSelect_when_indexPathRow_notZero_calls_collectionView_scrollToItem() {
         //Given
         let expectedIndexPath = IndexPath(item: 1, section: 0)
         let vc = LooksViewController(itemSize: .zero, filters: [])
@@ -60,16 +60,59 @@ class LooksViewControllerTests: XCTestCase {
         //When
         vc.collectionView(spy, didSelectItemAt: expectedIndexPath)
         //Then
-        XCTAssertEqual(spy.actualIndexPath, expectedIndexPath)
-        XCTAssertEqual(spy.actualScrollPosition, .centeredHorizontally)
-        XCTAssertEqual(spy.actualAnimated, true)
+        XCTAssertEqual(spy.scrollToItemIndexPath, expectedIndexPath)
+        XCTAssertEqual(spy.scrollToItemScrollPosition, .centeredHorizontally)
+        XCTAssertEqual(spy.scrollToItemAnimated, true)
+    }
+    
+    func test_didSelect_when_indexPathRow_isZero_doesnt_call_collectionView_scrollToItem() {
+        //Given
+        let expectedIndexPath = IndexPath(item: 0, section: 0)
+        let vc = LooksViewController(itemSize: .zero, filters: [])
+        let spy = CollectionViewSpy()
+        //When
+        vc.collectionView(spy, didSelectItemAt: expectedIndexPath)
+        //Then
+        XCTAssertNil(spy.scrollToItemIndexPath)
+        XCTAssertNil(spy.scrollToItemScrollPosition)
+        XCTAssertNil(spy.scrollToItemAnimated)
+    }
+    
+    func test_deselectFilter_calls_deselectItem_and_selectItem_and_didSelectItem() {
+        //Given
+        let collectionSpy = CollectionViewSpy()
+        let delegateSpy = CollectionViewDelegateSpy()
+        let vc = LooksViewController(itemSize: .zero, filters: App.unitTests.filters, collectionView: collectionSpy)
+        collectionSpy.delegate = delegateSpy
+        let expectedDeselectedIndex = 2
+        vc.selectedFilterIndex = expectedDeselectedIndex
+        //When
+        vc.deselectFilter()
+        //Then
+        XCTAssertEqual(collectionSpy.deselectItemAnimated, false)
+        XCTAssertEqual(collectionSpy.deselectItemIndexPath, IndexPath(item: expectedDeselectedIndex, section: 0))
+        XCTAssertEqual(collectionSpy.selectItemIndexPath, IndexPath(item: 0, section: 0))
+        XCTAssertEqual(collectionSpy.selectItemAnimated, false)
+        XCTAssertEqual(collectionSpy.selectItemScrollPosition, .top)
+        XCTAssertEqual(delegateSpy.didSelectIndexPath, IndexPath(item: 0, section: 0))
+        XCTAssertEqual(delegateSpy.didSelectCollectionView, collectionSpy)
     }
 }
 
 private final class CollectionViewSpy: UICollectionView {
-    var actualIndexPath: IndexPath?
-    var actualScrollPosition: UICollectionView.ScrollPosition?
-    var actualAnimated: Bool?
+    //scrollToItem props
+    var scrollToItemIndexPath: IndexPath?
+    var scrollToItemScrollPosition: UICollectionView.ScrollPosition?
+    var scrollToItemAnimated: Bool?
+    
+    //deselect props
+    var deselectItemIndexPath: IndexPath?
+    var deselectItemAnimated: Bool?
+    
+    //select props
+    var selectItemIndexPath: IndexPath?
+    var selectItemScrollPosition: UICollectionView.ScrollPosition?
+    var selectItemAnimated: Bool?
     
     init() {
         super.init(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -80,8 +123,29 @@ private final class CollectionViewSpy: UICollectionView {
     }
     
     override func scrollToItem(at indexPath: IndexPath, at scrollPosition: UICollectionView.ScrollPosition, animated: Bool) {
-        actualIndexPath = indexPath
-        actualScrollPosition = scrollPosition
-        actualAnimated = animated
+        scrollToItemIndexPath = indexPath
+        scrollToItemScrollPosition = scrollPosition
+        scrollToItemAnimated = animated
+    }
+    
+    override func deselectItem(at indexPath: IndexPath, animated: Bool) {
+        deselectItemIndexPath = indexPath
+        deselectItemAnimated = animated
+    }
+    
+    override func selectItem(at indexPath: IndexPath?, animated: Bool, scrollPosition: UICollectionView.ScrollPosition) {
+        selectItemIndexPath = indexPath
+        selectItemAnimated = animated
+        selectItemScrollPosition = scrollPosition
+    }
+}
+
+private final class CollectionViewDelegateSpy: NSObject, UICollectionViewDelegate {
+    var didSelectIndexPath: IndexPath?
+    var didSelectCollectionView: UICollectionView?
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        didSelectCollectionView = collectionView
+        didSelectIndexPath = indexPath
     }
 }
