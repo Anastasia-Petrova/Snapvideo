@@ -7,7 +7,6 @@
 //
 
 import XCTest
-import UIKit
 @testable import Snapvideo
 
 final class LookCollectionViewLayoutTests: XCTestCase {
