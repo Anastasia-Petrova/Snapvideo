@@ -291,12 +291,13 @@ final class VideoEditorViewController: UIViewController {
         looksContainerView.translatesAutoresizingMaskIntoConstraints = false
         looksContainerView.backgroundColor = .white
         topLooksConstraint = view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: looksContainerView.topAnchor, constant: -view.safeAreaInsets.bottom)
-        
+        let looksViewHeight: CGFloat = 100.0
         let bottomConstraint = looksContainerView.topAnchor.constraint(equalTo: playerView.bottomAnchor)
         bottomConstraint.priority = .defaultLow
         NSLayoutConstraint.activate ([
             looksContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             looksContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            looksContainerView.heightAnchor.constraint(equalTo: tabBar.heightAnchor, constant: looksViewHeight),
             bottomConstraint,
             topLooksConstraint
         ])
@@ -309,16 +310,20 @@ final class VideoEditorViewController: UIViewController {
         let collectionStackView = UIStackView()
         collectionStackView.translatesAutoresizingMaskIntoConstraints = false
         collectionStackView.axis = .vertical
+        
         looksContainerView.addSubview(collectionStackView)
         collectionStackView.addArrangedSubview(looksViewController.view)
         collectionStackView.addArrangedSubview(buttonsStackView)
+        let spacer = UIView()
+        spacer.backgroundColor = .white
+        collectionStackView.addArrangedSubview(spacer)
         
         NSLayoutConstraint.activate ([
             collectionStackView.trailingAnchor.constraint(equalTo: looksContainerView.trailingAnchor),
             collectionStackView.leadingAnchor.constraint(equalTo: looksContainerView.leadingAnchor),
             collectionStackView.topAnchor.constraint(equalTo: looksContainerView.topAnchor),
             collectionStackView.bottomAnchor.constraint(equalTo: looksContainerView.bottomAnchor),
-            looksViewController.view.heightAnchor.constraint(equalToConstant: 100)
+            looksViewController.view.heightAnchor.constraint(equalToConstant: looksViewHeight)
         ])
         
     }
@@ -372,13 +377,13 @@ final class VideoEditorViewController: UIViewController {
         NSLayoutConstraint.activate([
             view.leftAnchor.constraint(equalTo: bgVideoView.leftAnchor),
             view.rightAnchor.constraint(equalTo: bgVideoView.rightAnchor),
-            bgVideoView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            bgVideoView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             bgVideoView.topAnchor.constraint(equalTo: view.topAnchor)])
     }
     
     func setUpCancelButton() {
         NSLayoutConstraint.activate ([
-            cancelButton.widthAnchor.constraint(equalToConstant: 44)
+            cancelButton.heightAnchor.constraint(equalToConstant: 44)
         ])
         cancelButton.addTarget(self, action: #selector(self.discardLooks), for: .touchUpInside)
     }
@@ -532,7 +537,7 @@ final class VideoEditorViewController: UIViewController {
     public func openToolsMenu() {
         self.view.layoutIfNeeded()
         isToolsViewShown = true
-        topToolsConstraint.constant = toolsViewController.view.frame.height
+        topToolsConstraint.constant = toolsViewController.view.frame.height + tabBar.frame.height
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
