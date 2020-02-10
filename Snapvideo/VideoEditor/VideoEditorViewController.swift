@@ -240,9 +240,9 @@ final class VideoEditorViewController: UIViewController {
         playerView.addSubview(slider)
         bottomSliderConstraint = slider.bottomAnchor.constraint(equalTo: playerView.bottomAnchor, constant: -40)
         NSLayoutConstraint.activate ([
-        slider.leadingAnchor.constraint(equalTo: playerView.leadingAnchor, constant: 50),
-        slider.trailingAnchor.constraint(equalTo: playerView.trailingAnchor, constant: -50),
-        bottomSliderConstraint])
+            slider.leadingAnchor.constraint(equalTo: playerView.leadingAnchor, constant: 50),
+            slider.trailingAnchor.constraint(equalTo: playerView.trailingAnchor, constant: -50),
+            bottomSliderConstraint])
         slider.minimumValue = 0
         slider.maximumValue = trackDuration
         slider.addTarget(self, action: #selector(self.sliderAction), for: .valueChanged)
@@ -265,9 +265,9 @@ final class VideoEditorViewController: UIViewController {
         playerView.addSubview(timerLabel)
         bottomTimerConstraint = timerLabel.topAnchor.constraint(equalTo: playerView.topAnchor, constant: 40)
         NSLayoutConstraint.activate ([
-        timerLabel.leadingAnchor.constraint(equalTo: playerView.leadingAnchor, constant: 40),
-        bottomTimerConstraint,
-        timerLabel.heightAnchor.constraint(equalToConstant: 44)])
+            timerLabel.leadingAnchor.constraint(equalTo: playerView.leadingAnchor, constant: 40),
+            bottomTimerConstraint,
+            timerLabel.heightAnchor.constraint(equalToConstant: 44)])
         timerLabel.alpha = 0.5
         timerLabel.textColor = .white
         let videoDuration = Int(trackDuration)
@@ -328,10 +328,10 @@ final class VideoEditorViewController: UIViewController {
         topToolsConstraint = view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: toolsViewController.view.topAnchor)
         
         NSLayoutConstraint.activate ([
-        toolsViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-        toolsViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-        toolsViewController.view.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.6),
-        topToolsConstraint
+            toolsViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            toolsViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            toolsViewController.view.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.6),
+            topToolsConstraint
         ])
     }
     
@@ -339,20 +339,20 @@ final class VideoEditorViewController: UIViewController {
         exportView.translatesAutoresizingMaskIntoConstraints = false
         exportView.backgroundColor = .white
         topExportConstraint = view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: exportView.topAnchor, constant: -view.safeAreaInsets.bottom)
-
+        
         NSLayoutConstraint.activate ([
-        exportView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-        exportView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-        exportView.heightAnchor.constraint(equalToConstant: 100),
-        topExportConstraint
+            exportView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            exportView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            exportView.heightAnchor.constraint(equalToConstant: 100),
+            topExportConstraint
         ])
-
+        
         let exportStackView = UIStackView()
         exportStackView.translatesAutoresizingMaskIntoConstraints = false
         exportStackView.axis = .vertical
         exportStackView.distribution = .fillEqually
         exportView.addSubview(exportStackView)
-
+        
         NSLayoutConstraint.activate ([
             exportStackView.trailingAnchor.constraint(equalTo: exportView.trailingAnchor),
             exportStackView.leadingAnchor.constraint(equalTo: exportView.leadingAnchor),
@@ -366,7 +366,7 @@ final class VideoEditorViewController: UIViewController {
         exportStackView.addArrangedSubview(saveStackView)
         exportStackView.addArrangedSubview(saveCopyStackView)
     }
-   
+    
     func setUpBackgroundView() {
         bgVideoView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -378,7 +378,7 @@ final class VideoEditorViewController: UIViewController {
     
     func setUpCancelButton() {
         NSLayoutConstraint.activate ([
-        cancelButton.widthAnchor.constraint(equalToConstant: 44)
+            cancelButton.widthAnchor.constraint(equalToConstant: 44)
         ])
         cancelButton.addTarget(self, action: #selector(self.discardLooks), for: .touchUpInside)
     }
@@ -386,7 +386,7 @@ final class VideoEditorViewController: UIViewController {
     func setUpDoneButton() {
         doneButton.isEnabled = false
         NSLayoutConstraint.activate ([
-        doneButton.heightAnchor.constraint(equalToConstant: 44)
+            doneButton.heightAnchor.constraint(equalToConstant: 44)
         ])
         doneButton.addTarget(self, action: #selector(self.saveFilter), for: .touchUpInside)
     }
@@ -452,7 +452,7 @@ final class VideoEditorViewController: UIViewController {
         
         let header = HeaderExportLabel()
         header.text = "Save a copy"
-
+        
         let body = BodyExportLabel()
         body.text = "Creates a copy with changes that you can undo."
         
@@ -467,13 +467,13 @@ final class VideoEditorViewController: UIViewController {
         saveCopyButton.addTarget(self, action: #selector(self.saveVideoCopy), for: .touchUpInside)
         saveCopyStackView.addSubview(saveCopyButton)
         NSLayoutConstraint.activate ([
-        saveCopyButton.trailingAnchor.constraint(equalTo: saveCopyStackView.trailingAnchor),
-        saveCopyButton.leadingAnchor.constraint(equalTo: saveCopyStackView.leadingAnchor),
-        saveCopyButton.topAnchor.constraint(equalTo: saveCopyStackView.topAnchor),
-        saveCopyButton.bottomAnchor.constraint(equalTo: saveCopyStackView.bottomAnchor)
+            saveCopyButton.trailingAnchor.constraint(equalTo: saveCopyStackView.trailingAnchor),
+            saveCopyButton.leadingAnchor.constraint(equalTo: saveCopyStackView.leadingAnchor),
+            saveCopyButton.topAnchor.constraint(equalTo: saveCopyStackView.topAnchor),
+            saveCopyButton.bottomAnchor.constraint(equalTo: saveCopyStackView.bottomAnchor)
         ])
     }
-        
+    
     @objc func playerItemDidReachEnd(notification: Notification) {
         if let playerItem = notification.object as? AVPlayerItem {
             playerItem.seek(to: CMTime.zero, completionHandler: nil)
@@ -520,7 +520,7 @@ final class VideoEditorViewController: UIViewController {
             self.view.layoutIfNeeded()
         }
     }
-
+    
     public func closeExportMenu() {
         self.view.layoutIfNeeded()
         topExportConstraint.constant = -self.view.safeAreaInsets.bottom
@@ -537,7 +537,7 @@ final class VideoEditorViewController: UIViewController {
             self.view.layoutIfNeeded()
         }
     }
-
+    
     public func closeToolsMenu() {
         self.view.layoutIfNeeded()
         topToolsConstraint.constant = -self.view.safeAreaInsets.bottom
@@ -565,13 +565,13 @@ final class VideoEditorViewController: UIViewController {
     
     @objc func saveVideoCopy() {
         PHPhotoLibrary.requestAuthorization { [weak self] status in
-          switch status {
-          case .authorized:
-            self?.saveVideoToPhotos()
-          default:
-            print("Photos permissions not granted.")
-            return
-          }
+            switch status {
+            case .authorized:
+                self?.saveVideoToPhotos()
+            default:
+                print("Photos permissions not granted.")
+                return
+            }
         }
     }
     
