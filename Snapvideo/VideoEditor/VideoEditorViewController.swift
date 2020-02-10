@@ -14,7 +14,7 @@ final class VideoEditorViewController: UIViewController {
     let asset: AVAsset
     let player: AVPlayer
     let playerView: VideoView
-    let effectsView = UIView()
+    let looksContainerView = UIView()
     let exportView = UIView()
     var topExportConstraint = NSLayoutConstraint()
     let looksViewController: LooksViewController
@@ -149,6 +149,14 @@ final class VideoEditorViewController: UIViewController {
                 self?.previewImage = image
             }
         )
+        
+        view.addSubview(bgVideoView)
+        view.addSubview(playerView)
+        view.addSubview(looksContainerView)
+        view.addSubview(toolsViewController.view)
+        view.addSubview(exportView)
+        view.addSubview(tabBar)
+        
         setUpBackgroundView()
         setUpPlayerView()
         setUpLooksView()
@@ -181,7 +189,8 @@ final class VideoEditorViewController: UIViewController {
     private func setUpTabBar() {
         tabBar.delegate = self
         tabBar.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(tabBar)
+        tabBar.setContentHuggingPriority(.required, for: .vertical)
+        tabBar.setContentCompressionResistancePriority(.required, for: .vertical)
         NSLayoutConstraint.activate([
             tabBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             tabBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -241,11 +250,11 @@ final class VideoEditorViewController: UIViewController {
     
     func setUpPlayerView() {
         playerView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(playerView)
         NSLayoutConstraint.activate ([
-        playerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-        playerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-        playerView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor)
+            playerView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            playerView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            playerView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            tabBar.topAnchor.constraint(greaterThanOrEqualTo: playerView.bottomAnchor)
         ])
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
         playerView.addGestureRecognizer(tap)
@@ -279,16 +288,16 @@ final class VideoEditorViewController: UIViewController {
     }
     
     func setUpLooksView() {
-        effectsView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(effectsView)
-        effectsView.backgroundColor = .white
-        topLooksConstraint = view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: effectsView.topAnchor, constant: -view.safeAreaInsets.bottom)
-
+        looksContainerView.translatesAutoresizingMaskIntoConstraints = false
+        looksContainerView.backgroundColor = .white
+        topLooksConstraint = view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: looksContainerView.topAnchor, constant: -view.safeAreaInsets.bottom)
         
+        let bottomConstraint = looksContainerView.topAnchor.constraint(equalTo: playerView.bottomAnchor)
+        bottomConstraint.priority = .defaultLow
         NSLayoutConstraint.activate ([
-            effectsView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            effectsView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            effectsView.topAnchor.constraint(equalTo: playerView.bottomAnchor),
+            looksContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            looksContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            bottomConstraint,
             topLooksConstraint
         ])
         let buttonsStackView = UIStackView()
@@ -300,15 +309,15 @@ final class VideoEditorViewController: UIViewController {
         let collectionStackView = UIStackView()
         collectionStackView.translatesAutoresizingMaskIntoConstraints = false
         collectionStackView.axis = .vertical
-        effectsView.addSubview(collectionStackView)
+        looksContainerView.addSubview(collectionStackView)
         collectionStackView.addArrangedSubview(looksViewController.view)
         collectionStackView.addArrangedSubview(buttonsStackView)
         
         NSLayoutConstraint.activate ([
-            collectionStackView.trailingAnchor.constraint(equalTo: effectsView.trailingAnchor),
-            collectionStackView.leadingAnchor.constraint(equalTo: effectsView.leadingAnchor),
-            collectionStackView.topAnchor.constraint(equalTo: effectsView.topAnchor),
-            collectionStackView.bottomAnchor.constraint(equalTo: effectsView.bottomAnchor),
+            collectionStackView.trailingAnchor.constraint(equalTo: looksContainerView.trailingAnchor),
+            collectionStackView.leadingAnchor.constraint(equalTo: looksContainerView.leadingAnchor),
+            collectionStackView.topAnchor.constraint(equalTo: looksContainerView.topAnchor),
+            collectionStackView.bottomAnchor.constraint(equalTo: looksContainerView.bottomAnchor),
             looksViewController.view.heightAnchor.constraint(equalToConstant: 100)
         ])
         
@@ -316,7 +325,6 @@ final class VideoEditorViewController: UIViewController {
     
     func setUpToolsView() {
         toolsViewController.view.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(toolsViewController.view)
         topToolsConstraint = view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: toolsViewController.view.topAnchor)
         
         NSLayoutConstraint.activate ([
@@ -329,7 +337,6 @@ final class VideoEditorViewController: UIViewController {
     
     func setUpExportView() {
         exportView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(exportView)
         exportView.backgroundColor = .white
         topExportConstraint = view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: exportView.topAnchor, constant: -view.safeAreaInsets.bottom)
 
@@ -361,7 +368,6 @@ final class VideoEditorViewController: UIViewController {
     }
    
     func setUpBackgroundView() {
-        self.view.addSubview(bgVideoView)
         bgVideoView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             view.leftAnchor.constraint(equalTo: bgVideoView.leftAnchor),
