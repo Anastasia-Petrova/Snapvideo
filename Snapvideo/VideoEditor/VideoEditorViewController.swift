@@ -20,7 +20,7 @@ final class VideoEditorViewController: UIViewController {
     let looksViewController: LooksViewController
     var bottomLooksConstraint = NSLayoutConstraint()
     let toolsViewController: ToolsViewController
-    var bottomToolsConstraint = NSLayoutConstraint()
+    var topToolsConstraint = NSLayoutConstraint()
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
     let bgVideoView: VideoView
     var playerRateObservation: NSKeyValueObservation?
@@ -287,12 +287,13 @@ final class VideoEditorViewController: UIViewController {
     func setUpToolsView() {
         toolsViewController.view.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(toolsViewController.view)
-        bottomToolsConstraint = toolsViewController.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 300)
+        topToolsConstraint = self.view.bottomAnchor.constraint(equalTo: toolsViewController.view.topAnchor)
+        
         NSLayoutConstraint.activate ([
         toolsViewController.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
         toolsViewController.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-        toolsViewController.view.heightAnchor.constraint(equalToConstant: 300),
-        bottomToolsConstraint
+        toolsViewController.view.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.6),
+        topToolsConstraint
         ])
     }
     
@@ -495,7 +496,7 @@ final class VideoEditorViewController: UIViewController {
     public func openToolsMenu() {
         self.view.layoutIfNeeded()
         isToolsViewShown = true
-        bottomToolsConstraint.constant = 0 - self.view.safeAreaInsets.bottom - 49
+        topToolsConstraint.constant = toolsViewController.view.frame.height
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
@@ -503,7 +504,7 @@ final class VideoEditorViewController: UIViewController {
 
     public func closeToolsMenu() {
         self.view.layoutIfNeeded()
-        bottomToolsConstraint.constant = 300
+        topToolsConstraint.constant = 0
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
