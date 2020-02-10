@@ -41,6 +41,18 @@ final class HomeViewController: UIViewController {
         }
     }
     
+    var isToolsButtonSelected: Bool = false {
+        didSet {
+            guard let childVC = childViewController as? VideoEditorViewController else { return }
+
+            if isToolsButtonSelected {
+                childVC.openToolsMenu()
+            } else {
+                childVC.closeToolsMenu()
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tabBar.delegate = self
@@ -171,6 +183,8 @@ extension HomeViewController: UITabBarDelegate {
         isLooksButtonSelected = selectedIndex == 0 && previouslySelectedIndex != selectedIndex
         
         isExportButtonSelected = selectedIndex == 2 && previouslySelectedIndex != selectedIndex
+        
+        isToolsButtonSelected = selectedIndex == 1 && previouslySelectedIndex != selectedIndex
         
         if previouslySelectedIndex == selectedIndex {
             previouslySelectedIndex = nil

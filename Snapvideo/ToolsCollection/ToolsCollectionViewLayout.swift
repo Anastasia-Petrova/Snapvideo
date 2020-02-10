@@ -15,7 +15,6 @@ final class ToolsCollectionViewLayout: UICollectionViewFlowLayout {
         self.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         self.minimumLineSpacing = 5
         self.scrollDirection = .vertical
-        
     }
     
     required init?(coder: NSCoder) {

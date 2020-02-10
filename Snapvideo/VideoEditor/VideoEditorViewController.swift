@@ -15,11 +15,12 @@ final class VideoEditorViewController: UIViewController {
     let player: AVPlayer
     let playerView: VideoView
     let effectsView = UIView()
-    var bottomLooksConstraint = NSLayoutConstraint()
     let exportView = UIView()
     var bottomExportConstraint = NSLayoutConstraint()
-    var bottomToolsConstraint = NSLayoutConstraint()
     let looksViewController: LooksViewController
+    var bottomLooksConstraint = NSLayoutConstraint()
+    let toolsViewController: ToolsViewController
+    var bottomToolsConstraint = NSLayoutConstraint()
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
     let bgVideoView: VideoView
     var playerRateObservation: NSKeyValueObservation?
@@ -44,6 +45,20 @@ final class VideoEditorViewController: UIViewController {
             
             if parent.isExportButtonSelected &&  parent.isExportButtonSelected != isExportViewShown {
                 parent.isExportButtonSelected = isExportViewShown
+                parent.tabBar.selectedItem = nil
+                parent.previouslySelectedIndex = nil
+            }
+        }
+    }
+    
+    var isToolsViewShown: Bool = true {
+        didSet {
+            guard let parent = self.parent as? HomeViewController else {
+               return
+            }
+            
+            if parent.isToolsButtonSelected &&  parent.isToolsButtonSelected != isToolsViewShown {
+                parent.isToolsButtonSelected = isToolsViewShown
                 parent.tabBar.selectedItem = nil
                 parent.previouslySelectedIndex = nil
             }
@@ -82,6 +97,7 @@ final class VideoEditorViewController: UIViewController {
             filter: AnyFilter(BlurFilter(blurRadius: 100))
         )
         looksViewController = LooksViewController(itemSize: itemSize, filters: filters)
+        toolsViewController = ToolsViewController()
         self.presentedFilter = presentedFilter
         super.init(nibName: nil, bundle: nil)
         addChild(looksViewController)
@@ -120,6 +136,7 @@ final class VideoEditorViewController: UIViewController {
         setUpTimer()
         setUpCancelButton()
         setUpDoneButton()
+        setUpToolsView()
         setUpExportView()
         setUpSaveStackView()
         setUpSaveCopyStackView()
@@ -234,10 +251,10 @@ final class VideoEditorViewController: UIViewController {
         bottomLooksConstraint = effectsView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 100)
         
         NSLayoutConstraint.activate ([
-        effectsView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-        effectsView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-        effectsView.topAnchor.constraint(equalTo: playerView.bottomAnchor),
-        bottomLooksConstraint
+            effectsView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            effectsView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            effectsView.topAnchor.constraint(equalTo: playerView.bottomAnchor),
+            bottomLooksConstraint
         ])
         
         let collectionStackView = UIStackView()
@@ -264,6 +281,18 @@ final class VideoEditorViewController: UIViewController {
         
         NSLayoutConstraint.activate ([
             looksViewController.view.heightAnchor.constraint(equalToConstant: 100)
+        ])
+    }
+    
+    func setUpToolsView() {
+        toolsViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(toolsViewController.view)
+        bottomToolsConstraint = toolsViewController.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 300)
+        NSLayoutConstraint.activate ([
+        toolsViewController.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+        toolsViewController.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+        toolsViewController.view.heightAnchor.constraint(equalToConstant: 300),
+        bottomToolsConstraint
         ])
     }
     
@@ -455,6 +484,21 @@ final class VideoEditorViewController: UIViewController {
     public func closeExportMenu() {
         bottomExportConstraint.constant = 140
         UIView.animate(withDuration: 0.2) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    public func openToolsMenu() {
+        isToolsViewShown = true
+        bottomToolsConstraint.constant = 0 - self.view.safeAreaInsets.bottom - 49
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    }
+
+    public func closeToolsMenu() {
+        bottomToolsConstraint.constant = 300
+        UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
     }
