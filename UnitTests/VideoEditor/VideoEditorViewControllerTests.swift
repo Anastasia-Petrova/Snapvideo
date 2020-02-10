@@ -20,8 +20,7 @@ class VideoEditorViewControllerTests: XCTestCase {
             return
         }
         let url = URL(fileURLWithPath: path)
-        let vc = VideoEditorViewController(url: url, filters: filters) { (presentedFilter) in
-        }
+        let vc = VideoEditorViewController(url: url, filters: filters)
         
         vc.openLooks()
         //asset contstraint constant

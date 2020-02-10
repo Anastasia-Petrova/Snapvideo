@@ -13,67 +13,16 @@ import MobileCoreServices
 final class HomeViewController: UIViewController {
     var addVideoButton = UIButton()
     let app = App.shared
-    let tabBar = TabBar(items: "LOOKS", "TOOLS", "EXPORT")
     var childViewController: UIViewController?
-    var previouslySelectedIndex: Int?
-    
-    var isLooksButtonSelected: Bool = false {
-        didSet {
-            guard let childVC = childViewController as? VideoEditorViewController else { return }
-            
-            if isLooksButtonSelected {
-                childVC.openLooks()
-            } else {
-                childVC.closeLooks()
-            }
-        }
-    }
-    
-    var isExportButtonSelected: Bool = false {
-        didSet {
-            guard let childVC = childViewController as? VideoEditorViewController else { return }
-
-            if isExportButtonSelected {
-                childVC.openExportMenu()
-            } else {
-                childVC.closeExportMenu()
-            }
-        }
-    }
-    
-    var isToolsButtonSelected: Bool = false {
-        didSet {
-            guard let childVC = childViewController as? VideoEditorViewController else { return }
-
-            if isToolsButtonSelected {
-                childVC.openToolsMenu()
-            } else {
-                childVC.closeToolsMenu()
-            }
-        }
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tabBar.delegate = self
         self.view.backgroundColor = .white
         self.navigationController?.navigationBar.barTintColor = .white
         self.navigationController?.hideHairline()
         setUpStackView()
         setUpAddVideoButton()
-        setUpTabBar()
         setUpOpenButton()
-        tabBar.isHidden = true
-    }
-    
-    private func setUpTabBar() {
-        tabBar.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(tabBar)
-        NSLayoutConstraint.activate([
-            tabBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            tabBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tabBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
     }
     
     func setUpOpenButton() {
@@ -130,10 +79,10 @@ final class HomeViewController: UIViewController {
         self.childViewController = videoEditorVC
         videoEditorVC.view.translatesAutoresizingMaskIntoConstraints = false
         addChild(videoEditorVC)
-        view.insertSubview(videoEditorVC.view, belowSubview: tabBar)
+        view.addSubview(videoEditorVC.view)
         NSLayoutConstraint.activate([
-            videoEditorVC.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            videoEditorVC.view.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            videoEditorVC.view.topAnchor.constraint(equalTo: view.topAnchor),
+            videoEditorVC.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             videoEditorVC.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             videoEditorVC.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
@@ -142,7 +91,6 @@ final class HomeViewController: UIViewController {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             videoEditorVC.view.isHidden = false
-            self.tabBar.isHidden = false
         }
     }
     
@@ -150,11 +98,6 @@ final class HomeViewController: UIViewController {
         guard let childVC = childViewController else { return }
         childVC.removeFromParent()
         childVC.view.removeFromSuperview()
-        if previouslySelectedIndex != nil {
-            tabBar.selectedItem = nil
-            tabBar.previouslySelectedItem = nil
-            previouslySelectedIndex = nil
-        }
     }
 }
 
@@ -167,32 +110,12 @@ extension HomeViewController: UIImagePickerControllerDelegate {
         }
         dismiss(animated: true) {
             self.removeEmbeddedViewController()
-            self.embed(VideoEditorViewController(url: url, filters: self.app.filters, presentedFilter: { [weak self] didTapFilter in
-                self?.tabBar.isHidden = didTapFilter
-            }))
+            self.embed(VideoEditorViewController(url: url, filters: self.app.filters))
         }
     }
 }
 
 extension HomeViewController: UINavigationControllerDelegate {}
-
-extension HomeViewController: UITabBarDelegate {
-    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        guard let selectedIndex = tabBar.items?.firstIndex(of: item) else { return }
-        
-        isLooksButtonSelected = selectedIndex == 0 && previouslySelectedIndex != selectedIndex
-        
-        isExportButtonSelected = selectedIndex == 2 && previouslySelectedIndex != selectedIndex
-        
-        isToolsButtonSelected = selectedIndex == 1 && previouslySelectedIndex != selectedIndex
-        
-        if previouslySelectedIndex == selectedIndex {
-            previouslySelectedIndex = nil
-        } else {
-            previouslySelectedIndex = selectedIndex
-        }
-    }
-}
 
 extension UINavigationController {
     func hideHairline() {

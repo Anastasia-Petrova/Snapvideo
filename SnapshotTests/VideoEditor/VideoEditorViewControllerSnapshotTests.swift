@@ -18,8 +18,7 @@ final class VideoEditorViewControllerSnapshotTests: XCTestCase {
             return
         }
         let url = URL(fileURLWithPath: path)
-        let vc = VideoEditorViewController(url: url, filters: filters) { (presentedFilter) in
-        }
+        let vc = VideoEditorViewController(url: url, filters: filters)
         
         assertSnapshot(matching: vc, as: .wait(for: 5, on: .image))
     }

@@ -16,9 +16,10 @@ final class VideoEditorViewController: UIViewController {
     let playerView: VideoView
     let effectsView = UIView()
     let exportView = UIView()
-    var bottomExportConstraint = NSLayoutConstraint()
+    var topExportConstraint = NSLayoutConstraint()
     let looksViewController: LooksViewController
     var bottomLooksConstraint = NSLayoutConstraint()
+    let tabBar = TabBar(items: "LOOKS", "TOOLS", "EXPORT")
     let toolsViewController: ToolsViewController
     var topToolsConstraint = NSLayoutConstraint()
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
@@ -32,35 +33,57 @@ final class VideoEditorViewController: UIViewController {
     var doneButton = LooksViewButton(imageName: "done")
     var saveCopyButton = SaveCopyVideoButton()
     var spacerHeight = CGFloat()
-    var presentedFilter: (Bool) -> Void
     let saveStackView = UIStackView()
     let saveCopyStackView = UIStackView()
     let itemSize = CGSize(width: 60, height: 76)
+    var previouslySelectedIndex: Int?
+    
+    var isLooksButtonSelected: Bool = false {
+        didSet {
+            if isLooksButtonSelected {
+                openLooks()
+            } else {
+                closeLooks()
+            }
+        }
+    }
+    
+    var isExportButtonSelected: Bool = false {
+        didSet {
+            if isExportButtonSelected {
+                openExportMenu()
+            } else {
+                closeExportMenu()
+            }
+        }
+    }
+    
+    var isToolsButtonSelected: Bool = false {
+        didSet {
+            if isToolsButtonSelected {
+                openToolsMenu()
+            } else {
+                closeToolsMenu()
+            }
+        }
+    }
     
     var isExportViewShown: Bool = true {
         didSet {
-            guard let parent = self.parent as? HomeViewController else {
-               return
-            }
-            
-            if parent.isExportButtonSelected &&  parent.isExportButtonSelected != isExportViewShown {
-                parent.isExportButtonSelected = isExportViewShown
-                parent.tabBar.selectedItem = nil
-                parent.previouslySelectedIndex = nil
+            if isExportButtonSelected &&  isExportButtonSelected != isExportViewShown {
+                isExportButtonSelected = isExportViewShown
+                tabBar.selectedItem = nil
+                previouslySelectedIndex = nil
             }
         }
     }
     
     var isToolsViewShown: Bool = true {
         didSet {
-            guard let parent = self.parent as? HomeViewController else {
-               return
-            }
-            
-            if parent.isToolsButtonSelected &&  parent.isToolsButtonSelected != isToolsViewShown {
-                parent.isToolsButtonSelected = isToolsViewShown
-                parent.tabBar.selectedItem = nil
-                parent.previouslySelectedIndex = nil
+            if isToolsButtonSelected &&  isToolsButtonSelected != isToolsViewShown {
+                isToolsButtonSelected = isToolsViewShown
+                tabBar.selectedItem = nil
+                previouslySelectedIndex = nil
             }
         }
     }
@@ -78,7 +101,7 @@ final class VideoEditorViewController: UIViewController {
         return Float(CMTimeGetSeconds(trackDuration))
     }
     
-    init(url: URL, filters: [AnyFilter], presentedFilter: @escaping (Bool) -> Void) {
+    init(url: URL, filters: [AnyFilter]) {
         asset = AVAsset(url: url)
         let playerItem = AVPlayerItem(asset: asset)
         player = AVPlayer(playerItem: playerItem)
@@ -98,7 +121,6 @@ final class VideoEditorViewController: UIViewController {
         )
         looksViewController = LooksViewController(itemSize: itemSize, filters: filters)
         toolsViewController = ToolsViewController()
-        self.presentedFilter = presentedFilter
         super.init(nibName: nil, bundle: nil)
         addChild(looksViewController)
         looksViewController.didMove(toParent: self)
@@ -107,7 +129,7 @@ final class VideoEditorViewController: UIViewController {
             self?.playerView.filter = filters[newIndex]
             self?.bgVideoView.filter = filters[newIndex] + AnyFilter(BlurFilter(blurRadius: 100))
             self?.doneButton.isEnabled = newIndex != 0
-            presentedFilter(newIndex != 0)
+            self?.tabBar.isHidden = newIndex != 0
             guard newIndex != previousIndex && newIndex != 0 else { return }
             self?.player.play()
         }
@@ -141,6 +163,7 @@ final class VideoEditorViewController: UIViewController {
         setUpSaveStackView()
         setUpSaveCopyStackView()
         setUpSaveCopyButton()
+        setUpTabBar()
     }
     
     @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
@@ -153,6 +176,17 @@ final class VideoEditorViewController: UIViewController {
     
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+    
+    private func setUpTabBar() {
+        tabBar.delegate = self
+        tabBar.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(tabBar)
+        NSLayoutConstraint.activate([
+            tabBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            tabBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tabBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
     }
     
     func setUpPlayer() {
@@ -301,13 +335,13 @@ final class VideoEditorViewController: UIViewController {
         exportView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(exportView)
         exportView.backgroundColor = .white
-        bottomExportConstraint = exportView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 140)
+        topExportConstraint = self.view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: exportView.topAnchor, constant: -self.view.safeAreaInsets.bottom)
 
         NSLayoutConstraint.activate ([
         exportView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
         exportView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
         exportView.heightAnchor.constraint(equalToConstant: 100),
-        bottomExportConstraint
+        topExportConstraint
         ])
 
         let exportStackView = UIStackView()
@@ -457,7 +491,7 @@ final class VideoEditorViewController: UIViewController {
     
     public func openLooks() {
         self.view.layoutIfNeeded()
-        bottomLooksConstraint.constant = 0 - self.view.safeAreaInsets.bottom
+        bottomLooksConstraint.constant = self.view.safeAreaInsets.bottom
         bottomSliderConstraint.constant *= 0.84
         bottomTimerConstraint.constant *= 0.84
         UIView.animate(withDuration: 0.2) {
@@ -479,7 +513,7 @@ final class VideoEditorViewController: UIViewController {
     public func openExportMenu() {
         self.view.layoutIfNeeded()
         isExportViewShown = true
-        bottomExportConstraint.constant = 0 - self.view.safeAreaInsets.bottom - 49
+        topExportConstraint.constant = exportView.frame.height + tabBar.frame.height
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
@@ -487,7 +521,7 @@ final class VideoEditorViewController: UIViewController {
 
     public func closeExportMenu() {
         self.view.layoutIfNeeded()
-        bottomExportConstraint.constant = 140
+        topExportConstraint.constant = -self.view.safeAreaInsets.bottom
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
@@ -504,7 +538,7 @@ final class VideoEditorViewController: UIViewController {
 
     public func closeToolsMenu() {
         self.view.layoutIfNeeded()
-        topToolsConstraint.constant = 0
+        topToolsConstraint.constant = -self.view.safeAreaInsets.bottom
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
@@ -548,5 +582,23 @@ final class VideoEditorViewController: UIViewController {
             choosenFilter: looksViewController.selectedFilter,
             asset: playerItem.asset
         )
+    }
+}
+
+extension VideoEditorViewController: UITabBarDelegate {
+    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        guard let selectedIndex = tabBar.items?.firstIndex(of: item) else { return }
+        
+        isLooksButtonSelected = selectedIndex == 0 && previouslySelectedIndex != selectedIndex
+        
+        isExportButtonSelected = selectedIndex == 2 && previouslySelectedIndex != selectedIndex
+        
+        isToolsButtonSelected = selectedIndex == 1 && previouslySelectedIndex != selectedIndex
+        
+        if previouslySelectedIndex == selectedIndex {
+            previouslySelectedIndex = nil
+        } else {
+            previouslySelectedIndex = selectedIndex
+        }
     }
 }
