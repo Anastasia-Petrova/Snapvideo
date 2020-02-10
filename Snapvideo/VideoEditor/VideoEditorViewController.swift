@@ -18,7 +18,7 @@ final class VideoEditorViewController: UIViewController {
     let exportView = UIView()
     var topExportConstraint = NSLayoutConstraint()
     let looksViewController: LooksViewController
-    var bottomLooksConstraint = NSLayoutConstraint()
+    var topLooksConstraint = NSLayoutConstraint()
     let tabBar = TabBar(items: "LOOKS", "TOOLS", "EXPORT")
     let toolsViewController: ToolsViewController
     var topToolsConstraint = NSLayoutConstraint()
@@ -280,66 +280,62 @@ final class VideoEditorViewController: UIViewController {
     
     func setUpLooksView() {
         effectsView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(effectsView)
+        view.addSubview(effectsView)
         effectsView.backgroundColor = .white
-        bottomLooksConstraint = effectsView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 100)
+        topLooksConstraint = view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: effectsView.topAnchor, constant: -view.safeAreaInsets.bottom)
+
         
         NSLayoutConstraint.activate ([
-            effectsView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            effectsView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            effectsView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            effectsView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             effectsView.topAnchor.constraint(equalTo: playerView.bottomAnchor),
-            bottomLooksConstraint
+            topLooksConstraint
         ])
-        
-        let collectionStackView = UIStackView()
-        collectionStackView.translatesAutoresizingMaskIntoConstraints = false
-        collectionStackView.axis = .vertical
-        effectsView.addSubview(collectionStackView)
-        
-        NSLayoutConstraint.activate ([
-            collectionStackView.trailingAnchor.constraint(equalTo: effectsView.trailingAnchor),
-            collectionStackView.leadingAnchor.constraint(equalTo: effectsView.leadingAnchor),
-            collectionStackView.topAnchor.constraint(equalTo: effectsView.topAnchor),
-            collectionStackView.bottomAnchor.constraint(equalTo: effectsView.bottomAnchor)
-        ])
-        
         let buttonsStackView = UIStackView()
-            
-        collectionStackView.addArrangedSubview(looksViewController.view)
-        collectionStackView.addArrangedSubview(buttonsStackView)
-        
         buttonsStackView.addArrangedSubview(cancelButton)
         buttonsStackView.addArrangedSubview(doneButton)
         buttonsStackView.axis = .horizontal
         buttonsStackView.distribution = .fillEqually
         
+        let collectionStackView = UIStackView()
+        collectionStackView.translatesAutoresizingMaskIntoConstraints = false
+        collectionStackView.axis = .vertical
+        effectsView.addSubview(collectionStackView)
+        collectionStackView.addArrangedSubview(looksViewController.view)
+        collectionStackView.addArrangedSubview(buttonsStackView)
+        
         NSLayoutConstraint.activate ([
+            collectionStackView.trailingAnchor.constraint(equalTo: effectsView.trailingAnchor),
+            collectionStackView.leadingAnchor.constraint(equalTo: effectsView.leadingAnchor),
+            collectionStackView.topAnchor.constraint(equalTo: effectsView.topAnchor),
+            collectionStackView.bottomAnchor.constraint(equalTo: effectsView.bottomAnchor),
             looksViewController.view.heightAnchor.constraint(equalToConstant: 100)
         ])
+        
     }
     
     func setUpToolsView() {
         toolsViewController.view.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(toolsViewController.view)
-        topToolsConstraint = self.view.bottomAnchor.constraint(equalTo: toolsViewController.view.topAnchor)
+        view.addSubview(toolsViewController.view)
+        topToolsConstraint = view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: toolsViewController.view.topAnchor)
         
         NSLayoutConstraint.activate ([
-        toolsViewController.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-        toolsViewController.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-        toolsViewController.view.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.6),
+        toolsViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        toolsViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+        toolsViewController.view.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.6),
         topToolsConstraint
         ])
     }
     
     func setUpExportView() {
         exportView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(exportView)
+        view.addSubview(exportView)
         exportView.backgroundColor = .white
-        topExportConstraint = self.view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: exportView.topAnchor, constant: -self.view.safeAreaInsets.bottom)
+        topExportConstraint = view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: exportView.topAnchor, constant: -view.safeAreaInsets.bottom)
 
         NSLayoutConstraint.activate ([
-        exportView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-        exportView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+        exportView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        exportView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
         exportView.heightAnchor.constraint(equalToConstant: 100),
         topExportConstraint
         ])
@@ -491,7 +487,7 @@ final class VideoEditorViewController: UIViewController {
     
     public func openLooks() {
         self.view.layoutIfNeeded()
-        bottomLooksConstraint.constant = self.view.safeAreaInsets.bottom
+        topLooksConstraint.constant = looksViewController.view.frame.height + tabBar.frame.height
         bottomSliderConstraint.constant *= 0.84
         bottomTimerConstraint.constant *= 0.84
         UIView.animate(withDuration: 0.2) {
@@ -501,7 +497,7 @@ final class VideoEditorViewController: UIViewController {
     
     public func closeLooks() {
         self.view.layoutIfNeeded()
-        bottomLooksConstraint.constant = 100
+        topLooksConstraint.constant = -view.safeAreaInsets.bottom
         bottomSliderConstraint.constant = -40
         bottomTimerConstraint.constant = 40
         resetToDefaultFilter()
@@ -554,7 +550,7 @@ final class VideoEditorViewController: UIViewController {
     
     @objc func saveFilter() {
         self.view.layoutIfNeeded()
-        bottomLooksConstraint.constant = 146
+        topLooksConstraint.constant = 146
         resetToDefaultFilter()
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()

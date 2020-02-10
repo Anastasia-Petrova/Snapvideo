@@ -10,8 +10,7 @@ import XCTest
 @testable import Snapvideo
 
 class VideoEditorViewControllerTests: XCTestCase {
-
-    func testExample() {
+    func test_openLooks_and_closeLooks_setCorrect_topLooksConstraint_constant() {
         let filters = [
             AnyFilter(PassthroughFilter())
         ]
@@ -23,10 +22,15 @@ class VideoEditorViewControllerTests: XCTestCase {
         let vc = VideoEditorViewController(url: url, filters: filters)
         
         vc.openLooks()
-        //asset contstraint constant
-        XCTAssertEqual(vc.bottomLooksConstraint.constant, 0 - vc.view.safeAreaInsets.bottom)
+        XCTAssertEqual(
+            vc.topLooksConstraint.constant,
+            vc.looksViewController.view.frame.height + vc.tabBar.frame.height
+        )
+        
         vc.closeLooks()
-        //asset contstraint constant
-        XCTAssertEqual(vc.bottomLooksConstraint.constant, 100)
+        XCTAssertEqual(
+            vc.topLooksConstraint.constant,
+            -vc.view.safeAreaInsets.bottom
+        )
     }
 }
