@@ -455,6 +455,7 @@ final class VideoEditorViewController: UIViewController {
     }
     
     public func openLooks() {
+        self.view.layoutIfNeeded()
         bottomLooksConstraint.constant = 0 - self.view.safeAreaInsets.bottom
         bottomSliderConstraint.constant *= 0.84
         bottomTimerConstraint.constant *= 0.84
@@ -464,6 +465,7 @@ final class VideoEditorViewController: UIViewController {
     }
     
     public func closeLooks() {
+        self.view.layoutIfNeeded()
         bottomLooksConstraint.constant = 100
         bottomSliderConstraint.constant = -40
         bottomTimerConstraint.constant = 40
@@ -474,6 +476,7 @@ final class VideoEditorViewController: UIViewController {
     }
     
     public func openExportMenu() {
+        self.view.layoutIfNeeded()
         isExportViewShown = true
         bottomExportConstraint.constant = 0 - self.view.safeAreaInsets.bottom - 49
         UIView.animate(withDuration: 0.2) {
@@ -482,6 +485,7 @@ final class VideoEditorViewController: UIViewController {
     }
 
     public func closeExportMenu() {
+        self.view.layoutIfNeeded()
         bottomExportConstraint.constant = 140
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
@@ -489,6 +493,7 @@ final class VideoEditorViewController: UIViewController {
     }
     
     public func openToolsMenu() {
+        self.view.layoutIfNeeded()
         isToolsViewShown = true
         bottomToolsConstraint.constant = 0 - self.view.safeAreaInsets.bottom - 49
         UIView.animate(withDuration: 0.3) {
@@ -497,6 +502,7 @@ final class VideoEditorViewController: UIViewController {
     }
 
     public func closeToolsMenu() {
+        self.view.layoutIfNeeded()
         bottomToolsConstraint.constant = 300
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
@@ -512,6 +518,7 @@ final class VideoEditorViewController: UIViewController {
     }
     
     @objc func saveFilter() {
+        self.view.layoutIfNeeded()
         bottomLooksConstraint.constant = 146
         resetToDefaultFilter()
         UIView.animate(withDuration: 0.2) {
