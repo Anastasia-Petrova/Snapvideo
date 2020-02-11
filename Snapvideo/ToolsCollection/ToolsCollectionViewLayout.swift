@@ -12,8 +12,8 @@ final class ToolsCollectionViewLayout: UICollectionViewFlowLayout {
     override init() {
         super.init()
         self.itemSize = CGSize(width: 60, height: 76)
-        self.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
-        self.minimumLineSpacing = 5
+        self.sectionInset = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 20)
+        self.minimumLineSpacing = 20
         self.scrollDirection = .vertical
     }
     

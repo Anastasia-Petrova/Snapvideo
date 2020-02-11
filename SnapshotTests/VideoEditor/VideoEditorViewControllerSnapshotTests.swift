@@ -35,10 +35,10 @@ final class VideoEditorViewControllerSnapshotTests: XCTestCase {
         let vc = VideoEditorViewController(url: url, filters: filters, tools: tools)
         
         vc.openLooks()
-        assertSnapshot(matching: vc, as: .wait(for: 2, on: .image))
+        assertSnapshot(matching: vc, as: .wait(for: 5, on: .image))
         
         vc.closeLooks()
-        assertSnapshot(matching: vc, as: .wait(for: 2, on: .image))
+        assertSnapshot(matching: vc, as: .wait(for: 5, on: .image))
     }
     
     func testVideoEditorViewController_openTools_and_closeTools_set_correct_constraints() {
@@ -52,10 +52,10 @@ final class VideoEditorViewControllerSnapshotTests: XCTestCase {
         let vc = VideoEditorViewController(url: url, filters: filters, tools: tools)
 
         vc.openTools()
-        assertSnapshot(matching: vc, as: .wait(for: 2, on: .image))
+        assertSnapshot(matching: vc, as: .wait(for: 5, on: .image))
         
         vc.closeTools()
-        assertSnapshot(matching: vc, as: .wait(for: 2, on: .image))
+        assertSnapshot(matching: vc, as: .wait(for: 5, on: .image))
     }
     
     func testVideoEditorViewController_openExportMenu_and_closeExportMenu_set_correct_constraints() {
@@ -69,9 +69,9 @@ final class VideoEditorViewControllerSnapshotTests: XCTestCase {
         let vc = VideoEditorViewController(url: url, filters: filters, tools: tools)
         
         vc.openExportMenu()
-        assertSnapshot(matching: vc, as: .wait(for: 2, on: .image))
+        assertSnapshot(matching: vc, as: .wait(for: 5, on: .image))
         
         vc.closeExportMenu()
-        assertSnapshot(matching: vc, as: .wait(for: 2, on: .image))
+        assertSnapshot(matching: vc, as: .wait(for: 5, on: .image))
     }
 }
