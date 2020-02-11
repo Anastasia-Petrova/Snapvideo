@@ -57,4 +57,28 @@ class VideoEditorViewControllerTests: XCTestCase {
             -vc.view.safeAreaInsets.bottom
         )
     }
+    
+    func test_openExportMenu_and_closeExportMenu_setCorrect_topExportMenuConstraint_constant() {
+        let filters = [
+            AnyFilter(PassthroughFilter())
+        ]
+        guard let path = Bundle.unitTests.path(forResource: "videoTest", ofType:"MOV") else {
+            XCTFail("testVideo.MOV not found")
+            return
+        }
+        let url = URL(fileURLWithPath: path)
+        let vc = VideoEditorViewController(url: url, filters: filters)
+        
+        vc.openExportMenu()
+        XCTAssertEqual(
+            vc.topExportConstraint.constant,
+            vc.exportView.frame.height + vc.tabBar.frame.height
+        )
+        
+        vc.closeExportMenu()
+        XCTAssertEqual(
+            vc.topExportConstraint.constant,
+            -vc.view.safeAreaInsets.bottom
+        )
+    }
 }
