@@ -10,7 +10,7 @@ import Foundation
 
 struct App {
     let filters: [AnyFilter]
-    
+    let tools: [AnyTool]
     public static let shared = `default`
 }
 
@@ -33,7 +33,8 @@ extension App {
             AnyFilter(MonoFilter()),
             AnyFilter(MonochromeFilter()),
             AnyFilter(NoirFilter())
-        ]
+        ],
+        tools: [AnyTool(BrightTool())]
     )
     
     private static let many = App(
@@ -60,14 +61,16 @@ extension App {
             AnyFilter(SharpAndWarmFilter(inputSharpness: 0.7)),
             AnyFilter(VignetteFilter()),
             AnyFilter(ClampFilter())
-        ]
+        ],
+        tools: [AnyTool(BrightTool())]
     )
     
     private static let variant2 = App(
         filters: [
             AnyFilter(PassthroughFilter()),
             AnyFilter(ComicFilter())
-        ]
+        ],
+        tools: [AnyTool(BrightTool())]
     )
     
     private static let composite = App(
@@ -77,7 +80,8 @@ extension App {
             AnyFilter(BlurFilter(blurRadius: 20)) + AnyFilter(SharpAndWarmFilter(inputSharpness: 0.7)),
             AnyFilter(ClampFilter()) + AnyFilter(VignetteFilter()),
             AnyFilter(ComicFilter()) + AnyFilter(VignetteFilter()),
-        ]
+        ],
+        tools: [AnyTool(BrightTool())]
     )
     
     private static let slowFilter = App(
@@ -95,7 +99,8 @@ extension App {
             AnyFilter(ClampFilter()) +
             AnyFilter(VignetteFilter()) +
             AnyFilter(SharpAndWarmFilter(inputSharpness: 0.7))
-        ]
+        ],
+        tools: [AnyTool(BrightTool())]
     )
 }
 
@@ -118,7 +123,8 @@ extension App {
             AnyFilter(MonoFilter()),
             AnyFilter(MonochromeFilter()),
             AnyFilter(NoirFilter())
-        ]
+        ],
+        tools: [AnyTool(BrightTool())]
     )
     
     static let unitTests = App(
@@ -126,7 +132,8 @@ extension App {
             AnyFilter(PassthroughFilter()),
             AnyFilter(SharpAndWarmFilter(inputSharpness: 0.7)),
             AnyFilter(VignetteFilter()),
-        ]
+        ],
+        tools: [AnyTool(BrightTool())]
     )
 }
 
