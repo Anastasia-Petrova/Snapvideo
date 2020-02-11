@@ -12,9 +12,9 @@ final class ToolsViewController: UIViewController {
     let dataSource: ToolsCollectionDataSource
     let collectionView: UICollectionView
 
-    init() {
+    init(tools: [AnyTool]) {
         self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: ToolsCollectionViewLayout())
-        self.dataSource = ToolsCollectionDataSource(collectionView: collectionView)
+        self.dataSource = ToolsCollectionDataSource(collectionView: collectionView, tools: tools)
         super.init(nibName: nil, bundle: nil)
     }
     

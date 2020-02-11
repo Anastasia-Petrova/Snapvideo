@@ -101,7 +101,7 @@ final class VideoEditorViewController: UIViewController {
         return Float(CMTimeGetSeconds(trackDuration))
     }
     
-    init(url: URL, filters: [AnyFilter]) {
+    init(url: URL, filters: [AnyFilter], tools: [AnyTool]) {
         asset = AVAsset(url: url)
         let playerItem = AVPlayerItem(asset: asset)
         player = AVPlayer(playerItem: playerItem)
@@ -120,7 +120,7 @@ final class VideoEditorViewController: UIViewController {
             filter: AnyFilter(BlurFilter(blurRadius: 100))
         )
         looksViewController = LooksViewController(itemSize: itemSize, filters: filters)
-        toolsViewController = ToolsViewController()
+        toolsViewController = ToolsViewController(tools: tools)
         super.init(nibName: nil, bundle: nil)
         addChild(looksViewController)
         looksViewController.didMove(toParent: self)
