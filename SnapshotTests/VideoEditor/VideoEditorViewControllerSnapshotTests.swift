@@ -13,24 +13,26 @@ import SnapshotTesting
 final class VideoEditorViewControllerSnapshotTests: XCTestCase {
     func DISABLED_testVideoEditorViewController() {
         let filters = [AnyFilter(PassthroughFilter())]
+        let tools = [AnyTool(WarmthTool())]
         guard let path = Bundle.snapshotTests.path(forResource: "videoTest", ofType:"MOV") else {
             XCTFail("testVideo.MOV not found")
             return
         }
         let url = URL(fileURLWithPath: path)
-        let vc = VideoEditorViewController(url: url, filters: filters)
+        let vc = VideoEditorViewController(url: url, filters: filters, tools: tools)
         
         assertSnapshot(matching: vc, as: .wait(for: 2, on: .image))
     }
     
     func testVideoEditorViewController_openLooks_and_closeLooks_set_correct_constraints() {
         let filters = [AnyFilter(PassthroughFilter())]
+        let tools = [AnyTool(WarmthTool())]
         guard let path = Bundle.snapshotTests.path(forResource: "videoTest", ofType:"MOV") else {
             XCTFail("testVideo.MOV not found")
             return
         }
         let url = URL(fileURLWithPath: path)
-        let vc = VideoEditorViewController(url: url, filters: filters)
+        let vc = VideoEditorViewController(url: url, filters: filters, tools: tools)
         
         vc.openLooks()
         assertSnapshot(matching: vc, as: .wait(for: 2, on: .image))
@@ -41,13 +43,14 @@ final class VideoEditorViewControllerSnapshotTests: XCTestCase {
     
     func testVideoEditorViewController_openTools_and_closeTools_set_correct_constraints() {
         let filters = [AnyFilter(PassthroughFilter())]
+        let tools = [AnyTool(WarmthTool())]
         guard let path = Bundle.snapshotTests.path(forResource: "videoTest", ofType:"MOV") else {
             XCTFail("testVideo.MOV not found")
             return
         }
         let url = URL(fileURLWithPath: path)
-        let vc = VideoEditorViewController(url: url, filters: filters)
-        
+        let vc = VideoEditorViewController(url: url, filters: filters, tools: tools)
+
         vc.openTools()
         assertSnapshot(matching: vc, as: .wait(for: 2, on: .image))
         
@@ -57,12 +60,13 @@ final class VideoEditorViewControllerSnapshotTests: XCTestCase {
     
     func testVideoEditorViewController_openExportMenu_and_closeExportMenu_set_correct_constraints() {
         let filters = [AnyFilter(PassthroughFilter())]
+        let tools = [AnyTool(WarmthTool())]
         guard let path = Bundle.snapshotTests.path(forResource: "videoTest", ofType:"MOV") else {
             XCTFail("testVideo.MOV not found")
             return
         }
         let url = URL(fileURLWithPath: path)
-        let vc = VideoEditorViewController(url: url, filters: filters)
+        let vc = VideoEditorViewController(url: url, filters: filters, tools: tools)
         
         vc.openExportMenu()
         assertSnapshot(matching: vc, as: .wait(for: 2, on: .image))

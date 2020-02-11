@@ -19,7 +19,7 @@ class VideoEditorViewControllerTests: XCTestCase {
             return
         }
         let url = URL(fileURLWithPath: path)
-        let vc = VideoEditorViewController(url: url, filters: filters)
+        let vc = VideoEditorViewController(url: url, filters: filters, tools: [])
         
         vc.openLooks()
         XCTAssertEqual(
@@ -43,7 +43,7 @@ class VideoEditorViewControllerTests: XCTestCase {
             return
         }
         let url = URL(fileURLWithPath: path)
-        let vc = VideoEditorViewController(url: url, filters: filters)
+        let vc = VideoEditorViewController(url: url, filters: filters, tools: [AnyTool(WarmthTool())])
         
         vc.openTools()
         XCTAssertEqual(
@@ -67,7 +67,7 @@ class VideoEditorViewControllerTests: XCTestCase {
             return
         }
         let url = URL(fileURLWithPath: path)
-        let vc = VideoEditorViewController(url: url, filters: filters)
+        let vc = VideoEditorViewController(url: url, filters: filters, tools: [])
         
         vc.openExportMenu()
         XCTAssertEqual(
