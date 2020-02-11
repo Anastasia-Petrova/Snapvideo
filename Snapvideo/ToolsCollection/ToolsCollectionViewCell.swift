@@ -39,7 +39,6 @@ final class ToolsCollectionViewCell: UICollectionViewCell {
         toolName.font = UIFont.systemFont(ofSize: 9)
         toolName.numberOfLines = 1
         toolImageView.contentMode = .scaleAspectFill
-        toolImageView.tintColor = .darkGray
         toolImageView.clipsToBounds = true
     }
     

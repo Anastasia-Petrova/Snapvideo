@@ -24,7 +24,7 @@ final class VideoEditorViewControllerSnapshotTests: XCTestCase {
         assertSnapshot(matching: vc, as: .wait(for: 2, on: .image))
     }
     
-    func testVideoEditorViewController_openLooks_and_closeLooks_set_correct_constraints() {
+    func DISABLED_testVideoEditorViewController_openLooks_and_closeLooks_set_correct_constraints() {
         let filters = [AnyFilter(PassthroughFilter())]
         let tools = [AnyTool(WarmthTool())]
         guard let path = Bundle.snapshotTests.path(forResource: "videoTest", ofType:"MOV") else {
@@ -41,7 +41,7 @@ final class VideoEditorViewControllerSnapshotTests: XCTestCase {
         assertSnapshot(matching: vc, as: .wait(for: 5, on: .image))
     }
     
-    func testVideoEditorViewController_openTools_and_closeTools_set_correct_constraints() {
+    func DISABLED_testVideoEditorViewController_openTools_and_closeTools_set_correct_constraints() {
         let filters = [AnyFilter(PassthroughFilter())]
         let tools = [AnyTool(WarmthTool())]
         guard let path = Bundle.snapshotTests.path(forResource: "videoTest", ofType:"MOV") else {
@@ -58,7 +58,7 @@ final class VideoEditorViewControllerSnapshotTests: XCTestCase {
         assertSnapshot(matching: vc, as: .wait(for: 5, on: .image))
     }
     
-    func testVideoEditorViewController_openExportMenu_and_closeExportMenu_set_correct_constraints() {
+    func DISABLED_testVideoEditorViewController_openExportMenu_and_closeExportMenu_set_correct_constraints() {
         let filters = [AnyFilter(PassthroughFilter())]
         let tools = [AnyTool(WarmthTool())]
         guard let path = Bundle.snapshotTests.path(forResource: "videoTest", ofType:"MOV") else {
