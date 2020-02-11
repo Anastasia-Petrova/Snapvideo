@@ -34,7 +34,23 @@ extension App {
             AnyFilter(MonochromeFilter()),
             AnyFilter(NoirFilter())
         ],
-        tools: [AnyTool(BrightTool())]
+        tools: [
+            AnyTool(FadeTool()),
+            AnyTool(BrightTool()),
+            AnyTool(SpeedUpTool()),
+            AnyTool(CutTool()),
+            AnyTool(SlowDownTool()),
+            AnyTool(CropTool()),
+            AnyTool(TuneColorTool()),
+            AnyTool(VignetteTool()),
+            AnyTool(SaturationTool()),
+            AnyTool(ShadowsTool()),
+            AnyTool(ContrastTool()),
+            AnyTool(HighlightsTool()),
+            AnyTool(SharpenTool()),
+            AnyTool(TiltShiftTool()),
+            AnyTool(WarmthTool())
+        ]
     )
     
     private static let many = App(

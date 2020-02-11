@@ -16,7 +16,7 @@ final class ToolsCollectionDataSource: NSObject, UICollectionViewDataSource {
             collectionView?.reloadData()
         }
     }
-    //TODO: Параметризировать инициализатор с коллекций тулзов
+    
     init(collectionView: UICollectionView, tools: [AnyTool]) {
         self.tools = tools
         self.collectionView = collectionView
