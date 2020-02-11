@@ -33,4 +33,28 @@ class VideoEditorViewControllerTests: XCTestCase {
             -vc.view.safeAreaInsets.bottom
         )
     }
+    
+    func test_openTools_and_closeTools_setCorrect_topToolsConstraint_constant() {
+        let filters = [
+            AnyFilter(PassthroughFilter())
+        ]
+        guard let path = Bundle.unitTests.path(forResource: "videoTest", ofType:"MOV") else {
+            XCTFail("testVideo.MOV not found")
+            return
+        }
+        let url = URL(fileURLWithPath: path)
+        let vc = VideoEditorViewController(url: url, filters: filters)
+        
+        vc.openTools()
+        XCTAssertEqual(
+            vc.topToolsConstraint.constant,
+            vc.toolsViewController.view.frame.height + vc.tabBar.frame.height
+        )
+        
+        vc.closeTools()
+        XCTAssertEqual(
+            vc.topToolsConstraint.constant,
+            -vc.view.safeAreaInsets.bottom
+        )
+    }
 }

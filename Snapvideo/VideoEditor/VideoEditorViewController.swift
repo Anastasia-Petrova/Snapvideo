@@ -61,9 +61,9 @@ final class VideoEditorViewController: UIViewController {
     var isToolsButtonSelected: Bool = false {
         didSet {
             if isToolsButtonSelected {
-                openToolsMenu()
+                openTools()
             } else {
-                closeToolsMenu()
+                closeTools()
             }
         }
     }
@@ -534,7 +534,7 @@ final class VideoEditorViewController: UIViewController {
         }
     }
     
-    public func openToolsMenu() {
+    public func openTools() {
         self.view.layoutIfNeeded()
         isToolsViewShown = true
         topToolsConstraint.constant = toolsViewController.view.frame.height + tabBar.frame.height
@@ -543,7 +543,7 @@ final class VideoEditorViewController: UIViewController {
         }
     }
     
-    public func closeToolsMenu() {
+    public func closeTools() {
         self.view.layoutIfNeeded()
         topToolsConstraint.constant = -self.view.safeAreaInsets.bottom
         UIView.animate(withDuration: 0.3) {
