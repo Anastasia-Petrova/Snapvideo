@@ -27,7 +27,7 @@ class ToolsViewControllerTests: XCTestCase {
         let vc = ToolsViewController(tools: tools)
         
         var toolIndex: Int?
-        vc.choosenToolCallback = { index in
+        vc.didSelectToolCallback = { index in
             toolIndex = index
         }
         vc.collectionView(vc.collectionView, didSelectItemAt: expectedIndexPath)

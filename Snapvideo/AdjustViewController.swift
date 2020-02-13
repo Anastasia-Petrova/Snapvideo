@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import Photos
 
-class EditingWithToolViewController: UIViewController {
+final class AdjustViewController: UIViewController {
     let asset: AVAsset
     let player: AVPlayer
     let playerView: VideoView
@@ -158,7 +158,7 @@ class EditingWithToolViewController: UIViewController {
     
 }
 
-extension EditingWithToolViewController: UITabBarDelegate {
+extension AdjustViewController: UITabBarDelegate {
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
 
     }

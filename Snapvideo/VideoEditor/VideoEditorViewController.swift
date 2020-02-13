@@ -136,8 +136,8 @@ final class VideoEditorViewController: UIViewController {
             self?.player.play()
         }
         
-        toolsViewController.choosenToolCallback = { [weak self] toolIndex in
-            let vc = EditingWithToolViewController(url: url, tool: tools[toolIndex])
+        toolsViewController.didSelectToolCallback = { [weak self] toolIndex in
+            let vc = AdjustViewController(url: url, tool: tools[toolIndex])
             vc.modalTransitionStyle = .crossDissolve
             self?.present(vc, animated: true, completion: nil)
         }

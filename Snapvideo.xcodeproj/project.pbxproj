@@ -50,7 +50,8 @@
 		6D66488123EDFE7B002AAF2E /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 6D66488023EDFE7B002AAF2E /* SnapshotTesting */; };
 		6D73068423D06BE300226C77 /* SaveCopyVideoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D73068323D06BE300226C77 /* SaveCopyVideoButton.swift */; };
 		6D8BB64023F5B23D00BDF601 /* ToolsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8BB63F23F5B23D00BDF601 /* ToolsViewControllerTests.swift */; };
-		6D8BB64223F5B76E00BDF601 /* EditingWithToolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8BB64123F5B76E00BDF601 /* EditingWithToolViewController.swift */; };
+		6D8C283C23F5FA8B008700C3 /* AdjustViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8BB64323F5CFBC00BDF601 /* AdjustViewControllerSnapshotTests.swift */; };
+		6D8C283D23F5FC88008700C3 /* AdjustViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8BB64123F5B76E00BDF601 /* AdjustViewController.swift */; };
 		6D96B85023D08E5E00C1C6D5 /* HeaderExportLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D96B84F23D08E5E00C1C6D5 /* HeaderExportLabel.swift */; };
 		6D96B85323D090A300C1C6D5 /* ExportImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D96B85223D090A300C1C6D5 /* ExportImageView.swift */; };
 		6D96B85823D0969E00C1C6D5 /* LooksViewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D96B85723D0969E00C1C6D5 /* LooksViewButton.swift */; };
@@ -153,7 +154,8 @@
 		6D66487D23EDFD34002AAF2E /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		6D73068323D06BE300226C77 /* SaveCopyVideoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveCopyVideoButton.swift; sourceTree = "<group>"; };
 		6D8BB63F23F5B23D00BDF601 /* ToolsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsViewControllerTests.swift; sourceTree = "<group>"; };
-		6D8BB64123F5B76E00BDF601 /* EditingWithToolViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditingWithToolViewController.swift; sourceTree = "<group>"; };
+		6D8BB64123F5B76E00BDF601 /* AdjustViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustViewController.swift; sourceTree = "<group>"; };
+		6D8BB64323F5CFBC00BDF601 /* AdjustViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		6D96B84F23D08E5E00C1C6D5 /* HeaderExportLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderExportLabel.swift; sourceTree = "<group>"; };
 		6D96B85223D090A300C1C6D5 /* ExportImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportImageView.swift; sourceTree = "<group>"; };
 		6D96B85723D0969E00C1C6D5 /* LooksViewButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LooksViewButton.swift; sourceTree = "<group>"; };
@@ -272,7 +274,7 @@
 				6D0C29C023C28CA5006E7C40 /* App.swift */,
 				6D17A7E023ABB39100C70542 /* AppDelegate.swift */,
 				6D17A7F423ABB6E000C70542 /* HomeViewController.swift */,
-				6D8BB64123F5B76E00BDF601 /* EditingWithToolViewController.swift */,
+				6D8BB64123F5B76E00BDF601 /* AdjustViewController.swift */,
 				6D17A7EE23ABB39600C70542 /* Info.plist */,
 				6D17A7E223ABB39100C70542 /* SceneDelegate.swift */,
 			);
@@ -332,6 +334,7 @@
 				6D66488623EE02EC002AAF2E /* VideoEditor */,
 				6D66487D23EDFD34002AAF2E /* Bundle.swift */,
 				6DDFFB6D23EC281D00093675 /* HomeViewControllerSnapshotTests.swift */,
+				6D8BB64323F5CFBC00BDF601 /* AdjustViewControllerSnapshotTests.swift */,
 				6D66487123EDF9A5002AAF2E /* Info.plist */,
 				6DBA80C923EC4433005A585E /* WaitExtension.swift */,
 			);
@@ -684,6 +687,7 @@
 				6D17A7E123ABB39100C70542 /* AppDelegate.swift in Sources */,
 				6DBA80D423ED931B005A585E /* LooksCollectionViewLayout.swift in Sources */,
 				6DE18A0B23F2FAE40018C944 /* SharpenTool.swift in Sources */,
+				6D8C283D23F5FC88008700C3 /* AdjustViewController.swift in Sources */,
 				6DA0B28023E71A8900D23CAD /* ToolsCollectionViewCell.swift in Sources */,
 				6D1D491D23D7903C00ECACE5 /* VintageFilter.swift in Sources */,
 				6D1D490B23D777F000ECACE5 /* BodyExportLabel.swift in Sources */,
@@ -700,7 +704,6 @@
 				6DE18A0F23F2FC990018C944 /* ShadowsTool.swift in Sources */,
 				6D17A7E323ABB39100C70542 /* SceneDelegate.swift in Sources */,
 				6DE18A0D23F2FB180018C944 /* VignetteTool.swift in Sources */,
-				6D8BB64223F5B76E00BDF601 /* EditingWithToolViewController.swift in Sources */,
 				6D1D491123D785FB00ECACE5 /* ColorInvertFilter.swift in Sources */,
 				6D1D491B23D78EDA00ECACE5 /* TonalFilter.swift in Sources */,
 				6DE18A0723F2F8D00018C944 /* SlowTool.swift in Sources */,
@@ -748,6 +751,7 @@
 				6D66487C23EDFC9C002AAF2E /* VideoEditorViewControllerSnapshotTests.swift in Sources */,
 				6D66487B23EDFC9C002AAF2E /* ToolsCollectionViewCellSnapshotTests.swift in Sources */,
 				6D66487923EDFC9C002AAF2E /* HomeViewControllerSnapshotTests.swift in Sources */,
+				6D8C283C23F5FA8B008700C3 /* AdjustViewControllerSnapshotTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
