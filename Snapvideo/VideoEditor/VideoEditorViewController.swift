@@ -14,6 +14,7 @@ final class VideoEditorViewController: UIViewController {
     let asset: AVAsset
     let player: AVPlayer
     let playerView: VideoView
+    let url: URL
     let looksContainerView = UIView()
     let exportView = UIView()
     var topExportConstraint = NSLayoutConstraint()
@@ -102,6 +103,7 @@ final class VideoEditorViewController: UIViewController {
     }
     
     init(url: URL, filters: [AnyFilter], tools: [AnyTool]) {
+        self.url = url
         asset = AVAsset(url: url)
         let playerItem = AVPlayerItem(asset: asset)
         player = AVPlayer(playerItem: playerItem)
@@ -132,6 +134,12 @@ final class VideoEditorViewController: UIViewController {
             self?.tabBar.isHidden = newIndex != 0
             guard newIndex != previousIndex && newIndex != 0 else { return }
             self?.player.play()
+        }
+        
+        toolsViewController.choosenToolCallback = { [weak self] toolIndex in
+            let vc = EditingWithToolViewController(url: url, tool: tools[toolIndex])
+            vc.modalTransitionStyle = .crossDissolve
+            self?.present(vc, animated: true, completion: nil)
         }
     }
     
@@ -590,6 +598,8 @@ final class VideoEditorViewController: UIViewController {
             asset: playerItem.asset
         )
     }
+    
+    
 }
 
 extension VideoEditorViewController: UITabBarDelegate {

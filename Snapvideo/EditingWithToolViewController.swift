@@ -133,7 +133,7 @@ class EditingWithToolViewController: UIViewController {
             playerView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             playerView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
             playerView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            tabBar.topAnchor.constraint(greaterThanOrEqualTo: playerView.bottomAnchor)
+            playerView.bottomAnchor.constraint(equalTo: tabBar.topAnchor)
         ])
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
         playerView.addGestureRecognizer(tap)

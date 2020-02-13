@@ -9,8 +9,11 @@
 import UIKit
 
 final class ToolsViewController: UIViewController {
+    typealias Callback = ((Int) -> Void)
+    
     let dataSource: ToolsCollectionDataSource
     let collectionView: UICollectionView
+    var choosenToolCallback: Callback? = nil
 
     init(tools: [AnyTool]) {
         self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: ToolsCollectionViewLayout())
@@ -44,6 +47,6 @@ final class ToolsViewController: UIViewController {
 
 extension ToolsViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        choosenToolCallback?(indexPath.row)
     }
 }
