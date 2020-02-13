@@ -11,7 +11,7 @@ import UIKit
 import CoreImage
 
 struct SharpenTool: Tool {
-    let name: String = "sharpen"
+    let icon = ImageAsset.Tools.sharpen
     
     func apply(image: CIImage) -> CIImage {
         

@@ -11,7 +11,7 @@ import UIKit
 import CoreImage
 
 struct BrightTool: Tool {
-    let name: String = "bright"
+    let icon = ImageAsset.Tools.bright
     let inputSharpness: Double = 1.0
     
     func apply(image: CIImage) -> CIImage {

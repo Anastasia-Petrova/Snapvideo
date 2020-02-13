@@ -11,7 +11,7 @@ import UIKit
 import CoreImage
 
 struct TiltShiftTool: Tool {
-    let name: String = "tiltShift"
+    let icon = ImageAsset.Tools.tiltShift
     
     func apply(image: CIImage) -> CIImage {
         

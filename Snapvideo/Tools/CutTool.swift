@@ -11,7 +11,7 @@ import UIKit
 import CoreImage
 
 struct CutTool: Tool {
-    let name: String = "cut"
+    let icon = ImageAsset.Tools.cut
     
     func apply(image: CIImage) -> CIImage {
         

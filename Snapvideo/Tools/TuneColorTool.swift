@@ -11,7 +11,7 @@ import UIKit
 import CoreImage
 
 struct TuneColorTool: Tool {
-    let name: String = "tune"
+    let icon = ImageAsset.Tools.tune
     
     func apply(image: CIImage) -> CIImage {
         

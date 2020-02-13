@@ -36,7 +36,7 @@ final class ToolsCollectionDataSource: NSObject, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ToolsCollectionViewCell.identifier, for: indexPath) as! ToolsCollectionViewCell
         cell.toolName.text = tools[indexPath.row].name
-        cell.toolImageView.image = UIImage(named: tools[indexPath.row].name)?.withTintColor(.darkGray)
+        cell.toolImageView.image = tools[indexPath.row].icon.withTintColor(.darkGray)
         return cell
     }
 }

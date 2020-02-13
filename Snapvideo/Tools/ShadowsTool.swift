@@ -11,7 +11,7 @@ import UIKit
 import CoreImage
 
 struct ShadowsTool: Tool {
-    let name: String = "shadows"
+    let icon = ImageAsset.Tools.shadows
     
     func apply(image: CIImage) -> CIImage {
         

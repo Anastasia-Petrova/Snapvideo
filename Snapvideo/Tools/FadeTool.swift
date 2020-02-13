@@ -11,7 +11,7 @@ import UIKit
 import CoreImage
 
 struct FadeTool: Tool {
-    let name: String = "fade"
+    let icon = ImageAsset.Tools.fade
     
     func apply(image: CIImage) -> CIImage {
         

@@ -11,7 +11,7 @@ import UIKit
 import CoreImage
 
 struct CropTool: Tool {
-    let name: String = "crop"
+    let icon = ImageAsset.Tools.crop
     
     func apply(image: CIImage) -> CIImage {
         

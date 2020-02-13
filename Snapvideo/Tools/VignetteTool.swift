@@ -11,7 +11,7 @@ import UIKit
 import CoreImage
 
 struct VignetteTool: Tool {
-    let name: String = "vignette"
+    let icon = ImageAsset.Tools.vignette
     
     func apply(image: CIImage) -> CIImage {
         let optionalFilter = CIFilter(name: "CIVignette",

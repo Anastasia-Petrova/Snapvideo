@@ -11,7 +11,7 @@ import UIKit
 import CoreImage
 
 struct SaturationTool: Tool {
-    let name: String = "saturation"
+    let icon = ImageAsset.Tools.saturation
     
     func apply(image: CIImage) -> CIImage {
         

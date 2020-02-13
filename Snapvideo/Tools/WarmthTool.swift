@@ -11,7 +11,7 @@ import UIKit
 import CoreImage
 
 struct WarmthTool: Tool {
-    let name: String = "warmth"
+    let icon = ImageAsset.Tools.warmth
     
     func apply(image: CIImage) -> CIImage {
         

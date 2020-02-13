@@ -11,7 +11,7 @@ import UIKit
 import CoreImage
 
 struct HighlightsTool: Tool {
-    let name: String = "highlights"
+    let icon = ImageAsset.Tools.highlights
     
     func apply(image: CIImage) -> CIImage {
         

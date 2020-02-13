@@ -15,8 +15,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="u8W-x1-fQh">
-                                <rect key="frame" x="27" y="224" width="360" height="448"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="u8W-x1-fQh">
+                                <rect key="frame" x="107" y="361.5" width="200" height="173"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="axO-Zl-zt8"/>
+                                    <constraint firstAttribute="width" secondItem="u8W-x1-fQh" secondAttribute="height" multiplier="37:32" id="u4e-KG-12S"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -33,6 +37,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="LaunchScreen" width="360" height="448.33334350585938"/>
+        <image name="logo" width="333.33334350585938" height="288.33334350585938"/>
     </resources>
 </document>

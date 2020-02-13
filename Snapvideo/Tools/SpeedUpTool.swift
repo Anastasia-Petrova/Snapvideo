@@ -11,7 +11,7 @@ import UIKit
 import CoreImage
 
 struct SpeedUpTool: Tool {
-    let name: String = "speedUp"
+    let icon = ImageAsset.Tools.speedUp
     
     func apply(image: CIImage) -> CIImage {
         

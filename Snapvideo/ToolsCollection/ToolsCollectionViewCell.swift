@@ -30,14 +30,16 @@ final class ToolsCollectionViewCell: UICollectionViewCell {
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            toolImageView.heightAnchor.constraint(equalTo: toolImageView.widthAnchor)
+            toolImageView.heightAnchor.constraint(equalTo: toolImageView.widthAnchor),
+            toolImageView.widthAnchor.constraint(equalToConstant: 40)
         ])
         stackView.alignment = .center
         stackView.axis = .vertical
         stackView.spacing = 6
-        toolName.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
-        toolName.font = UIFont.systemFont(ofSize: 9)
-        toolName.numberOfLines = 1
+        toolName.setContentCompressionResistancePriority(.required, for: .vertical)
+        toolName.font = UIFont.systemFont(ofSize: 12)
+        toolName.numberOfLines = 0
+        toolName.textAlignment = .center
         toolImageView.contentMode = .scaleAspectFill
         toolImageView.clipsToBounds = true
     }
