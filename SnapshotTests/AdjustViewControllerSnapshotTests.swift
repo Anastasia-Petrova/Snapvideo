@@ -11,7 +11,7 @@ import SnapshotTesting
 @testable import Snapvideo
 
 final class AdjustViewControllerSnapshotTests: XCTestCase {
-    func testEditingWithToolViewController() {
+    func DISABLED_testEditingWithToolViewController() {
         let tool = AnyTool(WarmthTool())
         guard let path = Bundle.snapshotTests.path(forResource: "videoTest", ofType:"MOV") else {
             XCTFail("testVideo.MOV not found")
