@@ -14,7 +14,6 @@ final class ToolsViewControllerSnapshotTests: XCTestCase {
     func testToolsViewController() {
         let tools = [AnyTool(WarmthTool())]
         let vc = ToolsViewController(tools: tools)
-//        record = true
         assertSnapshot(matching: vc, as: .image)
     }
 }
