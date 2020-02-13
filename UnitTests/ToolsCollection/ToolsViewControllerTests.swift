@@ -20,4 +20,18 @@ class ToolsViewControllerTests: XCTestCase {
         XCTAssertEqual(collectionView.dataSource?.isEqual(dataSource), true)
         XCTAssertEqual(collectionView.delegate?.isEqual(vc), true)
     }
+    
+    func test_didSelect_calls_choosenToolCallback() {
+        let expectedIndexPath = IndexPath(item: 1, section: 0)
+        let tools = [AnyTool(WarmthTool())]
+        let vc = ToolsViewController(tools: tools)
+        
+        var toolIndex: Int?
+        vc.choosenToolCallback = { index in
+            toolIndex = index
+        }
+        vc.collectionView(vc.collectionView, didSelectItemAt: expectedIndexPath)
+        
+        XCTAssertEqual(expectedIndexPath.row, toolIndex)
+    }
 }

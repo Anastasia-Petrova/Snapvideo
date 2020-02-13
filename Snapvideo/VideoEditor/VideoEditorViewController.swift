@@ -599,7 +599,6 @@ final class VideoEditorViewController: UIViewController {
         )
     }
     
-    
 }
 
 extension VideoEditorViewController: UITabBarDelegate {
