@@ -16,6 +16,7 @@ final class ToolsViewController: UIViewController {
         self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: ToolsCollectionViewLayout())
         self.dataSource = ToolsCollectionDataSource(collectionView: collectionView, tools: tools)
         super.init(nibName: nil, bundle: nil)
+        collectionView.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -38,5 +39,11 @@ final class ToolsViewController: UIViewController {
         collectionView.topAnchor.constraint(equalTo: self.view.topAnchor),
         collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
+    }
+}
+
+extension ToolsViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
     }
 }
