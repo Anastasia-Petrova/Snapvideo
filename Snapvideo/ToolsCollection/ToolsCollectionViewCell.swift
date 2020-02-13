@@ -9,7 +9,6 @@
 import UIKit
 
 final class ToolsCollectionViewCell: UICollectionViewCell {
-    let stackView = UIStackView()
     let toolImageView = UIImageView(image: UIImage(named: "placeholder"))
     let toolName = UILabel()
     static let identifier = "ToolsCollectionViewCell"
@@ -21,23 +20,26 @@ final class ToolsCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        let stackView = UIStackView(arrangedSubviews: [
+            toolImageView,
+            toolName,
+            UIView()
+        ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(stackView)
-        stackView.addArrangedSubview(toolImageView)
-        stackView.addArrangedSubview(toolName)
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             toolImageView.heightAnchor.constraint(equalTo: toolImageView.widthAnchor),
-            toolImageView.widthAnchor.constraint(equalToConstant: 40)
+            toolImageView.widthAnchor.constraint(equalToConstant: frame.width * 0.5)
         ])
         stackView.alignment = .center
         stackView.axis = .vertical
-        stackView.spacing = 6
+        stackView.spacing = 8
         toolName.setContentCompressionResistancePriority(.required, for: .vertical)
-        toolName.font = UIFont.systemFont(ofSize: 12)
+        toolName.font = UIFont.systemFont(ofSize: 14)
         toolName.numberOfLines = 0
         toolName.textAlignment = .center
         toolImageView.contentMode = .scaleAspectFill

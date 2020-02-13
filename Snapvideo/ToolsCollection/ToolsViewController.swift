@@ -16,10 +16,14 @@ final class ToolsViewController: UIViewController {
     var didSelectToolCallback: Callback? = nil
 
     init(tools: [AnyTool]) {
-        self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: ToolsCollectionViewLayout())
+        self.collectionView = UICollectionView(
+            frame: .zero,
+            collectionViewLayout: ToolsCollectionViewLayout()
+        )
         self.dataSource = ToolsCollectionDataSource(collectionView: collectionView, tools: tools)
         super.init(nibName: nil, bundle: nil)
         collectionView.delegate = self
+        
     }
     
     required init?(coder: NSCoder) {
@@ -29,6 +33,13 @@ final class ToolsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpCollectionView()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if let toolsLayout = collectionView.collectionViewLayout as? ToolsCollectionViewLayout {
+            toolsLayout.setWidth(width: view.frame.width)
+        }
     }
     
     func setUpCollectionView() {

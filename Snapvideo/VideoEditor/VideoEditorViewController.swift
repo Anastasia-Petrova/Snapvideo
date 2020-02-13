@@ -343,7 +343,7 @@ final class VideoEditorViewController: UIViewController {
         NSLayoutConstraint.activate ([
             toolsViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             toolsViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            toolsViewController.view.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.6),
+            toolsViewController.view.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5),
             topToolsConstraint
         ])
     }
