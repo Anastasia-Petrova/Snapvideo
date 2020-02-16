@@ -8,7 +8,6 @@
 
 import UIKit
 import AVFoundation
-import Photos
 
 final class AdjustViewController: UIViewController {
     let asset: AVAsset

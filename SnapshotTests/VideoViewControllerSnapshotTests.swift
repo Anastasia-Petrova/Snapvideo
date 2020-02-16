@@ -6,6 +6,9 @@
 //  Copyright © 2020 Anastasia Petrova. All rights reserved.
 //
 
+import AVFoundation
+@testable import Snapvideo
+import SnapshotTesting
 import XCTest
 
 final class VideoViewControllerSnapshotTests: XCTestCase {
@@ -18,16 +21,15 @@ final class VideoViewControllerSnapshotTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func test() {
+        guard let path = Bundle.snapshotTests.path(forResource: "videoTest", ofType:"MOV") else {
+            XCTFail("testVideo.MOV not found")
+            return
         }
+        let url = URL(fileURLWithPath: path)
+        let asset = AVAsset(url: url)
+        let vc = VideoViewController(asset: asset)
+        
+        assertSnapshot(matching: vc, as: .wait(for: 1, on: .image))
     }
-
 }

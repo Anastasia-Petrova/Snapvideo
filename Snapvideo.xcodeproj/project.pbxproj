@@ -282,11 +282,11 @@
 				6DA0B27E23E71A2600D23CAD /* ToolsCollection */,
 				6D9874AD23CB9F0100EC83DC /* VideoEditingHelpers */,
 				6D17A80523AD4EB100C70542 /* VideoEditor */,
+				6D8BB64123F5B76E00BDF601 /* AdjustViewController.swift */,
 				6D0C29C023C28CA5006E7C40 /* App.swift */,
 				6D17A7E023ABB39100C70542 /* AppDelegate.swift */,
 				6D17A7F423ABB6E000C70542 /* HomeViewController.swift */,
 				6D8C284023F601A1008700C3 /* ImageAsset.swift */,
-				6D8BB64123F5B76E00BDF601 /* AdjustViewController.swift */,
 				6D17A7EE23ABB39600C70542 /* Info.plist */,
 				6D17A7E223ABB39100C70542 /* SceneDelegate.swift */,
 			);
