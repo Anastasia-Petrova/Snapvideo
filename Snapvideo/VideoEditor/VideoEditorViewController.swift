@@ -12,9 +12,8 @@ import Photos
 
 final class VideoEditorViewController: UIViewController {
     let asset: AVAsset
-    let player: AVPlayer
-    let playerView: VideoView
     let url: URL
+    let videoViewController: VideoViewController
     let looksContainerView = UIView()
     let exportView = UIView()
     var topExportConstraint = NSLayoutConstraint()
@@ -23,9 +22,6 @@ final class VideoEditorViewController: UIViewController {
     let tabBar = TabBar(items: "LOOKS", "TOOLS", "EXPORT")
     let toolsViewController: ToolsViewController
     var topToolsConstraint = NSLayoutConstraint()
-    lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
-    let bgVideoView: VideoView
-    var playerRateObservation: NSKeyValueObservation?
     var cancelButton = LooksViewButton(imageName: "cancel")
     var doneButton = LooksViewButton(imageName: "done")
     var saveCopyButton = SaveCopyVideoButton()
@@ -92,7 +88,7 @@ final class VideoEditorViewController: UIViewController {
     }
     
     var trackDuration: Float {
-        guard let trackDuration = player.currentItem?.asset.duration else {
+        guard let trackDuration = videoViewController.player.currentItem?.asset.duration else {
             return 0
         }
         return Float(CMTimeGetSeconds(trackDuration))
@@ -101,22 +97,7 @@ final class VideoEditorViewController: UIViewController {
     init(url: URL, filters: [AnyFilter], tools: [AnyTool]) {
         self.url = url
         asset = AVAsset(url: url)
-        let playerItem = AVPlayerItem(asset: asset)
-        player = AVPlayer(playerItem: playerItem)
-        let output = AVPlayerItemVideoOutput(outputSettings: nil)
-        let outputBG = AVPlayerItemVideoOutput(outputSettings: nil)
-        playerItem.add(output)
-        playerItem.add(outputBG)
-        playerView = VideoView(
-            videoOutput: output,
-            videoOrientation: self.asset.videoOrientation
-        )
-        bgVideoView = VideoView(
-            videoOutput: outputBG,
-            videoOrientation: self.asset.videoOrientation,
-            contentsGravity: .resizeAspectFill,
-            filter: AnyFilter(BlurFilter(blurRadius: 100))
-        )
+        videoViewController = VideoViewController(asset: asset)
         looksViewController = LooksViewController(itemSize: itemSize, filters: filters)
         toolsViewController = ToolsViewController(tools: tools)
         super.init(nibName: nil, bundle: nil)
@@ -124,12 +105,12 @@ final class VideoEditorViewController: UIViewController {
         looksViewController.didMove(toParent: self)
         
         looksViewController.filterIndexChangeCallback = { [weak self] newIndex, previousIndex in
-            self?.playerView.filter = filters[newIndex]
-            self?.bgVideoView.filter = filters[newIndex] + AnyFilter(BlurFilter(blurRadius: 100))
+            self?.videoViewController.playerView.filter = filters[newIndex]
+            self?.videoViewController.bgVideoView.filter = filters[newIndex] + AnyFilter(BlurFilter(blurRadius: 100))
             self?.doneButton.isEnabled = newIndex != 0
             self?.tabBar.isHidden = newIndex != 0
             guard newIndex != previousIndex && newIndex != 0 else { return }
-            self?.player.play()
+            self?.videoViewController.player.play()
         }
         
         toolsViewController.didSelectToolCallback = { [weak self] toolIndex in
@@ -154,18 +135,14 @@ final class VideoEditorViewController: UIViewController {
             }
         )
         
-        view.addSubview(bgVideoView)
-        view.addSubview(playerView)
+        view.addSubview(videoViewController.view)
         view.addSubview(looksContainerView)
         view.addSubview(toolsViewController.view)
         view.addSubview(exportView)
         view.addSubview(tabBar)
         
-        setUpBackgroundView()
-        setUpPlayerView()
+        setUpVideoViewController()
         setUpLooksView()
-        setUpResumeButton()
-        setUpPlayer()
         setUpCancelButton()
         setUpDoneButton()
         setUpToolsView()
@@ -174,18 +151,6 @@ final class VideoEditorViewController: UIViewController {
         setUpSaveCopyStackView()
         setUpSaveCopyButton()
         setUpTabBar()
-    }
-    
-    @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
-        if player.rate == 0 {
-            player.play()
-        } else {
-            player.pause()
-        }
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
     }
     
     private func setUpTabBar() {
@@ -200,48 +165,14 @@ final class VideoEditorViewController: UIViewController {
         ])
     }
     
-    func setUpPlayer() {
-        //1 Подписка на событие достижения конца видео
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(playerItemDidReachEnd(notification:)),
-            name: .AVPlayerItemDidPlayToEndTime,
-            object: player.currentItem
-        )
-        
-        //2 Подписка на изменение рейта плейера - (играю/не играю)
-        playerRateObservation = player.observe(\.rate) { [weak self] (_, _) in
-            guard let self = self else { return }
-            let isPlaying = self.player.rate > 0
-            self.resumeImageView.isHidden = isPlaying
-            isPlaying ? self.playerView.play() :  self.playerView.pause()
-        }
-    }
-    
-    func setUpResumeButton() {
-        resumeImageView.translatesAutoresizingMaskIntoConstraints = false
-        playerView.addSubview(resumeImageView)
-        NSLayoutConstraint.activate([
-            resumeImageView.centerYAnchor.constraint(equalTo: playerView.centerYAnchor),
-            resumeImageView.centerXAnchor.constraint(equalTo: playerView.centerXAnchor),
-            resumeImageView.heightAnchor.constraint(equalToConstant: 70),
-            resumeImageView.widthAnchor.constraint(equalToConstant: 70)
-        ])
-        resumeImageView.tintColor = .white
-        resumeImageView.isUserInteractionEnabled = false
-        resumeImageView.isHidden = false
-    }
-    
-    func setUpPlayerView() {
-        playerView.translatesAutoresizingMaskIntoConstraints = false
+    func setUpVideoViewController() {
+        videoViewController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate ([
-            playerView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            playerView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-            playerView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            tabBar.topAnchor.constraint(greaterThanOrEqualTo: playerView.bottomAnchor)
+            videoViewController.view.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            videoViewController.view.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            videoViewController.view.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            tabBar.topAnchor.constraint(greaterThanOrEqualTo: videoViewController.view.bottomAnchor)
         ])
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
-        playerView.addGestureRecognizer(tap)
     }
    
     func setUpLooksView() {
@@ -249,7 +180,7 @@ final class VideoEditorViewController: UIViewController {
         looksContainerView.backgroundColor = .white
         topLooksConstraint = view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: looksContainerView.topAnchor, constant: -view.safeAreaInsets.bottom)
         let looksViewHeight: CGFloat = 100.0
-        let bottomConstraint = looksContainerView.topAnchor.constraint(equalTo: playerView.bottomAnchor)
+        let bottomConstraint = looksContainerView.topAnchor.constraint(equalTo: videoViewController.view.bottomAnchor)
         bottomConstraint.priority = .defaultLow
         NSLayoutConstraint.activate ([
             looksContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -282,7 +213,6 @@ final class VideoEditorViewController: UIViewController {
             collectionStackView.bottomAnchor.constraint(equalTo: looksContainerView.bottomAnchor),
             looksViewController.view.heightAnchor.constraint(equalToConstant: looksViewHeight)
         ])
-        
     }
     
     func setUpToolsView() {
@@ -327,15 +257,6 @@ final class VideoEditorViewController: UIViewController {
         saveCopyStackView.axis = .horizontal
         exportStackView.addArrangedSubview(saveStackView)
         exportStackView.addArrangedSubview(saveCopyStackView)
-    }
-    
-    func setUpBackgroundView() {
-        bgVideoView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            view.leftAnchor.constraint(equalTo: bgVideoView.leftAnchor),
-            view.rightAnchor.constraint(equalTo: bgVideoView.rightAnchor),
-            bgVideoView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            bgVideoView.topAnchor.constraint(equalTo: view.topAnchor)])
     }
     
     func setUpCancelButton() {
@@ -526,7 +447,7 @@ final class VideoEditorViewController: UIViewController {
         DispatchQueue.main.async {
             self.isExportViewShown = false
         }
-        guard let playerItem = player.currentItem else { return }
+        guard let playerItem = videoViewController.player.currentItem else { return }
         VideoEditer.saveEditedVideo(
             choosenFilter: looksViewController.selectedFilter,
             asset: playerItem.asset

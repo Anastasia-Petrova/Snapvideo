@@ -14,11 +14,11 @@ final class VideoViewController: UIViewController {
     let player: AVPlayer
     let playerView: VideoView
     let bgVideoView: VideoView
-    let url: URL
+    var playerRateObservation: NSKeyValueObservation?
+    lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
     
-    init(url: URL) {
-        self.url = url
-        asset = AVAsset(url: url)
+    init(asset: AVAsset) {
+        self.asset = asset
         let playerItem = AVPlayerItem(asset: asset)
         player = AVPlayer(playerItem: playerItem)
         let output = AVPlayerItemVideoOutput(outputSettings: nil)
@@ -48,6 +48,12 @@ final class VideoViewController: UIViewController {
         view.addSubview(playerView)
         setUpBackgroundView()
         setUpPlayerView()
+        setUpPlayer()
+        setUpResumeButton()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     func setUpBackgroundView() {
@@ -71,11 +77,49 @@ final class VideoViewController: UIViewController {
         playerView.addGestureRecognizer(tap)
     }
     
+    func setUpResumeButton() {
+        resumeImageView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(resumeImageView)
+        NSLayoutConstraint.activate([
+            resumeImageView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+            resumeImageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            resumeImageView.heightAnchor.constraint(equalToConstant: 70),
+            resumeImageView.widthAnchor.constraint(equalToConstant: 70)
+        ])
+        resumeImageView.tintColor = .white
+        resumeImageView.isUserInteractionEnabled = false
+        resumeImageView.isHidden = false
+    }
+
     @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
         if player.rate == 0 {
             player.play()
         } else {
             player.pause()
+        }
+    }
+    
+    func setUpPlayer() {
+        //1 Подписка на событие достижения конца видео
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(playerItemDidReachEnd(notification:)),
+            name: .AVPlayerItemDidPlayToEndTime,
+            object: player.currentItem
+        )
+        
+        //2 Подписка на изменение рейта плейера - (играю/не играю)
+        playerRateObservation = player.observe(\.rate) { [weak self] (_, _) in
+            guard let self = self else { return }
+            let isPlaying = self.player.rate > 0
+            self.resumeImageView.isHidden = isPlaying
+            isPlaying ? self.playerView.play() :  self.playerView.pause()
+        }
+    }
+    
+    @objc func playerItemDidReachEnd(notification: Notification) {
+        if let playerItem = notification.object as? AVPlayerItem {
+            playerItem.seek(to: CMTime.zero, completionHandler: nil)
         }
     }
 }
