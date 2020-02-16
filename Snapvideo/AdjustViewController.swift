@@ -12,15 +12,13 @@ import Photos
 
 final class AdjustViewController: UIViewController {
     let asset: AVAsset
-    let player: AVPlayer
-    let playerView: VideoView
-    var playerRateObservation: NSKeyValueObservation?
+    let videoViewController: VideoViewController
     let tabBar = TabBar(items: "✕", "✓")
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
     var slider = UISlider()
     
     var trackDuration: Float {
-        guard let trackDuration = player.currentItem?.asset.duration else {
+        guard let trackDuration = videoViewController.player.currentItem?.asset.duration else {
             return 0
         }
         return Float(CMTimeGetSeconds(trackDuration))
@@ -28,14 +26,7 @@ final class AdjustViewController: UIViewController {
     
     init(url: URL, tool: AnyTool) {
         asset = AVAsset(url: url)
-        let playerItem = AVPlayerItem(asset: asset)
-        player = AVPlayer(playerItem: playerItem)
-        let output = AVPlayerItemVideoOutput(outputSettings: nil)
-        playerItem.add(output)
-        playerView = VideoView(
-            videoOutput: output,
-            videoOrientation: self.asset.videoOrientation
-        )
+        videoViewController = VideoViewController(asset: asset)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -46,23 +37,13 @@ final class AdjustViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-        view.addSubview(playerView)
+        view.addSubview(videoViewController.view)
         view.addSubview(tabBar)
-        setUpPlayerView()
-        setUpResumeButton()
-        setUpPlayer()
+        setUpVideoViewController()
         setUpSlider()
         setUpTabBar()
     }
     
-    @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
-         if player.rate == 0 {
-             player.play()
-         } else {
-             player.pause()
-         }
-     }
-     
      deinit {
          NotificationCenter.default.removeObserver(self)
      }
@@ -79,74 +60,30 @@ final class AdjustViewController: UIViewController {
          ])
      }
     
-    func setUpPlayer() {
-        //1 Подписка на событие достижения конца видео
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(playerItemDidReachEnd(notification:)),
-            name: .AVPlayerItemDidPlayToEndTime,
-            object: player.currentItem
-        )
-        
-        //2 Подписка на изменение рейта плейера - (играю/не играю)
-        playerRateObservation = player.observe(\.rate) { [weak self] (_, _) in
-            guard let self = self else { return }
-            let isPlaying = self.player.rate > 0
-            self.resumeImageView.isHidden = isPlaying
-            isPlaying ? self.playerView.play() :  self.playerView.pause()
-        }
-        
-        player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 100), queue: .main) { [weak self] time in
-            self?.slider.value = Float(time.seconds)
-        }
-    }
-    
-    func setUpResumeButton() {
-        resumeImageView.translatesAutoresizingMaskIntoConstraints = false
-        playerView.addSubview(resumeImageView)
-        NSLayoutConstraint.activate([
-            resumeImageView.centerYAnchor.constraint(equalTo: playerView.centerYAnchor),
-            resumeImageView.centerXAnchor.constraint(equalTo: playerView.centerXAnchor),
-            resumeImageView.heightAnchor.constraint(equalToConstant: 70),
-            resumeImageView.widthAnchor.constraint(equalToConstant: 70)
-        ])
-        resumeImageView.tintColor = .white
-        resumeImageView.isUserInteractionEnabled = false
-        resumeImageView.isHidden = false
-    }
-    
     func setUpSlider() {
         slider.translatesAutoresizingMaskIntoConstraints = false
-        playerView.addSubview(slider)
+        videoViewController.view.addSubview(slider)
         NSLayoutConstraint.activate ([
-            slider.leadingAnchor.constraint(equalTo: playerView.leadingAnchor, constant: 50),
-            slider.trailingAnchor.constraint(equalTo: playerView.trailingAnchor, constant: -50),
-            slider.bottomAnchor.constraint(equalTo: playerView.bottomAnchor, constant: -40)])
+            slider.leadingAnchor.constraint(equalTo: videoViewController.view.leadingAnchor, constant: 50),
+            slider.trailingAnchor.constraint(equalTo: videoViewController.view.trailingAnchor, constant: -50),
+            slider.bottomAnchor.constraint(equalTo: videoViewController.view.bottomAnchor, constant: -40)])
         slider.minimumValue = 0
         slider.maximumValue = trackDuration
         slider.addTarget(self, action: #selector(self.sliderAction), for: .valueChanged)
     }
     
-    func setUpPlayerView() {
-        playerView.translatesAutoresizingMaskIntoConstraints = false
+    func setUpVideoViewController() {
+        videoViewController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate ([
-            playerView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            playerView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-            playerView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            playerView.bottomAnchor.constraint(equalTo: tabBar.topAnchor)
+            videoViewController.view.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            videoViewController.view.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            videoViewController.view.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            videoViewController.view.bottomAnchor.constraint(equalTo: tabBar.topAnchor)
         ])
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
-        playerView.addGestureRecognizer(tap)
-    }
-    
-    @objc func playerItemDidReachEnd(notification: Notification) {
-        if let playerItem = notification.object as? AVPlayerItem {
-            playerItem.seek(to: CMTime.zero, completionHandler: nil)
-        }
     }
     
     @objc func sliderAction() {
-        player.seek(
+        videoViewController.player.seek(
             to: CMTime(
                 seconds: Double(slider.value),
                 preferredTimescale: 1
@@ -155,7 +92,6 @@ final class AdjustViewController: UIViewController {
             toleranceAfter: CMTime.zero
         )
     }
-    
 }
 
 extension AdjustViewController: UITabBarDelegate {
