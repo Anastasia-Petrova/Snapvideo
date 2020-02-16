@@ -5,7 +5,7 @@ jobs:
 
     macos: 
       xcode: 11.3.0
-
+    working_directory: /Users/distiller/project
     steps: 
       - checkout
       - run:
