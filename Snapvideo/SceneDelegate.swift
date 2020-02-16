@@ -15,8 +15,13 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
  
     guard let windowScene = (scene as? UIWindowScene) else { return }
     window = UIWindow(windowScene: windowScene)
-    let rootVC = HomeViewController() //ToolsCollectionViewController()
+//    guard let path = Bundle.main.path(forResource: "videoTest", ofType:"MOV") else {
+//        return
+//    }
+//    let url = URL(fileURLWithPath: path)
+    let rootVC = HomeViewController()
     let navigationController = UINavigationController(rootViewController: rootVC)
+//    window?.rootViewController = VideoViewController(url: url)
     window?.rootViewController = navigationController
     window?.makeKeyAndVisible()
   }
