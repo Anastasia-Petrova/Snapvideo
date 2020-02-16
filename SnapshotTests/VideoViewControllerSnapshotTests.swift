@@ -16,7 +16,7 @@ final class VideoViewControllerSnapshotTests: XCTestCase {
 //        record = true
     }
 
-    func test() {
+    func DISABLED_test() {
         let url = Bundle.snapshotTests.url(forResource: "videoTest", withExtension: "mp4")!
         print("videoTest:" + url.absoluteString)
         let asset = AVAsset(url: url)
