@@ -27,11 +27,11 @@ final class VideoViewController: UIViewController {
         playerItem.add(outputBG)
         playerView = VideoView(
             videoOutput: output,
-            videoOrientation: self.asset.videoOrientation
+            videoOrientation: .up//self.asset.videoOrientation
         )
         bgVideoView = VideoView(
             videoOutput: outputBG,
-            videoOrientation: self.asset.videoOrientation,
+            videoOrientation: .up,//self.asset.videoOrientation,
             contentsGravity: .resizeAspectFill,
             filter: AnyFilter(BlurFilter(blurRadius: 100))
         )

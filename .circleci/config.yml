@@ -11,5 +11,10 @@ jobs:
       - run:
           name: Run Unit Tests
           command: xcodebuild test -scheme Snapvideo -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.3'
+          environment:
+            SNAPSHOT_ARTIFACTS: /tmp/__SnapshotArtifacts__
+      - store_artifacts:
+          path: /tmp/__SnapshotArtifacts__
       - store_test_results:
           path: test_output
+
