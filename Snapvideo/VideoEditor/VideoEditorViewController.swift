@@ -26,10 +26,6 @@ final class VideoEditorViewController: UIViewController {
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
     let bgVideoView: VideoView
     var playerRateObservation: NSKeyValueObservation?
-    var slider = UISlider()
-    var bottomSliderConstraint = NSLayoutConstraint()
-    let timerLabel = UILabel()
-    var bottomTimerConstraint = NSLayoutConstraint()
     var cancelButton = LooksViewButton(imageName: "cancel")
     var doneButton = LooksViewButton(imageName: "done")
     var saveCopyButton = SaveCopyVideoButton()
@@ -170,8 +166,6 @@ final class VideoEditorViewController: UIViewController {
         setUpLooksView()
         setUpResumeButton()
         setUpPlayer()
-        setUpSlider()
-        setUpTimer()
         setUpCancelButton()
         setUpDoneButton()
         setUpToolsView()
@@ -222,11 +216,6 @@ final class VideoEditorViewController: UIViewController {
             self.resumeImageView.isHidden = isPlaying
             isPlaying ? self.playerView.play() :  self.playerView.pause()
         }
-        
-        player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 100), queue: .main) { [weak self] time in
-            self?.slider.value = Float(time.seconds)
-            self?.updateTimer()
-        }
     }
     
     func setUpResumeButton() {
@@ -243,19 +232,6 @@ final class VideoEditorViewController: UIViewController {
         resumeImageView.isHidden = false
     }
     
-    func setUpSlider() {
-        slider.translatesAutoresizingMaskIntoConstraints = false
-        playerView.addSubview(slider)
-        bottomSliderConstraint = slider.bottomAnchor.constraint(equalTo: playerView.bottomAnchor, constant: -40)
-        NSLayoutConstraint.activate ([
-            slider.leadingAnchor.constraint(equalTo: playerView.leadingAnchor, constant: 50),
-            slider.trailingAnchor.constraint(equalTo: playerView.trailingAnchor, constant: -50),
-            bottomSliderConstraint])
-        slider.minimumValue = 0
-        slider.maximumValue = trackDuration
-        slider.addTarget(self, action: #selector(self.sliderAction), for: .valueChanged)
-    }
-    
     func setUpPlayerView() {
         playerView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate ([
@@ -267,34 +243,7 @@ final class VideoEditorViewController: UIViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
         playerView.addGestureRecognizer(tap)
     }
-    
-    func setUpTimer() {
-        timerLabel.translatesAutoresizingMaskIntoConstraints = false
-        playerView.addSubview(timerLabel)
-        bottomTimerConstraint = timerLabel.topAnchor.constraint(equalTo: playerView.topAnchor, constant: 40)
-        NSLayoutConstraint.activate ([
-            timerLabel.leadingAnchor.constraint(equalTo: playerView.leadingAnchor, constant: 40),
-            bottomTimerConstraint,
-            timerLabel.heightAnchor.constraint(equalToConstant: 44)])
-        timerLabel.alpha = 0.5
-        timerLabel.textColor = .white
-        let videoDuration = Int(trackDuration)
-        timerLabel.text = "\(formatMinuteSeconds(videoDuration))"
-    }
-    
-    func updateTimer() {
-        let duraion = Int(CMTimeGetSeconds(player.currentTime()))
-        let timeString = formatMinuteSeconds(duraion)
-        timerLabel.text = "\(timeString)"
-    }
-    
-    func formatMinuteSeconds(_ totalSeconds: Int) -> String {
-        let hours  = totalSeconds / 3600
-        let minutes = (totalSeconds / 60) % 60
-        let seconds = totalSeconds % 60
-        return String(format:"%02d:%02d:%02d", hours, minutes, seconds);
-    }
-    
+   
     func setUpLooksView() {
         looksContainerView.translatesAutoresizingMaskIntoConstraints = false
         looksContainerView.backgroundColor = .white
@@ -492,23 +441,10 @@ final class VideoEditorViewController: UIViewController {
             playerItem.seek(to: CMTime.zero, completionHandler: nil)
         }
     }
-    
-    @objc func sliderAction() {
-        player.seek(
-            to: CMTime(
-                seconds: Double(slider.value),
-                preferredTimescale: 1
-            ),
-            toleranceBefore: CMTime.zero,
-            toleranceAfter: CMTime.zero
-        )
-    }
-    
+   
     public func openLooks() {
         self.view.layoutIfNeeded()
         topLooksConstraint.constant = looksViewController.view.frame.height + tabBar.frame.height
-        bottomSliderConstraint.constant *= 0.84
-        bottomTimerConstraint.constant *= 0.84
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
@@ -517,8 +453,6 @@ final class VideoEditorViewController: UIViewController {
     public func closeLooks() {
         self.view.layoutIfNeeded()
         topLooksConstraint.constant = -view.safeAreaInsets.bottom
-        bottomSliderConstraint.constant = -40
-        bottomTimerConstraint.constant = 40
         resetToDefaultFilter()
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()

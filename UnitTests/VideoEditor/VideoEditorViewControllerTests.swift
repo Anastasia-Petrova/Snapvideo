@@ -9,7 +9,7 @@
 import XCTest
 @testable import Snapvideo
 
-class VideoEditorViewControllerTests: XCTestCase {
+final class VideoEditorViewControllerTests: XCTestCase {
     func test_openLooks_and_closeLooks_setCorrect_topLooksConstraint_constant() {
         let filters = [
             AnyFilter(PassthroughFilter())

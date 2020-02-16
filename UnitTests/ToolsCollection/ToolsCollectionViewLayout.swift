@@ -9,7 +9,7 @@
 import XCTest
 @testable import Snapvideo
 
-class ToolsCollectionViewLayout: XCTestCase {
+final class ToolsCollectionViewLayout: XCTestCase {
     func test_properties() {
         let expectedSize = CGSize(width: 60, height: 76)
         let toolsCollectionViewLayout = LooksCollectionViewLayout(itemSize: expectedSize)

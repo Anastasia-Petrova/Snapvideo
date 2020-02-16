@@ -9,7 +9,7 @@
 import XCTest
 @testable import Snapvideo
 
-class LooksViewControllerTests: XCTestCase {
+final class LooksViewControllerTests: XCTestCase {
     func test_init_assigns_properties() {
         //Given
         let expectedItemSize = CGSize(width: 60, height: 76)

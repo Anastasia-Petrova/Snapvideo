@@ -9,8 +9,7 @@
 import XCTest
 @testable import Snapvideo
 
-class ToolsViewControllerTests: XCTestCase {
-
+final class ToolsViewControllerTests: XCTestCase {
     func test_init_assigns_properties() {
         let tools = [AnyTool(WarmthTool())]
         let vc = ToolsViewController(tools: tools)
