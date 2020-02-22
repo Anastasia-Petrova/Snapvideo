@@ -11,19 +11,34 @@ import CoreImage
 
 struct VignetteFilter: Filter {
     let name: String = "Vignette"
+    let radius: Double
+    let intensity: Double
+    
+    private let filter = CIFilter(name: "CIVignette", parameters: nil)
+    
+    func parameters(with image: CIImage) -> [String : Any] {
+        [
+            kCIInputImageKey:  image,
+            kCIInputRadiusKey : NSNumber(floatLiteral: radius),
+            kCIInputIntensityKey : NSNumber(floatLiteral: intensity),
+        ]
+    }
     
     func apply(image: CIImage) -> CIImage {
-        let optionalFilter = CIFilter(name: "CIVignette",
-                                      parameters: [
-                                        "inputImage":  image,
-                                        "inputRadius" : 0.5,
-                                        "inputIntensity" : 2.0
-        ])
-        guard let filter = optionalFilter else {
-            return image
-        }
-        filter.setValue(image, forKey: kCIInputImageKey)
-        
-        return filter.outputImage ?? image
+        filter?.createOutputImage(for: parameters(with: image)) ?? image
+    }
+}
+
+extension VignetteFilter {
+    init() {
+        radius = 0.8
+        intensity = 5.0
+    }
+}
+
+extension CIFilter {
+    func createOutputImage(for parameters: [String : Any]) -> CIImage? {
+        setValuesForKeys(parameters)
+        return outputImage
     }
 }

@@ -68,7 +68,7 @@ final class HomeViewController: UIViewController {
             button.topAnchor.constraint(equalTo: view.topAnchor),
             button.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
-        button.addTarget(self, action: #selector(self.handleAddVideoTap), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleAddVideoTap), for: .touchUpInside)
     }
     
     @objc private func handleAddVideoTap() {
