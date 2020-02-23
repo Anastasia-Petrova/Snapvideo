@@ -17,7 +17,7 @@ final class ParameterListView: UIView {
     let callback: DidSelectParameterCallback
     private var topConstraint: NSLayoutConstraint?
     private var bottomConstraint: NSLayoutConstraint?
-    private var offsetY: CGFloat = 0.0 { didSet { setNeedsLayout() } }
+    var offsetY: CGFloat = 0.0 { didSet { setNeedsLayout() } }
     
     init(parameters: [Parameter], callback: @escaping DidSelectParameterCallback) {
         self.parameters = parameters
@@ -118,7 +118,7 @@ final class ParameterListView: UIView {
         offsetY = offsetY + translation
     }
     
-    struct Parameter {
+    struct Parameter: Equatable {
         let name: String
         var value: String
     }
