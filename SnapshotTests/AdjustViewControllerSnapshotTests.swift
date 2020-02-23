@@ -18,7 +18,7 @@ final class AdjustViewControllerSnapshotTests: XCTestCase {
             return
         }
         let url = URL(fileURLWithPath: path)
-        let vc = AdjustViewController(url: url, tool: tool)
+        let vc = AdjustmentsViewController(url: url, tool: tool)
         
         assertSnapshot(matching: vc, as: .wait(for: 2, on: .image))
     }

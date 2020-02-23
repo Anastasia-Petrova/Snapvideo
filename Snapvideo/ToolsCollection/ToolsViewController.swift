@@ -13,7 +13,7 @@ final class ToolsViewController: UIViewController {
     
     let dataSource: ToolsCollectionDataSource
     let collectionView: UICollectionView
-    var didSelectToolCallback: Callback? = nil
+    var didSelectToolCallback: Callback?
 
     init(tools: [AnyTool]) {
         self.collectionView = UICollectionView(

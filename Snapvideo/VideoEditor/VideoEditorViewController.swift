@@ -98,23 +98,26 @@ final class VideoEditorViewController: UIViewController {
         self.url = url
         asset = AVAsset(url: url)
         videoViewController = VideoViewController(asset: asset)
-        looksViewController = LooksViewController(itemSize: itemSize, filters: filters)
+        looksViewController = LooksViewController(itemSize: itemSize, filters: filters) {
+            [
+            weak videoViewController,
+            weak doneButton,
+            weak tabBar
+            ] newIndex, previousIndex in
+            videoViewController?.playerView.filter = filters[newIndex]
+            videoViewController?.bgVideoView.filter = filters[newIndex] + AnyFilter(BlurFilter(blurRadius: 100))
+            doneButton?.isEnabled = newIndex != 0
+            tabBar?.isHidden = newIndex != 0
+            guard newIndex != previousIndex && newIndex != 0 else { return }
+            videoViewController?.player.play()
+        }
         toolsViewController = ToolsViewController(tools: tools)
         super.init(nibName: nil, bundle: nil)
         addChild(looksViewController)
         looksViewController.didMove(toParent: self)
         
-        looksViewController.filterIndexChangeCallback = { [weak self] newIndex, previousIndex in
-            self?.videoViewController.playerView.filter = filters[newIndex]
-            self?.videoViewController.bgVideoView.filter = filters[newIndex] + AnyFilter(BlurFilter(blurRadius: 100))
-            self?.doneButton.isEnabled = newIndex != 0
-            self?.tabBar.isHidden = newIndex != 0
-            guard newIndex != previousIndex && newIndex != 0 else { return }
-            self?.videoViewController.player.play()
-        }
-        
         toolsViewController.didSelectToolCallback = { [weak self] toolIndex in
-            let vc = AdjustViewController(url: url, tool: tools[toolIndex])
+            let vc = AdjustmentsViewController(url: url, tool: tools[toolIndex])
             vc.modalTransitionStyle = .crossDissolve
             self?.present(vc, animated: true, completion: nil)
         }

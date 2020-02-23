@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-final class AdjustViewController: UIViewController {
+final class AdjustmentsViewController: UIViewController {
     let asset: AVAsset
     let videoViewController: VideoViewController
     let tabBar = TabBar(items: "✕", "✓")
@@ -93,7 +93,7 @@ final class AdjustViewController: UIViewController {
     }
 }
 
-extension AdjustViewController: UITabBarDelegate {
+extension AdjustmentsViewController: UITabBarDelegate {
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
 
     }

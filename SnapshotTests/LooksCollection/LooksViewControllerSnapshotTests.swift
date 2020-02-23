@@ -12,7 +12,7 @@ import SnapshotTesting
 
 class LooksViewControllerSnapshotTests: XCTestCase {
     func testLooksViewController() {
-        let vc = LooksViewController(itemSize: CGSize(width: 60, height: 76), filters: [])
+        let vc = LooksViewController(itemSize: CGSize(width: 60, height: 76), filters: []) { _,_ in }
         vc.collectionView.layer.borderColor = UIColor.red.cgColor
         vc.collectionView.layer.borderWidth = 4
         assertSnapshot(matching: vc, as: .image)
