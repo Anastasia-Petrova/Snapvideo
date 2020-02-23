@@ -10,34 +10,81 @@ import Foundation
 import UIKit
 import CoreImage
 
+protocol Parameterized {
+    associatedtype Parameter: CustomStringConvertible
+    associatedtype Value
+    
+    var allParameters: [Parameter] { get }
+    
+    func value(for parameter: Parameter) -> Value
+    
+    func minValue(for parameter: Parameter) -> Value
+    
+    func maxValue(for parameter: Parameter) -> Value
+    
+    mutating func setValue(value: Value, for parameter: Parameter)
+}
+
 struct VignetteTool: Tool {
+    
+    
     let icon = ImageAsset.Tools.vignette
-//    private var filter = VignetteFilter(radius: 0.5)
+    
+    private var filter = VignetteFilter(radius: 0, intensity: 0)
     
     func apply(image: CIImage) -> CIImage {
-        let optionalFilter = CIFilter(
-            name: "CIVignette",
-            parameters: [
-                "inputImage":  image,
-                "inputRadius" : 0.5,
-                "inputIntensity" : 2.0
-            ]
-        )
-        guard let filter = optionalFilter else {
-            return image
-        }
-        filter.setValue(image, forKey: kCIInputImageKey)
-        
-        return filter.outputImage ?? image
+        filter.apply(image: image)
     }
 }
 
-struct VignetteT {
-    let apply: (CIImage) -> CIImage
-    let name: String
+extension VignetteTool: Parameterized {
+    typealias Value = Double
+    var allParameters: [Parameter] { Parameter.allCases }
     
-    init<F: Filter>(_ filter: F) {
-        apply = filter.apply
-        name = filter.name
+    func value(for parameter: Parameter) -> Double {
+        switch parameter {
+        case .radius:
+            return filter.radius
+        case .intensity:
+            return filter.intensity
+        }
     }
+    
+    mutating func setValue(value: Double, for parameter: Parameter) {
+        switch parameter {
+        case .radius:
+            filter.radius = value
+        case .intensity:
+            filter.intensity = value
+        }
+    }
+    
+    func minValue(for parameter: Parameter) -> Double {
+        switch parameter {
+        case .radius:
+            return 0.0
+        case .intensity:
+            return -1.0
+        }
+    }
+    
+    func maxValue(for parameter: Parameter) -> Double {
+        switch parameter {
+        case .radius:
+            return 2.0
+        case .intensity:
+            return 1.0
+        }
+    }
+}
+
+extension VignetteTool {
+    enum Parameter: String, CaseIterable {
+        case radius
+        case intensity
+    }
+}
+
+extension VignetteTool.Parameter: CustomStringConvertible {
+    var description: String { rawValue.capitalized }
 }

@@ -11,10 +11,10 @@ import CoreImage
 
 struct VignetteFilter: Filter {
     let name: String = "Vignette"
-    let radius: Double
-    let intensity: Double
+    var radius: Double
+    var intensity: Double
     
-    private let filter = CIFilter(name: "CIVignette", parameters: nil)
+    private let filter = CIFilter(name: "CIVignetteEffect", parameters: nil)
     
     func parameters(with image: CIImage) -> [String : Any] {
         [
@@ -31,8 +31,8 @@ struct VignetteFilter: Filter {
 
 extension VignetteFilter {
     init() {
-        radius = 0.8
-        intensity = 5.0
+        radius = 0
+        intensity = 0.1
     }
 }
 
