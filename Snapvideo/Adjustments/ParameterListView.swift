@@ -17,6 +17,7 @@ final class ParameterListView: UIView {
     let callback: DidSelectParameterCallback
     private var topConstraint: NSLayoutConstraint?
     private var bottomConstraint: NSLayoutConstraint?
+    private var offsetY: CGFloat = 0.0 { didSet { setNeedsLayout() } }
     
     init(parameters: [Parameter], callback: @escaping DidSelectParameterCallback) {
         self.parameters = parameters
@@ -28,8 +29,8 @@ final class ParameterListView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        topConstraint?.constant = stackView.frame.height
-        bottomConstraint?.constant = 0
+        topConstraint?.constant = stackView.frame.height - offsetY
+        bottomConstraint?.constant = offsetY
     }
     
     func setUpStackView() {
@@ -37,10 +38,12 @@ final class ParameterListView: UIView {
             .map(makeParameterButton)
             .forEach(stackView.addArrangedSubview)
         
+        stackView.axis = .vertical
+        stackView.spacing = 16
         stackView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(stackView)
         
-        let topConstraint = topAnchor.constraint(equalTo: stackView.topAnchor)
+        let topConstraint = stackView.topAnchor.constraint(equalTo: topAnchor)
         let bottomConstraint = bottomAnchor.constraint(equalTo: stackView.bottomAnchor)
         NSLayoutConstraint.activate([
             topConstraint,
@@ -60,11 +63,14 @@ final class ParameterListView: UIView {
         let value = UILabel()
         
         name.text = parameter.name
+        name.font = .systemFont(ofSize: 18)
         value.text = parameter.value
+        value.font = .systemFont(ofSize: 18)
         
         stackView.addArrangedSubview(name)
         stackView.addArrangedSubview(value)
         stackView.distribution = .equalSpacing
+        stackView.spacing = 16
         
         button.translatesAutoresizingMaskIntoConstraints = false
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -99,11 +105,17 @@ final class ParameterListView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setOffsetY(_ offsetY: CGFloat) {
-//        scrollView.setContentOffset(CGPoint(
-//            x: scrollView.contentOffset.x,
-//            y: offsetY), animated: true
-//        )
+    func translateY(_ translation: CGFloat) {
+        let newOffsetY = offsetY + translation
+        guard newOffsetY < stackView.frame.height else {
+            offsetY = stackView.frame.height
+            return
+        }
+        guard newOffsetY > 0 else {
+            offsetY = 0
+            return
+        }
+        offsetY = offsetY + translation
     }
     
     struct Parameter {
