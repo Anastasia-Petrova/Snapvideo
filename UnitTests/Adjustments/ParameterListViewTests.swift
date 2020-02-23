@@ -7,9 +7,9 @@
 //
 
 import Foundation
+@testable import Snapvideo
 import UIKit
 import XCTest
-@testable import Snapvideo
 
 final class ParameterListViewTests: XCTestCase {
     private typealias Parameter = ParameterListView.Parameter
@@ -38,16 +38,16 @@ final class ParameterListViewTests: XCTestCase {
         ]) { _ in }
         add(view, on: UIViewController())
         
-        XCTAssertEqual(view.offsetY, 0)
+        XCTAssertEqual(view.offset, view.minOffset)
         
         view.translateY(5)
-        XCTAssertEqual(view.offsetY, 5)
+        XCTAssertEqual(view.offset, 5)
         
-        view.translateY(-10)
-        XCTAssertEqual(view.offsetY, 0)
+        view.translateY(-100)
+        XCTAssertEqual(view.offset, view.minOffset)
         
         view.translateY(10000)
-        XCTAssertEqual(view.offsetY, view.stackView.frame.height)
+        XCTAssertEqual(view.offset, view.maxOffset)
     }
     
     func add(_ view: UIView, on vc: UIViewController) {

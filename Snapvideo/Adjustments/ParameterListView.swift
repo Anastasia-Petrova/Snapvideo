@@ -10,94 +10,85 @@ import UIKit
 
 final class ParameterListView: UIView {
     typealias DidSelectParameterCallback = (Parameter) -> Void
+    static let rowVerticalSpacing: CGFloat = 8.0
+    
     var parameters: [Parameter]
     let stackView = UIStackView()
-    let selectedElementView = UIView()
+    let container = UIView()
+    let selectedParameterView: ParameterView
     
     let callback: DidSelectParameterCallback
     private var topConstraint: NSLayoutConstraint?
     private var bottomConstraint: NSLayoutConstraint?
-    var offsetY: CGFloat = 0.0 { didSet { setNeedsLayout() } }
+    
+    var offset: CGFloat = 0.0 { didSet { setNeedsLayout() } }
+  
+    var rowHeight: CGFloat {
+        let heightNoSpacings = container.frame.height - CGFloat(parameters.count - 1) * Self.rowVerticalSpacing
+        return heightNoSpacings / CGFloat(parameters.count)
+    }
+    
+    var maxOffset: CGFloat {
+      container.frame.height - rowHeight
+    }
+    
+    let minOffset: CGFloat = 0.0
     
     init(parameters: [Parameter], callback: @escaping DidSelectParameterCallback) {
         self.parameters = parameters
         self.callback = callback
+        selectedParameterView = ParameterView(parameter: parameters.first ?? Parameter(name: "", value: "")) //TODO: use NonEmpty array
         super.init(frame: .zero)
         setUpStackView()
-        setUpSelectedElementView()
+        setUpSelectedParameterView()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        topConstraint?.constant = stackView.frame.height - offsetY
-        bottomConstraint?.constant = offsetY
+        topConstraint?.constant = maxOffset - offset
+        bottomConstraint?.constant = minOffset + offset
     }
     
     func setUpStackView() {
         parameters
-            .map(makeParameterButton)
+            .map(ParameterView.init)
             .forEach(stackView.addArrangedSubview)
         
-        stackView.axis = .vertical
-        stackView.spacing = 16
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(stackView)
+        container.backgroundColor = UIColor.white.withAlphaComponent(0.6)
+        container.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(container)
         
-        let topConstraint = stackView.topAnchor.constraint(equalTo: topAnchor)
-        let bottomConstraint = bottomAnchor.constraint(equalTo: stackView.bottomAnchor)
+        stackView.axis = .vertical
+        stackView.spacing = Self.rowVerticalSpacing
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        container.addSubview(stackView)
+        
+        let topConstraint = container.topAnchor.constraint(equalTo: topAnchor)
+        let bottomConstraint = bottomAnchor.constraint(equalTo: container.bottomAnchor)
         NSLayoutConstraint.activate([
             topConstraint,
             bottomConstraint,
-            leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-            trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
+            leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            trailingAnchor.constraint(equalTo: container.trailingAnchor),
+            container.topAnchor.constraint(equalTo: stackView.topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: container.bottomAnchor),
+            stackView.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: container.trailingAnchor),
         ])
         self.bottomConstraint = bottomConstraint
         self.topConstraint = topConstraint
     }
-    
-    func makeParameterButton(_ parameter: Parameter) -> UIView {
-        let container = UIView()
-        let stackView = UIStackView()
-        let button = UIButton()
-        let name = UILabel()
-        let value = UILabel()
-        
-        name.text = parameter.name
-        name.font = .systemFont(ofSize: 18)
-        value.text = parameter.value
-        value.font = .systemFont(ofSize: 18)
-        
-        stackView.addArrangedSubview(name)
-        stackView.addArrangedSubview(value)
-        stackView.distribution = .equalSpacing
-        stackView.spacing = 16
-        
-        button.translatesAutoresizingMaskIntoConstraints = false
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        container.addSubview(stackView)
-        container.addSubview(button)
-        
-        NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: container.topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: container.bottomAnchor),
-            stackView.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: container.trailingAnchor),
-            button.topAnchor.constraint(equalTo: container.topAnchor),
-            button.bottomAnchor.constraint(equalTo: container.bottomAnchor),
-            button.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            button.trailingAnchor.constraint(equalTo: container.trailingAnchor),
-        ])
-        
-        return stackView
-    }
 
-    func setUpSelectedElementView() {
-        selectedElementView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(selectedElementView)
+    func setUpSelectedParameterView() {
+        selectedParameterView.backgroundColor = .blue
+        selectedParameterView.labels.forEach { $0.textColor = .white }
+        
+        selectedParameterView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(selectedParameterView)
         NSLayoutConstraint.activate([
-            centerYAnchor.constraint(equalTo: selectedElementView.centerYAnchor),
-            leadingAnchor.constraint(equalTo: selectedElementView.leadingAnchor),
-            trailingAnchor.constraint(equalTo: selectedElementView.trailingAnchor)
+            centerYAnchor.constraint(equalTo: selectedParameterView.centerYAnchor),
+            leadingAnchor.constraint(equalTo: selectedParameterView.leadingAnchor),
+            trailingAnchor.constraint(equalTo: selectedParameterView.trailingAnchor)
         ])
     }
     
@@ -106,20 +97,71 @@ final class ParameterListView: UIView {
     }
     
     func translateY(_ translation: CGFloat) {
-        let newOffsetY = offsetY + translation
-        guard newOffsetY < stackView.frame.height else {
-            offsetY = stackView.frame.height
+        let newOffsetY = offset + translation
+        
+        guard newOffsetY < maxOffset else {
+            offset = maxOffset
             return
         }
-        guard newOffsetY > 0 else {
-            offsetY = 0
+        guard newOffsetY > minOffset else {
+            offset = minOffset
             return
         }
-        offsetY = offsetY + translation
+        offset = offset + translation
     }
-    
+}
+
+extension ParameterListView {
     struct Parameter: Equatable {
         let name: String
         var value: String
+    }
+}
+
+extension ParameterListView {
+    final class ParameterView: UIView {
+        var labels: [UILabel] {
+            [nameLabel, valueLabel]
+        }
+        
+        let nameLabel = UILabel()
+        let valueLabel = UILabel()
+        
+        init(parameter: Parameter) {
+            super.init(frame: .zero)
+            
+            let stackView = UIStackView()
+            let button = UIButton()
+            
+            nameLabel.text = parameter.name
+            nameLabel.font = .systemFont(ofSize: 18)
+            valueLabel.text = parameter.value
+            valueLabel.font = .systemFont(ofSize: 18)
+            
+            stackView.addArrangedSubview(nameLabel)
+            stackView.addArrangedSubview(valueLabel)
+            stackView.distribution = .equalSpacing
+            stackView.spacing = 16
+            
+            button.translatesAutoresizingMaskIntoConstraints = false
+            stackView.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(stackView)
+            addSubview(button)
+            
+            NSLayoutConstraint.activate([
+                stackView.topAnchor.constraint(equalTo: topAnchor),
+                stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
+                stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+                stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+                button.topAnchor.constraint(equalTo: topAnchor),
+                button.bottomAnchor.constraint(equalTo: bottomAnchor),
+                button.leadingAnchor.constraint(equalTo: leadingAnchor),
+                button.trailingAnchor.constraint(equalTo: trailingAnchor),
+            ])
+        }
+        
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
     }
 }
