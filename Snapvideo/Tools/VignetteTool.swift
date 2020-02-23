@@ -12,7 +12,7 @@ import CoreImage
 
 protocol Parameterized {
     associatedtype Parameter: CustomStringConvertible
-    associatedtype Value
+    associatedtype Value: CustomStringConvertible
     
     var allParameters: [Parameter] { get }
     
@@ -26,8 +26,6 @@ protocol Parameterized {
 }
 
 struct VignetteTool: Tool {
-    
-    
     let icon = ImageAsset.Tools.vignette
     
     private var filter = VignetteFilter(radius: 0, intensity: 0)
@@ -39,42 +37,51 @@ struct VignetteTool: Tool {
 
 extension VignetteTool: Parameterized {
     typealias Value = Double
+    
     var allParameters: [Parameter] { Parameter.allCases }
     
     func value(for parameter: Parameter) -> Double {
         switch parameter {
         case .radius:
-            return filter.radius
+            return filter.radius * parameter.k
         case .intensity:
-            return filter.intensity
+            return filter.intensity * parameter.k
         }
     }
     
     mutating func setValue(value: Double, for parameter: Parameter) {
         switch parameter {
         case .radius:
-            filter.radius = value
+            filter.radius = value / parameter.k
         case .intensity:
-            filter.intensity = value
+            filter.intensity = value / parameter.k
         }
     }
     
     func minValue(for parameter: Parameter) -> Double {
         switch parameter {
         case .radius:
-            return 0.0
+            return 0.0 * parameter.k
         case .intensity:
-            return -1.0
+            return -1.0 * parameter.k
         }
     }
     
     func maxValue(for parameter: Parameter) -> Double {
         switch parameter {
         case .radius:
-            return 2.0
+            return 2.0 * parameter.k
         case .intensity:
-            return 1.0
+            return 1.0 * parameter.k
         }
+    }
+    
+    func process(input: Double, for parameter: Parameter) -> Double {
+        input / parameter.k
+    }
+    
+    func process(output: Double, for parameter: Parameter) -> Double {
+        output * parameter.k
     }
 }
 
@@ -82,6 +89,15 @@ extension VignetteTool {
     enum Parameter: String, CaseIterable {
         case radius
         case intensity
+        
+        var k: Double {
+            switch self {
+            case .radius:
+                return 50.0
+            case .intensity:
+                return 100.0
+            }
+        }
     }
 }
 
