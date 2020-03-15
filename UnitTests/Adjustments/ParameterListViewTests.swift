@@ -26,8 +26,10 @@ final class ParameterListViewTests: XCTestCase {
     func test_callback() {
         let expected = Parameter(name: "Foo", value: "1")
         var actual: Parameter?
+        
         let view = ParameterListView(parameters: []) { actual = $0 }
         view.callback(expected)
+        
         XCTAssertEqual(expected, actual)
     }
     
@@ -38,16 +40,16 @@ final class ParameterListViewTests: XCTestCase {
         ]) { _ in }
         add(view, on: UIViewController())
         
-        XCTAssertEqual(view.offset, view.minOffset)
+        XCTAssertEqual(view.verticalOffset, ParameterListView.minOffset)
         
         view.translateY(5)
-        XCTAssertEqual(view.offset, 5)
+        XCTAssertEqual(view.verticalOffset, 5)
         
         view.translateY(-100)
-        XCTAssertEqual(view.offset, view.minOffset)
+        XCTAssertEqual(view.verticalOffset, ParameterListView.minOffset)
         
         view.translateY(10000)
-        XCTAssertEqual(view.offset, view.maxOffset)
+        XCTAssertEqual(view.verticalOffset, view.maxOffset)
     }
     
     func add(_ view: UIView, on vc: UIViewController) {

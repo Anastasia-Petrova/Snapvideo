@@ -119,9 +119,8 @@ extension HomeViewController: UINavigationControllerDelegate {}
 
 extension UINavigationController {
     func hideHairline() {
-        if let hairline = findHairlineImageViewUnder(navigationBar) {
-            hairline.isHidden = true
-        }
+        let hairline = findHairlineImageViewUnder(navigationBar)
+        hairline?.isHidden = true
     }
 
     func findHairlineImageViewUnder(_ view: UIView) -> UIImageView? {
@@ -129,7 +128,7 @@ extension UINavigationController {
             return view as? UIImageView
         }
         for subview in view.subviews {
-            if let imageView = self.findHairlineImageViewUnder(subview) {
+            if let imageView = findHairlineImageViewUnder(subview) {
                 return imageView
             }
         }

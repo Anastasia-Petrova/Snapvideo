@@ -236,7 +236,6 @@ final class LooksCollectionDataSourceTests: XCTestCase {
         wait(for: [expectation], timeout: 5)
     }
     
-    
     func test_filterAsync() {
         //Given
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())

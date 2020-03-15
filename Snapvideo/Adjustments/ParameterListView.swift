@@ -10,18 +10,20 @@ import UIKit
 
 final class ParameterListView: UIView {
     typealias DidSelectParameterCallback = (Parameter) -> Void
+    
     static let rowVerticalSpacing: CGFloat = 8.0
+    static let minOffset: CGFloat = 0.0
     
     var parameters: [Parameter]
     let stackView = UIStackView()
     let container = UIView()
-    let selectedParameterView: ParameterView
+    private let selectedParameterRow: ParameterRow
     
     let callback: DidSelectParameterCallback
     private var topConstraint: NSLayoutConstraint?
     private var bottomConstraint: NSLayoutConstraint?
     
-    var offset: CGFloat = 0.0 { didSet { setNeedsLayout() } }
+    var verticalOffset: CGFloat = ParameterListView.minOffset { didSet { setNeedsLayout() } }
   
     var rowHeight: CGFloat {
         let heightNoSpacings = container.frame.height - CGFloat(parameters.count - 1) * Self.rowVerticalSpacing
@@ -32,26 +34,24 @@ final class ParameterListView: UIView {
       container.frame.height - rowHeight
     }
     
-    let minOffset: CGFloat = 0.0
-    
     init(parameters: [Parameter], callback: @escaping DidSelectParameterCallback) {
         self.parameters = parameters
         self.callback = callback
-        selectedParameterView = ParameterView(parameter: parameters.first ?? Parameter(name: "", value: "")) //TODO: use NonEmpty array
+        selectedParameterRow = ParameterRow(parameter: parameters.first ?? Parameter(name: "", value: "")) //TODO: use NonEmpty array
         super.init(frame: .zero)
         setUpStackView()
-        setUpSelectedParameterView()
+        setUpSelectedParameterRow()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        topConstraint?.constant = maxOffset - offset
-        bottomConstraint?.constant = minOffset + offset
+        topConstraint?.constant = maxOffset - verticalOffset
+        bottomConstraint?.constant = Self.minOffset + verticalOffset
     }
     
     func setUpStackView() {
         parameters
-            .map(ParameterView.init)
+            .map(ParameterRow.init)
             .forEach(stackView.addArrangedSubview)
         
         container.backgroundColor = UIColor.white.withAlphaComponent(0.6)
@@ -79,16 +79,16 @@ final class ParameterListView: UIView {
         self.topConstraint = topConstraint
     }
 
-    func setUpSelectedParameterView() {
-        selectedParameterView.backgroundColor = .blue
-        selectedParameterView.labels.forEach { $0.textColor = .white }
+    func setUpSelectedParameterRow() {
+        selectedParameterRow.backgroundColor = .blue
+        selectedParameterRow.labels.forEach { $0.textColor = .white }
         
-        selectedParameterView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(selectedParameterView)
+        selectedParameterRow.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(selectedParameterRow)
         NSLayoutConstraint.activate([
-            centerYAnchor.constraint(equalTo: selectedParameterView.centerYAnchor),
-            leadingAnchor.constraint(equalTo: selectedParameterView.leadingAnchor),
-            trailingAnchor.constraint(equalTo: selectedParameterView.trailingAnchor)
+            centerYAnchor.constraint(equalTo: selectedParameterRow.centerYAnchor),
+            leadingAnchor.constraint(equalTo: selectedParameterRow.leadingAnchor),
+            trailingAnchor.constraint(equalTo: selectedParameterRow.trailingAnchor)
         ])
     }
     
@@ -96,18 +96,18 @@ final class ParameterListView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func translateY(_ translation: CGFloat) {
-        let newOffsetY = offset + translation
+    func translateY(_ translationY: CGFloat) {
+        let newVerticalOffset = verticalOffset + translationY
         
-        guard newOffsetY < maxOffset else {
-            offset = maxOffset
+        guard newVerticalOffset < maxOffset else {
+            verticalOffset = maxOffset
             return
         }
-        guard newOffsetY > minOffset else {
-            offset = minOffset
+        guard newVerticalOffset > Self.minOffset else {
+            verticalOffset = Self.minOffset
             return
         }
-        offset = offset + translation
+        verticalOffset = newVerticalOffset
     }
 }
 
@@ -119,7 +119,7 @@ extension ParameterListView {
 }
 
 extension ParameterListView {
-    final class ParameterView: UIView {
+    final private class ParameterRow: UIView {
         var labels: [UILabel] {
             [nameLabel, valueLabel]
         }
