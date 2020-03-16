@@ -15,7 +15,6 @@ final class AdjustmentsViewController: UIViewController {
     let listView: ParameterListView
     let tabBar = TabBar(items: "✕", "✓")
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
-    var slider = UISlider()
     
     var previousTranslationY: CGFloat = 0
     
@@ -59,7 +58,6 @@ final class AdjustmentsViewController: UIViewController {
         view.addSubview(tabBar)
         
         setUpVideoViewController()
-        setUpSlider()
         setUpParameterListView()
         setUpTabBar()
         setUpPanGestureRecognizer()
@@ -90,18 +88,6 @@ final class AdjustmentsViewController: UIViewController {
         ])
     }
     
-    private func setUpSlider() {
-        slider.translatesAutoresizingMaskIntoConstraints = false
-        videoViewController.view.addSubview(slider)
-        NSLayoutConstraint.activate ([
-            slider.leadingAnchor.constraint(equalTo: videoViewController.view.leadingAnchor, constant: 50),
-            slider.trailingAnchor.constraint(equalTo: videoViewController.view.trailingAnchor, constant: -50),
-            slider.bottomAnchor.constraint(equalTo: videoViewController.view.bottomAnchor, constant: -40)])
-        slider.minimumValue = 0
-        slider.maximumValue = trackDuration
-        slider.addTarget(self, action: #selector(self.sliderAction), for: .valueChanged)
-    }
-    
     private func setUpVideoViewController() {
         videoViewController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate ([
@@ -121,17 +107,6 @@ final class AdjustmentsViewController: UIViewController {
         let deltaY = previousTranslationY - translation.y
         previousTranslationY = translation.y
         listView.translateY(deltaY)
-    }
-    
-    @objc func sliderAction() {
-        videoViewController.player.seek(
-            to: CMTime(
-                seconds: Double(slider.value),
-                preferredTimescale: 1
-            ),
-            toleranceBefore: CMTime.zero,
-            toleranceAfter: CMTime.zero
-        )
     }
 }
 
