@@ -130,7 +130,6 @@ extension ParameterListView {
         init(parameter: Parameter) {
             super.init(frame: .zero)
             
-            let stackView = UIStackView()
             let button = UIButton()
             
             nameLabel.text = parameter.name
@@ -138,8 +137,7 @@ extension ParameterListView {
             valueLabel.text = parameter.value
             valueLabel.font = .systemFont(ofSize: 18)
             
-            stackView.addArrangedSubview(nameLabel)
-            stackView.addArrangedSubview(valueLabel)
+            let stackView = UIStackView(arrangedSubviews: [nameLabel, valueLabel])
             stackView.distribution = .equalSpacing
             stackView.spacing = 16
             
@@ -151,8 +149,8 @@ extension ParameterListView {
             NSLayoutConstraint.activate([
                 stackView.topAnchor.constraint(equalTo: topAnchor),
                 stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
-                stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-                stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+                stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+                trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: 16),
                 button.topAnchor.constraint(equalTo: topAnchor),
                 button.bottomAnchor.constraint(equalTo: bottomAnchor),
                 button.leadingAnchor.constraint(equalTo: leadingAnchor),
