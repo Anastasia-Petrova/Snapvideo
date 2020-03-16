@@ -12,6 +12,7 @@ import AVFoundation
 final class AdjustmentsViewController: UIViewController {
     let asset: AVAsset
     let videoViewController: VideoViewController
+    let listView: ParameterListView
     let tabBar = TabBar(items: "✕", "✓")
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
     var slider = UISlider()
@@ -26,6 +27,16 @@ final class AdjustmentsViewController: UIViewController {
     init(url: URL, tool: AnyTool) {
         asset = AVAsset(url: url)
         videoViewController = VideoViewController(asset: asset)
+        listView = ParameterListView(parameters: [
+            ParameterListView.Parameter(name: "Hello", value: "10"),
+            ParameterListView.Parameter(name: "World World World", value: "20"),
+            ParameterListView.Parameter(name: "Hello", value: "10"),
+            ParameterListView.Parameter(name: "World World World", value: "20"),
+            ParameterListView.Parameter(name: "Hello", value: "10"),
+            ParameterListView.Parameter(name: "World World World", value: "20"),
+            ParameterListView.Parameter(name: "Hello", value: "10"),
+            ParameterListView.Parameter(name: "World World World", value: "20"),
+        ]) { _ in }
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -35,31 +46,43 @@ final class AdjustmentsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
+        view.backgroundColor = .white
         view.addSubview(videoViewController.view)
+        view.addSubview(listView)
         view.addSubview(tabBar)
+        
         setUpVideoViewController()
         setUpSlider()
+        setUpParameterListView()
         setUpTabBar()
     }
     
-     deinit {
-         NotificationCenter.default.removeObserver(self)
-     }
-     
-     private func setUpTabBar() {
-         tabBar.delegate = self
-         tabBar.translatesAutoresizingMaskIntoConstraints = false
-         tabBar.setContentHuggingPriority(.required, for: .vertical)
-         tabBar.setContentCompressionResistancePriority(.required, for: .vertical)
-         NSLayoutConstraint.activate([
-             tabBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-             tabBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-             tabBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-         ])
-     }
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
     
-    func setUpSlider() {
+    private func setUpParameterListView() {
+        listView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            listView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.6),
+            listView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            listView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
+        ])
+    }
+    
+    private func setUpTabBar() {
+        tabBar.delegate = self
+        tabBar.translatesAutoresizingMaskIntoConstraints = false
+        tabBar.setContentHuggingPriority(.required, for: .vertical)
+        tabBar.setContentCompressionResistancePriority(.required, for: .vertical)
+        NSLayoutConstraint.activate([
+            tabBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            tabBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tabBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+    }
+    
+    private func setUpSlider() {
         slider.translatesAutoresizingMaskIntoConstraints = false
         videoViewController.view.addSubview(slider)
         NSLayoutConstraint.activate ([
@@ -95,6 +118,6 @@ final class AdjustmentsViewController: UIViewController {
 
 extension AdjustmentsViewController: UITabBarDelegate {
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-
+        
     }
 }
