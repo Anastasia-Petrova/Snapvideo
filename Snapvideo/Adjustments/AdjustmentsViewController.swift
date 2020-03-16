@@ -68,6 +68,7 @@ final class AdjustmentsViewController: UIViewController {
     }
     
     private func setUpParameterListView() {
+        listView.isHidden = true
         listView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             listView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
@@ -107,6 +108,14 @@ final class AdjustmentsViewController: UIViewController {
         let deltaY = previousTranslationY - translation.y
         previousTranslationY = translation.y
         listView.translateY(deltaY)
+        switch recognizer.state {
+        case .began:
+            listView.isHidden = false
+        case .ended:
+            listView.isHidden = true
+            previousTranslationY = 0
+        default: break
+        }
     }
 }
 
