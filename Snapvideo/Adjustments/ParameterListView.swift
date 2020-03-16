@@ -54,7 +54,7 @@ final class ParameterListView: UIView {
             .map(ParameterRow.init)
             .forEach(stackView.addArrangedSubview)
         
-        container.backgroundColor = UIColor.white.withAlphaComponent(0.6)
+        container.backgroundColor = UIColor.white.withAlphaComponent(0.7)
         container.translatesAutoresizingMaskIntoConstraints = false
         addSubview(container)
         
@@ -80,7 +80,7 @@ final class ParameterListView: UIView {
     }
 
     func setUpSelectedParameterRow() {
-        selectedParameterRow.backgroundColor = .blue
+        selectedParameterRow.backgroundColor = .systemBlue
         selectedParameterRow.labels.forEach { $0.textColor = .white }
         
         selectedParameterRow.translatesAutoresizingMaskIntoConstraints = false
@@ -134,8 +134,10 @@ extension ParameterListView {
             
             nameLabel.text = parameter.name
             nameLabel.font = .systemFont(ofSize: 18)
+            nameLabel.textColor = UIColor.init(white: 50.0/255.0, alpha: 1)
             valueLabel.text = parameter.value
             valueLabel.font = .systemFont(ofSize: 18)
+            valueLabel.textColor = UIColor.init(white: 50.0/255.0, alpha: 1)
             
             let stackView = UIStackView(arrangedSubviews: [nameLabel, valueLabel])
             stackView.distribution = .equalSpacing
