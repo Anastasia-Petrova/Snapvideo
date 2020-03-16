@@ -17,6 +17,13 @@ final class AdjustmentsViewController: UIViewController {
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
     var slider = UISlider()
     
+    var previousTranslationY: CGFloat = 0
+    
+    lazy var panGestureRecognizer = UIPanGestureRecognizer(
+        target: self,
+        action: #selector(handlePanGesture)
+    )
+    
     var trackDuration: Float {
         guard let trackDuration = videoViewController.player.currentItem?.asset.duration else {
             return 0
@@ -55,6 +62,7 @@ final class AdjustmentsViewController: UIViewController {
         setUpSlider()
         setUpParameterListView()
         setUpTabBar()
+        setUpPanGestureRecognizer()
     }
     
     deinit {
@@ -64,7 +72,7 @@ final class AdjustmentsViewController: UIViewController {
     private func setUpParameterListView() {
         listView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            listView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.6),
+            listView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
             listView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             listView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
         ])
@@ -94,7 +102,7 @@ final class AdjustmentsViewController: UIViewController {
         slider.addTarget(self, action: #selector(self.sliderAction), for: .valueChanged)
     }
     
-    func setUpVideoViewController() {
+    private func setUpVideoViewController() {
         videoViewController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate ([
             videoViewController.view.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
@@ -102,6 +110,17 @@ final class AdjustmentsViewController: UIViewController {
             videoViewController.view.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             videoViewController.view.bottomAnchor.constraint(equalTo: tabBar.topAnchor)
         ])
+    }
+    
+    private func setUpPanGestureRecognizer() {
+        videoViewController.view.addGestureRecognizer(panGestureRecognizer)
+    }
+    
+    @objc func handlePanGesture(_ recognizer: UIPanGestureRecognizer) {
+        let translation = recognizer.translation(in: videoViewController.view)
+        let deltaY = previousTranslationY - translation.y
+        previousTranslationY = translation.y
+        listView.translateY(deltaY)
     }
     
     @objc func sliderAction() {
