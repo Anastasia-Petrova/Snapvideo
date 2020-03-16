@@ -110,9 +110,9 @@ final class AdjustmentsViewController: UIViewController {
         listView.translateY(deltaY)
         switch recognizer.state {
         case .began:
-            listView.isHidden = false
+            listView.setHidden(false, duration: 0.3)
         case .ended:
-            listView.isHidden = true
+            listView.setHidden(true, duration: 0.2)
             previousTranslationY = 0
         default: break
         }
