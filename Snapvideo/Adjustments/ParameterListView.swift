@@ -17,7 +17,11 @@ final class ParameterListView: UIView {
     let stackView = UIStackView()
     let container = UIView()
     private let selectedParameterRow: ParameterRow
-    var selectedParameterIndex = 0
+    var selectedParameterIndex = 0 {
+        didSet {
+            selectedParameterRow.setParameter(parameters[selectedParameterIndex])
+        }
+    }
     
     let callback: DidSelectParameterCallback
     private var topConstraint: NSLayoutConstraint?
@@ -141,11 +145,23 @@ extension ParameterListView {
             
             let button = UIButton()
             
+            setUpLabels(button)
+            setParameter(parameter)
+        }
+        
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+        
+        func setParameter(_ parameter: Parameter) {
             nameLabel.text = parameter.name
-            nameLabel.font = .systemFont(ofSize: 18)
-            nameLabel.textColor = UIColor.init(white: 50.0/255.0, alpha: 1)
             valueLabel.text = parameter.value
+        }
+        
+        private func setUpLabels(_ button: UIButton) {
+            nameLabel.font = .systemFont(ofSize: 18)
             valueLabel.font = .systemFont(ofSize: 18)
+            nameLabel.textColor = UIColor.init(white: 50.0/255.0, alpha: 1)
             valueLabel.textColor = UIColor.init(white: 50.0/255.0, alpha: 1)
             
             let stackView = UIStackView(arrangedSubviews: [nameLabel, valueLabel])
@@ -168,10 +184,6 @@ extension ParameterListView {
                 button.leadingAnchor.constraint(equalTo: leadingAnchor),
                 button.trailingAnchor.constraint(equalTo: trailingAnchor),
             ])
-        }
-        
-        required init?(coder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
         }
     }
 }
