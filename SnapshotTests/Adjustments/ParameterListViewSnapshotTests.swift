@@ -20,7 +20,6 @@ final class ParameterListViewSnapshotTests: XCTestCase {
         ]) { _ in }
         add(view, on: vc)
         view.backgroundColor = .red
-        
         assertSnapshot(matching: vc, as: .image)
     }
     
@@ -34,7 +33,6 @@ final class ParameterListViewSnapshotTests: XCTestCase {
         ]) { _ in }
         add(view, on: vc)
         view.backgroundColor = .red
-        
         assertSnapshot(matching: vc, as: .image)
     }
     

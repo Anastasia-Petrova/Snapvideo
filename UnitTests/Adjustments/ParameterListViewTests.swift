@@ -52,6 +52,10 @@ final class ParameterListViewTests: XCTestCase {
         XCTAssertEqual(view.verticalOffset, view.maxOffset)
     }
     
+    func test_calculateSelectedRowIndex() {
+        //Test
+    }
+    
     func add(_ view: UIView, on vc: UIViewController) {
         view.translatesAutoresizingMaskIntoConstraints = false
         vc.view.addSubview(view)

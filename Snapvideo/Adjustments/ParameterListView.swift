@@ -11,13 +11,13 @@ import UIKit
 final class ParameterListView: UIView {
     typealias DidSelectParameterCallback = (Parameter) -> Void
     
-    static let rowVerticalSpacing: CGFloat = 8.0
     static let minOffset: CGFloat = 0.0
     
     var parameters: [Parameter]
     let stackView = UIStackView()
     let container = UIView()
     private let selectedParameterRow: ParameterRow
+    var selectedParameterIndex = 0
     
     let callback: DidSelectParameterCallback
     private var topConstraint: NSLayoutConstraint?
@@ -26,7 +26,7 @@ final class ParameterListView: UIView {
     var verticalOffset: CGFloat = ParameterListView.minOffset { didSet { setNeedsLayout() } }
   
     var rowHeight: CGFloat {
-        let heightNoSpacings = container.frame.height - CGFloat(parameters.count - 1) * Self.rowVerticalSpacing
+        let heightNoSpacings = container.frame.height - CGFloat(parameters.count - 1)
         return heightNoSpacings / CGFloat(parameters.count)
     }
     
@@ -37,7 +37,7 @@ final class ParameterListView: UIView {
     init(parameters: [Parameter], callback: @escaping DidSelectParameterCallback) {
         self.parameters = parameters
         self.callback = callback
-        selectedParameterRow = ParameterRow(parameter: parameters.first ?? Parameter(name: "", value: "")) //TODO: use NonEmpty array
+        selectedParameterRow = ParameterRow(parameter: parameters[selectedParameterIndex])
         super.init(frame: .zero)
         setUpStackView()
         setUpSelectedParameterRow()
@@ -47,6 +47,8 @@ final class ParameterListView: UIView {
         super.layoutSubviews()
         topConstraint?.constant = maxOffset - verticalOffset
         bottomConstraint?.constant = Self.minOffset + verticalOffset
+        
+        selectedParameterIndex = Self.calculateSelectedRowIndex(offset: Int(verticalOffset), rowHeight: Int(rowHeight))
     }
     
     func setUpStackView() {
@@ -59,7 +61,6 @@ final class ParameterListView: UIView {
         addSubview(container)
         
         stackView.axis = .vertical
-        stackView.spacing = Self.rowVerticalSpacing
         stackView.translatesAutoresizingMaskIntoConstraints = false
         container.addSubview(stackView)
         
@@ -109,6 +110,14 @@ final class ParameterListView: UIView {
         }
         verticalOffset = newVerticalOffset
     }
+    
+    static func calculateSelectedRowIndex(offset: Int, rowHeight: Int) -> Int {
+        let realIndex = offset/rowHeight
+        let realPartition = offset % rowHeight
+        let halfRowPartition = rowHeight/2
+        
+        return realPartition > halfRowPartition ? realIndex + 1 : realIndex
+    }
 }
 
 extension ParameterListView {
@@ -149,6 +158,7 @@ extension ParameterListView {
             addSubview(button)
             
             NSLayoutConstraint.activate([
+                button.heightAnchor.constraint(equalToConstant: 50),
                 stackView.topAnchor.constraint(equalTo: topAnchor),
                 stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
                 stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
