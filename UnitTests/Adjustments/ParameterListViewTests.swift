@@ -53,7 +53,11 @@ final class ParameterListViewTests: XCTestCase {
     }
     
     func test_calculateSelectedRowIndex() {
-        //Test
+        let rowHeight = 34
+        XCTAssertEqual(ParameterListView.calculateSelectedRowIndex(offset: 0, rowHeight: rowHeight), 0)
+        XCTAssertEqual(ParameterListView.calculateSelectedRowIndex(offset: 4, rowHeight: rowHeight), 0)
+        XCTAssertEqual(ParameterListView.calculateSelectedRowIndex(offset: 36, rowHeight: rowHeight), 1)
+        XCTAssertEqual(ParameterListView.calculateSelectedRowIndex(offset: 86, rowHeight: rowHeight), 3)
     }
     
     func add(_ view: UIView, on vc: UIViewController) {
