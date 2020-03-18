@@ -41,7 +41,7 @@ final class ParameterListViewSnapshotTests: XCTestCase {
         vc.view.backgroundColor = .black
         vc.view.addSubview(view)
         NSLayoutConstraint.activate([
-            view.widthAnchor.constraint(equalTo: vc.view.widthAnchor, multiplier: 0.6),
+            view.widthAnchor.constraint(equalTo: vc.view.widthAnchor, multiplier: 0.7),
             view.centerXAnchor.constraint(equalTo: vc.view.centerXAnchor),
             view.centerYAnchor.constraint(equalTo: vc.view.centerYAnchor),
         ])

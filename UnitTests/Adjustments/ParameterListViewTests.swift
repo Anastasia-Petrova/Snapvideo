@@ -27,7 +27,7 @@ final class ParameterListViewTests: XCTestCase {
         let expected = Parameter(name: "Foo", value: "1")
         var actual: Parameter?
         
-        let view = ParameterListView(parameters: []) { actual = $0 }
+        let view = ParameterListView(parameters: [expected]) { actual = $0 }
         view.callback(expected)
         
         XCTAssertEqual(expected, actual)
