@@ -70,6 +70,7 @@ final class ParameterListView: UIView {
             .forEach(stackView.addArrangedSubview)
         stackView.addArrangedSubview(BorderView(direction: .down))
         
+        container.layer.cornerRadius = 3.0
         container.backgroundColor = UIColor.white.withAlphaComponent(0.7)
         container.translatesAutoresizingMaskIntoConstraints = false
         addSubview(container)
@@ -169,10 +170,10 @@ extension ParameterListView {
         }
         
         private func setUpLabels(_ button: UIButton) {
-            nameLabel.font = .systemFont(ofSize: 18)
-            valueLabel.font = .systemFont(ofSize: 18)
-            nameLabel.textColor = UIColor.init(white: 50.0/255.0, alpha: 1)
-            valueLabel.textColor = UIColor.init(white: 50.0/255.0, alpha: 1)
+            nameLabel.font = .systemFont(ofSize: 15, weight: .medium)
+            valueLabel.font = .systemFont(ofSize: 15, weight: .medium)
+            nameLabel.textColor = UIColor.init(white: 80.0/255.0, alpha: 1)
+            valueLabel.textColor = UIColor.init(white: 80.0/255.0, alpha: 1)
             
             let stackView = UIStackView(arrangedSubviews: [nameLabel, valueLabel])
             stackView.distribution = .equalSpacing
