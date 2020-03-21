@@ -23,6 +23,7 @@ final class ParameterListView: UIView {
         didSet {
             if selectedParameterIndex != oldValue {
                 selectionFeedbackGenerator.selectionChanged()
+                hideParameter()
                 selectedParameterRow.setParameter(parameters[selectedParameterIndex])
             }
         }
@@ -108,6 +109,20 @@ final class ParameterListView: UIView {
         self.bottomConstraint = bottomConstraint
         self.topConstraint = topConstraint
     }
+    
+    func hideParameter() {
+        let parameters = stackView.arrangedSubviews
+        parameters.forEach { parameter in
+            if let parameter  = parameter as? ParameterRow {
+                parameter.nameLabel.alpha = 1
+                parameter.valueLabel.alpha = 1
+            }
+        }
+        if let parameter = parameters[selectedParameterIndex + 1] as? ParameterRow {
+            parameter.nameLabel.alpha = 0
+            parameter.valueLabel.alpha = 0
+        }
+    }
 
     func setUpSelectedParameterRow() {
         selectedParameterRow.backgroundColor = .systemBlue
@@ -165,13 +180,13 @@ extension ParameterListView {
         }
         
         func setParameter(_ parameter: Parameter) {
-            nameLabel.text = parameter.name
-            valueLabel.text = parameter.value
+            nameLabel.setText(parameter.name, animationDuration: 0.2)
+            valueLabel.setText(parameter.value, animationDuration: 0.2)
         }
         
         private func setUpLabels(_ button: UIButton) {
-            nameLabel.font = .systemFont(ofSize: 15, weight: .medium)
-            valueLabel.font = .systemFont(ofSize: 15, weight: .medium)
+            nameLabel.font = .systemFont(ofSize: 15)
+            valueLabel.font = .systemFont(ofSize: 15)
             nameLabel.textColor = UIColor.init(white: 80.0/255.0, alpha: 1)
             valueLabel.textColor = UIColor.init(white: 80.0/255.0, alpha: 1)
             
@@ -188,8 +203,8 @@ extension ParameterListView {
                 button.heightAnchor.constraint(equalToConstant: 50),
                 stackView.topAnchor.constraint(equalTo: topAnchor),
                 stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
-                stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-                trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: 16),
+                stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 32),
+                trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: 32),
                 button.topAnchor.constraint(equalTo: topAnchor),
                 button.bottomAnchor.constraint(equalTo: bottomAnchor),
                 button.leadingAnchor.constraint(equalTo: leadingAnchor),
