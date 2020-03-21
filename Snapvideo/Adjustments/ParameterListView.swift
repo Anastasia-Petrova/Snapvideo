@@ -11,7 +11,7 @@ import UIKit
 final class ParameterListView: UIView {
     typealias DidSelectParameterCallback = (Parameter) -> Void
     
-    static let minOffset: CGFloat = BorderView.borderHeight
+    static let minOffset: CGFloat = 0.0
     
     var parameters: [Parameter]
     let stackView = UIStackView()
@@ -39,11 +39,11 @@ final class ParameterListView: UIView {
     }
     
     var borderHeight: CGFloat {
-        return Self.minOffset
+        return BorderView.borderHeight
     }
     
     var maxOffset: CGFloat {
-      container.frame.height - rowHeight - borderHeight
+        container.frame.height - rowHeight - borderHeight * 2.0
     }
     
     init(parameters: [Parameter], callback: @escaping DidSelectParameterCallback) {
@@ -58,9 +58,23 @@ final class ParameterListView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         topConstraint?.constant = maxOffset - verticalOffset
-        bottomConstraint?.constant = verticalOffset
+        bottomConstraint?.constant = Self.minOffset + verticalOffset
         
         selectedParameterIndex = Self.calculateSelectedRowIndex(offset: Int(verticalOffset - ParameterListView.minOffset), rowHeight: Int(rowHeight))
+    }
+    
+    func translateY(_ translationY: CGFloat) {
+        let newVerticalOffset = verticalOffset + translationY
+        
+        guard newVerticalOffset < maxOffset else {
+            verticalOffset = maxOffset
+            return
+        }
+        guard newVerticalOffset > Self.minOffset else {
+            verticalOffset = Self.minOffset
+            return
+        }
+        verticalOffset = newVerticalOffset
     }
     
     func setUpStackView() {
@@ -102,7 +116,7 @@ final class ParameterListView: UIView {
         selectedParameterRow.translatesAutoresizingMaskIntoConstraints = false
         addSubview(selectedParameterRow)
         NSLayoutConstraint.activate([
-            centerYAnchor.constraint(equalTo: selectedParameterRow.centerYAnchor, constant: ParameterListView.minOffset / 2),
+            centerYAnchor.constraint(equalTo: selectedParameterRow.centerYAnchor),
             leadingAnchor.constraint(equalTo: selectedParameterRow.leadingAnchor),
             trailingAnchor.constraint(equalTo: selectedParameterRow.trailingAnchor)
         ])
@@ -110,20 +124,6 @@ final class ParameterListView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func translateY(_ translationY: CGFloat) {
-        let newVerticalOffset = verticalOffset + translationY
-        
-        guard newVerticalOffset < maxOffset else {
-            verticalOffset = maxOffset
-            return
-        }
-        guard newVerticalOffset > Self.minOffset else {
-            verticalOffset = Self.minOffset
-            return
-        }
-        verticalOffset = newVerticalOffset
     }
     
     static func calculateSelectedRowIndex(offset: Int, rowHeight: Int) -> Int {
