@@ -21,11 +21,11 @@ final class ParameterListView: UIView {
     
     var selectedParameterIndex = 0 {
         didSet {
-            if selectedParameterIndex != oldValue {
-                selectionFeedbackGenerator.selectionChanged()
-                hideParameter()
-                selectedParameterRow.setParameter(parameters[selectedParameterIndex])
-            }
+            guard selectedParameterIndex != oldValue else { return }
+            
+            selectionFeedbackGenerator.selectionChanged()
+            updateParameterLabelsVisibility(selectedIndex: selectedParameterIndex, deselectedIndex: oldValue)
+            selectedParameterRow.setParameter(parameters[selectedParameterIndex])
         }
     }
     
@@ -110,18 +110,16 @@ final class ParameterListView: UIView {
         self.topConstraint = topConstraint
     }
     
-    func hideParameter() {
+    func updateParameterLabelsVisibility(selectedIndex: Int, deselectedIndex: Int) {
+        func setParameterRow(_ view: UIView, isHidden: Bool) {
+            guard let row = view as? ParameterRow else { return }
+            row.nameLabel.alpha = isHidden ? 0.0 : 1.0
+            row.valueLabel.alpha = isHidden ? 0.0 : 1.0
+        }
+        
         let parameters = stackView.arrangedSubviews
-        parameters.forEach { parameter in
-            if let parameter  = parameter as? ParameterRow {
-                parameter.nameLabel.alpha = 1
-                parameter.valueLabel.alpha = 1
-            }
-        }
-        if let parameter = parameters[selectedParameterIndex + 1] as? ParameterRow {
-            parameter.nameLabel.alpha = 0
-            parameter.valueLabel.alpha = 0
-        }
+        setParameterRow(parameters[deselectedIndex + 1], isHidden: false)
+        setParameterRow(parameters[selectedIndex + 1], isHidden: true)
     }
 
     func setUpSelectedParameterRow() {
