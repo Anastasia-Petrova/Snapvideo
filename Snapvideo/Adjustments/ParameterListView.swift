@@ -11,7 +11,7 @@ import UIKit
 final class ParameterListView: UIView {
     typealias DidSelectParameterCallback = (Parameter) -> Void
     
-    static let minOffset: CGFloat = 0.0
+    static let minOffset: CGFloat = BorderView.borderHeight
     
     var parameters: [Parameter]
     let stackView = UIStackView()
@@ -30,12 +30,15 @@ final class ParameterListView: UIView {
     var verticalOffset: CGFloat = ParameterListView.minOffset { didSet { setNeedsLayout() } }
   
     var rowHeight: CGFloat {
-        let heightNoSpacings = container.frame.height - CGFloat(parameters.count - 1)
-        return heightNoSpacings / CGFloat(parameters.count)
+        return (container.frame.height - borderHeight * 2.0) / CGFloat(parameters.count)
+    }
+    
+    var borderHeight: CGFloat {
+        return Self.minOffset
     }
     
     var maxOffset: CGFloat {
-      container.frame.height - rowHeight
+      container.frame.height - rowHeight - borderHeight
     }
     
     init(parameters: [Parameter], callback: @escaping DidSelectParameterCallback) {
@@ -50,15 +53,17 @@ final class ParameterListView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         topConstraint?.constant = maxOffset - verticalOffset
-        bottomConstraint?.constant = Self.minOffset + verticalOffset
+        bottomConstraint?.constant = verticalOffset
         
-        selectedParameterIndex = Self.calculateSelectedRowIndex(offset: Int(verticalOffset), rowHeight: Int(rowHeight))
+        selectedParameterIndex = Self.calculateSelectedRowIndex(offset: Int(verticalOffset - ParameterListView.minOffset), rowHeight: Int(rowHeight))
     }
     
     func setUpStackView() {
+        stackView.addArrangedSubview(BorderView(direction: .up))
         parameters
             .map(ParameterRow.init)
             .forEach(stackView.addArrangedSubview)
+        stackView.addArrangedSubview(BorderView(direction: .down))
         
         container.backgroundColor = UIColor.white.withAlphaComponent(0.7)
         container.translatesAutoresizingMaskIntoConstraints = false
@@ -91,7 +96,7 @@ final class ParameterListView: UIView {
         selectedParameterRow.translatesAutoresizingMaskIntoConstraints = false
         addSubview(selectedParameterRow)
         NSLayoutConstraint.activate([
-            centerYAnchor.constraint(equalTo: selectedParameterRow.centerYAnchor),
+            centerYAnchor.constraint(equalTo: selectedParameterRow.centerYAnchor, constant: ParameterListView.minOffset / 2),
             leadingAnchor.constraint(equalTo: selectedParameterRow.leadingAnchor),
             trailingAnchor.constraint(equalTo: selectedParameterRow.trailingAnchor)
         ])
@@ -184,6 +189,48 @@ extension ParameterListView {
                 button.leadingAnchor.constraint(equalTo: leadingAnchor),
                 button.trailingAnchor.constraint(equalTo: trailingAnchor),
             ])
+        }
+    }
+}
+
+extension ParameterListView {
+    final private class BorderView: UIView {
+        static let borderHeight: CGFloat = 20.0
+        
+        enum Direction: Equatable {
+            case up, down
+            
+            var image: UIImage {
+                switch self {
+                case .up:
+                    return UIImage(systemName: "chevron.compact.up")!
+                case .down:
+                    return UIImage(systemName: "chevron.compact.down")!
+                }
+            }
+        }
+        
+        init(direction: Direction) {
+            super.init(frame: .zero)
+            setUpChevron(direction: direction)
+        }
+        
+        private func setUpChevron(direction: Direction) {
+            let chevron = UIImageView()
+            chevron.image = direction.image
+            
+            chevron.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(chevron)
+            NSLayoutConstraint.activate([
+                chevron.heightAnchor.constraint(equalToConstant: Self.borderHeight),
+                chevron.centerXAnchor.constraint(equalTo: centerXAnchor),
+                chevron.topAnchor.constraint(equalTo: topAnchor),
+                chevron.bottomAnchor.constraint(equalTo: bottomAnchor),
+            ])
+        }
+        
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
         }
     }
 }
