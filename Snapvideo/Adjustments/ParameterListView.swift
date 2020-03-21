@@ -16,10 +16,15 @@ final class ParameterListView: UIView {
     var parameters: [Parameter]
     let stackView = UIStackView()
     let container = UIView()
+    private let selectionFeedbackGenerator = UISelectionFeedbackGenerator()
     private let selectedParameterRow: ParameterRow
+    
     var selectedParameterIndex = 0 {
         didSet {
-            selectedParameterRow.setParameter(parameters[selectedParameterIndex])
+            if selectedParameterIndex != oldValue {
+                selectionFeedbackGenerator.selectionChanged()
+                selectedParameterRow.setParameter(parameters[selectedParameterIndex])
+            }
         }
     }
     
