@@ -6,6 +6,7 @@ Video Editing application for iOS, inspired by [Snapseed](https://apps.apple.com
 
 ![Preview](https://i.imgur.com/mMbPeZC.gif)
 ![Preview2](https://i.imgur.com/3hOg0Yd.gif)
+![Preview3](https://i.imgur.com/FpJKQCw.gif)
 
 ### Features
 
