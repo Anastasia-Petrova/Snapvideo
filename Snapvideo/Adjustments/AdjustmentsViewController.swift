@@ -14,7 +14,7 @@ final class AdjustmentsViewController: UIViewController {
     let videoViewController: VideoViewController
     let listView: ParameterListView
     let tabBar = TabBar(items: "✕", "✓")
-    let sliderView = AdjustmentSliderView()
+    let sliderView = AdjustmentSliderView(name: "Brightness", value: -50)
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
     
     var previousTranslationY: CGFloat = 0

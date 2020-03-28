@@ -9,10 +9,29 @@
 import UIKit
 
 final class AdjustmentSliderView: UIView {
+    private let sliderLayer = CAShapeLayer()
+    private let valueLabel = UILabel()
+    var name: String {
+        didSet {
+            setNeedsLayout()
+        }
+    }
     
-    init() {
+    var value: CGFloat {
+        didSet {
+            setNeedsLayout()
+        }
+    }
+    
+    var isPositive: Bool {
+        value >= 0
+    }
+    
+    init(name: String, value: CGFloat) {
+        self.name = name
+        self.value = value
         super.init(frame: .zero)
-        self.backgroundColor = .clear
+        backgroundColor = .clear
         setUpViews()
     }
     
@@ -20,29 +39,90 @@ final class AdjustmentSliderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setUpViews() {
-        let sliderView = UIView()
-        sliderView.backgroundColor = .systemBlue
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        updateValueSlider()
+        updateValueLabel()
+    }
+    
+    private func setUpViews() {
+        let sliderView = makeSliderView()
         
-        let adjustmentName = UILabel()
-        adjustmentName.font = .systemFont(ofSize: 12)
-        adjustmentName.textColor = .systemBlue
-        adjustmentName.text = "Adjustment +2"
-        adjustmentName.numberOfLines = 1
-        adjustmentName.textAlignment = .center
+        valueLabel.font = .systemFont(ofSize: 14, weight: .medium)
+        valueLabel.textColor = .darkGray
+        valueLabel.numberOfLines = 1
+        valueLabel.textAlignment = .center
         
-        let stackView = UIStackView(arrangedSubviews: [sliderView, adjustmentName])
+        let labelContainer = UIView()
+        labelContainer.backgroundColor = UIColor.white.withAlphaComponent(0.7)
+        labelContainer.addSubview(valueLabel)
+        labelContainer.layer.cornerRadius = 12.0
+        labelContainer.layer.masksToBounds = true
+        
+        valueLabel.translatesAutoresizingMaskIntoConstraints = false
+        let verticalOffset: CGFloat = 6
+        let horizontalOffset: CGFloat = 12
+        NSLayoutConstraint.activate ([
+            valueLabel.leadingAnchor.constraint(equalTo: labelContainer.leadingAnchor, constant: horizontalOffset),
+            valueLabel.trailingAnchor.constraint(equalTo: labelContainer.trailingAnchor, constant: -horizontalOffset),
+            valueLabel.topAnchor.constraint(equalTo: labelContainer.topAnchor, constant: verticalOffset),
+            valueLabel.bottomAnchor.constraint(equalTo: labelContainer.bottomAnchor, constant: -verticalOffset)
+        ])
+        
+        let labelStackView = UIStackView(arrangedSubviews: [labelContainer])
+        labelStackView.axis = .vertical
+        labelStackView.alignment = .center
+        
+        let stackView = UIStackView(arrangedSubviews: [sliderView, labelStackView])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = 4
-        self.addSubview(stackView)
+        stackView.spacing = 10
+        addSubview(stackView)
         
         NSLayoutConstraint.activate ([
             sliderView.heightAnchor.constraint(equalToConstant: 6),
-            stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            stackView.topAnchor.constraint(equalTo: self.topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            stackView.topAnchor.constraint(equalTo: topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+    }
+    
+    private func updateValueSlider() {
+        let path = UIBezierPath(
+            rect: CGRect(
+                origin: .zero,
+                size: CGSize(
+                    width: isPositive ? value : -value,
+                    height: 6
+                )
+            )
+        ).cgPath
+        let center = bounds.width/2.0
+        let position = CGPoint(
+            x: isPositive ? center : center - -value,
+            y: 0
+        )
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        sliderLayer.path = path
+        sliderLayer.position = position
+        CATransaction.commit()
+    }
+    
+    private func updateValueLabel() {
+        valueLabel.text = name + " " + "\(isPositive ? "+" : "")" + "\(Int(value))"
+    }
+    
+    private func makeSliderView() -> UIView {
+        let sliderView = UIView()
+        sliderView.backgroundColor = .white
+        
+        sliderLayer.lineWidth = 0.0
+        sliderLayer.strokeColor = UIColor.clear.cgColor
+        sliderLayer.fillColor = UIColor.systemBlue.cgColor
+        sliderView.layer.addSublayer(sliderLayer)
+        
+        return sliderView
     }
 }
