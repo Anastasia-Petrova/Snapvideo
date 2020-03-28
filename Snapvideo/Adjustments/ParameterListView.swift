@@ -180,7 +180,9 @@ extension ParameterListView {
         
         func setParameter(_ parameter: Parameter) {
             nameLabel.setText(parameter.name, animationDuration: 0.2)
-            valueLabel.setText(String(parameter.value), animationDuration: 0.2)
+            var valueText = String(parameter.value)
+            valueText = parameter.value > 0 ? "+" + valueText : valueText
+            valueLabel.setText(valueText, animationDuration: 0.2)
         }
         
         private func setUpLabels(_ button: UIButton) {

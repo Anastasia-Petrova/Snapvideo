@@ -16,15 +16,15 @@ final class ParameterListViewTests: XCTestCase {
     
     func test_init_assigns_parameters() {
         let expected = [
-            Parameter(name: "Foo", value: "1"),
-            Parameter(name: "Bar", value: "2")
+            Parameter(name: "Foo", value: 1),
+            Parameter(name: "Bar", value: 2)
         ]
         let view = ParameterListView(parameters: expected) { _ in }
         XCTAssertEqual(view.parameters, expected)
     }
     
     func test_callback() {
-        let expected = Parameter(name: "Foo", value: "1")
+        let expected = Parameter(name: "Foo", value: 1)
         var actual: Parameter?
         
         let view = ParameterListView(parameters: [expected]) { actual = $0 }
@@ -35,8 +35,8 @@ final class ParameterListViewTests: XCTestCase {
     
     func test_translateY_boundries() {
         let view = ParameterListView(parameters: [
-            Parameter(name: "", value: ""),
-            Parameter(name: "", value: "")
+            Parameter(name: "", value: 1),
+            Parameter(name: "", value: 1)
         ]) { _ in }
         add(view, on: UIViewController())
         

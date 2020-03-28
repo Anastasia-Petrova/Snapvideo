@@ -16,23 +16,25 @@ final class ParameterListViewSnapshotTests: XCTestCase {
     func test_single_row() {
         let vc = UIViewController()
         let view = ParameterListView(parameters: [
-            Parameter(name: "Hello", value: "+10")
+            Parameter(name: "Hello", value: 10)
         ]) { _ in }
         add(view, on: vc)
         view.backgroundColor = .red
+        
         assertSnapshot(matching: vc, as: .image)
     }
     
     func test_multiple_row() {
         let vc = UIViewController()
         let view = ParameterListView(parameters: [
-            Parameter(name: "Hello", value: "+10"),
-            Parameter(name: "World", value: "0"),
-            Parameter(name: "Foo", value: "+3"),
-            Parameter(name: "Bar", value: "-23"),
+            Parameter(name: "Hello", value: 10),
+            Parameter(name: "World", value: 0),
+            Parameter(name: "Foo", value: 3),
+            Parameter(name: "Bar", value: -23),
         ]) { _ in }
         add(view, on: vc)
         view.backgroundColor = .red
+        
         assertSnapshot(matching: vc, as: .image)
     }
     
