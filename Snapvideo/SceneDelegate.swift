@@ -15,12 +15,25 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-//        start()
-        test()
+        start()
+//        adjustmentScreen()
+//        test()
     }
     
     private func start() {
         let vc = HomeViewController()
+        
+        let navigationController = UINavigationController(rootViewController: vc)
+        
+        window?.rootViewController = navigationController
+        window?.makeKeyAndVisible()
+    }
+    
+    private func adjustmentScreen() {
+        let vc = AdjustmentsViewController(
+            url: Bundle.main.url(forResource: "videoTest", withExtension: "MOV")!,
+            tool: AnyTool(VignetteTool())
+        )
         
         let navigationController = UINavigationController(rootViewController: vc)
         
@@ -37,12 +50,8 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             ParameterListView.Parameter(name: "World World World", value: "20"),
             ParameterListView.Parameter(name: "Hello", value: "10"),
             ParameterListView.Parameter(name: "World World World", value: "20"),
-            ParameterListView.Parameter(name: "Hello", value: "10"),
-            ParameterListView.Parameter(name: "World World World", value: "20"),
-            ParameterListView.Parameter(name: "Hello", value: "10"),
-            ParameterListView.Parameter(name: "World World World", value: "20"),
         ]) { _ in }
-        //    view.backgroundColor = .red
+        view.backgroundColor = .red
         view.translatesAutoresizingMaskIntoConstraints = false
         vc.view.addSubview(view)
         NSLayoutConstraint.activate([

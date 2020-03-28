@@ -34,15 +34,15 @@ final class AdjustmentsViewController: UIViewController {
         asset = AVAsset(url: url)
         videoViewController = VideoViewController(asset: asset)
         listView = ParameterListView(parameters: [
-            ParameterListView.Parameter(name: "Hello", value: "10"),
-            ParameterListView.Parameter(name: "World World World", value: "20"),
-            ParameterListView.Parameter(name: "Hello", value: "10"),
-            ParameterListView.Parameter(name: "World World World", value: "20"),
-            ParameterListView.Parameter(name: "Hello", value: "10"),
-            ParameterListView.Parameter(name: "World World World", value: "20"),
-            ParameterListView.Parameter(name: "Hello", value: "10"),
-            ParameterListView.Parameter(name: "World World World", value: "20"),
+            ParameterListView.Parameter(name: "Brightness", value: "10"),
+            ParameterListView.Parameter(name: "Contrast", value: "25"),
+            ParameterListView.Parameter(name: "Saturation", value: "40"),
+            ParameterListView.Parameter(name: "Ambience", value: "23"),
+            ParameterListView.Parameter(name: "Highlight", value: "10"),
+            ParameterListView.Parameter(name: "Shadows", value: "3"),
+            ParameterListView.Parameter(name: "Warms", value: "5"),
         ]) { _ in }
+//        listView.backgroundColor = .red
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -110,9 +110,9 @@ final class AdjustmentsViewController: UIViewController {
         listView.translateY(deltaY)
         switch recognizer.state {
         case .began:
-            listView.setHidden(false, duration: 0.3)
+            listView.setHiddenAnimated(false, duration: 0.3)
         case .ended:
-            listView.setHidden(true, duration: 0.2)
+            listView.setHiddenAnimated(true, duration: 0.2)
             previousTranslationY = 0
         default: break
         }

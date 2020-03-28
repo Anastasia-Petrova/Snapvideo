@@ -9,7 +9,7 @@
 import UIKit
 
 extension UIView {
-    func setHidden(_ isHidden: Bool, duration: TimeInterval) {
+    func setHiddenAnimated(_ isHidden: Bool, duration: TimeInterval) {
         if self.isHidden && !isHidden {
            self.isHidden = isHidden
         }
