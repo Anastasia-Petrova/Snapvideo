@@ -22,10 +22,11 @@ final class ParameterListView: UIView {
     var selectedParameterIndex = 0 {
         didSet {
             guard selectedParameterIndex != oldValue else { return }
-            
+            let parameter = parameters[selectedParameterIndex]
             selectionFeedbackGenerator.selectionChanged()
             updateParameterLabelsVisibility(selectedIndex: selectedParameterIndex, deselectedIndex: oldValue)
-            selectedParameterRow.setParameter(parameters[selectedParameterIndex])
+            selectedParameterRow.setParameter(parameter)
+            callback(parameter)
         }
     }
     
@@ -151,7 +152,7 @@ final class ParameterListView: UIView {
 extension ParameterListView {
     struct Parameter: Equatable {
         let name: String
-        var value: String
+        var value: Int
     }
 }
 
@@ -179,7 +180,7 @@ extension ParameterListView {
         
         func setParameter(_ parameter: Parameter) {
             nameLabel.setText(parameter.name, animationDuration: 0.2)
-            valueLabel.setText(parameter.value, animationDuration: 0.2)
+            valueLabel.setText(String(parameter.value), animationDuration: 0.2)
         }
         
         private func setUpLabels(_ button: UIButton) {

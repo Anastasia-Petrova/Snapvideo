@@ -12,7 +12,19 @@ import AVFoundation
 final class AdjustmentsViewController: UIViewController {
     let asset: AVAsset
     let videoViewController: VideoViewController
-    let listView: ParameterListView
+    lazy var listView = ParameterListView(parameters: [
+        ParameterListView.Parameter(name: "Brightness", value: 10),
+        ParameterListView.Parameter(name: "Contrast", value: 25),
+        ParameterListView.Parameter(name: "Saturation", value: 40),
+        ParameterListView.Parameter(name: "Ambience", value: -23),
+        ParameterListView.Parameter(name: "Highlight", value: 10),
+        ParameterListView.Parameter(name: "Shadows", value: 3),
+        ParameterListView.Parameter(name: "Warms", value: -5),
+    ]) { [weak self] parameter in
+        self?.sliderView.name = parameter.name
+        self?.sliderView.value = CGFloat(parameter.value)
+    }
+    
     let tabBar = TabBar(items: "✕", "✓")
     let sliderView = AdjustmentSliderView(name: "Brightness", value: -50)
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
@@ -34,16 +46,6 @@ final class AdjustmentsViewController: UIViewController {
     init(url: URL, tool: AnyTool) {
         asset = AVAsset(url: url)
         videoViewController = VideoViewController(asset: asset)
-        listView = ParameterListView(parameters: [
-            ParameterListView.Parameter(name: "Brightness", value: "10"),
-            ParameterListView.Parameter(name: "Contrast", value: "25"),
-            ParameterListView.Parameter(name: "Saturation", value: "40"),
-            ParameterListView.Parameter(name: "Ambience", value: "23"),
-            ParameterListView.Parameter(name: "Highlight", value: "10"),
-            ParameterListView.Parameter(name: "Shadows", value: "3"),
-            ParameterListView.Parameter(name: "Warms", value: "5"),
-        ]) { _ in }
-//        listView.backgroundColor = .red
         super.init(nibName: nil, bundle: nil)
     }
     
