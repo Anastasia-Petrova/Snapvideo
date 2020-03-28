@@ -14,6 +14,7 @@ final class AdjustmentsViewController: UIViewController {
     let videoViewController: VideoViewController
     let listView: ParameterListView
     let tabBar = TabBar(items: "✕", "✓")
+    let sliderView = AdjustmentSliderView()
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
     
     var previousTranslationY: CGFloat = 0
@@ -54,10 +55,12 @@ final class AdjustmentsViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         view.addSubview(videoViewController.view)
+        view.addSubview(sliderView)
         view.addSubview(listView)
         view.addSubview(tabBar)
         
         setUpVideoViewController()
+        setUpSliderView()
         setUpParameterListView()
         setUpTabBar()
         setUpPanGestureRecognizer()
@@ -65,6 +68,15 @@ final class AdjustmentsViewController: UIViewController {
     
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+    
+    private func setUpSliderView() {
+        sliderView.translatesAutoresizingMaskIntoConstraints = false 
+        NSLayoutConstraint.activate([
+            sliderView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            sliderView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            sliderView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10)
+        ])
     }
     
     private func setUpParameterListView() {
