@@ -120,6 +120,7 @@ final class VideoEditorViewController: UIViewController {
             let vc = AdjustmentsViewController(url: url, tool: tools[toolIndex])
             vc.modalTransitionStyle = .crossDissolve
             self?.present(vc, animated: true, completion: nil)
+            self?.isToolsViewShown = false
         }
     }
     

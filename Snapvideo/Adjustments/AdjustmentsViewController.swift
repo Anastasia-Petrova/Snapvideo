@@ -175,7 +175,7 @@ final class AdjustmentsViewController: UIViewController {
     }
     
     @objc func cancelAdjustment() {
-        
+        self.dismiss(animated: true, completion: nil)
     }
     
     @objc func showParameterList() {
