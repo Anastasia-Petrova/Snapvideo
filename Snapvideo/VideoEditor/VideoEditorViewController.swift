@@ -160,6 +160,7 @@ final class VideoEditorViewController: UIViewController {
     private func setUpTabBar() {
         tabBar.delegate = self
         tabBar.translatesAutoresizingMaskIntoConstraints = false
+        tabBar.isTranslucent = false
         tabBar.setContentHuggingPriority(.required, for: .vertical)
         tabBar.setContentCompressionResistancePriority(.required, for: .vertical)
         NSLayoutConstraint.activate([
@@ -205,17 +206,24 @@ final class VideoEditorViewController: UIViewController {
         
         looksContainerView.addSubview(collectionStackView)
         collectionStackView.addArrangedSubview(looksViewController.view)
-        collectionStackView.addArrangedSubview(buttonsStackView)
+        
+        let line = UIView()
+        line.backgroundColor = .lightGray
+        line.alpha = 0.8
+        collectionStackView.addArrangedSubview(line)
+        
         let spacer = UIView()
         spacer.backgroundColor = .white
         collectionStackView.addArrangedSubview(spacer)
+        collectionStackView.addArrangedSubview(buttonsStackView)
         
         NSLayoutConstraint.activate ([
             collectionStackView.trailingAnchor.constraint(equalTo: looksContainerView.trailingAnchor),
             collectionStackView.leadingAnchor.constraint(equalTo: looksContainerView.leadingAnchor),
             collectionStackView.topAnchor.constraint(equalTo: looksContainerView.topAnchor),
             collectionStackView.bottomAnchor.constraint(equalTo: looksContainerView.bottomAnchor),
-            looksViewController.view.heightAnchor.constraint(equalToConstant: looksViewHeight)
+            looksViewController.view.heightAnchor.constraint(equalToConstant: looksViewHeight),
+            line.heightAnchor.constraint(equalToConstant: 0.6)
         ])
     }
     
@@ -273,7 +281,7 @@ final class VideoEditorViewController: UIViewController {
     func setUpDoneButton() {
         doneButton.isEnabled = false
         NSLayoutConstraint.activate ([
-            doneButton.heightAnchor.constraint(equalToConstant: 44)
+            doneButton.heightAnchor.constraint(equalToConstant: 20)
         ])
         doneButton.addTarget(self, action: #selector(self.saveFilter), for: .touchUpInside)
     }

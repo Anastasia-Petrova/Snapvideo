@@ -9,6 +9,12 @@
 import UIKit
 
 final class LooksViewButton: UIButton {
+    override var isHighlighted: Bool {
+        didSet {
+            backgroundColor = isHighlighted ? UIColor.lightGray.withAlphaComponent(0.3) : UIColor.clear
+        }
+    }
+    
     init(imageName: String) {
         super.init(frame: .zero)
         self.imageView?.contentMode = .scaleAspectFit
