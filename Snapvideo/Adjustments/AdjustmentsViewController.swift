@@ -13,6 +13,9 @@ final class AdjustmentsViewController: UIViewController {
     let toolBar = UIToolbar(
         frame: CGRect(origin: .zero, size: CGSize(width: 320, height: 44))
     )
+    let cancelButton = UIButton()
+    let menuButton = UIButton()
+    let doneButton = UIButton()
     let asset: AVAsset
     let videoViewController: VideoViewController
     lazy var listView = ParameterListView(parameters: [
@@ -93,42 +96,52 @@ final class AdjustmentsViewController: UIViewController {
         ])
     }
     
+    private func setUpCancelButton() {
+        cancelButton.setImage(UIImage(named: "cancel"), for: .normal)
+        cancelButton.imageView?.contentMode = .scaleAspectFit
+        cancelButton.addTarget(self, action: #selector(cancelAdjustment), for: .touchUpInside)
+    }
+    
+    private func setUpMenuButton() {
+        menuButton.setImage(UIImage(systemName: "slider.horizontal.3"), for: .normal)
+        menuButton.imageView?.contentMode = .scaleAspectFit
+        menuButton.addTarget(self, action: #selector(applyAdjustment), for: .touchUpInside)
+    }
+    
+    private func setUpDoneButton() {
+        doneButton.setImage(UIImage(named: "done"), for: .normal)
+        doneButton.imageView?.contentMode = .scaleAspectFit
+        doneButton.addTarget(self, action: #selector(applyAdjustment), for: .touchUpInside)
+    }
+    
     private func setUpToolBar() {
         toolBar.translatesAutoresizingMaskIntoConstraints = false
         func spacer() -> UIBarButtonItem {
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         }
         
+        setUpCancelButton()
+        let cancelItem = UIBarButtonItem(customView: cancelButton)
+        
+        setUpMenuButton()
+        let menuItem = UIBarButtonItem(customView: menuButton)
+        
+        setUpDoneButton()
+        let doneItem = UIBarButtonItem(customView: doneButton)
+        
+        let items = [cancelItem, spacer(), menuItem, spacer(), doneItem]
+        toolBar.tintColor = .darkGray
+        toolBar.setItems(items, animated: false)
+        
         NSLayoutConstraint.activate([
             toolBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             toolBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             toolBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            toolBar.heightAnchor.constraint(equalToConstant: 44)
+            toolBar.heightAnchor.constraint(equalToConstant: 44),
+            doneButton.widthAnchor.constraint(equalToConstant: 20),
+            cancelButton.widthAnchor.constraint(equalToConstant: 20),
+            menuButton.widthAnchor.constraint(equalToConstant: 30),
         ])
-        
-        let cancelButton = UIBarButtonItem(
-            title: "✕",
-            style: .plain,
-            target: self,
-            action: #selector(cancelAdjustment)
-        )
-        
-        let menuButton = UIBarButtonItem()
-        menuButton.image = UIImage(systemName: "slider.horizontal.3")
-        menuButton.style = .plain
-        menuButton.target = self
-        menuButton.action = #selector(applyAdjustment)
-        
-        let applyButton = UIBarButtonItem(
-            title: "✓",
-            style: .done,
-            target: self,
-            action: #selector(applyAdjustment)
-        )
-        
-        let items = [cancelButton, spacer(), menuButton, spacer(), applyButton]
-        toolBar.tintColor = .darkGray
-        toolBar.setItems(items, animated: false)
     }
     
     private func setUpVideoViewController() {
