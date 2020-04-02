@@ -14,7 +14,7 @@ final class AdjustmentsViewController: UIViewController {
         frame: CGRect(origin: .zero, size: CGSize(width: 320, height: 44))
     )
     let cancelButton = UIButton()
-    let menuButton = UIButton()
+    let parameterListButton = UIButton()
     let doneButton = UIButton()
     let asset: AVAsset
     let videoViewController: VideoViewController
@@ -102,10 +102,10 @@ final class AdjustmentsViewController: UIViewController {
         cancelButton.addTarget(self, action: #selector(cancelAdjustment), for: .touchUpInside)
     }
     
-    private func setUpMenuButton() {
-        menuButton.setImage(UIImage(systemName: "slider.horizontal.3"), for: .normal)
-        menuButton.imageView?.contentMode = .scaleAspectFit
-        menuButton.addTarget(self, action: #selector(applyAdjustment), for: .touchUpInside)
+    private func setUpParameterListButton() {
+        parameterListButton.setImage(UIImage(systemName: "slider.horizontal.3"), for: .normal)
+        parameterListButton.imageView?.contentMode = .scaleAspectFit
+        parameterListButton.addTarget(self, action: #selector(showParameterList), for: .touchUpInside)
     }
     
     private func setUpDoneButton() {
@@ -123,13 +123,13 @@ final class AdjustmentsViewController: UIViewController {
         setUpCancelButton()
         let cancelItem = UIBarButtonItem(customView: cancelButton)
         
-        setUpMenuButton()
-        let menuItem = UIBarButtonItem(customView: menuButton)
+        setUpParameterListButton()
+        let parameterListItem = UIBarButtonItem(customView: parameterListButton)
         
         setUpDoneButton()
         let doneItem = UIBarButtonItem(customView: doneButton)
         
-        let items = [cancelItem, spacer(), menuItem, spacer(), doneItem]
+        let items = [cancelItem, spacer(), parameterListItem, spacer(), doneItem]
         toolBar.tintColor = .darkGray
         toolBar.setItems(items, animated: false)
         
@@ -140,7 +140,7 @@ final class AdjustmentsViewController: UIViewController {
             toolBar.heightAnchor.constraint(equalToConstant: 44),
             doneButton.widthAnchor.constraint(equalToConstant: 20),
             cancelButton.widthAnchor.constraint(equalToConstant: 20),
-            menuButton.widthAnchor.constraint(equalToConstant: 30),
+            parameterListButton.widthAnchor.constraint(equalToConstant: 30),
         ])
     }
     
@@ -169,15 +169,26 @@ final class AdjustmentsViewController: UIViewController {
         case .ended:
             listView.setHiddenAnimated(true, duration: 0.2)
             previousTranslationY = 0
+            parameterListButton.tintColor = .darkGray
         default: break
         }
     }
     
-    @objc func applyAdjustment() {
+    @objc func cancelAdjustment() {
         
     }
     
-    @objc func cancelAdjustment() {
+    @objc func showParameterList() {
+        if listView.isHidden {
+            parameterListButton.tintColor = .systemBlue
+            listView.setHiddenAnimated(false, duration: 0.3)
+        } else {
+            parameterListButton.tintColor = .darkGray
+            listView.setHiddenAnimated(true, duration: 0.2)
+        }
+    }
+    
+    @objc func applyAdjustment() {
         
     }
 }
