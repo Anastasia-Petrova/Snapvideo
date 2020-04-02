@@ -10,6 +10,9 @@ import UIKit
 import AVFoundation
 
 final class AdjustmentsViewController: UIViewController {
+    let toolBar = UIToolbar(
+        frame: CGRect(origin: .zero, size: CGSize(width: 320, height: 44))
+    )
     let asset: AVAsset
     let videoViewController: VideoViewController
     lazy var listView = ParameterListView(parameters: [
@@ -25,7 +28,6 @@ final class AdjustmentsViewController: UIViewController {
         self?.sliderView.value = CGFloat(parameter.value)
     }
     
-    let tabBar = TabBar(items: "✕", "✓")
     let sliderView = AdjustmentSliderView(name: "Brightness", value: -50)
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
     
@@ -59,12 +61,12 @@ final class AdjustmentsViewController: UIViewController {
         view.addSubview(videoViewController.view)
         view.addSubview(sliderView)
         view.addSubview(listView)
-        view.addSubview(tabBar)
+        view.addSubview(toolBar)
         
         setUpVideoViewController()
         setUpSliderView()
+        setUpToolBar()
         setUpParameterListView()
-        setUpTabBar()
         setUpPanGestureRecognizer()
     }
     
@@ -91,16 +93,42 @@ final class AdjustmentsViewController: UIViewController {
         ])
     }
     
-    private func setUpTabBar() {
-        tabBar.delegate = self
-        tabBar.translatesAutoresizingMaskIntoConstraints = false
-        tabBar.setContentHuggingPriority(.required, for: .vertical)
-        tabBar.setContentCompressionResistancePriority(.required, for: .vertical)
+    private func setUpToolBar() {
+        toolBar.translatesAutoresizingMaskIntoConstraints = false
+        func spacer() -> UIBarButtonItem {
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        }
+        
         NSLayoutConstraint.activate([
-            tabBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            tabBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tabBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            toolBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            toolBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            toolBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            toolBar.heightAnchor.constraint(equalToConstant: 44)
         ])
+        
+        let cancelButton = UIBarButtonItem(
+            title: "✕",
+            style: .plain,
+            target: self,
+            action: #selector(cancelAdjustment)
+        )
+        
+        let menuButton = UIBarButtonItem()
+        menuButton.image = UIImage(systemName: "slider.horizontal.3")
+        menuButton.style = .plain
+        menuButton.target = self
+        menuButton.action = #selector(applyAdjustment)
+        
+        let applyButton = UIBarButtonItem(
+            title: "✓",
+            style: .done,
+            target: self,
+            action: #selector(applyAdjustment)
+        )
+        
+        let items = [cancelButton, spacer(), menuButton, spacer(), applyButton]
+        toolBar.tintColor = .darkGray
+        toolBar.setItems(items, animated: false)
     }
     
     private func setUpVideoViewController() {
@@ -109,7 +137,7 @@ final class AdjustmentsViewController: UIViewController {
             videoViewController.view.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             videoViewController.view.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
             videoViewController.view.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            videoViewController.view.bottomAnchor.constraint(equalTo: tabBar.topAnchor)
+            videoViewController.view.bottomAnchor.constraint(equalTo: toolBar.topAnchor)
         ])
     }
     
@@ -131,10 +159,12 @@ final class AdjustmentsViewController: UIViewController {
         default: break
         }
     }
-}
-
-extension AdjustmentsViewController: UITabBarDelegate {
-    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+    
+    @objc func applyAdjustment() {
+        
+    }
+    
+    @objc func cancelAdjustment() {
         
     }
 }
