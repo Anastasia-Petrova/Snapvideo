@@ -119,6 +119,7 @@ final class VideoEditorViewController: UIViewController {
         toolsViewController.didSelectToolCallback = { [weak self] toolIndex in
             let vc = AdjustmentsViewController(url: url, tool: tools[toolIndex])
             vc.modalTransitionStyle = .crossDissolve
+            vc.modalPresentationStyle = .fullScreen
             self?.present(vc, animated: true, completion: nil)
             self?.isToolsViewShown = false
         }
