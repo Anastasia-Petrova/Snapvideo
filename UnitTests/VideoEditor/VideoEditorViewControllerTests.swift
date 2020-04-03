@@ -24,7 +24,7 @@ final class VideoEditorViewControllerTests: XCTestCase {
         vc.openLooks()
         XCTAssertEqual(
             vc.topLooksConstraint.constant,
-            vc.looksViewController.view.frame.height + vc.tabBar.frame.height
+            vc.looksViewController.view.frame.height + vc.tabBar.frame.height + 0.3
         )
         
         vc.closeLooks()
