@@ -10,6 +10,7 @@ import UIKit
 
 final class AdjustmentSliderView: UIView {
     private let sliderLayer = CAShapeLayer()
+    let separatorLayer = CAShapeLayer()
     private let valueLabel = UILabel()
     var name: String {
         didSet {
@@ -41,6 +42,7 @@ final class AdjustmentSliderView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        setSeparatorSliderPosition()
         updateValueSlider()
         updateValueLabel()
     }
@@ -123,6 +125,33 @@ final class AdjustmentSliderView: UIView {
         sliderLayer.fillColor = UIColor.systemBlue.cgColor
         sliderView.layer.addSublayer(sliderLayer)
         
+        separatorLayer.lineWidth = 0.0
+        separatorLayer.strokeColor = UIColor.clear.cgColor
+        separatorLayer.fillColor = UIColor.red.cgColor
+        sliderView.layer.addSublayer(separatorLayer)
+        
         return sliderView
+    }
+    
+    private func setSeparatorSliderPosition() {
+        let path = UIBezierPath(
+            rect: CGRect(
+                origin: .zero,
+                size: CGSize(
+                    width: 1,
+                    height: 12
+                )
+            )
+        ).cgPath
+        let center = bounds.width/2.0
+        let position = CGPoint(
+            x: center,
+            y: 0
+        )
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        separatorLayer.path = path
+        separatorLayer.position = position
+        CATransaction.commit()
     }
 }
