@@ -179,13 +179,9 @@ final class AdjustmentsViewController: UIViewController {
     }
     
     @objc func showParameterList() {
-        if listView.isHidden {
-            parameterListButton.tintColor = .systemBlue
-            listView.setHiddenAnimated(false, duration: 0.3)
-        } else {
-            parameterListButton.tintColor = .darkGray
-            listView.setHiddenAnimated(true, duration: 0.2)
-        }
+        parameterListButton.tintColor = listView.isHidden ? .systemBlue : .darkGray
+        let duration = listView.isHidden ? 0.3 : 0.2
+        listView.setHiddenAnimated(!listView.isHidden, duration: duration)
     }
     
     @objc func applyAdjustment() {
