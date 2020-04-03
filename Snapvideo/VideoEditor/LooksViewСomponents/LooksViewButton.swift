@@ -19,7 +19,7 @@ final class LooksViewButton: UIButton {
         super.init(frame: .zero)
         self.imageView?.contentMode = .scaleAspectFit
         self.setImage(UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate), for: .normal)
-        self.tintColor = .darkGray
+        self.tintColor = .lightGray
     }
     
     required init?(coder: NSCoder) {

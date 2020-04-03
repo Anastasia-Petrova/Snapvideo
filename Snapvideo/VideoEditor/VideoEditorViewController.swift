@@ -22,8 +22,8 @@ final class VideoEditorViewController: UIViewController {
     let tabBar = TabBar(items: "LOOKS", "TOOLS", "EXPORT")
     let toolsViewController: ToolsViewController
     var topToolsConstraint = NSLayoutConstraint()
-    var cancelButton = LooksViewButton(imageName: "cancel")
-    var doneButton = LooksViewButton(imageName: "done")
+    var cancelButton = LooksViewButton(imageName: "cancel-solid")
+    var doneButton = LooksViewButton(imageName: "done-solid")
     var saveCopyButton = SaveCopyVideoButton()
     var spacerHeight = CGFloat()
     let saveStackView = UIStackView()
@@ -208,8 +208,7 @@ final class VideoEditorViewController: UIViewController {
         collectionStackView.addArrangedSubview(looksViewController.view)
         
         let line = UIView()
-        line.backgroundColor = .lightGray
-        line.alpha = 0.8
+        line.backgroundColor = .darkGray
         collectionStackView.addArrangedSubview(line)
         
         let spacer = UIView()
@@ -223,7 +222,7 @@ final class VideoEditorViewController: UIViewController {
             collectionStackView.topAnchor.constraint(equalTo: looksContainerView.topAnchor),
             collectionStackView.bottomAnchor.constraint(equalTo: looksContainerView.bottomAnchor),
             looksViewController.view.heightAnchor.constraint(equalToConstant: looksViewHeight),
-            line.heightAnchor.constraint(equalToConstant: 0.6)
+            line.heightAnchor.constraint(equalToConstant: 0.4)
         ])
     }
     
@@ -272,16 +271,18 @@ final class VideoEditorViewController: UIViewController {
     }
     
     func setUpCancelButton() {
+        cancelButton.imageEdgeInsets = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
         NSLayoutConstraint.activate ([
-            cancelButton.heightAnchor.constraint(equalToConstant: 44)
+            cancelButton.heightAnchor.constraint(equalToConstant: 25)
         ])
         cancelButton.addTarget(self, action: #selector(self.discardLooks), for: .touchUpInside)
     }
     
     func setUpDoneButton() {
         doneButton.isEnabled = false
+        doneButton.imageEdgeInsets = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
         NSLayoutConstraint.activate ([
-            doneButton.heightAnchor.constraint(equalToConstant: 20)
+            doneButton.heightAnchor.constraint(equalToConstant: 25)
         ])
         doneButton.addTarget(self, action: #selector(self.saveFilter), for: .touchUpInside)
     }
@@ -377,7 +378,7 @@ final class VideoEditorViewController: UIViewController {
    
     public func openLooks() {
         self.view.layoutIfNeeded()
-        topLooksConstraint.constant = looksViewController.view.frame.height + tabBar.frame.height
+        topLooksConstraint.constant = looksViewController.view.frame.height + tabBar.frame.height + 0.3
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
