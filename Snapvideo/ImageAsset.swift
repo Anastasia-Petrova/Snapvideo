@@ -37,22 +37,3 @@ enum ImageAsset: String, ImageAssets, Equatable {
     case saveVideoImage
 }
 
-extension ImageAsset {
-    enum Tools: String, ImageAssets, Equatable {
-        case bright
-        case contrast
-        case crop
-        case cut
-        case fade
-        case highlights
-        case saturation
-        case shadows
-        case sharpen
-        case slowDown
-        case speedUp
-        case tiltShift
-        case tune
-        case vignette
-        case warmth
-    }
-}

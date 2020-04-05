@@ -110,7 +110,7 @@ extension HomeViewController: UIImagePickerControllerDelegate {
         }
         dismiss(animated: true) {
             self.removeEmbeddedViewController()
-            self.embed(VideoEditorViewController(url: url, filters: self.app.filters, tools: self.app.tools))
+            self.embed(VideoEditorViewController(url: url, filters: self.app.filters))
         }
     }
 }

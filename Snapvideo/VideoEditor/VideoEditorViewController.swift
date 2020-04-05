@@ -19,9 +19,7 @@ final class VideoEditorViewController: UIViewController {
     var topExportConstraint = NSLayoutConstraint()
     let looksViewController: LooksViewController
     var topLooksConstraint = NSLayoutConstraint()
-    let tabBar = TabBar(items: "LOOKS", "TOOLS", "EXPORT")
-    let toolsViewController: ToolsViewController
-    var topToolsConstraint = NSLayoutConstraint()
+    let tabBar = TabBar(items: "LOOKS", "UPLOADS", "EXPORT")
     var cancelButton = LooksViewButton(imageName: "cancel-solid")
     var doneButton = LooksViewButton(imageName: "done-solid")
     var saveCopyButton = SaveCopyVideoButton()
@@ -51,30 +49,10 @@ final class VideoEditorViewController: UIViewController {
         }
     }
     
-    var isToolsButtonSelected: Bool = false {
-        didSet {
-            if isToolsButtonSelected {
-                openTools()
-            } else {
-                closeTools()
-            }
-        }
-    }
-    
     var isExportViewShown: Bool = true {
         didSet {
             if isExportButtonSelected &&  isExportButtonSelected != isExportViewShown {
                 isExportButtonSelected = isExportViewShown
-                tabBar.selectedItem = nil
-                previouslySelectedIndex = nil
-            }
-        }
-    }
-    
-    var isToolsViewShown: Bool = true {
-        didSet {
-            if isToolsButtonSelected &&  isToolsButtonSelected != isToolsViewShown {
-                isToolsButtonSelected = isToolsViewShown
                 tabBar.selectedItem = nil
                 previouslySelectedIndex = nil
             }
@@ -94,7 +72,7 @@ final class VideoEditorViewController: UIViewController {
         return Float(CMTimeGetSeconds(trackDuration))
     }
     
-    init(url: URL, filters: [AnyFilter], tools: [AnyTool]) {
+    init(url: URL, filters: [AnyFilter]) {
         self.url = url
         asset = AVAsset(url: url)
         videoViewController = VideoViewController(asset: asset)
@@ -111,18 +89,9 @@ final class VideoEditorViewController: UIViewController {
             guard newIndex != previousIndex && newIndex != 0 else { return }
             videoViewController?.player.play()
         }
-        toolsViewController = ToolsViewController(tools: tools)
         super.init(nibName: nil, bundle: nil)
         addChild(looksViewController)
         looksViewController.didMove(toParent: self)
-        
-        toolsViewController.didSelectToolCallback = { [weak self] toolIndex in
-            let vc = AdjustmentsViewController(url: url, tool: tools[toolIndex])
-            vc.modalTransitionStyle = .crossDissolve
-            vc.modalPresentationStyle = .overCurrentContext
-            self?.present(vc, animated: true, completion: nil)
-            self?.isToolsViewShown = false
-        }
     }
     
     required init?(coder: NSCoder) {
@@ -142,7 +111,6 @@ final class VideoEditorViewController: UIViewController {
         
         view.addSubview(videoViewController.view)
         view.addSubview(looksContainerView)
-        view.addSubview(toolsViewController.view)
         view.addSubview(exportView)
         view.addSubview(tabBar)
         
@@ -150,7 +118,6 @@ final class VideoEditorViewController: UIViewController {
         setUpLooksView()
         setUpCancelButton()
         setUpDoneButton()
-        setUpToolsView()
         setUpExportView()
         setUpSaveStackView()
         setUpSaveCopyStackView()
@@ -224,18 +191,6 @@ final class VideoEditorViewController: UIViewController {
             collectionStackView.bottomAnchor.constraint(equalTo: looksContainerView.bottomAnchor),
             looksViewController.view.heightAnchor.constraint(equalToConstant: looksViewHeight),
             line.heightAnchor.constraint(equalToConstant: 0.4)
-        ])
-    }
-    
-    func setUpToolsView() {
-        toolsViewController.view.translatesAutoresizingMaskIntoConstraints = false
-        topToolsConstraint = view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: toolsViewController.view.topAnchor)
-        
-        NSLayoutConstraint.activate ([
-            toolsViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            toolsViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            toolsViewController.view.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5),
-            topToolsConstraint
         ])
     }
     
@@ -411,23 +366,6 @@ final class VideoEditorViewController: UIViewController {
         }
     }
     
-    public func openTools() {
-        self.view.layoutIfNeeded()
-        isToolsViewShown = true
-        topToolsConstraint.constant = toolsViewController.view.frame.height + tabBar.frame.height
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
-        }
-    }
-    
-    public func closeTools() {
-        self.view.layoutIfNeeded()
-        topToolsConstraint.constant = -self.view.safeAreaInsets.bottom
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
-        }
-    }
-    
     private func resetToDefaultFilter() {
         looksViewController.deselectFilter()
     }
@@ -477,8 +415,6 @@ extension VideoEditorViewController: UITabBarDelegate {
         isLooksButtonSelected = selectedIndex == 0 && previouslySelectedIndex != selectedIndex
         
         isExportButtonSelected = selectedIndex == 2 && previouslySelectedIndex != selectedIndex
-        
-        isToolsButtonSelected = selectedIndex == 1 && previouslySelectedIndex != selectedIndex
         
         if previouslySelectedIndex == selectedIndex {
             previouslySelectedIndex = nil
