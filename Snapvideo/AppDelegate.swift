@@ -9,11 +9,25 @@
 import UIKit
 import Photos
 import UserNotifications
+import VimeoNetworking
 
 @UIApplicationMain
 final class AppDelegate: UIResponder, UIApplicationDelegate, PHPhotoLibraryChangeObserver {
     var result: PHFetchResult<PHAsset>?
     let center = UNUserNotificationCenter.current()
+    
+    lazy var authenticationController: AuthenticationController = {
+        let appConfiguration = AppConfiguration(
+            clientIdentifier: "feaa04ff48eedc3e6474cf36515591cab2e4f84e",
+            clientSecret: "feaa04ff48eedc3e6474cf36515591cab2e4f84e",
+            scopes: [.Private, .Upload],
+            keychainService: "KeychainServiceVimeo"
+        )
+        
+        let vimeoClient = VimeoClient(appConfiguration: appConfiguration, configureSessionManagerBlock: nil)
+        
+        return AuthenticationController(client: vimeoClient, appConfiguration: appConfiguration, configureSessionManagerBlock: nil)
+    }()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         PHPhotoLibrary.shared().register(self)
@@ -28,6 +42,25 @@ final class AppDelegate: UIResponder, UIApplicationDelegate, PHPhotoLibraryChang
     
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        authenticationController.codeGrant(responseURL: url) { result in
+            switch result
+            {
+            case .success(let account):
+                print("authenticated successfully: \(account)")
+            case .failure(let error):
+                print("failure authenticating: \(error)")
+            }
+        }
+
+        return true
+    }
+    
+    private func startVimeo() {
+        let URL = authenticationController.codeGrantAuthorizationURL()
+        UIApplication.shared.open(URL)
     }
     
     private func setupNotifications() {
