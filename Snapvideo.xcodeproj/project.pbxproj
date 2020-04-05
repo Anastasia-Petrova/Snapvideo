@@ -272,7 +272,6 @@
 				6D1D492923DB71EA00ECACE5 /* UnitTests */,
 				6D66486E23EDF9A5002AAF2E /* SnapshotTests */,
 				6D17A7DE23ABB39100C70542 /* Products */,
-				6DC05F9523EC30FA00A96B76 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -514,13 +513,6 @@
 			path = VideoEditor;
 			sourceTree = "<group>";
 		};
-		6DC05F9523EC30FA00A96B76 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		6DC05F9F23EC3B7400A96B76 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -588,6 +580,7 @@
 				6D17A7D923ABB39100C70542 /* Sources */,
 				6D17A7DA23ABB39100C70542 /* Frameworks */,
 				6D17A7DB23ABB39100C70542 /* Resources */,
+				6D118C66243A044C009A1798 /* Copy Carthage Dependencies */,
 			);
 			buildRules = (
 			);
@@ -716,6 +709,29 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6D118C66243A044C009A1798 /* Copy Carthage Dependencies */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/VimeoNetworking.framework",
+			);
+			name = "Copy Carthage Dependencies";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/VimeoNetworking.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6D17A7D923ABB39100C70542 /* Sources */ = {
@@ -975,6 +991,10 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LFG8A6E922;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Snapvideo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -995,6 +1015,10 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LFG8A6E922;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Snapvideo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
