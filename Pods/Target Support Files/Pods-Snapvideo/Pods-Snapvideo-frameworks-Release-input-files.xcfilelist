@@ -1,0 +1,3 @@
+${PODS_ROOT}/Target Support Files/Pods-Snapvideo/Pods-Snapvideo-frameworks.sh
+${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework
+${BUILT_PRODUCTS_DIR}/VimeoNetworking/VimeoNetworking.framework

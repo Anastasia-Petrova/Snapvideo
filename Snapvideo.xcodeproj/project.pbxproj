@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		60621FE4C22B3A1741044231 /* Pods_Snapvideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE163B26EB75FE4D07E09B1E /* Pods_Snapvideo.framework */; };
 		6D01E03623BFA2F900B558E8 /* LooksCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D01E03523BFA2F900B558E8 /* LooksCollectionViewCell.swift */; };
 		6D01E03823BFA3D600B558E8 /* LooksCollectionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D01E03723BFA3D600B558E8 /* LooksCollectionDataSource.swift */; };
 		6D01E03A23BFC2FE00B558E8 /* AssetImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D01E03923BFC2FE00B558E8 /* AssetImageGenerator.swift */; };
@@ -101,6 +102,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		017CD30715D667916AE780E6 /* Pods-Snapvideo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snapvideo.debug.xcconfig"; path = "Target Support Files/Pods-Snapvideo/Pods-Snapvideo.debug.xcconfig"; sourceTree = "<group>"; };
+		2FB6C59B13251A7AB3DC3F38 /* Pods-Snapvideo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snapvideo.release.xcconfig"; path = "Target Support Files/Pods-Snapvideo/Pods-Snapvideo.release.xcconfig"; sourceTree = "<group>"; };
 		6D01E03523BFA2F900B558E8 /* LooksCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LooksCollectionViewCell.swift; sourceTree = "<group>"; };
 		6D01E03723BFA3D600B558E8 /* LooksCollectionDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LooksCollectionDataSource.swift; sourceTree = "<group>"; };
 		6D01E03923BFC2FE00B558E8 /* AssetImageGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetImageGenerator.swift; sourceTree = "<group>"; };
@@ -180,6 +183,7 @@
 		6DDFFB6D23EC281D00093675 /* HomeViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		6DEA248C23C2038B00D7595A /* ComicFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicFilter.swift; sourceTree = "<group>"; };
 		6DFF1ADF23C3BEC7009BCAE2 /* OldFilmFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldFilmFilter.swift; sourceTree = "<group>"; };
+		AE163B26EB75FE4D07E09B1E /* Pods_Snapvideo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Snapvideo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +191,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60621FE4C22B3A1741044231 /* Pods_Snapvideo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,6 +231,8 @@
 				6D1D492923DB71EA00ECACE5 /* UnitTests */,
 				6D66486E23EDF9A5002AAF2E /* SnapshotTests */,
 				6D17A7DE23ABB39100C70542 /* Products */,
+				FA43E10D1905DEBD55B1A2D5 /* Pods */,
+				DAEFA7C8383A692575D60434 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -477,6 +484,23 @@
 			path = Filters;
 			sourceTree = "<group>";
 		};
+		DAEFA7C8383A692575D60434 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AE163B26EB75FE4D07E09B1E /* Pods_Snapvideo.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FA43E10D1905DEBD55B1A2D5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				017CD30715D667916AE780E6 /* Pods-Snapvideo.debug.xcconfig */,
+				2FB6C59B13251A7AB3DC3F38 /* Pods-Snapvideo.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -484,9 +508,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6D17A7F123ABB39600C70542 /* Build configuration list for PBXNativeTarget "Snapvideo" */;
 			buildPhases = (
+				CD7D4C7C129986E1FBFF539A /* [CP] Check Pods Manifest.lock */,
 				6D17A7D923ABB39100C70542 /* Sources */,
 				6D17A7DA23ABB39100C70542 /* Frameworks */,
 				6D17A7DB23ABB39100C70542 /* Resources */,
+				EC7474647EE6F6538BCD1A7B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -511,8 +537,6 @@
 				6D1D492E23DB71EA00ECACE5 /* PBXTargetDependency */,
 			);
 			name = UnitTests;
-			packageProductDependencies = (
-			);
 			productName = VideoTestTests;
 			productReference = 6D1D492823DB71EA00ECACE5 /* UnitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -615,6 +639,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		CD7D4C7C129986E1FBFF539A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Snapvideo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EC7474647EE6F6538BCD1A7B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Snapvideo/Pods-Snapvideo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Snapvideo/Pods-Snapvideo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Snapvideo/Pods-Snapvideo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6D17A7D923ABB39100C70542 /* Sources */ = {
@@ -846,6 +912,7 @@
 		};
 		6D17A7F223ABB39600C70542 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 017CD30715D667916AE780E6 /* Pods-Snapvideo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -856,6 +923,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = Snapvideo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -870,6 +938,7 @@
 		};
 		6D17A7F323ABB39600C70542 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2FB6C59B13251A7AB3DC3F38 /* Pods-Snapvideo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -880,6 +949,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = Snapvideo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
