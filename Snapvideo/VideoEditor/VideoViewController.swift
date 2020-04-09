@@ -14,8 +14,18 @@ final class VideoViewController: UIViewController {
     let player: AVPlayer
     let playerView: VideoView
     let bgVideoView: VideoView
+    let activityIndicator = UIActivityIndicatorView()
     var playerRateObservation: NSKeyValueObservation?
+    
+    var indicatorSwitcher: Bool = false {
+        didSet {
+            setActivityIndicatorOn(indicatorSwitcher)
+        }
+    }
+    
+    lazy var tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap))
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
+    
     
     init(asset: AVAsset) {
         self.asset = asset
@@ -73,22 +83,30 @@ final class VideoViewController: UIViewController {
             playerView.topAnchor.constraint(equalTo: view.topAnchor),
             playerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap))
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap))
         playerView.addGestureRecognizer(tap)
     }
     
     func setUpResumeButton() {
-        resumeImageView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(resumeImageView)
+        let stackView = UIStackView(arrangedSubviews: [resumeImageView, activityIndicator])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        view.addSubview(stackView)
+        
         NSLayoutConstraint.activate([
-            resumeImageView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-            resumeImageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            stackView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+            stackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             resumeImageView.heightAnchor.constraint(equalToConstant: 70),
             resumeImageView.widthAnchor.constraint(equalToConstant: 70)
         ])
         resumeImageView.tintColor = .white
         resumeImageView.isUserInteractionEnabled = false
         resumeImageView.isHidden = false
+        
+        activityIndicator.color = .systemBlue
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.style = .large
+//        activityIndicator.alpha = 0
     }
 
     @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
@@ -114,6 +132,16 @@ final class VideoViewController: UIViewController {
             let isPlaying = self.player.rate > 0
             self.resumeImageView.isHidden = isPlaying
             isPlaying ? self.playerView.play() :  self.playerView.pause()
+        }
+    }
+    
+    private func setActivityIndicatorOn(_ isOn: Bool) {
+        tap.isEnabled = !isOn
+        resumeImageView.isHidden = isOn
+        if isOn {
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.stopAnimating()
         }
     }
     
