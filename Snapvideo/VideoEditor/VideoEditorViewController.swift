@@ -21,6 +21,7 @@ final class VideoEditorViewController: UIViewController {
     var topLooksConstraint = NSLayoutConstraint()
     let vimeoViewController = VimeoViewController()
     var topVimeoConstraint = NSLayoutConstraint()
+    var selecterFilter: AnyFilter?
 
     let tabBar = TabBar(items: "LOOKS", "UPLOADS", "EXPORT")
     var cancelButton = LooksViewButton(imageName: "cancel-solid")
@@ -100,20 +101,22 @@ final class VideoEditorViewController: UIViewController {
         self.url = url
         asset = AVAsset(url: url)
         videoViewController = VideoViewController(asset: asset)
-        looksViewController = LooksViewController(itemSize: itemSize, filters: filters) {
-            [
-            weak videoViewController,
-            weak doneButton,
-            weak tabBar
-            ] newIndex, previousIndex in
-            videoViewController?.playerView.filter = filters[newIndex]
-            videoViewController?.bgVideoView.filter = filters[newIndex] + AnyFilter(BlurFilter(blurRadius: 100))
-            doneButton?.isEnabled = newIndex != 0
-            tabBar?.isHidden = newIndex != 0
-            guard newIndex != previousIndex && newIndex != 0 else { return }
-            videoViewController?.player.play()
-        }
+        looksViewController = LooksViewController(itemSize: itemSize, filters: filters)
         super.init(nibName: nil, bundle: nil)
+        looksViewController.filterIndexChangeCallback = {
+                    [
+                    weak videoViewController,
+                    weak doneButton,
+                    weak tabBar
+                    ] newIndex, previousIndex in
+                    videoViewController?.playerView.filter = filters[newIndex]
+                    videoViewController?.bgVideoView.filter = filters[newIndex] + AnyFilter(BlurFilter(blurRadius: 100))
+                    doneButton?.isEnabled = newIndex != 0
+                    tabBar?.isHidden = newIndex != 0
+                    guard newIndex != previousIndex && newIndex != 0 else { return }
+                    videoViewController?.player.play()
+                    self.selecterFilter = filters[newIndex]
+                }
         addChild(looksViewController)
         looksViewController.didMove(toParent: self)
     }

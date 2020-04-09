@@ -9,26 +9,26 @@
 import UIKit
 
 final class LooksViewController: UIViewController {
-    typealias Callback = (Int, Int) -> Void
+//    typealias Callback = ((Int, Int) -> Void)
     
     let dataSource: LooksCollectionDataSource
     let collectionView: UICollectionView
-    let filterIndexChangeCallback: Callback
-    var selectedFilterIndex = 0
+    var filterIndexChangeCallback: ((Int, Int) -> Void)?
+    var selectedFilterIndex = 0 
     var selectedFilter: AnyFilter {
         dataSource.filters[selectedFilterIndex]
     }
 
-    convenience init(itemSize: CGSize, filters: [AnyFilter], callback: @escaping Callback) {
+    convenience init(itemSize: CGSize, filters: [AnyFilter]) {
         let collectionView = UICollectionView(
             frame: .zero,
             collectionViewLayout: LooksCollectionViewLayout(itemSize: itemSize)
         )
-        self.init(itemSize: itemSize, filters: filters, collectionView: collectionView, callback: callback)
+        self.init(itemSize: itemSize, filters: filters, collectionView: collectionView)
     }
     
-    init(itemSize: CGSize, filters: [AnyFilter], collectionView: UICollectionView, callback: @escaping Callback) {
-        filterIndexChangeCallback = callback
+    init(itemSize: CGSize, filters: [AnyFilter], collectionView: UICollectionView) {
+        
         self.collectionView = collectionView
         self.dataSource = LooksCollectionDataSource(
             collectionView: collectionView,
@@ -78,7 +78,7 @@ extension LooksViewController: UICollectionViewDelegate {
         let previousIndex = selectedFilterIndex
         selectedFilterIndex = indexPath.row
         
-        filterIndexChangeCallback(selectedFilterIndex, previousIndex)
+        filterIndexChangeCallback?(selectedFilterIndex, previousIndex)
         
         if selectedFilterIndex != 0 {
             collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
