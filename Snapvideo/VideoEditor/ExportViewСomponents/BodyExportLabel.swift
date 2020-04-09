@@ -15,7 +15,6 @@ final class BodyExportLabel: UILabel {
         self.numberOfLines = 0
         self.textColor = .lightGray
         self.textAlignment = .left
-//        self.setContentCompressionResistancePriority(.required, for: .vertical)
     }
     
     required init?(coder: NSCoder) {

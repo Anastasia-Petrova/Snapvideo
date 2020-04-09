@@ -10,7 +10,7 @@ import UIKit
 
 final class ExportImageView: UIImageView {
     init(imageName: String) {
-        let image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
+        let image = UIImage(systemName: imageName)?.withRenderingMode(.alwaysTemplate)
         super.init(image: image)
         self.contentMode = .scaleAspectFit
         self.tintColor = .darkGray

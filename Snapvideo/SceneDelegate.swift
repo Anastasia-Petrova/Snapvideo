@@ -30,9 +30,6 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         start()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.startVimeo()
-        }
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
@@ -58,7 +55,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
     }
     
-    private func startVimeo() {
+    public func startVimeo() {
         let URL = authenticationController.codeGrantAuthorizationURL()
         UIApplication.shared.open(URL)
     }
