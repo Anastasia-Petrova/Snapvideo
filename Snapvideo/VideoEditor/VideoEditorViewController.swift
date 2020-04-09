@@ -19,12 +19,16 @@ final class VideoEditorViewController: UIViewController {
     var topExportConstraint = NSLayoutConstraint()
     let looksViewController: LooksViewController
     var topLooksConstraint = NSLayoutConstraint()
+    let vimeoViewController = VimeoViewController()
+    var topVimeoConstraint = NSLayoutConstraint()
+
     let tabBar = TabBar(items: "LOOKS", "UPLOADS", "EXPORT")
     var cancelButton = LooksViewButton(imageName: "cancel-solid")
     var doneButton = LooksViewButton(imageName: "done-solid")
     var saveCopyButton = SaveCopyVideoButton()
+    var shareButton = SaveCopyVideoButton()
     var spacerHeight = CGFloat()
-    let saveStackView = UIStackView()
+    let shareStackView = UIStackView()
     let saveCopyStackView = UIStackView()
     let itemSize = CGSize(width: 60, height: 76)
     var previouslySelectedIndex: Int?
@@ -39,6 +43,26 @@ final class VideoEditorViewController: UIViewController {
         }
     }
     
+    var isVimeoButtonSelected: Bool = false {
+        didSet {
+            if isVimeoButtonSelected {
+                openVimeo()
+            } else {
+                closeVimeo()
+            }
+        }
+    }
+    
+    var isVimeoViewShown: Bool = true {
+        didSet {
+            if isVimeoButtonSelected &&  isVimeoButtonSelected != isVimeoViewShown {
+                isVimeoButtonSelected = isVimeoViewShown
+                tabBar.selectedItem = nil
+                previouslySelectedIndex = nil
+            }
+        }
+    }
+
     var isExportButtonSelected: Bool = false {
         didSet {
             if isExportButtonSelected {
@@ -111,6 +135,7 @@ final class VideoEditorViewController: UIViewController {
         
         view.addSubview(videoViewController.view)
         view.addSubview(looksContainerView)
+        view.addSubview(vimeoViewController.view)
         view.addSubview(exportView)
         view.addSubview(tabBar)
         
@@ -118,9 +143,11 @@ final class VideoEditorViewController: UIViewController {
         setUpLooksView()
         setUpCancelButton()
         setUpDoneButton()
+        setUpVimeoView()
         setUpExportView()
-        setUpSaveStackView()
+        setUpShareStackView()
         setUpSaveCopyStackView()
+        setUpShareButton()
         setUpSaveCopyButton()
         setUpTabBar()
     }
@@ -194,6 +221,18 @@ final class VideoEditorViewController: UIViewController {
         ])
     }
     
+    func setUpVimeoView() {
+        vimeoViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        topVimeoConstraint = view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: vimeoViewController.view.topAnchor)
+        
+        NSLayoutConstraint.activate ([
+            vimeoViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            vimeoViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            vimeoViewController.view.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5),
+            topVimeoConstraint
+        ])
+    }
+
     func setUpExportView() {
         exportView.translatesAutoresizingMaskIntoConstraints = false
         exportView.backgroundColor = .white
@@ -218,11 +257,11 @@ final class VideoEditorViewController: UIViewController {
             exportStackView.topAnchor.constraint(equalTo: exportView.topAnchor),
             exportStackView.bottomAnchor.constraint(equalTo: exportView.bottomAnchor)
         ])
-        saveStackView.translatesAutoresizingMaskIntoConstraints = false
-        saveStackView.axis = .horizontal
+        shareStackView.translatesAutoresizingMaskIntoConstraints = false
+        shareStackView.axis = .horizontal
         saveCopyStackView.translatesAutoresizingMaskIntoConstraints = false
         saveCopyStackView.axis = .horizontal
-        exportStackView.addArrangedSubview(saveStackView)
+        exportStackView.addArrangedSubview(shareStackView)
         exportStackView.addArrangedSubview(saveCopyStackView)
     }
     
@@ -243,22 +282,22 @@ final class VideoEditorViewController: UIViewController {
         doneButton.addTarget(self, action: #selector(self.saveFilter), for: .touchUpInside)
     }
     
-    func setUpSaveStackView() {
-        saveStackView.spacing = 16
-        saveStackView.alignment = .center
-        let imageView = ExportImageView(imageName: "saveVideoImage")
+    func setUpShareStackView() {
+        shareStackView.spacing = 16
+        shareStackView.alignment = .center
+        let imageView = ExportImageView(imageName: "square.and.arrow.up")
         let leftSpacer = UIView()
         let rightSpacer = UIView()
         let labelsStackView = UIStackView()
         labelsStackView.translatesAutoresizingMaskIntoConstraints = false
         labelsStackView.axis = .vertical
         
-        saveStackView.addArrangedSubview(leftSpacer)
-        saveStackView.addArrangedSubview(imageView)
-        saveStackView.addArrangedSubview(labelsStackView)
-        saveStackView.addArrangedSubview(rightSpacer)
-        saveStackView.setCustomSpacing(0, after: leftSpacer)
-        saveStackView.setCustomSpacing(0, after: labelsStackView)
+        shareStackView.addArrangedSubview(leftSpacer)
+        shareStackView.addArrangedSubview(imageView)
+        shareStackView.addArrangedSubview(labelsStackView)
+        shareStackView.addArrangedSubview(rightSpacer)
+        shareStackView.setCustomSpacing(0, after: leftSpacer)
+        shareStackView.setCustomSpacing(0, after: labelsStackView)
         
         NSLayoutConstraint.activate ([
             leftSpacer.widthAnchor.constraint(equalToConstant: 16),
@@ -267,10 +306,10 @@ final class VideoEditorViewController: UIViewController {
         ])
         
         let header = HeaderExportLabel()
-        header.text = "Save"
+        header.text = "Share"
         
         let body = BodyExportLabel()
-        body.text = "Saves with changes that you can undo. IOS will ask for permission to modify this photo."
+        body.text = "Posts video to social media sites or sends it via email or SMS."
         
         labelsStackView.addArrangedSubview(header)
         labelsStackView.addArrangedSubview(body)
@@ -281,7 +320,7 @@ final class VideoEditorViewController: UIViewController {
     func setUpSaveCopyStackView() {
         saveCopyStackView.spacing = 16
         saveCopyStackView.alignment = .center
-        let imageView = ExportImageView(imageName: "saveVideoCopyImage")
+        let imageView = ExportImageView(imageName: "doc.on.doc")
         let leftSpacer = UIView()
         let rightSpacer = UIView()
         let labelsStackView = UIStackView()
@@ -306,7 +345,7 @@ final class VideoEditorViewController: UIViewController {
         header.text = "Save a copy"
         
         let body = BodyExportLabel()
-        body.text = "Creates a copy with changes that you can undo."
+        body.text = "Creates a copy with changes that you can't undo."
         
         labelsStackView.addArrangedSubview(header)
         labelsStackView.addArrangedSubview(body)
@@ -326,10 +365,16 @@ final class VideoEditorViewController: UIViewController {
         ])
     }
     
-    @objc func playerItemDidReachEnd(notification: Notification) {
-        if let playerItem = notification.object as? AVPlayerItem {
-            playerItem.seek(to: CMTime.zero, completionHandler: nil)
-        }
+    func setUpShareButton() {
+        shareButton.translatesAutoresizingMaskIntoConstraints = false
+        shareButton.addTarget(self, action: #selector(self.openActivityView), for: .touchUpInside)
+        shareStackView.addSubview(shareButton)
+        NSLayoutConstraint.activate ([
+            shareButton.trailingAnchor.constraint(equalTo: shareStackView.trailingAnchor),
+            shareButton.leadingAnchor.constraint(equalTo: shareStackView.leadingAnchor),
+            shareButton.topAnchor.constraint(equalTo: shareStackView.topAnchor),
+            shareButton.bottomAnchor.constraint(equalTo: shareStackView.bottomAnchor)
+        ])
     }
    
     public func openLooks() {
@@ -366,8 +411,43 @@ final class VideoEditorViewController: UIViewController {
         }
     }
     
+    public func openVimeo() {
+        self.view.layoutIfNeeded()
+        isVimeoViewShown = true
+        topVimeoConstraint.constant = vimeoViewController.view.frame.height + tabBar.frame.height
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    public func closeVimeo() {
+        self.view.layoutIfNeeded()
+        topVimeoConstraint.constant = -self.view.safeAreaInsets.bottom
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
     private func resetToDefaultFilter() {
         looksViewController.deselectFilter()
+    }
+    
+    func saveVideoToPhotos() {
+        DispatchQueue.main.async {
+            self.isExportViewShown = false
+        }
+        guard let playerItem = videoViewController.player.currentItem else { return }
+        guard let filter = selecterFilter else { return }
+        VideoEditor.saveEditedVideo(
+            choosenFilter: filter,
+            asset: playerItem.asset
+        )
+    }
+    
+    @objc func playerItemDidReachEnd(notification: Notification) {
+        if let playerItem = notification.object as? AVPlayerItem {
+            playerItem.seek(to: CMTime.zero, completionHandler: nil)
+        }
     }
     
     @objc func discardLooks() {
@@ -383,6 +463,27 @@ final class VideoEditorViewController: UIViewController {
         }
     }
     
+    @objc func openActivityView() {
+        DispatchQueue.main.async {
+            self.isExportViewShown = false
+        }
+        guard let playerItem = videoViewController.player.currentItem else { return }
+        guard let filter = selecterFilter else { return }
+        VideoEditor.composeVideo(
+            choosenFilter: filter,
+            asset: playerItem.asset
+        ) { path in
+            DispatchQueue.main.async {
+                guard let filePath = path else { return }
+                let objectToImport = [NSURL(fileURLWithPath: filePath)]
+                let activityVC = UIActivityViewController(activityItems: objectToImport, applicationActivities: nil)
+                activityVC.setValue("Video", forKey: "subject")
+                activityVC.excludedActivityTypes = [.addToReadingList, .assignToContact]
+                self.present(activityVC, animated: true, completion: nil)
+            }
+        }
+    }
+    
     @objc func saveVideoCopy() {
         PHPhotoLibrary.requestAuthorization { [weak self] status in
             switch status {
@@ -394,18 +495,6 @@ final class VideoEditorViewController: UIViewController {
             }
         }
     }
-    
-    func saveVideoToPhotos() {
-        DispatchQueue.main.async {
-            self.isExportViewShown = false
-        }
-        guard let playerItem = videoViewController.player.currentItem else { return }
-        VideoEditer.saveEditedVideo(
-            choosenFilter: looksViewController.selectedFilter,
-            asset: playerItem.asset
-        )
-    }
-    
 }
 
 extension VideoEditorViewController: UITabBarDelegate {
@@ -413,6 +502,8 @@ extension VideoEditorViewController: UITabBarDelegate {
         guard let selectedIndex = tabBar.items?.firstIndex(of: item) else { return }
         
         isLooksButtonSelected = selectedIndex == 0 && previouslySelectedIndex != selectedIndex
+        
+        isVimeoButtonSelected = selectedIndex == 1 && previouslySelectedIndex != selectedIndex
         
         isExportButtonSelected = selectedIndex == 2 && previouslySelectedIndex != selectedIndex
         
