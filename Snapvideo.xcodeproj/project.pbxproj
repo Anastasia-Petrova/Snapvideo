@@ -81,6 +81,7 @@
 		6DDE026A23C12B2A002D7942 /* BlurFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDE026923C12B2A002D7942 /* BlurFilter.swift */; };
 		6DDFFB6B23E9D2CD00093675 /* ToolsCollectionDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDFFB6923E9CF2000093675 /* ToolsCollectionDataSourceTests.swift */; };
 		6DE41ECF243F374D00081913 /* VimeoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE41ECE243F374D00081913 /* VimeoViewController.swift */; };
+		6DE41ED224407E4300081913 /* EasyCoreData in Frameworks */ = {isa = PBXBuildFile; productRef = 6DE41ED124407E4300081913 /* EasyCoreData */; };
 		6DEA248D23C2038B00D7595A /* ComicFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEA248C23C2038B00D7595A /* ComicFilter.swift */; };
 		6DFF1AE023C3BEC7009BCAE2 /* OldFilmFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFF1ADF23C3BEC7009BCAE2 /* OldFilmFilter.swift */; };
 /* End PBXBuildFile section */
@@ -194,6 +195,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				60621FE4C22B3A1741044231 /* Pods_Snapvideo.framework in Frameworks */,
+				6DE41ED224407E4300081913 /* EasyCoreData in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -530,6 +532,9 @@
 			dependencies = (
 			);
 			name = Snapvideo;
+			packageProductDependencies = (
+				6DE41ED124407E4300081913 /* EasyCoreData */,
+			);
 			productName = VideoTest;
 			productReference = 6D17A7DD23ABB39100C70542 /* Snapvideo.app */;
 			productType = "com.apple.product-type.application";
@@ -607,6 +612,7 @@
 			mainGroup = 6D17A7D423ABB39100C70542;
 			packageReferences = (
 				6D66487F23EDFE7B002AAF2E /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
+				6DE41ED024407E4300081913 /* XCRemoteSwiftPackageReference "EasyCoreData" */,
 			);
 			productRefGroup = 6D17A7DE23ABB39100C70542 /* Products */;
 			projectDirPath = "";
@@ -1106,6 +1112,14 @@
 				minimumVersion = 1.7.1;
 			};
 		};
+		6DE41ED024407E4300081913 /* XCRemoteSwiftPackageReference "EasyCoreData" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Anastasia-Petrova/EasyCoreData.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1113,6 +1127,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6D66487F23EDFE7B002AAF2E /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
 			productName = SnapshotTesting;
+		};
+		6DE41ED124407E4300081913 /* EasyCoreData */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6DE41ED024407E4300081913 /* XCRemoteSwiftPackageReference "EasyCoreData" */;
+			productName = EasyCoreData;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
