@@ -94,7 +94,7 @@ final class VideoEditorViewController: UIViewController {
         return Float(CMTimeGetSeconds(trackDuration))
     }
     
-    init(url: URL, filters: [AnyFilter], tools: [AnyTool]) {
+    init(url: URL, filters: [AnyFilter], tools: [ToolEnum]) {
         self.url = url
         asset = AVAsset(url: url)
         videoViewController = VideoViewController(asset: asset)
@@ -117,11 +117,20 @@ final class VideoEditorViewController: UIViewController {
         looksViewController.didMove(toParent: self)
         
         toolsViewController.didSelectToolCallback = { [weak self] toolIndex in
-            let vc = AdjustmentsViewController(url: url, tool: tools[toolIndex])
-            vc.modalTransitionStyle = .crossDissolve
-            vc.modalPresentationStyle = .overCurrentContext
-            self?.present(vc, animated: true, completion: nil)
-            self?.isToolsViewShown = false
+            func presentVC<T: Tool>(for tool: T) {
+                let vc = AdjustmentsViewController(url: url, tool: tool)
+                vc.modalTransitionStyle = .crossDissolve
+                vc.modalPresentationStyle = .overCurrentContext
+                self?.present(vc, animated: true, completion: nil)
+                self?.isToolsViewShown = false
+            }
+            
+            switch tools[toolIndex] {
+            case let .vignette(tool),
+                 let .bright(tool),
+                 let .blur(tool):
+                presentVC(for: tool)
+            }
         }
     }
     

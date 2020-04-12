@@ -15,7 +15,7 @@ final class ToolsViewController: UIViewController {
     let collectionView: UICollectionView
     var didSelectToolCallback: Callback?
 
-    init(tools: [AnyTool]) {
+    init(tools: [ToolEnum]) {
         self.collectionView = UICollectionView(
             frame: .zero,
             collectionViewLayout: ToolsCollectionViewLayout()

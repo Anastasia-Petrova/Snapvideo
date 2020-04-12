@@ -15,8 +15,8 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-//        start()
-        adjustmentScreen()
+        start()
+//        adjustmentScreen()
 //        test()
     }
     
@@ -32,7 +32,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private func adjustmentScreen() {
         let vc = AdjustmentsViewController(
             url: Bundle.main.url(forResource: "videoTest", withExtension: "MOV")!,
-            tool: AnyTool(VignetteTool())
+            tool: VignetteTool()
         )
         
         let navigationController = UINavigationController(rootViewController: vc)

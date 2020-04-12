@@ -9,13 +9,15 @@
 import UIKit
 import AVFoundation
 
-final class AdjustmentsViewController: UIViewController {
+final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
     let toolBar = UIToolbar(
         frame: CGRect(origin: .zero, size: CGSize(width: 320, height: 44))
     )
     let parameterListItem = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"), style: .plain, target: self, action: #selector(showParameterList))
     let asset: AVAsset
     let videoViewController: VideoViewController
+    let tool: SelectedTool
+    
     lazy var parameterlistView = ParameterListView(parameters: [
         ParameterListView.Parameter(name: "Brightness", value: 10),
         ParameterListView.Parameter(name: "Contrast", value: 25),
@@ -32,6 +34,7 @@ final class AdjustmentsViewController: UIViewController {
     let sliderView = AdjustmentSliderView(name: "Brightness", value: -50)
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
     
+    //TODO: Combine to single CGPoint prop
     var previousTranslationY: CGFloat = 0
     var previousTranslationX: CGFloat = 0
     
@@ -47,8 +50,9 @@ final class AdjustmentsViewController: UIViewController {
         return Float(CMTimeGetSeconds(trackDuration))
     }
     
-    init(url: URL, tool: AnyTool) {
+    init(url: URL, tool: SelectedTool) {
         asset = AVAsset(url: url)
+        self.tool = tool
         videoViewController = VideoViewController(asset: asset)
         super.init(nibName: nil, bundle: nil)
     }
@@ -133,6 +137,8 @@ final class AdjustmentsViewController: UIViewController {
     
     @objc func handlePanGesture(_ recognizer: UIPanGestureRecognizer) {
         let translation = recognizer.translation(in: videoViewController.view)
+        //TODO: Recognize when we BEGAN vertical or horizontal pan gesture.
+        // Lock to particular direction until pan gesture ENDED.
         let condition = false
         if condition {
             let deltaY = previousTranslationY - translation.y

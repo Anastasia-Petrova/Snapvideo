@@ -24,26 +24,24 @@ extension Tool {
 
 enum ToolEnum: Equatable {
     case vignette(tool: VignetteTool)
-    case bright(name: String, icon: UIImage)
-    case blur(name: String, icon: UIImage)
+    case bright(tool: VignetteTool)
+    case blur(tool: VignetteTool)
     
     var name: String {
         switch self {
-        case let .vignette(tool):
+        case let .vignette(tool),
+             let .bright(tool),
+             let .blur(tool):
             return tool.description
-        case let .bright(name, _),
-             let .blur(name, _):
-            return name
         }
     }
     
     var icon: UIImage {
         switch self {
-        case let .vignette(tool):
+        case let .vignette(tool),
+             let .bright(tool),
+             let .blur(tool):
             return tool.icon.image()
-        case let .bright(_, icon),
-             let .blur(_, icon):
-            return icon
         }
     }
 }

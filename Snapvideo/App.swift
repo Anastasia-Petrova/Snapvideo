@@ -10,7 +10,7 @@ import Foundation
 
 struct App {
     let filters: [AnyFilter]
-    let tools: [AnyTool]
+    let tools: Array<ToolEnum>
     public static let shared = `default`
 }
 
@@ -34,23 +34,7 @@ extension App {
             AnyFilter(MonochromeFilter()),
             AnyFilter(NoirFilter())
         ],
-        tools: [
-            AnyTool(FadeTool()),
-            AnyTool(BrightTool()),
-            AnyTool(SpeedUpTool()),
-            AnyTool(CutTool()),
-            AnyTool(SlowDownTool()),
-            AnyTool(CropTool()),
-            AnyTool(TuneColorTool()),
-            AnyTool(VignetteTool()),
-            AnyTool(SaturationTool()),
-            AnyTool(ShadowsTool()),
-            AnyTool(ContrastTool()),
-            AnyTool(HighlightsTool()),
-            AnyTool(SharpenTool()),
-            AnyTool(TiltShiftTool()),
-            AnyTool(WarmthTool())
-        ]
+        tools: [.vignette(tool: VignetteTool())]
     )
     
     private static let many = App(
@@ -78,7 +62,7 @@ extension App {
             AnyFilter(VignetteFilter()),
             AnyFilter(ClampFilter())
         ],
-        tools: [AnyTool(BrightTool())]
+        tools: [.vignette(tool: VignetteTool())]
     )
     
     private static let variant2 = App(
@@ -86,7 +70,7 @@ extension App {
             AnyFilter(PassthroughFilter()),
             AnyFilter(ComicFilter())
         ],
-        tools: [AnyTool(BrightTool())]
+        tools: [.vignette(tool: VignetteTool())]
     )
     
     private static let composite = App(
@@ -97,7 +81,7 @@ extension App {
             AnyFilter(ClampFilter()) + AnyFilter(VignetteFilter()),
             AnyFilter(ComicFilter()) + AnyFilter(VignetteFilter()),
         ],
-        tools: [AnyTool(BrightTool())]
+        tools: [.vignette(tool: VignetteTool())]
     )
     
     private static let slowFilter = App(
@@ -116,7 +100,7 @@ extension App {
             AnyFilter(VignetteFilter()) +
             AnyFilter(SharpAndWarmFilter(inputSharpness: 0.7))
         ],
-        tools: [AnyTool(BrightTool())]
+        tools: [.vignette(tool: VignetteTool())]
     )
 }
 
@@ -140,7 +124,7 @@ extension App {
             AnyFilter(MonochromeFilter()),
             AnyFilter(NoirFilter())
         ],
-        tools: [AnyTool(BrightTool())]
+        tools: [.vignette(tool: VignetteTool())]
     )
     
     static let unitTests = App(
@@ -149,7 +133,7 @@ extension App {
             AnyFilter(SharpAndWarmFilter(inputSharpness: 0.7)),
             AnyFilter(VignetteFilter()),
         ],
-        tools: [AnyTool(BrightTool())]
+        tools: [.vignette(tool: VignetteTool())]
     )
 }
 

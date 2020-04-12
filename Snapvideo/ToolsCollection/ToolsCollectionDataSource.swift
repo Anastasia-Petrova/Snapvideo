@@ -10,14 +10,14 @@ import UIKit
 
 final class ToolsCollectionDataSource: NSObject, UICollectionViewDataSource {
     weak var collectionView: UICollectionView?
-    let tools: [AnyTool]
+    let tools: [ToolEnum]
     var image: UIImage? {
         didSet {
             collectionView?.reloadData()
         }
     }
     
-    init(collectionView: UICollectionView, tools: [AnyTool]) {
+    init(collectionView: UICollectionView, tools: [ToolEnum]) {
         self.tools = tools
         self.collectionView = collectionView
         super.init()
