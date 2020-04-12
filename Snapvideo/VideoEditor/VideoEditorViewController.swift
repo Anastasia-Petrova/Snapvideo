@@ -21,7 +21,7 @@ final class VideoEditorViewController: UIViewController {
     var topLooksConstraint = NSLayoutConstraint()
     let vimeoViewController = VimeoViewController()
     var topVimeoConstraint = NSLayoutConstraint()
-    var selecterFilter: AnyFilter?
+    var selectedFilter: AnyFilter = AnyFilter(PassthroughFilter())
 
     let tabBar = TabBar(items: "LOOKS", "UPLOADS", "EXPORT")
     var cancelButton = LooksViewButton(imageName: "cancel-solid")
@@ -115,7 +115,7 @@ final class VideoEditorViewController: UIViewController {
                     tabBar?.isHidden = newIndex != 0
                     guard newIndex != previousIndex && newIndex != 0 else { return }
                     videoViewController?.player.play()
-                    self.selecterFilter = filters[newIndex]
+                    self.selectedFilter = filters[newIndex]
                 }
         addChild(looksViewController)
         looksViewController.didMove(toParent: self)
@@ -440,9 +440,9 @@ final class VideoEditorViewController: UIViewController {
             self.isExportViewShown = false
         }
         guard let playerItem = videoViewController.player.currentItem else { return }
-        guard let filter = selecterFilter else { return }
+//        guard let filter = selecterFilter else { return }
         VideoEditor.saveEditedVideo(
-            choosenFilter: filter,
+            choosenFilter: selectedFilter,
             asset: playerItem.asset
         )
     }
@@ -472,13 +472,12 @@ final class VideoEditorViewController: UIViewController {
             self.videoViewController.indicatorSwitcher = true
         }
         guard let playerItem = videoViewController.player.currentItem else { return }
-        guard let filter = selecterFilter else { return }
+//        guard let filter = selecterFilter else { return }
         VideoEditor.composeVideo(
-            choosenFilter: filter,
+            choosenFilter: selectedFilter,
             asset: playerItem.asset
         ) { path in
             DispatchQueue.main.async {
-                guard let filePath = path else { return }
                 guard let filePath = path else {
                     self.videoViewController.indicatorSwitcher = false
                     return

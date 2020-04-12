@@ -8,7 +8,6 @@
 
 import UIKit
 import UserNotifications
-import VimeoNetworking
 
 @UIApplicationMain
 final class AppDelegate: UIResponder, UIApplicationDelegate {
