@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import CoreImage
 
-struct BrightTool: Tool {
+struct BrightTool {
     let icon = ImageAsset.Tools.bright
     let inputSharpness: Double = 1.0
     

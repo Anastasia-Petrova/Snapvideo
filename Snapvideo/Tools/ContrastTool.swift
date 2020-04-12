@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import CoreImage
 
-struct ContrastTool: Tool {
+struct ContrastTool {
     let icon = ImageAsset.Tools.contrast
     
     func apply(image: CIImage) -> CIImage {

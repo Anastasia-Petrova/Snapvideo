@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import CoreImage
 
-struct WarmthTool: Tool {
+struct WarmthTool {
     let icon = ImageAsset.Tools.warmth
     
     func apply(image: CIImage) -> CIImage {

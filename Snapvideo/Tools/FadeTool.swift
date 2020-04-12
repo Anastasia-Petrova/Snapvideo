@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import CoreImage
 
-struct FadeTool: Tool {
+struct FadeTool {
     let icon = ImageAsset.Tools.fade
     
     func apply(image: CIImage) -> CIImage {

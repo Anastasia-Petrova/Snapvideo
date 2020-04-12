@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import CoreImage
 
-struct TuneColorTool: Tool {
+struct TuneColorTool {
     let icon = ImageAsset.Tools.tune
     
     func apply(image: CIImage) -> CIImage {

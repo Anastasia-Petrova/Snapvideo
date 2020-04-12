@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import CoreImage
 
-struct SlowDownTool: Tool {
+struct SlowDownTool {
     let icon = ImageAsset.Tools.slowDown
     
     func apply(image: CIImage) -> CIImage {

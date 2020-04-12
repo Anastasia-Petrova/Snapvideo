@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import CoreImage
 
-struct HighlightsTool: Tool {
+struct HighlightsTool {
     let icon = ImageAsset.Tools.highlights
     
     func apply(image: CIImage) -> CIImage {

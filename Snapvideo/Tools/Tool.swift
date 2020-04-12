@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import CoreImage
 
-protocol Tool: CustomStringConvertible, Equatable {
+protocol Tool: CustomStringConvertible, Equatable, Parameterized {
     associatedtype Icon: ImageAssets
     
     var icon: Icon { get }
@@ -22,18 +22,28 @@ extension Tool {
     var description: String { icon.description }
 }
 
-struct AnyTool: Equatable {
-    let apply: (CIImage) -> CIImage
-    let name: String
-    let icon: UIImage
+enum ToolEnum: Equatable {
+    case vignette(tool: VignetteTool)
+    case bright(name: String, icon: UIImage)
+    case blur(name: String, icon: UIImage)
     
-    init<T: Tool>(_ tool: T) where T.Icon == ImageAsset.Tools {
-        apply = tool.apply
-        name = tool.description
-        icon = tool.icon.image()
+    var name: String {
+        switch self {
+        case let .vignette(tool):
+            return tool.description
+        case let .bright(name, _),
+             let .blur(name, _):
+            return name
+        }
     }
     
-    static func == (lhs: AnyTool, rhs: AnyTool) -> Bool {
-        lhs.name == rhs.name
+    var icon: UIImage {
+        switch self {
+        case let .vignette(tool):
+            return tool.icon.image()
+        case let .bright(_, icon),
+             let .blur(_, icon):
+            return icon
+        }
     }
 }

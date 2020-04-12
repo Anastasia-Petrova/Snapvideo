@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import CoreImage
 
-struct SaturationTool: Tool {
+struct SaturationTool {
     let icon = ImageAsset.Tools.saturation
     
     func apply(image: CIImage) -> CIImage {

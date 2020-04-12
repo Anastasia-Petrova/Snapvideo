@@ -22,3 +22,17 @@ protocol Parameterized {
     
     mutating func setValue(value: Value, for parameter: Parameter)
 }
+
+import CoreGraphics
+
+//protocol ParameterizedConcrete {
+//    var allParameters: [String] { get }
+//    
+//    func value(for parameter: String) -> CGFloat
+//    
+//    func minValue(for parameter: String) -> CGFloat
+//    
+//    func maxValue(for parameter: String) -> CGFloat
+//    
+//    mutating func setValue(value: CGFloat, for parameter: String)
+//}
