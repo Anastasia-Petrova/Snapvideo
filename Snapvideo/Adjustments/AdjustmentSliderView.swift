@@ -12,25 +12,30 @@ final class AdjustmentSliderView: UIView {
     private let sliderLayer = CAShapeLayer()
     let separatorLayer = CAShapeLayer()
     private let valueLabel = UILabel()
+    
+    var k: CGFloat { bounds.width/100.0 }
+    
     var name: String {
         didSet {
             setNeedsLayout()
         }
     }
     
-    var value: CGFloat {
+    private var progress: CGFloat { percent * k }
+    
+    var percent: CGFloat {
         didSet {
             setNeedsLayout()
         }
     }
     
     var isPositive: Bool {
-        value >= 0
+        percent >= 0
     }
     
     init(name: String, value: CGFloat) {
         self.name = name
-        self.value = value
+        self.percent = value
         super.init(frame: .zero)
         backgroundColor = .clear
         setUpViews()
@@ -95,14 +100,14 @@ final class AdjustmentSliderView: UIView {
             rect: CGRect(
                 origin: .zero,
                 size: CGSize(
-                    width: isPositive ? value : -value,
+                    width: isPositive ? progress : -progress,
                     height: 6
                 )
             )
         ).cgPath
         let center = bounds.width/2.0
         let position = CGPoint(
-            x: isPositive ? center : center - -value,
+            x: isPositive ? center : center - -progress,
             y: 0
         )
         CATransaction.begin()
@@ -113,7 +118,7 @@ final class AdjustmentSliderView: UIView {
     }
     
     private func updateValueLabel() {
-        valueLabel.text = name + " " + "\(isPositive ? "+" : "")" + "\(Int(value))"
+        valueLabel.text = name + " " + "\(isPositive ? "+" : "")" + "\(Int(percent))"
     }
     
     private func makeSliderView() -> UIView {

@@ -16,7 +16,7 @@ final class AdjustmentsViewController: UIViewController {
     let parameterListItem = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"), style: .plain, target: self, action: #selector(showParameterList))
     let asset: AVAsset
     let videoViewController: VideoViewController
-    lazy var listView = ParameterListView(parameters: [
+    lazy var parameterlistView = ParameterListView(parameters: [
         ParameterListView.Parameter(name: "Brightness", value: 10),
         ParameterListView.Parameter(name: "Contrast", value: 25),
         ParameterListView.Parameter(name: "Saturation", value: 40),
@@ -26,13 +26,14 @@ final class AdjustmentsViewController: UIViewController {
         ParameterListView.Parameter(name: "Warms", value: -5),
     ]) { [weak self] parameter in
         self?.sliderView.name = parameter.name
-        self?.sliderView.value = CGFloat(parameter.value)
+        self?.sliderView.percent = CGFloat(parameter.value)
     }
     
     let sliderView = AdjustmentSliderView(name: "Brightness", value: -50)
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
     
     var previousTranslationY: CGFloat = 0
+    var previousTranslationX: CGFloat = 0
     
     lazy var panGestureRecognizer = UIPanGestureRecognizer(
         target: self,
@@ -61,7 +62,7 @@ final class AdjustmentsViewController: UIViewController {
         view.backgroundColor = .white
         view.addSubview(videoViewController.view)
         view.addSubview(sliderView)
-        view.addSubview(listView)
+        view.addSubview(parameterlistView)
         view.addSubview(toolBar)
         
         setUpVideoViewController()
@@ -85,12 +86,12 @@ final class AdjustmentsViewController: UIViewController {
     }
     
     private func setUpParameterListView() {
-        listView.isHidden = true
-        listView.translatesAutoresizingMaskIntoConstraints = false
+        parameterlistView.isHidden = true
+        parameterlistView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            listView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
-            listView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            listView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
+            parameterlistView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
+            parameterlistView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            parameterlistView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
         ])
     }
     
@@ -132,17 +133,24 @@ final class AdjustmentsViewController: UIViewController {
     
     @objc func handlePanGesture(_ recognizer: UIPanGestureRecognizer) {
         let translation = recognizer.translation(in: videoViewController.view)
-        let deltaY = previousTranslationY - translation.y
-        previousTranslationY = translation.y
-        listView.translateY(deltaY)
-        switch recognizer.state {
-        case .began:
-            listView.setHiddenAnimated(false, duration: 0.3)
-        case .ended:
-            listView.setHiddenAnimated(true, duration: 0.2)
-            previousTranslationY = 0
-            parameterListItem.tintColor = .darkGray
-        default: break
+        let condition = false
+        if condition {
+            let deltaY = previousTranslationY - translation.y
+            previousTranslationY = translation.y
+            parameterlistView.translateY(deltaY)
+            switch recognizer.state {
+            case .began:
+                parameterlistView.setHiddenAnimated(false, duration: 0.3)
+            case .ended:
+                parameterlistView.setHiddenAnimated(true, duration: 0.2)
+                previousTranslationY = 0
+                parameterListItem.tintColor = .darkGray
+            default: break
+            }
+        } else {
+            let deltaX = previousTranslationX - translation.x
+            previousTranslationX = translation.x
+            sliderView.percent += deltaX
         }
     }
     
@@ -151,9 +159,9 @@ final class AdjustmentsViewController: UIViewController {
     }
     
     @objc func showParameterList() {
-        parameterListItem.tintColor = listView.isHidden ? .systemBlue : .darkGray
-        let duration = listView.isHidden ? 0.3 : 0.2
-        listView.setHiddenAnimated(!listView.isHidden, duration: duration)
+        parameterListItem.tintColor = parameterlistView.isHidden ? .systemBlue : .darkGray
+        let duration = parameterlistView.isHidden ? 0.3 : 0.2
+        parameterlistView.setHiddenAnimated(!parameterlistView.isHidden, duration: duration)
     }
     
     @objc func applyAdjustment() {

@@ -10,21 +10,6 @@ import Foundation
 import UIKit
 import CoreImage
 
-protocol Parameterized {
-    associatedtype Parameter: CustomStringConvertible
-    associatedtype Value: CustomStringConvertible
-    
-    var allParameters: [Parameter] { get }
-    
-    func value(for parameter: Parameter) -> Value
-    
-    func minValue(for parameter: Parameter) -> Value
-    
-    func maxValue(for parameter: Parameter) -> Value
-    
-    mutating func setValue(value: Value, for parameter: Parameter)
-}
-
 struct VignetteTool: Tool {
     let icon = ImageAsset.Tools.vignette
     

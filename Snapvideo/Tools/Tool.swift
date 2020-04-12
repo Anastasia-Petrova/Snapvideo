@@ -14,7 +14,6 @@ protocol Tool: CustomStringConvertible, Equatable {
     associatedtype Icon: ImageAssets
     
     var icon: Icon { get }
-//    var name: String { get }
     
     func apply(image: CIImage) -> CIImage
 }
