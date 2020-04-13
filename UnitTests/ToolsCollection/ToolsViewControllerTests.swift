@@ -11,7 +11,7 @@ import XCTest
 
 final class ToolsViewControllerTests: XCTestCase {
     func test_init_assigns_properties() {
-        let tools = [AnyTool(WarmthTool())]
+        let tools: Array<ToolEnum> = [.vignette(tool: VignetteTool())]
         let vc = ToolsViewController(tools: tools)
         let collectionView = vc.collectionView
         let dataSource = vc.dataSource
@@ -22,7 +22,7 @@ final class ToolsViewControllerTests: XCTestCase {
     
     func test_didSelect_calls_choosenToolCallback() {
         let expectedIndexPath = IndexPath(item: 1, section: 0)
-        let tools = [AnyTool(WarmthTool())]
+        let tools: Array<ToolEnum> = [.vignette(tool: VignetteTool())]
         let vc = ToolsViewController(tools: tools)
         
         var toolIndex: Int?

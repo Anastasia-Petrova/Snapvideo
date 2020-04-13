@@ -18,7 +18,7 @@ final class ToolsCollectionDataSourceTests: XCTestCase {
     override func setUp() {
         super.setUp()
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
-        dataSource = ToolsCollectionDataSource(collectionView: collectionView, tools: [AnyTool(WarmthTool())])
+        dataSource = ToolsCollectionDataSource(collectionView: collectionView, tools: [.vignette(tool: VignetteTool())])
     }
 
     override func tearDown() {

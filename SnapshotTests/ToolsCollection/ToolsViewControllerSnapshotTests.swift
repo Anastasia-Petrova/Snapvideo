@@ -12,7 +12,7 @@ import SnapshotTesting
 
 final class ToolsViewControllerSnapshotTests: XCTestCase {
     func testToolsViewController() {
-        let tools = [AnyTool(WarmthTool())]
+        let tools: Array<ToolEnum> = [.vignette(tool: VignetteTool())]
         let vc = ToolsViewController(tools: tools)
         assertSnapshot(matching: vc, as: .image)
     }
