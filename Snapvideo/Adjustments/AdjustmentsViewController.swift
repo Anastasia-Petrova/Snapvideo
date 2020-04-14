@@ -34,9 +34,8 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
     let sliderView = AdjustmentSliderView(name: "Brightness", value: -50)
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
     
-    //TODO: Combine to single CGPoint prop
-    var previousTranslationY: CGFloat = 0
-    var previousTranslationX: CGFloat = 0
+    var previousTranslation: CGFloat = 0
+    var condition = false
     
     lazy var panGestureRecognizer = UIPanGestureRecognizer(
         target: self,
@@ -137,25 +136,35 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
     
     @objc func handlePanGesture(_ recognizer: UIPanGestureRecognizer) {
         let translation = recognizer.translation(in: videoViewController.view)
-        //TODO: Recognize when we BEGAN vertical or horizontal pan gesture.
-        // Lock to particular direction until pan gesture ENDED.
-        let condition = false
+        let velocity = recognizer.velocity(in: self.view)
+            if recognizer.state == .began {
+            var velocityX = velocity.x
+            var velocityY = velocity.y
+            if velocityX < 0 && velocityY < 0 {
+                velocityX *= -1
+                velocityY *= -1
+            } else if velocityX < 0 {
+                velocityX *= -1
+            } else if velocityY < 0 {
+                velocityY *= -1
+            }
+            condition = velocityY > velocityX ? true : false
+        }
         if condition {
-            let deltaY = previousTranslationY - translation.y
-            previousTranslationY = translation.y
+            parameterlistView.setHiddenAnimated(false, duration: 0.3)
+            let deltaY = previousTranslation - translation.y
+            previousTranslation = translation.y
             parameterlistView.translateY(deltaY)
             switch recognizer.state {
-            case .began:
-                parameterlistView.setHiddenAnimated(false, duration: 0.3)
             case .ended:
                 parameterlistView.setHiddenAnimated(true, duration: 0.2)
-                previousTranslationY = 0
+                previousTranslation = 0
                 parameterListItem.tintColor = .darkGray
             default: break
             }
         } else {
-            let deltaX = previousTranslationX - translation.x
-            previousTranslationX = translation.x
+            let deltaX = previousTranslation - translation.x
+            previousTranslation = translation.x
             sliderView.percent += deltaX
         }
     }
