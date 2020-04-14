@@ -13,15 +13,29 @@ final class AdjustmentSliderView: UIView {
     let separatorLayer = CAShapeLayer()
     private let valueLabel = UILabel()
     
-    var k: CGFloat { bounds.width/100.0 }
+    var k: CGFloat { bounds.width/2.0/100.0 }
     
     var name: String {
         didSet {
             setNeedsLayout()
         }
     }
+    let maxPercent: CGFloat = 100.0
+    let minPersent: CGFloat = -100.0
     
-    private var progress: CGFloat { percent * k }
+    private var progress: CGFloat {
+        return percent * k
+    }
+    
+    func setProgress(_ percent: CGFloat) {
+        if percent > maxPercent {
+            self.percent = maxPercent
+        } else if percent < minPersent {
+            self.percent = minPersent
+        } else {
+            self.percent = percent
+        }
+    }
     
     var percent: CGFloat {
         didSet {

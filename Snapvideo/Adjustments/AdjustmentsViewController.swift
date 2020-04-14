@@ -31,10 +31,10 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
         self?.sliderView.percent = CGFloat(parameter.value)
     }
     
-    let sliderView = AdjustmentSliderView(name: "Brightness", value: -50)
+    let sliderView = AdjustmentSliderView(name: "Brightness", value: 0)
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
     
-    var previousTranslation: CGFloat = 0
+    var previousTranslation: CGPoint = .zero
     var condition = false
     
     lazy var panGestureRecognizer = UIPanGestureRecognizer(
@@ -136,36 +136,40 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
     
     @objc func handlePanGesture(_ recognizer: UIPanGestureRecognizer) {
         let translation = recognizer.translation(in: videoViewController.view)
-        let velocity = recognizer.velocity(in: self.view)
-            if recognizer.state == .began {
-            var velocityX = velocity.x
-            var velocityY = velocity.y
-            if velocityX < 0 && velocityY < 0 {
-                velocityX *= -1
-                velocityY *= -1
-            } else if velocityX < 0 {
-                velocityX *= -1
-            } else if velocityY < 0 {
-                velocityY *= -1
+        var velocity = recognizer.velocity(in: self.view)
+        if recognizer.state == .began {
+            if velocity.x < 0 && velocity.y < 0 {
+                velocity.x *= -1
+                velocity.y *= -1
+            } else if velocity.x < 0 {
+                velocity.x *= -1
+            } else if velocity.y < 0 {
+                velocity.y *= -1
             }
-            condition = velocityY > velocityX ? true : false
+            condition = velocity.y > velocity.x ? true : false
         }
         if condition {
-            parameterlistView.setHiddenAnimated(false, duration: 0.3)
-            let deltaY = previousTranslation - translation.y
-            previousTranslation = translation.y
+            let deltaY = previousTranslation.y - translation.y
+            previousTranslation.y = translation.y
             parameterlistView.translateY(deltaY)
             switch recognizer.state {
+            case .began:
+                parameterlistView.setHiddenAnimated(false, duration: 0.3)
             case .ended:
                 parameterlistView.setHiddenAnimated(true, duration: 0.2)
-                previousTranslation = 0
+                previousTranslation = .zero
                 parameterListItem.tintColor = .darkGray
             default: break
             }
         } else {
-            let deltaX = previousTranslation - translation.x
-            previousTranslation = translation.x
-            sliderView.percent += deltaX
+            let deltaX = previousTranslation.x - translation.x
+            previousTranslation.x = translation.x
+            sliderView.setProgress(sliderView.percent - deltaX/sliderView.k)
+            switch recognizer.state {
+            case .ended:
+                previousTranslation = .zero
+            default: break
+            }
         }
     }
     
