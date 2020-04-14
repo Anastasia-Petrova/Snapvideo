@@ -136,17 +136,10 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
     
     @objc func handlePanGesture(_ recognizer: UIPanGestureRecognizer) {
         let translation = recognizer.translation(in: videoViewController.view)
-        var velocity = recognizer.velocity(in: self.view)
+         
         if recognizer.state == .began {
-            if velocity.x < 0 && velocity.y < 0 {
-                velocity.x *= -1
-                velocity.y *= -1
-            } else if velocity.x < 0 {
-                velocity.x *= -1
-            } else if velocity.y < 0 {
-                velocity.y *= -1
-            }
-            condition = velocity.y > velocity.x ? true : false
+            let velocity = recognizer.velocity(in: self.view)
+            condition = abs(velocity.y) > abs(velocity.x) ? true : false
         }
         if condition {
             let deltaY = previousTranslation.y - translation.y
