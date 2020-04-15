@@ -7,19 +7,13 @@
 //
 
 import UIKit
-import Photos
 import UserNotifications
 
 @UIApplicationMain
-final class AppDelegate: UIResponder, UIApplicationDelegate, PHPhotoLibraryChangeObserver {
-    var result: PHFetchResult<PHAsset>?
+final class AppDelegate: UIResponder, UIApplicationDelegate {
     let center = UNUserNotificationCenter.current()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        PHPhotoLibrary.shared().register(self)
-        DispatchQueue.global().async {
-            self.result = PHAsset.fetchAssets(with: .video, options: nil)
-        }
         setupNotifications()
         return true
     }
@@ -68,19 +62,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate, PHPhotoLibraryChang
             }
         }
     }
-    
-    func photoLibraryDidChange(_ changeInstance: PHChange) {
-        guard let result = self.result else { return }
-        if let changes = changeInstance.changeDetails(for: result) {
-            self.result = changes.fetchResultAfterChanges
-            if changes.hasIncrementalChanges {
-                if let inserted = changes.insertedIndexes, inserted.count > 0 {
-                    self.scheduleNotification()
-                }
-            }
-        }
-    }
-    
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {

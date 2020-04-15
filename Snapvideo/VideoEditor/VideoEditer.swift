@@ -29,7 +29,10 @@ struct VideoEditer {
         PHPhotoLibrary.shared().performChanges({
             PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: exportUrl)
             }) { saved, error in
-                
+                if saved {
+                    let appDelegate = AppDelegate()
+                    appDelegate.scheduleNotification()
+                }
             }
         })
     }
