@@ -11,11 +11,43 @@ import VimeoNetworking
 
 final class VimeoViewController: UIViewController {
     let loginButton = UIButton()
-
+    
+    var state: State = .unauthorized {
+        didSet {
+            DispatchQueue.main.async {
+                self.view.setNeedsLayout()
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setUpLiginButton()
+        NetworkingNotification.authenticatedAccountDidChange.observe(target: self, selector: #selector(handleAuthEvent))
+    }
+    
+    deinit {
+        NetworkingNotification.authenticatedAccountDidChange.removeObserver(target: self)
+    }
+    
+    @objc private func handleAuthEvent(_ notification: NSNotification) {
+        let account = notification.object as? VIMAccount
+        state = account == nil ? .unauthorized : .authorized
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateViews()
+    }
+    
+    private func updateViews() {
+        switch state {
+        case .authorized:
+            loginButton.isHidden = true
+        case .unauthorized:
+            loginButton.isHidden = false
+        }
     }
     
     private func setUpLiginButton() {
@@ -39,5 +71,12 @@ final class VimeoViewController: UIViewController {
     @objc func handleLogin() {
         let url = authenticationController.codeGrantAuthorizationURL()
         UIApplication.shared.open(url)
+    }
+}
+
+extension VimeoViewController {
+    enum State {
+        case unauthorized
+        case authorized
     }
 }
