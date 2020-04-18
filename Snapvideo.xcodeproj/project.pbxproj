@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		60621FE4C22B3A1741044231 /* Pods_Snapvideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE163B26EB75FE4D07E09B1E /* Pods_Snapvideo.framework */; };
 		6D01E03623BFA2F900B558E8 /* LooksCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D01E03523BFA2F900B558E8 /* LooksCollectionViewCell.swift */; };
 		6D01E03823BFA3D600B558E8 /* LooksCollectionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D01E03723BFA3D600B558E8 /* LooksCollectionDataSource.swift */; };
 		6D01E03A23BFC2FE00B558E8 /* AssetImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D01E03923BFC2FE00B558E8 /* AssetImageGenerator.swift */; };
@@ -51,7 +50,7 @@
 		6D66487B23EDFC9C002AAF2E /* ToolsCollectionViewCellSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBA80D523EDA155005A585E /* ToolsCollectionViewCellSnapshotTests.swift */; };
 		6D66487C23EDFC9C002AAF2E /* VideoEditorViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC05F9B23EC350200A96B76 /* VideoEditorViewControllerSnapshotTests.swift */; };
 		6D66487E23EDFD34002AAF2E /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D66487D23EDFD34002AAF2E /* Bundle.swift */; };
-		6D66488123EDFE7B002AAF2E /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 6D66488023EDFE7B002AAF2E /* SnapshotTesting */; };
+		6D66488123EDFE7B002AAF2E /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 6D66488023EDFE7B002AAF2E /* SwiftPackageProductDependency */; };
 		6D73068423D06BE300226C77 /* SaveCopyVideoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D73068323D06BE300226C77 /* SaveCopyVideoButton.swift */; };
 		6D8BB64023F5B23D00BDF601 /* ToolsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8BB63F23F5B23D00BDF601 /* ToolsViewControllerTests.swift */; };
 		6D8C283C23F5FA8B008700C3 /* AdjustViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8BB64323F5CFBC00BDF601 /* AdjustViewControllerSnapshotTests.swift */; };
@@ -81,9 +80,10 @@
 		6DDE026A23C12B2A002D7942 /* BlurFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDE026923C12B2A002D7942 /* BlurFilter.swift */; };
 		6DDFFB6B23E9D2CD00093675 /* ToolsCollectionDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDFFB6923E9CF2000093675 /* ToolsCollectionDataSourceTests.swift */; };
 		6DE41ECF243F374D00081913 /* VimeoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE41ECE243F374D00081913 /* VimeoViewController.swift */; };
-		6DE41ED224407E4300081913 /* EasyCoreData in Frameworks */ = {isa = PBXBuildFile; productRef = 6DE41ED124407E4300081913 /* EasyCoreData */; };
+		6DE41ED224407E4300081913 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 6DE41ED124407E4300081913 /* SwiftPackageProductDependency */; };
 		6DEA248D23C2038B00D7595A /* ComicFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEA248C23C2038B00D7595A /* ComicFilter.swift */; };
 		6DFF1AE023C3BEC7009BCAE2 /* OldFilmFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFF1ADF23C3BEC7009BCAE2 /* OldFilmFilter.swift */; };
+		6E838801779348CEBB9384ED /* Pods_Snapvideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 926A73A63FC07E8895ECCAA3 /* Pods_Snapvideo.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -186,7 +186,7 @@
 		6DE41ECE243F374D00081913 /* VimeoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimeoViewController.swift; sourceTree = "<group>"; };
 		6DEA248C23C2038B00D7595A /* ComicFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicFilter.swift; sourceTree = "<group>"; };
 		6DFF1ADF23C3BEC7009BCAE2 /* OldFilmFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldFilmFilter.swift; sourceTree = "<group>"; };
-		AE163B26EB75FE4D07E09B1E /* Pods_Snapvideo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Snapvideo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		926A73A63FC07E8895ECCAA3 /* Pods_Snapvideo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Snapvideo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,8 +194,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				60621FE4C22B3A1741044231 /* Pods_Snapvideo.framework in Frameworks */,
-				6DE41ED224407E4300081913 /* EasyCoreData in Frameworks */,
+				6DE41ED224407E4300081913 /* BuildFile in Frameworks */,
+				6E838801779348CEBB9384ED /* Pods_Snapvideo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,7 +210,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D66488123EDFE7B002AAF2E /* SnapshotTesting in Frameworks */,
+				6D66488123EDFE7B002AAF2E /* BuildFile in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -500,7 +500,7 @@
 		DAEFA7C8383A692575D60434 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AE163B26EB75FE4D07E09B1E /* Pods_Snapvideo.framework */,
+				926A73A63FC07E8895ECCAA3 /* Pods_Snapvideo.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -525,7 +525,7 @@
 				6D17A7D923ABB39100C70542 /* Sources */,
 				6D17A7DA23ABB39100C70542 /* Frameworks */,
 				6D17A7DB23ABB39100C70542 /* Resources */,
-				EC7474647EE6F6538BCD1A7B /* [CP] Embed Pods Frameworks */,
+				5453ECC86B154C67EA7F45BC /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -533,7 +533,7 @@
 			);
 			name = Snapvideo;
 			packageProductDependencies = (
-				6DE41ED124407E4300081913 /* EasyCoreData */,
+				6DE41ED124407E4300081913 /* SwiftPackageProductDependency */,
 			);
 			productName = VideoTest;
 			productReference = 6D17A7DD23ABB39100C70542 /* Snapvideo.app */;
@@ -572,7 +572,7 @@
 			);
 			name = SnapshotTests;
 			packageProductDependencies = (
-				6D66488023EDFE7B002AAF2E /* SnapshotTesting */,
+				6D66488023EDFE7B002AAF2E /* SwiftPackageProductDependency */,
 			);
 			productName = SnapshotTests;
 			productReference = 6D66486D23EDF9A5002AAF2E /* SnapshotTests.xctest */;
@@ -611,8 +611,8 @@
 			);
 			mainGroup = 6D17A7D423ABB39100C70542;
 			packageReferences = (
-				6D66487F23EDFE7B002AAF2E /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
-				6DE41ED024407E4300081913 /* XCRemoteSwiftPackageReference "EasyCoreData" */,
+				6D66487F23EDFE7B002AAF2E /* RemoteSwiftPackageReference */,
+				6DE41ED024407E4300081913 /* RemoteSwiftPackageReference */,
 			);
 			productRefGroup = 6D17A7DE23ABB39100C70542 /* Products */;
 			projectDirPath = "";
@@ -658,6 +658,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		5453ECC86B154C67EA7F45BC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Snapvideo/Pods-Snapvideo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Snapvideo/Pods-Snapvideo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Snapvideo/Pods-Snapvideo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		CD7D4C7C129986E1FBFF539A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -678,23 +695,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		EC7474647EE6F6538BCD1A7B /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Snapvideo/Pods-Snapvideo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Snapvideo/Pods-Snapvideo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Snapvideo/Pods-Snapvideo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1104,7 +1104,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		6D66487F23EDFE7B002AAF2E /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
+		6D66487F23EDFE7B002AAF2E /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing.git";
 			requirement = {
@@ -1112,7 +1112,7 @@
 				minimumVersion = 1.7.1;
 			};
 		};
-		6DE41ED024407E4300081913 /* XCRemoteSwiftPackageReference "EasyCoreData" */ = {
+		6DE41ED024407E4300081913 /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Anastasia-Petrova/EasyCoreData.git";
 			requirement = {
@@ -1123,14 +1123,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		6D66488023EDFE7B002AAF2E /* SnapshotTesting */ = {
+		6D66488023EDFE7B002AAF2E /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6D66487F23EDFE7B002AAF2E /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			package = 6D66487F23EDFE7B002AAF2E /* RemoteSwiftPackageReference */;
 			productName = SnapshotTesting;
 		};
-		6DE41ED124407E4300081913 /* EasyCoreData */ = {
+		6DE41ED124407E4300081913 /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6DE41ED024407E4300081913 /* XCRemoteSwiftPackageReference "EasyCoreData" */;
+			package = 6DE41ED024407E4300081913 /* RemoteSwiftPackageReference */;
 			productName = EasyCoreData;
 		};
 /* End XCSwiftPackageProductDependency section */

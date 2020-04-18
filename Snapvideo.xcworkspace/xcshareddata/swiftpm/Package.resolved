@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "EasyCoreData",
+        "repositoryURL": "https://github.com/Anastasia-Petrova/EasyCoreData.git",
+        "state": {
+          "branch": null,
+          "revision": "4b40649d3182d6f0b71d9eae75d96dfec079fe57",
+          "version": "0.2.0"
+        }
+      },
+      {
+        "package": "SnapshotTesting",
+        "repositoryURL": "https://github.com/pointfreeco/swift-snapshot-testing.git",
+        "state": {
+          "branch": null,
+          "revision": "114882386a815f4a2e6d8f2f7ee4857acd372438",
+          "version": "1.7.2"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
