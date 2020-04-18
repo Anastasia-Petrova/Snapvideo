@@ -7,29 +7,9 @@
 //
 
 import UIKit
-import VimeoNetworking
 
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
-    
-    lazy var appConfiguration: AppConfiguration = {
-        .init(
-            clientIdentifier: "feaa04ff48eedc3e6474cf36515591cab2e4f84e",
-            clientSecret: "crpqthfLxViJGIMLICoxaShxm68uEWjHsyApn5UpsKvAef/QStz1cC7lC5OIHZXzXdgNQ7OpdkMjKFwd8fAGRr4+hIg8v3FvgJXG3wRKIoMBEfYzdyzdHFVlrqMjGu1I",
-            scopes: [.Public],
-            keychainService: "KeychainServiceVimeo"
-        )
-    }()
-    
-    lazy var vimeoClient: VimeoClient = { .init(appConfiguration: appConfiguration, configureSessionManagerBlock: nil) }()
-    
-    lazy var authenticationController: AuthenticationController = {
-        .init(
-            client: vimeoClient,
-            appConfiguration: appConfiguration,
-            configureSessionManagerBlock: nil
-        )
-    }()
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
@@ -40,7 +20,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         URLContexts.forEach {
-            self.authenticationController.codeGrant(responseURL: $0.url) { [weak vimeoClient = self.vimeoClient] result in
+            authenticationController.codeGrant(responseURL: $0.url) { result in
                 switch result
                 {
                 case .success(let account):
@@ -71,10 +51,5 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
-    }
-    
-    public func startVimeo() {
-        let url = authenticationController.codeGrantAuthorizationURL()
-        UIApplication.shared.open(url)
     }
 }

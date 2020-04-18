@@ -37,8 +37,7 @@ final class VimeoViewController: UIViewController {
     }
     
     @objc func handleLogin() {
-        let sceneDelegate = SceneDelegate()
-        sceneDelegate.startVimeo()
+        let url = authenticationController.codeGrantAuthorizationURL()
+        UIApplication.shared.open(url)
     }
 }
-
