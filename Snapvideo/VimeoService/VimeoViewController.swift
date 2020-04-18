@@ -36,6 +36,7 @@ final class VimeoViewController: UIViewController {
     @objc private func handleAuthEvent(_ notification: NSNotification) {
         let account = notification.object as? VIMAccount
         state = account == nil ? .unauthorized : .authorized
+        fetchVideos()
     }
     
     override func viewDidLayoutSubviews() {
@@ -51,6 +52,21 @@ final class VimeoViewController: UIViewController {
         case .unauthorized:
             loginButton.isHidden = false
             videoCollection.isHidden = true
+        }
+    }
+    
+    private func fetchVideos() {
+        let requestMyVideo = Request<[VIMVideo]>(path: "me/videos")
+        _ = vimeoClient.request(requestMyVideo) { result in
+            switch result {
+            case let .success(response):
+                let videos: [VIMVideo] = response.model
+                let url = URL(string: videos[0].link!)!
+//                UIApplication.shared.open(url)
+                print("retrieved video: \(videos)")
+            case let .failure(error):
+                print("error retrieving video: \(error)")
+            }
         }
     }
     
