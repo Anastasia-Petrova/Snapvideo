@@ -12,6 +12,7 @@ import VimeoNetworking
 final class VimeoViewController: UIViewController {
     let loginButton = UIButton()
     let videoCollection = UICollectionView(frame: .zero, collectionViewLayout: .init())
+    lazy var videoDataSource = VideoDataSource(collectionView: videoCollection)
     
     var state: State = .unauthorized {
         didSet {
@@ -56,18 +57,7 @@ final class VimeoViewController: UIViewController {
     }
     
     private func fetchVideos() {
-        let requestMyVideo = Request<[VIMVideo]>(path: "me/videos")
-        _ = vimeoClient.request(requestMyVideo) { result in
-            switch result {
-            case let .success(response):
-                let videos: [VIMVideo] = response.model
-                let url = URL(string: videos[0].link!)!
-//                UIApplication.shared.open(url)
-                print("retrieved video: \(videos)")
-            case let .failure(error):
-                print("error retrieving video: \(error)")
-            }
-        }
+        videoDataSource.fetchVideos()
     }
     
     private func setUpVideoCollection() {
