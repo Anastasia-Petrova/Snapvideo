@@ -11,6 +11,7 @@ import VimeoNetworking
 
 final class VimeoViewController: UIViewController {
     let loginButton = UIButton()
+    let videoCollection = UICollectionView(frame: .zero, collectionViewLayout: .init())
     
     var state: State = .unauthorized {
         didSet {
@@ -24,6 +25,7 @@ final class VimeoViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setUpLiginButton()
+        setUpVideoCollection()
         NetworkingNotification.authenticatedAccountDidChange.observe(target: self, selector: #selector(handleAuthEvent))
     }
     
@@ -45,9 +47,23 @@ final class VimeoViewController: UIViewController {
         switch state {
         case .authorized:
             loginButton.isHidden = true
+            videoCollection.isHidden = false
         case .unauthorized:
             loginButton.isHidden = false
+            videoCollection.isHidden = true
         }
+    }
+    
+    private func setUpVideoCollection() {
+        videoCollection.translatesAutoresizingMaskIntoConstraints = false
+        videoCollection.backgroundColor = .red
+        view.addSubview(videoCollection)
+        NSLayoutConstraint.activate ([
+            videoCollection.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            videoCollection.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            videoCollection.topAnchor.constraint(equalTo: view.topAnchor),
+            videoCollection.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
     }
     
     private func setUpLiginButton() {
