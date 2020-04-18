@@ -12,17 +12,23 @@ import VimeoNetworking
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     
-    lazy var authenticationController: AuthenticationController = {
-        let appConfiguration = AppConfiguration(
+    lazy var appConfiguration: AppConfiguration = {
+        .init(
             clientIdentifier: "feaa04ff48eedc3e6474cf36515591cab2e4f84e",
             clientSecret: "crpqthfLxViJGIMLICoxaShxm68uEWjHsyApn5UpsKvAef/QStz1cC7lC5OIHZXzXdgNQ7OpdkMjKFwd8fAGRr4+hIg8v3FvgJXG3wRKIoMBEfYzdyzdHFVlrqMjGu1I",
             scopes: [.Public],
             keychainService: "KeychainServiceVimeo"
         )
-        
-        let vimeoClient = VimeoClient(appConfiguration: appConfiguration, configureSessionManagerBlock: nil)
-        
-        return AuthenticationController(client: vimeoClient, appConfiguration: appConfiguration, configureSessionManagerBlock: nil)
+    }()
+    
+    lazy var vimeoClient: VimeoClient = { .init(appConfiguration: appConfiguration, configureSessionManagerBlock: nil) }()
+    
+    lazy var authenticationController: AuthenticationController = {
+        .init(
+            client: vimeoClient,
+            appConfiguration: appConfiguration,
+            configureSessionManagerBlock: nil
+        )
     }()
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -34,10 +40,22 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         URLContexts.forEach {
-            self.authenticationController.codeGrant(responseURL: $0.url) { result in
+            self.authenticationController.codeGrant(responseURL: $0.url) { [weak vimeoClient = self.vimeoClient] result in
                 switch result
                 {
                 case .success(let account):
+//                    let requestMyVideo = Request<[VIMVideo]>(path: "me/videos")
+//                    _ = vimeoClient?.request(requestMyVideo) { result in
+//                        switch result {
+//                        case let .success(response):
+//                            let video: [VIMVideo] = response.model
+//                            let url = URL(string: video[0].link!)!
+//                            UIApplication.shared.open(url)
+////                            print("retrieved video: \(video)")
+//                        case let .failure(error):
+//                            print("error retrieving video: \(error)")
+//                        }
+//                    }
                     print("authenticated successfully: \(account)")
                 case .failure(let error):
                     print("failure authenticating: \(error)")
@@ -56,7 +74,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     public func startVimeo() {
-        let URL = authenticationController.codeGrantAuthorizationURL()
-        UIApplication.shared.open(URL)
+        let url = authenticationController.codeGrantAuthorizationURL()
+        UIApplication.shared.open(url)
     }
 }
