@@ -1,5 +1,5 @@
 //
-//  ToolEditingViewController.swift
+//  AdjustmentsViewController.swift
 //  Snapvideo
 //
 //  Created by Anastasia Petrova on 13/02/2020.

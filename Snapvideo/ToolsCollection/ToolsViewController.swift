@@ -23,7 +23,7 @@ final class ToolsViewController: UIViewController {
         self.dataSource = ToolsCollectionDataSource(collectionView: collectionView, tools: tools)
         super.init(nibName: nil, bundle: nil)
         collectionView.delegate = self
-        
+    
     }
     
     required init?(coder: NSCoder) {
