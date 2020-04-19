@@ -29,6 +29,11 @@ final class VimeoViewController: UIViewController {
         setUpVideoCollection()
         NetworkingNotification.authenticatedAccountDidChange.observe(target: self, selector: #selector(handleAuthEvent))
         videoCollection.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
+        do {
+            _ = try authenticationController.loadUserAccount()
+        } catch {
+            state = .unauthorized
+        }
     }
     
     @objc private func handleTap() {
@@ -49,6 +54,9 @@ final class VimeoViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        if let layout = videoCollection.collectionViewLayout as? VimeoCollectionLayout {
+            layout.setWidth(width: view.frame.width)
+        }
         updateViews()
     }
     

@@ -15,41 +15,21 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        start()
+//        start(HomeViewController())
+        start(VimeoViewController())
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         URLContexts.forEach {
-            authenticationController.codeGrant(responseURL: $0.url) { result in
-                switch result
-                {
-                case .success(let account):
-//                    let requestMyVideo = Request<[VIMVideo]>(path: "me/videos")
-//                    _ = vimeoClient?.request(requestMyVideo) { result in
-//                        switch result {
-//                        case let .success(response):
-//                            let video: [VIMVideo] = response.model
-//                            let url = URL(string: video[0].link!)!
-//                            UIApplication.shared.open(url)
-////                            print("retrieved video: \(video)")
-//                        case let .failure(error):
-//                            print("error retrieving video: \(error)")
-//                        }
-//                    }
-                    print("authenticated successfully: \(account)")
-                case .failure(let error):
-                    print("failure authenticating: \(error)")
-                }
-            }
+            authenticationController.codeGrant(responseURL: $0.url) { _ in }
         }
     }
     
-    private func start() {
-        let vc = HomeViewController()
-        
+    private func start(_ vc: UIViewController) {
         let navigationController = UINavigationController(rootViewController: vc)
         
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }
+
 }
