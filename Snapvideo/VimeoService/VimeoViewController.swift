@@ -11,14 +11,7 @@ import VimeoNetworking
 
 final class VimeoViewController: UIViewController {
     let loginButton = UIButton()
-    let collectionLayout: UICollectionViewLayout = {
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 1280/5.0, height: 720/5.0)
-        layout.minimumLineSpacing = 16.0
-        layout.minimumInteritemSpacing = 16.0
-        return layout
-    }()
-    lazy var videoCollection = UICollectionView(frame: .zero, collectionViewLayout: collectionLayout)
+    lazy var videoCollection = UICollectionView(frame: .zero, collectionViewLayout: VimeoCollectionLayout())
     lazy var videoDataSource = VideoDataSource(collectionView: videoCollection)
     
     var state: State = .unauthorized {
