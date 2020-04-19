@@ -15,6 +15,7 @@
 		6D0C29C423C2A8C1006E7C40 /* AVAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0C29C323C2A8C1006E7C40 /* AVAsset.swift */; };
 		6D0E9B88244B61A4008339FE /* VideoDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0E9B87244B61A4008339FE /* VideoDataSource.swift */; };
 		6D0E9B8A244B6460008339FE /* VideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0E9B89244B6460008339FE /* VideoCell.swift */; };
+		6D0E9B8C244B8ED3008339FE /* VimeoCollectionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0E9B8B244B8ED3008339FE /* VimeoCollectionLayout.swift */; };
 		6D154AAE23DC72F900150E0A /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D154AAD23DC72F900150E0A /* Media.xcassets */; };
 		6D154AB023DC7A2A00150E0A /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D154AAF23DC7A2A00150E0A /* Bundle.swift */; };
 		6D154AB223DC817100150E0A /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D154AB123DC817100150E0A /* TestHelpers.swift */; };
@@ -117,6 +118,7 @@
 		6D0C29C323C2A8C1006E7C40 /* AVAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVAsset.swift; sourceTree = "<group>"; };
 		6D0E9B87244B61A4008339FE /* VideoDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDataSource.swift; sourceTree = "<group>"; };
 		6D0E9B89244B6460008339FE /* VideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCell.swift; sourceTree = "<group>"; };
+		6D0E9B8B244B8ED3008339FE /* VimeoCollectionLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimeoCollectionLayout.swift; sourceTree = "<group>"; };
 		6D154AAD23DC72F900150E0A /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		6D154AAF23DC7A2A00150E0A /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		6D154AB123DC817100150E0A /* TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
@@ -500,6 +502,7 @@
 			isa = PBXGroup;
 			children = (
 				6DE41ECE243F374D00081913 /* VimeoViewController.swift */,
+				6D0E9B8B244B8ED3008339FE /* VimeoCollectionLayout.swift */,
 				6D0E9B87244B61A4008339FE /* VideoDataSource.swift */,
 				6D0E9B89244B6460008339FE /* VideoCell.swift */,
 			);
@@ -746,6 +749,7 @@
 				6DB0698A23EE0EAE0088F4B7 /* LooksViewController.swift in Sources */,
 				6DDE026323C11659002D7942 /* VideoView.swift in Sources */,
 				6DB6C13F23C4D8A700E256A4 /* VignetteFilter.swift in Sources */,
+				6D0E9B8C244B8ED3008339FE /* VimeoCollectionLayout.swift in Sources */,
 				6D17A7E323ABB39100C70542 /* SceneDelegate.swift in Sources */,
 				6D1D491123D785FB00ECACE5 /* ColorInvertFilter.swift in Sources */,
 				6D1D491B23D78EDA00ECACE5 /* TonalFilter.swift in Sources */,
