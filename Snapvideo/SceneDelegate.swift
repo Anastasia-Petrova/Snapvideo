@@ -15,6 +15,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
+        loadVimeoUserAccount()
 //        start(HomeViewController())
         start(VimeoViewController())
     }
@@ -31,5 +32,12 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }
-
+    
+    private func loadVimeoUserAccount() {
+        do {
+            _ = try authenticationController.loadUserAccount()
+        } catch {
+            print("Couldn't load Vimeo account: \(error)")
+        }
+    }
 }

@@ -27,13 +27,9 @@ final class VimeoViewController: UIViewController {
         view.backgroundColor = .white
         setUpLiginButton()
         setUpVideoCollection()
+        state = vimeoClient.currentAccount == nil ? .unauthorized : .authorized
         NetworkingNotification.authenticatedAccountDidChange.observe(target: self, selector: #selector(handleAuthEvent))
         videoCollection.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
-        do {
-            _ = try authenticationController.loadUserAccount()
-        } catch {
-            state = .unauthorized
-        }
     }
     
     @objc private func handleTap() {
