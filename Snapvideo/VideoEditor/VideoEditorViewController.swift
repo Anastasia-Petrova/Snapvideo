@@ -22,6 +22,7 @@ final class VideoEditorViewController: UIViewController {
     let vimeoViewController = VimeoViewController()
     var topVimeoConstraint = NSLayoutConstraint()
     var selectedFilter: AnyFilter = AnyFilter(PassthroughFilter())
+    let coverView = UIView()
 
     let tabBar = TabBar(items: "LOOKS", "UPLOADS", "EXPORT")
     var cancelButton = LooksViewButton(imageName: "cancel-solid")
@@ -48,8 +49,10 @@ final class VideoEditorViewController: UIViewController {
         didSet {
             if isVimeoButtonSelected {
                 openVimeo()
+                coverView.isHidden = false
             } else {
                 closeVimeo()
+                coverView.isHidden = true
             }
         }
     }
@@ -138,9 +141,11 @@ final class VideoEditorViewController: UIViewController {
         
         view.addSubview(videoViewController.view)
         view.addSubview(looksContainerView)
+        view.addSubview(coverView)
         view.addSubview(vimeoViewController.view)
         view.addSubview(exportView)
         view.addSubview(tabBar)
+        
         
         setUpVideoViewController()
         setUpLooksView()
@@ -152,6 +157,7 @@ final class VideoEditorViewController: UIViewController {
         setUpSaveCopyStackView()
         setUpShareButton()
         setUpSaveCopyButton()
+        setUpCoverView()
         setUpTabBar()
     }
     
@@ -378,6 +384,21 @@ final class VideoEditorViewController: UIViewController {
             shareButton.topAnchor.constraint(equalTo: shareStackView.topAnchor),
             shareButton.bottomAnchor.constraint(equalTo: shareStackView.bottomAnchor)
         ])
+    }
+    
+    private func setUpCoverView() {
+        coverView.translatesAutoresizingMaskIntoConstraints = false
+        coverView.backgroundColor = .lightGray
+        coverView.alpha = 0.5
+        
+        NSLayoutConstraint.activate ([
+            coverView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            coverView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            coverView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            coverView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+        ])
+        
+        coverView.isHidden = true
     }
    
     public func openLooks() {
