@@ -18,6 +18,7 @@ final class VideoDataSource: NSObject {
         self.collectionView = collectionView
         super.init()
         collectionView.dataSource = self
+        collectionView.register(VimeoCollectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "VimeoCollectionHeader")
         collectionView.register(VideoCell.self, forCellWithReuseIdentifier: cellIndentifier)
     }
     
@@ -57,6 +58,16 @@ extension VideoDataSource: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return videos.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "VimeoCollectionHeader", for: indexPath)
+            return headerView
+            
+        default:  fatalError("Unexpected element kind")
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
