@@ -39,7 +39,8 @@ final class VideoDataSource: NSObject {
     }
     
     func fetchVideos() {
-        let requestMyVideo = Request<[VIMVideo]>(path: "me/videos")
+        let requestMyVideo = Request<[VIMVideo]>(path: "me/videos", useCache: false)
+        
         _ = vimeoClient.request(requestMyVideo) { [weak self] result in
             switch result {
             case let .success(response):

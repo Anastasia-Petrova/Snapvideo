@@ -1,5 +1,5 @@
 //
-//  SaveCopyVideoButton.swift
+//  HightlightedButton.swift
 //  Snapvideo
 //
 //  Created by Anastasia Petrova on 02/02/2020.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class SaveCopyVideoButton: UIButton {
+final class HightlightedButton: UIButton {
     override var isHighlighted: Bool {
         didSet {
             backgroundColor = isHighlighted ? UIColor.lightGray.withAlphaComponent(0.1) : UIColor.clear

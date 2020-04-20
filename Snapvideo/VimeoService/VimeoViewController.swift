@@ -69,7 +69,7 @@ final class VimeoViewController: UIViewController {
     
     private func setUpVideoCollection() {
         videoCollection.translatesAutoresizingMaskIntoConstraints = false
-        videoCollection.backgroundColor = .red
+        videoCollection.backgroundColor = .white
         view.addSubview(videoCollection)
         NSLayoutConstraint.activate ([
             videoCollection.leadingAnchor.constraint(equalTo: view.leadingAnchor),

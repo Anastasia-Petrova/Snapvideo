@@ -27,6 +27,8 @@ final class VideoCell: UICollectionViewCell {
             imageView.topAnchor.constraint(equalTo: topAnchor),
             imageView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+        imageView.contentMode = .center
+        imageView.clipsToBounds = true
     }
     
     required init?(coder: NSCoder) {

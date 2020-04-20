@@ -26,8 +26,8 @@ final class VideoEditorViewController: UIViewController {
     let tabBar = TabBar(items: "LOOKS", "UPLOADS", "EXPORT")
     var cancelButton = LooksViewButton(imageName: "cancel-solid")
     var doneButton = LooksViewButton(imageName: "done-solid")
-    var saveCopyButton = SaveCopyVideoButton()
-    var shareButton = SaveCopyVideoButton()
+    var saveCopyButton = HightlightedButton()
+    var shareButton = HightlightedButton()
     var spacerHeight = CGFloat()
     let shareStackView = UIStackView()
     let saveCopyStackView = UIStackView()
@@ -288,7 +288,7 @@ final class VideoEditorViewController: UIViewController {
     func setUpShareStackView() {
         shareStackView.spacing = 16
         shareStackView.alignment = .center
-        let imageView = ExportImageView(imageName: "square.and.arrow.up")
+        let imageView = ExportImageView(systemName: "square.and.arrow.up")
         let leftSpacer = UIView()
         let rightSpacer = UIView()
         let labelsStackView = UIStackView()
@@ -323,7 +323,7 @@ final class VideoEditorViewController: UIViewController {
     func setUpSaveCopyStackView() {
         saveCopyStackView.spacing = 16
         saveCopyStackView.alignment = .center
-        let imageView = ExportImageView(imageName: "doc.on.doc")
+        let imageView = ExportImageView(systemName: "doc.on.doc")
         let leftSpacer = UIView()
         let rightSpacer = UIView()
         let labelsStackView = UIStackView()
