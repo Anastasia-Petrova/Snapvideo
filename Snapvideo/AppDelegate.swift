@@ -45,10 +45,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         center.setNotificationCategories([category])
     }
     
-    public func scheduleNotification() {
+    public func scheduleNotification(title: String, body: String) {
         let content = UNMutableNotificationContent()
-        content.title = "Success!"
-        content.body = "Video was saved."
+        content.title = title
+        content.body = body
         content.sound = UNNotificationSound.default
         let date = Date(timeIntervalSinceNow: 1)
         let triggerDate = Calendar.current.dateComponents([.year,.month,.day,.hour,.minute,.second,], from: date)

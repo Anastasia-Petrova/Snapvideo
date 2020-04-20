@@ -40,7 +40,10 @@ struct VideoEditor {
             }) { saved, error in
                 if saved {
                     let appDelegate = AppDelegate()
-                    appDelegate.scheduleNotification()
+                    appDelegate.scheduleNotification(title: "Success!", body: "Video was saved.")
+                } else {
+                    let appDelegate = AppDelegate()
+                    appDelegate.scheduleNotification(title: "Error!", body: "Video was not saved. Try again.")
                 }
             }
         }
