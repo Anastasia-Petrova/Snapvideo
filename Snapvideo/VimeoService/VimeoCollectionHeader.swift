@@ -41,7 +41,7 @@ final class VimeoCollectionHeader: UICollectionViewCell {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.alignment = .center
-        stackView.spacing = 30
+        stackView.spacing = 20
         stackView.addArrangedSubview(imageView)
         stackView.addArrangedSubview(label)
         contentView.addSubview(stackView)

@@ -9,7 +9,6 @@
 import UIKit
 
 final class BackgroundView: UIView {
-    let stackView = UIStackView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -22,27 +21,19 @@ final class BackgroundView: UIView {
     }
     
     func setUpBackgroundView() {
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(stackView)
-        stackView.axis = .vertical
-        
-        let imageView = UIImageView(image: UIImage(systemName: "video"))
-        imageView.tintColor = .lightGray
-        imageView.contentMode = .scaleAspectFit
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(label)
         label.font = .systemFont(ofSize: 25, weight: .medium)
         label.numberOfLines = 0
-        label.text = "You haven't uploaded any videos yet"
+        label.text = "You don't have any videos yet"
         label.textColor = .lightGray
         label.textAlignment = .center
-        stackView.addArrangedSubview(imageView)
-        stackView.addArrangedSubview(label)
         
         NSLayoutConstraint.activate([
-            stackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 40),
-            stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -40),
-            imageView.heightAnchor.constraint(equalToConstant: 50)
+            label.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 40),
+            label.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -40)
         ])
     }
 }

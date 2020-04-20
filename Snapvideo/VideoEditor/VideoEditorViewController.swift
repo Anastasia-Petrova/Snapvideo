@@ -237,7 +237,7 @@ final class VideoEditorViewController: UIViewController {
         NSLayoutConstraint.activate ([
             vimeoViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             vimeoViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            vimeoViewController.view.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5),
+            vimeoViewController.view.heightAnchor.constraint(equalToConstant: 280),
             topVimeoConstraint
         ])
     }
