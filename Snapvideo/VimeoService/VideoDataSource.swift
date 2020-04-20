@@ -58,6 +58,7 @@ extension VideoDataSource: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        collectionView.backgroundView?.isHidden = !videos.isEmpty
         return videos.count
     }
     
