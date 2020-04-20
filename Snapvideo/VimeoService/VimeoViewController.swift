@@ -16,6 +16,7 @@ final class VimeoViewController: UIViewController {
     
     var state: State = .unauthorized {
         didSet {
+            fetchVideos()
             DispatchQueue.main.async {
                 self.view.setNeedsLayout()
             }
@@ -29,13 +30,7 @@ final class VimeoViewController: UIViewController {
         setUpVideoCollection()
         state = vimeoClient.currentAccount == nil ? .unauthorized : .authorized
         NetworkingNotification.authenticatedAccountDidChange.observe(target: self, selector: #selector(handleAuthEvent))
-        videoCollection.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
-    }
-    
-    @objc private func handleTap() {
-        if state == .authorized {
-            fetchVideos()
-        }
+        videoCollection.delegate = self
     }
     
     deinit {
@@ -45,7 +40,6 @@ final class VimeoViewController: UIViewController {
     @objc private func handleAuthEvent(_ notification: NSNotification) {
         let account = notification.object as? VIMAccount
         state = account == nil ? .unauthorized : .authorized
-        fetchVideos()
     }
     
     override func viewDidLayoutSubviews() {
@@ -68,7 +62,9 @@ final class VimeoViewController: UIViewController {
     }
     
     private func fetchVideos() {
-        videoDataSource.fetchVideos()
+        if state == .authorized {
+            videoDataSource.fetchVideos()
+        }
     }
     
     private func setUpVideoCollection() {
@@ -111,5 +107,15 @@ extension VimeoViewController {
     enum State {
         case unauthorized
         case authorized
+    }
+}
+
+extension VimeoViewController: UICollectionViewDelegate {
+    
+}
+
+extension VimeoViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: 50)
     }
 }
