@@ -26,7 +26,7 @@ final class VideoEditorViewController: UIViewController {
     var doneButton = LooksViewButton(imageName: "done-solid")
     var saveCopyButton = SaveCopyVideoButton()
     var spacerHeight = CGFloat()
-    let saveStackView = UIStackView()
+    let shareStackView = UIStackView()
     let saveCopyStackView = UIStackView()
     let itemSize = CGSize(width: 60, height: 76)
     var previouslySelectedIndex: Int?
@@ -161,7 +161,7 @@ final class VideoEditorViewController: UIViewController {
         setUpDoneButton()
         setUpToolsView()
         setUpExportView()
-        setUpSaveStackView()
+        setUpShareStackView()
         setUpSaveCopyStackView()
         setUpSaveCopyButton()
         setUpTabBar()
@@ -272,11 +272,11 @@ final class VideoEditorViewController: UIViewController {
             exportStackView.topAnchor.constraint(equalTo: exportView.topAnchor),
             exportStackView.bottomAnchor.constraint(equalTo: exportView.bottomAnchor)
         ])
-        saveStackView.translatesAutoresizingMaskIntoConstraints = false
-        saveStackView.axis = .horizontal
+        shareStackView.translatesAutoresizingMaskIntoConstraints = false
+        shareStackView.axis = .horizontal
         saveCopyStackView.translatesAutoresizingMaskIntoConstraints = false
         saveCopyStackView.axis = .horizontal
-        exportStackView.addArrangedSubview(saveStackView)
+        exportStackView.addArrangedSubview(shareStackView)
         exportStackView.addArrangedSubview(saveCopyStackView)
     }
     
@@ -297,22 +297,22 @@ final class VideoEditorViewController: UIViewController {
         doneButton.addTarget(self, action: #selector(self.saveFilter), for: .touchUpInside)
     }
     
-    func setUpSaveStackView() {
-        saveStackView.spacing = 16
-        saveStackView.alignment = .center
-        let imageView = ExportImageView(imageName: "saveVideoImage")
+    func setUpShareStackView() {
+        shareStackView.spacing = 16
+        shareStackView.alignment = .center
+        let imageView = ExportImageView(systemName: "square.and.arrow.up")
         let leftSpacer = UIView()
         let rightSpacer = UIView()
         let labelsStackView = UIStackView()
         labelsStackView.translatesAutoresizingMaskIntoConstraints = false
         labelsStackView.axis = .vertical
         
-        saveStackView.addArrangedSubview(leftSpacer)
-        saveStackView.addArrangedSubview(imageView)
-        saveStackView.addArrangedSubview(labelsStackView)
-        saveStackView.addArrangedSubview(rightSpacer)
-        saveStackView.setCustomSpacing(0, after: leftSpacer)
-        saveStackView.setCustomSpacing(0, after: labelsStackView)
+        shareStackView.addArrangedSubview(leftSpacer)
+        shareStackView.addArrangedSubview(imageView)
+        shareStackView.addArrangedSubview(labelsStackView)
+        shareStackView.addArrangedSubview(rightSpacer)
+        shareStackView.setCustomSpacing(0, after: leftSpacer)
+        shareStackView.setCustomSpacing(0, after: labelsStackView)
         
         NSLayoutConstraint.activate ([
             leftSpacer.widthAnchor.constraint(equalToConstant: 16),
@@ -321,21 +321,21 @@ final class VideoEditorViewController: UIViewController {
         ])
         
         let header = HeaderExportLabel()
-        header.text = "Save"
+        header.text = "Share"
         
         let body = BodyExportLabel()
-        body.text = "Saves with changes that you can undo. IOS will ask for permission to modify this photo."
-        
+        body.text = "Posts video to social media sites or sends it via email or SMS."
+
         labelsStackView.addArrangedSubview(header)
         labelsStackView.addArrangedSubview(body)
         labelsStackView.layoutMargins = .init(top: 8, left: 0, bottom: 8, right: 0)
         labelsStackView.isLayoutMarginsRelativeArrangement = true
     }
-    
+        
     func setUpSaveCopyStackView() {
         saveCopyStackView.spacing = 16
         saveCopyStackView.alignment = .center
-        let imageView = ExportImageView(imageName: "saveVideoCopyImage")
+        let imageView = ExportImageView(systemName: "doc.on.doc")
         let leftSpacer = UIView()
         let rightSpacer = UIView()
         let labelsStackView = UIStackView()
@@ -360,7 +360,7 @@ final class VideoEditorViewController: UIViewController {
         header.text = "Save a copy"
         
         let body = BodyExportLabel()
-        body.text = "Creates a copy with changes that you can undo."
+        body.text = "Creates a copy with changes that you can not undo."
         
         labelsStackView.addArrangedSubview(header)
         labelsStackView.addArrangedSubview(body)
