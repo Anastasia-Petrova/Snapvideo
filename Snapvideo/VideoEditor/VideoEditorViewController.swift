@@ -25,6 +25,7 @@ final class VideoEditorViewController: UIViewController {
     var cancelButton = LooksViewButton(imageName: "cancel-solid")
     var doneButton = LooksViewButton(imageName: "done-solid")
     var saveCopyButton = SaveCopyVideoButton()
+    var shareButton = SaveCopyVideoButton()
     var spacerHeight = CGFloat()
     let shareStackView = UIStackView()
     let saveCopyStackView = UIStackView()
@@ -380,6 +381,18 @@ final class VideoEditorViewController: UIViewController {
         ])
     }
     
+    func setUpShareButton() {
+        shareButton.translatesAutoresizingMaskIntoConstraints = false
+        shareButton.addTarget(self, action: #selector(self.openActivityView), for: .touchUpInside)
+        shareStackView.addSubview(shareButton)
+        NSLayoutConstraint.activate ([
+            shareButton.trailingAnchor.constraint(equalTo: shareStackView.trailingAnchor),
+            shareButton.leadingAnchor.constraint(equalTo: shareStackView.leadingAnchor),
+            shareButton.topAnchor.constraint(equalTo: shareStackView.topAnchor),
+            shareButton.bottomAnchor.constraint(equalTo: shareStackView.bottomAnchor)
+        ])
+    }
+    
     @objc func playerItemDidReachEnd(notification: Notification) {
         if let playerItem = notification.object as? AVPlayerItem {
             playerItem.seek(to: CMTime.zero, completionHandler: nil)
@@ -439,6 +452,10 @@ final class VideoEditorViewController: UIViewController {
     
     private func resetToDefaultFilter() {
         looksViewController.deselectFilter()
+    }
+    
+    @objc func openActivityView() {
+        
     }
     
     @objc func discardLooks() {
