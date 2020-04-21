@@ -10,6 +10,7 @@ import UIKit
 import AVKit
 import MobileCoreServices
 import EasyCoreData
+import CoreData
 
 final class HomeViewController: UIViewController {
     let controller = CoreDataController<Video, VideoViewModel>(entityName: "Video")
@@ -25,6 +26,8 @@ final class HomeViewController: UIViewController {
         setUpStackView()
         setUpAddVideoButton()
         setUpOpenButton()
+        controller.fetch()
+        getSavedVideo()
     }
     
     func setUpOpenButton() {
@@ -73,10 +76,6 @@ final class HomeViewController: UIViewController {
         button.addTarget(self, action: #selector(handleAddVideoTap), for: .touchUpInside)
     }
     
-    @objc private func handleAddVideoTap() {
-         VideoBrowser.startMediaBrowser(delegate: self, sourceType: .savedPhotosAlbum)
-    }
-    
     private func embed(_ videoEditorVC: UIViewController) {
         self.childViewController = videoEditorVC
         videoEditorVC.view.translatesAutoresizingMaskIntoConstraints = false
@@ -102,11 +101,27 @@ final class HomeViewController: UIViewController {
         childVC.view.removeFromSuperview()
     }
     
-    private func saveVideo(url: URL, filter: String = "Original") {
+    private func getSavedVideo() {
+        if controller.numberOfItems(in: 0) > 0,
+            let url = toPinViewModel(0).url {
+            let index = toPinViewModel(0).index
+            embed(VideoEditorViewController(url: url, index: Int(index), filters: self.app.filters))
+        }
+    }
+    
+    private func toPinViewModel(_ index: Int) -> VideoViewModel {
+        controller.getItem(at: IndexPath(item: index, section: 0))
+    }
+    
+    private func saveVideo(url: URL, filterIndex: Int = 0) {
         let video = Video()
         video.url = url
-        video.filter = filter
+        video.index = Int16(filterIndex)
         controller.add(model: video)
+    }
+    
+    @objc private func handleAddVideoTap() {
+         VideoBrowser.startMediaBrowser(delegate: self, sourceType: .savedPhotosAlbum)
     }
 }
 
@@ -119,7 +134,7 @@ extension HomeViewController: UIImagePickerControllerDelegate {
         }
         dismiss(animated: true) {
             self.removeEmbeddedViewController()
-            self.embed(VideoEditorViewController(url: url, filters: self.app.filters))
+            self.embed(VideoEditorViewController(url: url, index: 0, filters: self.app.filters))
             self.saveVideo(url: url)
         }
     }

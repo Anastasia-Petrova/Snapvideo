@@ -16,8 +16,9 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         loadVimeoUserAccount()
-//        start(HomeViewController())
-        start(VimeoViewController())
+//        try? authenticationController.logOut()
+        start(HomeViewController())
+//        start(VimeoViewController())
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {

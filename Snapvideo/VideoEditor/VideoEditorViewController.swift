@@ -22,11 +22,13 @@ final class VideoEditorViewController: UIViewController {
     let vimeoViewController = VimeoViewController()
     var topVimeoConstraint = NSLayoutConstraint()
     var selectedFilter: AnyFilter = AnyFilter(PassthroughFilter())
+    var selectedFilterIndex: Int
+    var pendingFilterIndex: Int?
     let coverView = UIView()
 
     let tabBar = TabBar(items: "LOOKS", "UPLOADS", "EXPORT")
     var cancelButton = LooksViewButton(imageName: "cancel-solid")
-    var doneButton = LooksViewButton(imageName: "done-solid")
+    var saveFilterButton = LooksViewButton(imageName: "done-solid")
     var saveCopyButton = HightlightedButton()
     var shareButton = HightlightedButton()
     var spacerHeight = CGFloat()
@@ -100,26 +102,26 @@ final class VideoEditorViewController: UIViewController {
         return Float(CMTimeGetSeconds(trackDuration))
     }
     
-    init(url: URL, filters: [AnyFilter]) {
+    init(url: URL, index: Int, filters: [AnyFilter]) {
         self.url = url
         asset = AVAsset(url: url)
+        selectedFilterIndex = index
         videoViewController = VideoViewController(asset: asset)
-        looksViewController = LooksViewController(itemSize: itemSize, filters: filters)
+        looksViewController = LooksViewController(itemSize: itemSize, selectedFilterIndex: index, filters: filters)
         super.init(nibName: nil, bundle: nil)
         looksViewController.filterIndexChangeCallback = {
-                    [
-                    weak videoViewController,
-                    weak doneButton,
-                    weak tabBar
-                    ] newIndex, previousIndex in
-                    videoViewController?.playerView.filter = filters[newIndex]
-                    videoViewController?.bgVideoView.filter = filters[newIndex] + AnyFilter(BlurFilter(blurRadius: 100))
-                    doneButton?.isEnabled = newIndex != 0
-                    tabBar?.isHidden = newIndex != 0
-                    guard newIndex != previousIndex && newIndex != 0 else { return }
-                    videoViewController?.player.play()
-                    self.selectedFilter = filters[newIndex]
-                }
+            [weak self] newIndex, previousIndex in
+            guard let self = self else { return }
+            let hasChangedSelectedFilter = newIndex != self.selectedFilterIndex
+            self.videoViewController.playerView.filter = filters[newIndex]
+            self.videoViewController.bgVideoView.filter = filters[newIndex] + AnyFilter(BlurFilter(blurRadius: 100))
+            self.saveFilterButton.isEnabled = hasChangedSelectedFilter
+            self.tabBar.isHidden = hasChangedSelectedFilter
+            guard newIndex != previousIndex && hasChangedSelectedFilter else { return }
+//            videoViewController?.player.play()
+            self.selectedFilter = filters[newIndex]
+            self.pendingFilterIndex = newIndex
+        }
         addChild(looksViewController)
         looksViewController.didMove(toParent: self)
     }
@@ -200,7 +202,7 @@ final class VideoEditorViewController: UIViewController {
         ])
         let buttonsStackView = UIStackView()
         buttonsStackView.addArrangedSubview(cancelButton)
-        buttonsStackView.addArrangedSubview(doneButton)
+        buttonsStackView.addArrangedSubview(saveFilterButton)
         buttonsStackView.axis = .horizontal
         buttonsStackView.distribution = .fillEqually
         
@@ -283,12 +285,12 @@ final class VideoEditorViewController: UIViewController {
     }
     
     func setUpDoneButton() {
-        doneButton.isEnabled = false
-        doneButton.imageEdgeInsets = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
+        saveFilterButton.isEnabled = false
+        saveFilterButton.imageEdgeInsets = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
         NSLayoutConstraint.activate ([
-            doneButton.heightAnchor.constraint(equalToConstant: 25)
+            saveFilterButton.heightAnchor.constraint(equalToConstant: 25)
         ])
-        doneButton.addTarget(self, action: #selector(self.saveFilter), for: .touchUpInside)
+        saveFilterButton.addTarget(self, action: #selector(self.saveFilter), for: .touchUpInside)
     }
     
     func setUpShareStackView() {
@@ -412,7 +414,7 @@ final class VideoEditorViewController: UIViewController {
     public func closeLooks() {
         self.view.layoutIfNeeded()
         topLooksConstraint.constant = -view.safeAreaInsets.bottom
-        resetToDefaultFilter()
+//        resetToDefaultFilter()
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
@@ -453,6 +455,7 @@ final class VideoEditorViewController: UIViewController {
     }
     
     private func resetToDefaultFilter() {
+        pendingFilterIndex = nil
         looksViewController.deselectFilter()
     }
     
@@ -479,12 +482,20 @@ final class VideoEditorViewController: UIViewController {
     }
     
     @objc func saveFilter() {
-        self.view.layoutIfNeeded()
+        view.layoutIfNeeded()
+        tabBar.isHidden = false
         topLooksConstraint.constant = 146
-        resetToDefaultFilter()
+//        resetToDefaultFilter()
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
+        if let pendingFilterIndex = looksViewController.pendingFilterIndex {
+            selectedFilterIndex = pendingFilterIndex
+            looksViewController.selectedFilterIndex = pendingFilterIndex
+        }
+        looksViewController.pendingFilterIndex = nil
+        pendingFilterIndex = nil
+        looksViewController.dataSource.updateVideo(index: selectedFilterIndex)
     }
     
     @objc func openActivityView() {

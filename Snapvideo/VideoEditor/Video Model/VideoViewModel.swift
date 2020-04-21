@@ -11,10 +11,10 @@ import EasyCoreData
 
 struct VideoViewModel: CoreDataMappable {
     let url: URL?
-    let filter: String?
+    let index: Int16
     
     init(model: Video) {
         url = model.url
-        filter = model.filter
+        index = model.index
     }
 }

@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import EasyCoreData
 
 final class LooksCollectionDataSource: NSObject, UICollectionViewDataSource {
+    let controller = CoreDataController<Video, VideoViewModel>(entityName: "Video")
     weak var collectionView: UICollectionView?
     let filters: [AnyFilter]
     var filteredImages: [String: UIImage] = [:]
@@ -30,6 +32,7 @@ final class LooksCollectionDataSource: NSObject, UICollectionViewDataSource {
             LooksCollectionViewCell.self,
             forCellWithReuseIdentifier: "LooksCollectionViewCell"
         )
+        controller.fetch()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -61,7 +64,6 @@ final class LooksCollectionDataSource: NSObject, UICollectionViewDataSource {
                 }
             }
         }
-        
         return cell
     }
     
@@ -79,6 +81,12 @@ final class LooksCollectionDataSource: NSObject, UICollectionViewDataSource {
             } else {
                 callback(nil)
             }
+        }
+    }
+    
+    func updateVideo(index: Int) {
+        controller.updateModels(indexPaths: [IndexPath(item: 0, section: 0)]) { video in
+            video.first?.index = Int16(index)
         }
     }
 }
