@@ -9,8 +9,10 @@
 import UIKit
 import AVKit
 import MobileCoreServices
+import EasyCoreData
 
 final class HomeViewController: UIViewController {
+    let controller = CoreDataController<Video, VideoViewModel>(entityName: "Video")
     var addVideoButton = UIButton()
     let app = App.shared
     var childViewController: UIViewController?
@@ -94,10 +96,17 @@ final class HomeViewController: UIViewController {
         }
     }
     
-    func removeEmbeddedViewController() {
+    private func removeEmbeddedViewController() {
         guard let childVC = childViewController else { return }
         childVC.removeFromParent()
         childVC.view.removeFromSuperview()
+    }
+    
+    private func saveVideo(url: URL, filter: String = "Original") {
+        let video = Video()
+        video.url = url
+        video.filter = filter
+        controller.add(model: video)
     }
 }
 
@@ -111,6 +120,7 @@ extension HomeViewController: UIImagePickerControllerDelegate {
         dismiss(animated: true) {
             self.removeEmbeddedViewController()
             self.embed(VideoEditorViewController(url: url, filters: self.app.filters))
+            self.saveVideo(url: url)
         }
     }
 }

@@ -1,5 +1,5 @@
 //
-//  VideoModel.swift
+//  VideoViewModel.swift
 //  Snapvideo
 //
 //  Created by Anastasia Petrova on 21/04/2020.
@@ -9,7 +9,7 @@
 import Foundation
 import EasyCoreData
 
-struct VideoModel: CoreDataMappable {
+struct VideoViewModel: CoreDataMappable {
     let url: URL?
     let filter: String?
     
