@@ -22,7 +22,7 @@
 		6D17A7ED23ABB39600C70542 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D17A7EB23ABB39600C70542 /* LaunchScreen.storyboard */; };
 		6D17A7F523ABB6E000C70542 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D17A7F423ABB6E000C70542 /* HomeViewController.swift */; };
 		6D18009D24439715001E9764 /* Parameterized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D18009C24439715001E9764 /* Parameterized.swift */; };
-		6D19954623C7AA3C000A76B1 /* VideoEditer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D19954523C7AA3C000A76B1 /* VideoEditer.swift */; };
+		6D19954623C7AA3C000A76B1 /* VideoEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D19954523C7AA3C000A76B1 /* VideoEditor.swift */; };
 		6D1D490B23D777F000ECACE5 /* BodyExportLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1D490A23D777F000ECACE5 /* BodyExportLabel.swift */; };
 		6D1D490F23D7842F00ECACE5 /* MonochromeFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1D490E23D7842F00ECACE5 /* MonochromeFilter.swift */; };
 		6D1D491123D785FB00ECACE5 /* ColorInvertFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1D491023D785FB00ECACE5 /* ColorInvertFilter.swift */; };
@@ -142,7 +142,7 @@
 		6D17A7EE23ABB39600C70542 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6D17A7F423ABB6E000C70542 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		6D18009C24439715001E9764 /* Parameterized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parameterized.swift; sourceTree = "<group>"; };
-		6D19954523C7AA3C000A76B1 /* VideoEditer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoEditer.swift; sourceTree = "<group>"; };
+		6D19954523C7AA3C000A76B1 /* VideoEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoEditor.swift; sourceTree = "<group>"; };
 		6D1D490A23D777F000ECACE5 /* BodyExportLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyExportLabel.swift; sourceTree = "<group>"; };
 		6D1D490E23D7842F00ECACE5 /* MonochromeFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonochromeFilter.swift; sourceTree = "<group>"; };
 		6D1D491023D785FB00ECACE5 /* ColorInvertFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorInvertFilter.swift; sourceTree = "<group>"; };
@@ -318,7 +318,7 @@
 				6D96B85423D0960000C1C6D5 /* LooksViewСomponents */,
 				6D05022523B9154100036D60 /* VideoEditorViewController.swift */,
 				6DD4192C23F9A77B005A2706 /* VideoViewController.swift */,
-				6D19954523C7AA3C000A76B1 /* VideoEditer.swift */,
+				6D19954523C7AA3C000A76B1 /* VideoEditor.swift */,
 				6DDE026223C11659002D7942 /* VideoView.swift */,
 			);
 			path = VideoEditor;
@@ -752,7 +752,7 @@
 				6DE18A1723F300EC0018C944 /* SaturationTool.swift in Sources */,
 				6DE18A0523F2F8AE0018C944 /* SpeedUpTool.swift in Sources */,
 				6D1D491523D78ADC00ECACE5 /* NoirFilter.swift in Sources */,
-				6D19954623C7AA3C000A76B1 /* VideoEditer.swift in Sources */,
+				6D19954623C7AA3C000A76B1 /* VideoEditor.swift in Sources */,
 				6D17A7E123ABB39100C70542 /* AppDelegate.swift in Sources */,
 				6DBA80D423ED931B005A585E /* LooksCollectionViewLayout.swift in Sources */,
 				6DE18A0B23F2FAE40018C944 /* SharpenTool.swift in Sources */,

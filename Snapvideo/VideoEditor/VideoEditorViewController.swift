@@ -455,7 +455,29 @@ final class VideoEditorViewController: UIViewController {
     }
     
     @objc func openActivityView() {
-        
+        DispatchQueue.main.async {
+            self.isExportViewShown = false
+            //                    self.videoViewController.indicatorSwitcher = true
+        }
+        guard let playerItem = videoViewController.player.currentItem else { return }
+        //        guard let filter = selecterFilter else { return }
+        VideoEditor.composeVideo(
+            choosenFilter: looksViewController.selectedFilter,
+            asset: playerItem.asset
+        ) { path in
+            DispatchQueue.main.async {
+                guard let filePath = path else {
+//                    self.videoViewController.indicatorSwitcher = false
+                    return
+                }
+                let objectToImport = [NSURL(fileURLWithPath: filePath)]
+                let activityVC = UIActivityViewController(activityItems: objectToImport, applicationActivities: nil)
+                activityVC.setValue("Video", forKey: "subject")
+                activityVC.excludedActivityTypes = [.addToReadingList, .assignToContact]
+                self.present(activityVC, animated: true, completion: nil)
+//                self.videoViewController.indicatorSwitcher = false
+            }
+        }
     }
     
     @objc func discardLooks() {
@@ -488,7 +510,7 @@ final class VideoEditorViewController: UIViewController {
             self.isExportViewShown = false
         }
         guard let playerItem = videoViewController.player.currentItem else { return }
-        VideoEditer.saveEditedVideo(
+        VideoEditor.saveEditedVideo(
             choosenFilter: looksViewController.selectedFilter,
             asset: playerItem.asset
         )
