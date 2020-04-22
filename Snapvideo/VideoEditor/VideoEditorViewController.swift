@@ -467,7 +467,7 @@ final class VideoEditorViewController: UIViewController {
         ) { path in
             DispatchQueue.main.async {
                 guard let filePath = path else {
-//                    self.videoViewController.indicatorSwitcher = false
+                    self.videoViewController.indicatorSwitcher = false
                     return
                 }
                 let objectToImport = [NSURL(fileURLWithPath: filePath)]
@@ -475,7 +475,7 @@ final class VideoEditorViewController: UIViewController {
                 activityVC.setValue("Video", forKey: "subject")
                 activityVC.excludedActivityTypes = [.addToReadingList, .assignToContact]
                 self.present(activityVC, animated: true, completion: nil)
-//                self.videoViewController.indicatorSwitcher = false
+                self.videoViewController.indicatorSwitcher = false
             }
         }
     }
