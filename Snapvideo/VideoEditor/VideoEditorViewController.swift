@@ -142,14 +142,14 @@ final class VideoEditorViewController: UIViewController {
         )
         
         view.addSubview(videoViewController.view)
-        view.addSubview(looksContainerView)
         view.addSubview(coverView)
+        view.addSubview(looksContainerView)
         view.addSubview(vimeoViewController.view)
         view.addSubview(exportView)
         view.addSubview(tabBar)
         
-        
         setUpVideoViewController()
+        setUpCoverView()
         setUpLooksView()
         setUpCancelButton()
         setUpDoneButton()
@@ -159,7 +159,6 @@ final class VideoEditorViewController: UIViewController {
         setUpSaveCopyStackView()
         setUpShareButton()
         setUpSaveCopyButton()
-        setUpCoverView()
         setUpTabBar()
     }
     
@@ -392,14 +391,20 @@ final class VideoEditorViewController: UIViewController {
         coverView.translatesAutoresizingMaskIntoConstraints = false
         coverView.backgroundColor = .lightGray
         coverView.alpha = 0.5
-        
+        let coverButton = UIButton()
+        coverButton.translatesAutoresizingMaskIntoConstraints = false
+        coverView.addSubview(coverButton)
         NSLayoutConstraint.activate ([
-            coverView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            coverView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            coverView.topAnchor.constraint(equalTo: self.view.topAnchor),
-            coverView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+            coverView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            coverView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            coverView.topAnchor.constraint(equalTo: view.topAnchor),
+            coverView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            coverButton.leadingAnchor.constraint(equalTo: coverView.leadingAnchor),
+            coverButton.trailingAnchor.constraint(equalTo: coverView.trailingAnchor),
+            coverButton.topAnchor.constraint(equalTo: coverView.topAnchor),
+            coverButton.bottomAnchor.constraint(equalTo: coverView.bottomAnchor)
         ])
-        
+        coverButton.addTarget(self, action: #selector(closeVimeoView), for: .touchUpInside)
         coverView.isHidden = true
     }
    
@@ -469,6 +474,10 @@ final class VideoEditorViewController: UIViewController {
             choosenFilter: selectedFilter,
             asset: playerItem.asset
         )
+    }
+    
+    @objc func closeVimeoView() {
+        isVimeoViewShown = false
     }
     
     @objc func playerItemDidReachEnd(notification: Notification) {
