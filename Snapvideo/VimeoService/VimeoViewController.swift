@@ -112,7 +112,12 @@ extension VimeoViewController {
 }
 
 extension VimeoViewController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let videoLink = videoDataSource.videos[indexPath.row].link,
+            let url = URL(string: videoLink) else { return }
+        let vc = VimeoPlayerViewController(url: url)
+        present(vc, animated: true, completion: nil)
+    }
 }
 
 extension VimeoViewController: UICollectionViewDelegateFlowLayout {

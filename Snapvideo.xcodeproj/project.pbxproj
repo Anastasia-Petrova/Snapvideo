@@ -41,6 +41,7 @@
 		6D2E412D23F04B0000B499F0 /* LooksViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2E412C23F04B0000B499F0 /* LooksViewControllerTests.swift */; };
 		6D2E8A0323CA671A00917E25 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2E89FE23CA5AC700917E25 /* TabBar.swift */; };
 		6D2E8A0423CA673A00917E25 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2E8A0023CA5DEA00917E25 /* TabBarItem.swift */; };
+		6D2ED3D224506AC800B2EBDA /* VimeoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2ED3D124506AC800B2EBDA /* VimeoPlayerViewController.swift */; };
 		6D3ED56A2403127C0072BC29 /* ParameterListViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3ED5692403127C0072BC29 /* ParameterListViewSnapshotTests.swift */; };
 		6D3ED56D24031C990072BC29 /* ParameterListViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3ED56C24031C990072BC29 /* ParameterListViewTests.swift */; };
 		6D5EFEAB24269CE600FB5DC8 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5EFEAA24269CE600FB5DC8 /* UILabel.swift */; };
@@ -153,6 +154,7 @@
 		6D2E412C23F04B0000B499F0 /* LooksViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LooksViewControllerTests.swift; sourceTree = "<group>"; };
 		6D2E89FE23CA5AC700917E25 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		6D2E8A0023CA5DEA00917E25 /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
+		6D2ED3D124506AC800B2EBDA /* VimeoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimeoPlayerViewController.swift; sourceTree = "<group>"; };
 		6D3ED5692403127C0072BC29 /* ParameterListViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterListViewSnapshotTests.swift; sourceTree = "<group>"; };
 		6D3ED56C24031C990072BC29 /* ParameterListViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterListViewTests.swift; sourceTree = "<group>"; };
 		6D5EFEAA24269CE600FB5DC8 /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
@@ -514,6 +516,7 @@
 			isa = PBXGroup;
 			children = (
 				6DE41ECE243F374D00081913 /* VimeoViewController.swift */,
+				6D2ED3D124506AC800B2EBDA /* VimeoPlayerViewController.swift */,
 				6DF1B5C1244E06C4005D506A /* BackgroundView.swift */,
 				6D0E9B8B244B8ED3008339FE /* VimeoCollectionLayout.swift */,
 				6D0E9B87244B61A4008339FE /* VideoDataSource.swift */,
@@ -753,6 +756,7 @@
 				6D1D491F23D791EC00ECACE5 /* MonoFilter.swift in Sources */,
 				6DDE026523C12A44002D7942 /* Filter.swift in Sources */,
 				6D1D491723D78C4A00ECACE5 /* ProcessFilter.swift in Sources */,
+				6D2ED3D224506AC800B2EBDA /* VimeoPlayerViewController.swift in Sources */,
 				6D1D491923D78DA600ECACE5 /* RetroFilter.swift in Sources */,
 				6D1D491523D78ADC00ECACE5 /* NoirFilter.swift in Sources */,
 				6DE41ECF243F374D00081913 /* VimeoViewController.swift in Sources */,

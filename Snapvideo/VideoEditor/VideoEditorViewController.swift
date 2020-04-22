@@ -118,7 +118,7 @@ final class VideoEditorViewController: UIViewController {
             self.saveFilterButton.isEnabled = hasChangedSelectedFilter
             self.tabBar.isHidden = hasChangedSelectedFilter
             guard newIndex != previousIndex && hasChangedSelectedFilter else { return }
-//            videoViewController?.player.play()
+            self.videoViewController.player.play()
             self.selectedFilter = filters[newIndex]
             self.pendingFilterIndex = newIndex
         }
