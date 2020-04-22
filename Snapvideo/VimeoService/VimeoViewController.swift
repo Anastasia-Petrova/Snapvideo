@@ -116,7 +116,8 @@ extension VimeoViewController: UICollectionViewDelegate {
         guard let videoLink = videoDataSource.videos[indexPath.row].link,
             let url = URL(string: videoLink) else { return }
         let vc = VimeoPlayerViewController(url: url)
-        present(vc, animated: true, completion: nil)
+        let nvc = UINavigationController(rootViewController: vc)
+        present(nvc, animated: true, completion: nil)
     }
 }
 

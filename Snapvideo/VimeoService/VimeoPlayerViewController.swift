@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 
-class VimeoPlayerViewController: UIViewController, WKUIDelegate {
+final class VimeoPlayerViewController: UIViewController, WKUIDelegate {
     let webConfiguration = WKWebViewConfiguration()
     let webView: WKWebView
     let url: URL
@@ -26,9 +26,19 @@ class VimeoPlayerViewController: UIViewController, WKUIDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpNavigationBar()
         webView.uiDelegate = self
         view = webView
         let myRequest = URLRequest(url: url)
         webView.load(myRequest)
+    }
+    
+    private func setUpNavigationBar() {
+        let doneItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(self.close))
+        navigationItem.leftBarButtonItem = doneItem
+    }
+    
+    @objc func close() {
+        dismiss(animated: true, completion: nil)
     }
 }
