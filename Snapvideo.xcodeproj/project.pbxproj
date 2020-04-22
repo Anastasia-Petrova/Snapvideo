@@ -299,10 +299,10 @@
 				6D96B85123D08FD600C1C6D5 /* ExportViewСomponents */,
 				6D96B85423D0960000C1C6D5 /* LooksViewСomponents */,
 				6DFA48CC244F29840082D372 /* Video Model */,
-				6D05022523B9154100036D60 /* VideoEditorViewController.swift */,
-				6DD4192C23F9A77B005A2706 /* VideoViewController.swift */,
 				6D19954523C7AA3C000A76B1 /* VideoEditor.swift */,
+				6D05022523B9154100036D60 /* VideoEditorViewController.swift */,
 				6DDE026223C11659002D7942 /* VideoView.swift */,
+				6DD4192C23F9A77B005A2706 /* VideoViewController.swift */,
 			);
 			path = VideoEditor;
 			sourceTree = "<group>";
@@ -515,13 +515,13 @@
 		6DE41ECD243F36A400081913 /* VimeoService */ = {
 			isa = PBXGroup;
 			children = (
-				6DE41ECE243F374D00081913 /* VimeoViewController.swift */,
-				6D2ED3D124506AC800B2EBDA /* VimeoPlayerViewController.swift */,
 				6DF1B5C1244E06C4005D506A /* BackgroundView.swift */,
-				6D0E9B8B244B8ED3008339FE /* VimeoCollectionLayout.swift */,
-				6D0E9B87244B61A4008339FE /* VideoDataSource.swift */,
 				6D0E9B89244B6460008339FE /* VideoCell.swift */,
+				6D0E9B87244B61A4008339FE /* VideoDataSource.swift */,
 				6DF1B5BF244DB20B005D506A /* VimeoCollectionHeader.swift */,
+				6D0E9B8B244B8ED3008339FE /* VimeoCollectionLayout.swift */,
+				6D2ED3D124506AC800B2EBDA /* VimeoPlayerViewController.swift */,
+				6DE41ECE243F374D00081913 /* VimeoViewController.swift */,
 			);
 			path = VimeoService;
 			sourceTree = "<group>";
@@ -529,8 +529,8 @@
 		6DFA48CC244F29840082D372 /* Video Model */ = {
 			isa = PBXGroup;
 			children = (
-				6DFA48C8244F27EA0082D372 /* VideoViewModel.swift */,
 				6DFA48CA244F29450082D372 /* Video+Init.swift */,
+				6DFA48C8244F27EA0082D372 /* VideoViewModel.swift */,
 			);
 			path = "Video Model";
 			sourceTree = "<group>";

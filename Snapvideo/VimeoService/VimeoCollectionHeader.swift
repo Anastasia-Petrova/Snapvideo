@@ -61,7 +61,7 @@ final class VimeoCollectionHeader: UICollectionViewCell {
         NSLayoutConstraint.activate ([
             uploadVideoButton.leadingAnchor.constraint(equalTo:  contentView.leadingAnchor),
             uploadVideoButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            uploadVideoButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
+            uploadVideoButton.topAnchor.constraint(equalTo: contentView.topAnchor),
             uploadVideoButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
         ])
         uploadVideoButton.addTarget(self, action: #selector(handleUpload), for: .touchUpInside)

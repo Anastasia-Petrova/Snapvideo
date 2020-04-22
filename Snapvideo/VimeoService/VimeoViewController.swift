@@ -75,7 +75,7 @@ final class VimeoViewController: UIViewController {
         NSLayoutConstraint.activate ([
             videoCollection.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             videoCollection.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            videoCollection.topAnchor.constraint(equalTo: view.topAnchor),
+            videoCollection.topAnchor.constraint(equalTo: view.topAnchor, constant: 4),
             videoCollection.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
