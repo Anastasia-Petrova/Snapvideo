@@ -25,6 +25,8 @@ final class VideoEditorViewController: UIViewController {
     var selectedFilterIndex: Int
     var pendingFilterIndex: Int?
     let coverView = UIView()
+    let progressView = UIProgressView(progressViewStyle: .default)
+    let coverButton = UIButton()
 
     let tabBar = TabBar(items: "LOOKS", "UPLOADS", "EXPORT")
     var cancelButton = LooksViewButton(imageName: "cancel-solid")
@@ -36,6 +38,12 @@ final class VideoEditorViewController: UIViewController {
     let saveCopyStackView = UIStackView()
     let itemSize = CGSize(width: 60, height: 76)
     var previouslySelectedIndex: Int?
+    
+    var progressValue: Float = 0 {
+        didSet {
+            progressView.progress = progressValue
+        }
+    }
     
     var isLooksButtonSelected: Bool = false {
         didSet {
@@ -391,8 +399,8 @@ final class VideoEditorViewController: UIViewController {
         coverView.translatesAutoresizingMaskIntoConstraints = false
         coverView.backgroundColor = .lightGray
         coverView.alpha = 0.5
-        let coverButton = UIButton()
         coverButton.translatesAutoresizingMaskIntoConstraints = false
+        coverView.addSubview(progressView)
         coverView.addSubview(coverButton)
         NSLayoutConstraint.activate ([
             coverView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -402,10 +410,15 @@ final class VideoEditorViewController: UIViewController {
             coverButton.leadingAnchor.constraint(equalTo: coverView.leadingAnchor),
             coverButton.trailingAnchor.constraint(equalTo: coverView.trailingAnchor),
             coverButton.topAnchor.constraint(equalTo: coverView.topAnchor),
-            coverButton.bottomAnchor.constraint(equalTo: coverView.bottomAnchor)
+            coverButton.bottomAnchor.constraint(equalTo: coverView.bottomAnchor),
+            progressView.centerXAnchor.constraint(equalTo: coverView.centerXAnchor),
+            progressView.centerYAnchor.constraint(equalTo: coverView.centerYAnchor),
         ])
         coverButton.addTarget(self, action: #selector(closeVimeoView), for: .touchUpInside)
         coverView.isHidden = true
+        progressView.tintColor = .systemBlue
+        progressView.trackTintColor = UIColor.lightGray.withAlphaComponent(0.8)
+        progressView.isHidden = true
     }
    
     public func openLooks() {
@@ -467,13 +480,25 @@ final class VideoEditorViewController: UIViewController {
     func saveVideoToPhotos() {
         DispatchQueue.main.async {
             self.isExportViewShown = false
+            self.showCoverView(isShown: true)
         }
         guard let playerItem = videoViewController.player.currentItem else { return }
 //        guard let filter = selecterFilter else { return }
         VideoEditor.saveEditedVideo(
             choosenFilter: selectedFilter,
             asset: playerItem.asset
-        )
+        ) { 
+            DispatchQueue.main.async {
+                self.showCoverView(isShown: false)
+            }
+        }
+    }
+    
+    func showCoverView(isShown: Bool) {
+        coverView.isHidden = !isShown
+        coverButton.isEnabled = !isShown
+        tabBar.isUserInteractionEnabled = !isShown
+        progressView.isHidden = !isShown
     }
     
     @objc func closeVimeoView() {
@@ -510,10 +535,12 @@ final class VideoEditorViewController: UIViewController {
     @objc func openActivityView() {
         DispatchQueue.main.async {
             self.isExportViewShown = false
+            self.showCoverView(isShown: true)
             self.videoViewController.indicatorSwitcher = true
         }
         guard let playerItem = videoViewController.player.currentItem else { return }
 //        guard let filter = selecterFilter else { return }
+        
         VideoEditor.composeVideo(
             choosenFilter: selectedFilter,
             asset: playerItem.asset
@@ -529,6 +556,7 @@ final class VideoEditorViewController: UIViewController {
                 activityVC.excludedActivityTypes = [.addToReadingList, .assignToContact]
                 self.present(activityVC, animated: true, completion: nil)
                 self.videoViewController.indicatorSwitcher = false
+                self.showCoverView(isShown: false)
             }
         }
     }

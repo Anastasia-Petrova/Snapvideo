@@ -21,7 +21,7 @@ struct VideoEditor {
         }
     }
     
-    static func saveEditedVideo(choosenFilter: AnyFilter, asset: AVAsset ) {
+    static func saveEditedVideo(choosenFilter: AnyFilter, asset: AVAsset, completion: @escaping () -> Void ) {
         let composition = setUpComposition(choosenFilter: choosenFilter, asset: asset)
         guard let export = AVAssetExportSession(
             asset: asset,
@@ -45,6 +45,7 @@ struct VideoEditor {
                     let appDelegate = AppDelegate()
                     appDelegate.scheduleNotification(title: "Error!", body: "Video was not saved. Try again.")
                 }
+                completion()
             }
         }
     }
