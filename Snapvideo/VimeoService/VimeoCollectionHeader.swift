@@ -68,6 +68,6 @@ final class VimeoCollectionHeader: UICollectionViewCell {
     }
     
     @objc func handleUpload() {
-        print("Handle upload was tapped!!!!")
+        VimeoUploadClient.performGetUploadLinkRequest(accessToken: vimeoClient.)
     }
 }
