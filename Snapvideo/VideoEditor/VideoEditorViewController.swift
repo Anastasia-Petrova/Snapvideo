@@ -481,6 +481,7 @@ final class VideoEditorViewController: UIViewController {
         DispatchQueue.main.async {
             self.isExportViewShown = false
             self.showCoverView(isShown: true)
+            self.videoViewController.indicatorSwitcher = true
         }
         guard let playerItem = videoViewController.player.currentItem else { return }
 //        guard let filter = selecterFilter else { return }
@@ -490,6 +491,7 @@ final class VideoEditorViewController: UIViewController {
         ) { 
             DispatchQueue.main.async {
                 self.showCoverView(isShown: false)
+                self.videoViewController.indicatorSwitcher = false
             }
         }
     }
