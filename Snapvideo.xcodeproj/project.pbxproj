@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D01BC5B2451FE3C00E82BC0 /* VimeoUploadLinkResponse .swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D01BC5A2451FE3C00E82BC0 /* VimeoUploadLinkResponse .swift */; };
 		6D01E03623BFA2F900B558E8 /* LooksCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D01E03523BFA2F900B558E8 /* LooksCollectionViewCell.swift */; };
 		6D01E03823BFA3D600B558E8 /* LooksCollectionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D01E03723BFA3D600B558E8 /* LooksCollectionDataSource.swift */; };
 		6D01E03A23BFC2FE00B558E8 /* AssetImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D01E03923BFC2FE00B558E8 /* AssetImageGenerator.swift */; };
@@ -117,6 +118,7 @@
 /* Begin PBXFileReference section */
 		017CD30715D667916AE780E6 /* Pods-Snapvideo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snapvideo.debug.xcconfig"; path = "Target Support Files/Pods-Snapvideo/Pods-Snapvideo.debug.xcconfig"; sourceTree = "<group>"; };
 		2FB6C59B13251A7AB3DC3F38 /* Pods-Snapvideo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snapvideo.release.xcconfig"; path = "Target Support Files/Pods-Snapvideo/Pods-Snapvideo.release.xcconfig"; sourceTree = "<group>"; };
+		6D01BC5A2451FE3C00E82BC0 /* VimeoUploadLinkResponse .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VimeoUploadLinkResponse .swift"; sourceTree = "<group>"; };
 		6D01E03523BFA2F900B558E8 /* LooksCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LooksCollectionViewCell.swift; sourceTree = "<group>"; };
 		6D01E03723BFA3D600B558E8 /* LooksCollectionDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LooksCollectionDataSource.swift; sourceTree = "<group>"; };
 		6D01E03923BFC2FE00B558E8 /* AssetImageGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetImageGenerator.swift; sourceTree = "<group>"; };
@@ -520,6 +522,7 @@
 				6DF1B5C1244E06C4005D506A /* BackgroundView.swift */,
 				6D0E9B89244B6460008339FE /* VideoCell.swift */,
 				6D2ED3D32451EA5700B2EBDA /* VimeoUploadClient.swift */,
+				6D01BC5A2451FE3C00E82BC0 /* VimeoUploadLinkResponse .swift */,
 				6D0E9B87244B61A4008339FE /* VideoDataSource.swift */,
 				6DF1B5BF244DB20B005D506A /* VimeoCollectionHeader.swift */,
 				6D0E9B8B244B8ED3008339FE /* VimeoCollectionLayout.swift */,
@@ -754,6 +757,7 @@
 				6D96B85023D08E5E00C1C6D5 /* HeaderExportLabel.swift in Sources */,
 				6D0E9B88244B61A4008339FE /* VideoDataSource.swift in Sources */,
 				6D1D490F23D7842F00ECACE5 /* MonochromeFilter.swift in Sources */,
+				6D01BC5B2451FE3C00E82BC0 /* VimeoUploadLinkResponse .swift in Sources */,
 				6D2E8A0423CA673A00917E25 /* TabBarItem.swift in Sources */,
 				6D0C29C123C28CA5006E7C40 /* App.swift in Sources */,
 				6D2ED3D42451EA5700B2EBDA /* VimeoUploadClient.swift in Sources */,

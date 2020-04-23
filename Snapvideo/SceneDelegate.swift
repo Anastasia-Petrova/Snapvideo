@@ -15,8 +15,8 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        loadVimeoUserAccount()
 //        try? authenticationController.logOut()
+        loadVimeoUserAccount()
         start(HomeViewController())
 //        start(VimeoViewController())
     }

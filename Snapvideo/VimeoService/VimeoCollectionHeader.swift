@@ -13,9 +13,10 @@ final class VimeoCollectionHeader: UICollectionViewCell {
     
     let imageView = ExportImageView(systemName: "arrow.up.right.video")
     let uploadVideoButton = HightlightedButton()
+    var callback: (() -> Void)?
     
     override init(frame: CGRect) {
-    super.init(frame: frame)
+        super.init(frame: frame)
         setUpHeaderView()
         setUpUploadButton()
     }
@@ -68,6 +69,6 @@ final class VimeoCollectionHeader: UICollectionViewCell {
     }
     
     @objc func handleUpload() {
-        VimeoUploadClient.performGetUploadLinkRequest(accessToken: vimeoClient.)
+        callback?()
     }
 }

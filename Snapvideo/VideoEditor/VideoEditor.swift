@@ -61,15 +61,7 @@ struct VideoEditor {
         export.outputURL = exportUrl
         export.videoComposition = composition
         export.exportAsynchronously(completionHandler: {
-        PHPhotoLibrary.shared().performChanges({
-            PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: exportUrl)
-            }) { saved, error in
-                if saved {
-                    completion(exportPath)
-                } else {
-                    completion(nil)
-                }
-            }
+            completion(exportPath)
         })
     }
 }

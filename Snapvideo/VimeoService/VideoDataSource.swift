@@ -65,7 +65,16 @@ extension VideoDataSource: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
-            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "VimeoCollectionHeader", for: indexPath)
+            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "VimeoCollectionHeader", for: indexPath) as! VimeoCollectionHeader
+            headerView.callback = {
+                guard let token = vimeoClient.currentAccount?.accessToken else {
+                    print("NO TOKEN!!!!")
+                    return
+                }
+                VimeoUploadClient.performGetUploadLinkRequest(accessToken: token, size: 1024 * 10) { response in
+                    print(response)
+                }
+            }
             return headerView
             
         default:  fatalError("Unexpected element kind")
