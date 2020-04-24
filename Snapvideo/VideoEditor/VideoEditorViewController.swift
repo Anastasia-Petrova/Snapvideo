@@ -19,11 +19,10 @@ final class VideoEditorViewController: UIViewController {
     var topExportConstraint = NSLayoutConstraint()
     let looksViewController: LooksViewController
     var topLooksConstraint = NSLayoutConstraint()
-    let vimeoViewController = VimeoViewController()
-    var topVimeoConstraint = NSLayoutConstraint()
     var selectedFilter: AnyFilter = AnyFilter(PassthroughFilter())
     var selectedFilterIndex: Int
     var pendingFilterIndex: Int?
+    var topVimeoConstraint = NSLayoutConstraint()
     let coverView = UIView()
     let progressView = UIProgressView(progressViewStyle: .default)
     let coverButton = UIButton()
@@ -38,6 +37,32 @@ final class VideoEditorViewController: UIViewController {
     let saveCopyStackView = UIStackView()
     let itemSize = CGSize(width: 60, height: 76)
     var previouslySelectedIndex: Int?
+    
+    lazy var vimeoViewController = VimeoViewController() { [weak self] in
+        guard let self = self else { return }
+        guard let token = vimeoClient.currentAccount?.accessToken else {
+            print("NO TOKEN!!!!")
+            return
+        }
+        DispatchQueue.global().async {
+            guard let playerItem = self.videoViewController.player.currentItem else { return
+            }
+            
+            VideoEditor.composeVideo(
+                choosenFilter: self.selectedFilter,
+                asset: playerItem.asset
+            ) { url in
+                guard let url = url else { return }
+                let size = VideoEditor.getVideoSize(url: url)
+                VimeoUploadClient.performGetUploadLinkRequest(
+                    accessToken: token,
+                    size: size
+                ) { response in
+                    print(response)
+                }
+            }
+        }
+    }
     
     var progressValue: Float = 0 {
         didSet {
