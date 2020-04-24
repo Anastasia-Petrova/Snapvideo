@@ -25,44 +25,16 @@ final class VimeoUploadClient {
         }
     }
     
-//    class func getUploadLinkRequestVimeo(size: Float) -> Request<VimeoUploadLinkResponseModel> {
-//        return .init(method: <#T##VimeoClient.Method#>, path: <#T##String#>, parameters: <#T##Any?#>, modelKeyPath: <#T##String?#>, useCache: <#T##Bool#>, cacheResponse: <#T##Bool#>, retryPolicy: <#T##RetryPolicy?#>)
-//    }
-    
-    class func getUploadLinkRequest(accessToken: String, size: Float) -> URLRequest {
+    class func getUploadLinkRequest(accessToken: String, size: Int) -> URLRequest {
         var request = URLRequest(url: URL(string: Endpoints.base)!)
         request.httpMethod = "POST"
         request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/vnd.vimeo.*+json;version=3.4", forHTTPHeaderField: "Accept")
-        
-//        let clientID = vimeoClient.configuration!.clientIdentifier
-//        let clientSecret = vimeoClient.configuration!.clientSecret
-        
-//        let authString = "\(clientID):\(clientSecret)"
-//        let authData = authString.data(using: String.Encoding.utf8)
-//        let base64String = authData?.base64EncodedString(options: [])
-//
-//        if let base64String = base64String {
-//            let headerValue = "Basic \(base64String)"
-//            request.setValue(headerValue, forHTTPHeaderField: Constants.AuthorizationHeaderKey)
-//        }
-        let body = UploadBody(upload: .init(approach: "tus", size: "102400"))
-        
+        let body = UploadBody(upload: .init(approach: "tus", size: "\(size)"))
         request.httpBody = try! JSONEncoder().encode(body)
-//        """
-//        {
-//            "upload": {
-//                "approach": "tus",
-//                "size": "\(size)"
-//            }
-//        }
-//        """.data(using: .utf8)!
-        
         return request
     }
-    
-    
     
     class func getUploadLinkTask(
         session: URLSession = .shared,
@@ -82,7 +54,7 @@ final class VimeoUploadClient {
                 let uploadResponse = try JSONDecoder().decode(VimeoUploadLinkResponse.self, from: data)
                 completion(.success(uploadResponse))
             } catch {
-                let json = try! JSONSerialization.jsonObject(with: data, options: .allowFragments)
+//                let json = try! JSONSerialization.jsonObject(with: data, options: .allowFragments)
                 completion(.failure(error))
             }
         }
@@ -90,7 +62,7 @@ final class VimeoUploadClient {
     
     class func performGetUploadLinkRequest(
         accessToken: String,
-        size: Float,
+        size: Int,
         completion: @escaping (Swift.Result<VimeoUploadLinkResponse, Error>) -> Void
     ) {
         let request = getUploadLinkRequest(accessToken: accessToken, size: size)
