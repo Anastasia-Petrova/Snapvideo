@@ -292,7 +292,6 @@
 				6D17A7EE23ABB39600C70542 /* Info.plist */,
 				6DFA48C5244F26F20082D372 /* Snapvideo.xcdatamodeld */,
 				6D17A7E223ABB39100C70542 /* SceneDelegate.swift */,
-				6DFC0880244B4F8800C1AB40 /* VimeoClient.swift */,
 			);
 			path = Snapvideo;
 			sourceTree = "<group>";
@@ -464,6 +463,17 @@
 			path = VideoEditingHelpers;
 			sourceTree = "<group>";
 		};
+		6DA2491024532CF700F27855 /* VimeoClient */ = {
+			isa = PBXGroup;
+			children = (
+				6DFC0880244B4F8800C1AB40 /* VimeoClient.swift */,
+				6D2ED3D32451EA5700B2EBDA /* VimeoUploadClient.swift */,
+				6D01BC5A2451FE3C00E82BC0 /* VimeoUploadLinkResponse .swift */,
+				6DA2491124532D8700F27855 /* VimeoUploadResponse.swift */,
+			);
+			path = VimeoClient;
+			sourceTree = "<group>";
+		};
 		6DB0699123EF53310088F4B7 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -519,10 +529,9 @@
 		6DE41ECD243F36A400081913 /* VimeoService */ = {
 			isa = PBXGroup;
 			children = (
+				6DA2491024532CF700F27855 /* VimeoClient */,
 				6DF1B5C1244E06C4005D506A /* BackgroundView.swift */,
 				6D0E9B89244B6460008339FE /* VideoCell.swift */,
-				6D2ED3D32451EA5700B2EBDA /* VimeoUploadClient.swift */,
-				6D01BC5A2451FE3C00E82BC0 /* VimeoUploadLinkResponse .swift */,
 				6D0E9B87244B61A4008339FE /* VimeoDataSource.swift */,
 				6DF1B5BF244DB20B005D506A /* VimeoCollectionHeader.swift */,
 				6D0E9B8B244B8ED3008339FE /* VimeoCollectionLayout.swift */,
