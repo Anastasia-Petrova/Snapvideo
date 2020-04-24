@@ -73,10 +73,7 @@ struct VideoEditor {
         }
     }
     
-    static func getVideoSize(url: URL) -> Int {
-        guard let data = try? Data(contentsOf: url) else {
-            return 0
-        }
-        return data.count
+    static func getVideoData(url: URL) -> Data? {
+        return try? Data(contentsOf: url)
     }
 }
