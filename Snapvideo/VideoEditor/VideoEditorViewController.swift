@@ -546,13 +546,13 @@ final class VideoEditorViewController: UIViewController {
         VideoEditor.composeVideo(
             choosenFilter: selectedFilter,
             asset: playerItem.asset
-        ) { path in
+        ) { url in
             DispatchQueue.main.async {
-                guard let filePath = path else {
+                guard let fileURL = url else {
                     self.videoViewController.indicatorSwitcher = false
                     return
                 }
-                let objectToImport = [NSURL(fileURLWithPath: filePath)]
+                let objectToImport = [fileURL as NSURL]
                 let activityVC = UIActivityViewController(activityItems: objectToImport, applicationActivities: nil)
                 activityVC.setValue("Video", forKey: "subject")
                 activityVC.excludedActivityTypes = [.addToReadingList, .assignToContact]
