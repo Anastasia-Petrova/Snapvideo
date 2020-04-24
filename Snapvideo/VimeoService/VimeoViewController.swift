@@ -12,7 +12,9 @@ import VimeoNetworking
 final class VimeoViewController: UIViewController {
     let loginButton = UIButton()
     lazy var videoCollection = UICollectionView(frame: .zero, collectionViewLayout: VimeoCollectionLayout())
-    lazy var videoDataSource = VideoDataSource(collectionView: videoCollection)
+    lazy var videoDataSource = VimeoDataSource(collectionView: videoCollection) { [weak self] in
+        self?.performUpload()
+    }
     
     var state: State = .unauthorized {
         didSet {
@@ -21,6 +23,16 @@ final class VimeoViewController: UIViewController {
                 self.view.setNeedsLayout()
             }
         }
+    }
+    let performUpload: () -> Void
+    
+    init(performUpload: @escaping () -> Void) {
+        self.performUpload = performUpload
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
