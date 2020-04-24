@@ -10,12 +10,14 @@ import Foundation
 import UIKit
 import VimeoNetworking
 
-final class VideoDataSource: NSObject {
+final class VimeoDataSource: NSObject {
     let cellIndentifier = "VideoCell"
     let collectionView: UICollectionView
+    let headerCallback: () -> Void
     
-    init(collectionView: UICollectionView) {
+    init(collectionView: UICollectionView, headerCallback: @escaping () -> Void) {
         self.collectionView = collectionView
+        self.headerCallback = headerCallback
         super.init()
         collectionView.dataSource = self
         collectionView.register(VimeoCollectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "VimeoCollectionHeader")
@@ -52,7 +54,7 @@ final class VideoDataSource: NSObject {
     }
 }
 
-extension VideoDataSource: UICollectionViewDataSource {
+extension VimeoDataSource: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -66,15 +68,7 @@ extension VideoDataSource: UICollectionViewDataSource {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "VimeoCollectionHeader", for: indexPath) as! VimeoCollectionHeader
-            headerView.callback = {
-                guard let token = vimeoClient.currentAccount?.accessToken else {
-                    print("NO TOKEN!!!!")
-                    return
-                }
-                VimeoUploadClient.performGetUploadLinkRequest(accessToken: token, size: 1024 * 10) { response in
-                    print(response)
-                }
-            }
+            headerView.callback = headerCallback
             return headerView
             
         default:  fatalError("Unexpected element kind")
@@ -103,7 +97,7 @@ extension VideoDataSource: UICollectionViewDataSource {
     }
 }
 
-extension VideoDataSource {
+extension VimeoDataSource {
     enum Error: Swift.Error {
         case badData
         case noData
