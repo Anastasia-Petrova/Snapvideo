@@ -26,7 +26,6 @@ final class VideoViewController: UIViewController {
     lazy var tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap))
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
     
-    
     init(asset: AVAsset) {
         self.asset = asset
         let playerItem = AVPlayerItem(asset: asset)
