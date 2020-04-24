@@ -20,10 +20,47 @@ struct VideoEditor {
             request.finish(with: filteredImage, context: nil)
         }
     }
-
-    static func saveEditedVideo(choosenFilter: AnyFilter, asset: AVAsset ) {
+    
+    static func saveEditedVideo(choosenFilter: AnyFilter, asset: AVAsset, completion: @escaping () -> Void ) {
         let composition = setUpComposition(choosenFilter: choosenFilter, asset: asset)
+        performExport(asset: asset, composition: composition) { exportUrl in
+            guard let exportUrl = exportUrl else {
+                completion()
+                return
+            }
+            saveToPhotoLibrary(exportUrl, completion: completion)
+        }
+    }
+    
+    static func saveToPhotoLibrary(_ exportUrl: URL, completion: @escaping () -> Void) {
+        PHPhotoLibrary.shared().performChanges({
+            PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: exportUrl)
+        }) { saved, error in
+            if saved {
+                let appDelegate = AppDelegate()
+                appDelegate.scheduleNotification(title: "Success!", body: "Video was saved.")
+            } else {
+                let appDelegate = AppDelegate()
+                appDelegate.scheduleNotification(title: "Error!", body: "Video was not saved. Try again.")
+            }
+            completion()
+        }
+    }
+    
+    static func composeVideo(choosenFilter: AnyFilter, asset: AVAsset, completion: @escaping (URL?) -> Void ) {
+        let composition = setUpComposition(choosenFilter: choosenFilter, asset: asset)
+        performExport(asset: asset, composition: composition) { exportPath in
+            completion(exportPath)
+        }
+    }
+    
+    static func performExport(
+        asset: AVAsset,
+        composition: AVVideoComposition,
+        completion: @escaping (URL?) -> Void
+    ) {
         guard let export = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetHighestQuality) else {
+            completion(nil)
             return
         }
         export.outputFileType = AVFileType.mov
@@ -31,30 +68,15 @@ struct VideoEditor {
         let exportUrl = URL(fileURLWithPath: exportPath)
         export.outputURL = exportUrl
         export.videoComposition = composition
-        export.exportAsynchronously(completionHandler: {
-        PHPhotoLibrary.shared().performChanges({
-            PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: exportUrl)
-            }) { saved, error in
-                if saved {
-                    let appDelegate = AppDelegate()
-                    appDelegate.scheduleNotification()
-                }
-            }
-        })
+        export.exportAsynchronously {
+            completion(exportUrl)
+        }
     }
     
-    static func composeVideo(choosenFilter: AnyFilter, asset: AVAsset, completion: @escaping (String?) -> Void ) {
-        let composition = setUpComposition(choosenFilter: choosenFilter, asset: asset)
-        guard let export = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetHighestQuality) else {
-            return completion(nil)
+    static func getVideoSize(url: URL) -> Int {
+        guard let data = try? Data(contentsOf: url) else {
+            return 0
         }
-        export.outputFileType = AVFileType.mov
-        let exportPath = NSTemporaryDirectory().appendingFormat("/\(UUID().uuidString).mov")
-        let exportUrl = URL(fileURLWithPath: exportPath)
-        export.outputURL = exportUrl
-        export.videoComposition = composition
-        export.exportAsynchronously(completionHandler: {
-            completion(exportPath)
-        })
+        return data.count
     }
 }
