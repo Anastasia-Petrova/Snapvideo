@@ -40,28 +40,7 @@ final class VideoEditorViewController: UIViewController {
     
     lazy var vimeoViewController = VimeoViewController() { [weak self] in
         guard let self = self else { return }
-        guard let token = vimeoClient.currentAccount?.accessToken else {
-            print("NO TOKEN!!!!")
-            return
-        }
-        DispatchQueue.global().async {
-            guard let playerItem = self.videoViewController.player.currentItem else { return
-            }
-            
-            VideoEditor.composeVideo(
-                choosenFilter: self.selectedFilter,
-                asset: playerItem.asset
-            ) { url in
-                guard let url = url else { return }
-                let size = VideoEditor.getVideoSize(url: url)
-                VimeoUploadClient.performGetUploadLinkRequest(
-                    accessToken: token,
-                    size: size
-                ) { response in
-                    print(response)
-                }
-            }
-        }
+        self.uploadVideo()
     }
     
     var progressValue: Float = 0 {
@@ -600,6 +579,59 @@ final class VideoEditorViewController: UIViewController {
         }
     }
 }
+
+extension VideoEditorViewController {
+    func uploadVideo() {
+        guard let token = vimeoClient.currentAccount?.accessToken else { return }
+        DispatchQueue.global().async {
+            guard let playerItem = self.videoViewController.player.currentItem else { return
+            }
+            
+            VideoEditor.composeVideo(
+                choosenFilter: self.selectedFilter,
+                asset: playerItem.asset
+            ) { [weak self] url in
+                guard let url = url,
+                    let data = VideoEditor.getVideoData(url: url) else { return }
+                self?.getUploadLink(token: token, data: data)
+            }
+        }
+    }
+    
+    func getUploadLink(token: String, data: Data) {
+        VimeoUploadClient.performGetUploadLinkRequest(
+            accessToken: token,
+            size: data.count
+        ) { response in
+            switch response {
+            case .success(let response):
+                let link = response.upload.uploadLink
+                self.performUploadRequest(data: data, link: link)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func performUploadRequest(data: Data, link: String) {
+        VimeoUploadClient.performUploadRequest(uploadLink: link, videoData: data) { response in
+            switch response {
+            case .success(let response):
+                VimeoUploadClient.performHeadUploadRequest(uploadLink: link) { (result) in
+                    switch result {
+                    case let .success(response):
+                        print(response)
+                    case let .failure(error):
+                        print(error)
+                    }
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+}
+
 
 extension VideoEditorViewController: UITabBarDelegate {
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
