@@ -72,4 +72,11 @@ struct VideoEditor {
             completion(exportUrl)
         }
     }
+    
+    static func getVideoSize(url: URL) -> Int {
+        guard let data = try? Data(contentsOf: url) else {
+            return 0
+        }
+        return data.count
+    }
 }
