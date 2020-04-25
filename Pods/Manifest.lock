@@ -14,22 +14,26 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
+  - TUSKit (1.4.2)
   - VimeoNetworking (4.0.0):
     - AFNetworking (= 3.1.0)
 
 DEPENDENCIES:
   - AFNetworking (= 3.1.0)
+  - TUSKit (= 1.4.2)
   - VimeoNetworking (= 4.0.0)
 
 SPEC REPOS:
   trunk:
     - AFNetworking
+    - TUSKit
     - VimeoNetworking
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  TUSKit: 4bcc2fe13e1b4d6c3bfbaca57d64e64c1be31201
   VimeoNetworking: 62238fe49b7f4982a1bb3e930adc0468ea88cc1c
 
-PODFILE CHECKSUM: 46682d1c8801866ab17a25586f22732d8932496c
+PODFILE CHECKSUM: f8ceacaf6409a64d5f6f17a97ecc2d580c1429ec
 
 COCOAPODS: 1.8.4
