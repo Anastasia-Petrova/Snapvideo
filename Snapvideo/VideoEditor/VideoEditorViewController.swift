@@ -164,6 +164,7 @@ final class VideoEditorViewController: UIViewController {
         setUpExportView()
         setUpShareStackView()
         setUpSaveCopyStackView()
+        setUpShareButton()
         setUpSaveCopyButton()
         setUpTabBar()
     }
@@ -457,7 +458,7 @@ final class VideoEditorViewController: UIViewController {
     @objc func openActivityView() {
         DispatchQueue.main.async {
             self.isExportViewShown = false
-            //                    self.videoViewController.indicatorSwitcher = true
+            self.videoViewController.indicatorSwitcher = true
         }
         guard let playerItem = videoViewController.player.currentItem else { return }
         //        guard let filter = selecterFilter else { return }
@@ -508,16 +509,18 @@ final class VideoEditorViewController: UIViewController {
     func saveVideoToPhotos() {
         DispatchQueue.main.async {
             self.isExportViewShown = false
+            self.videoViewController.indicatorSwitcher = true
         }
         guard let playerItem = videoViewController.player.currentItem else { return }
         VideoEditor.saveEditedVideo(
             choosenFilter: looksViewController.selectedFilter,
             asset: playerItem.asset
         ) {
-            
+            DispatchQueue.main.async {
+                self.videoViewController.indicatorSwitcher = false
+            }
         }
-    }
-    
+    }    
 }
 
 extension VideoEditorViewController: UITabBarDelegate {
