@@ -103,14 +103,21 @@ final class HomeViewController: UIViewController {
     
     private func getSavedVideo() {
         if controller.numberOfItems(in: 0) > 0,
-            let url = toPinViewModel(0).url {
-            let index = toPinViewModel(0).index
+            let url = toVideoViewModel(0).url {
+            let index = toVideoViewModel(0).index
             embed(VideoEditorViewController(url: url, index: Int(index), filters: self.app.filters))
         }
     }
     
-    private func toPinViewModel(_ index: Int) -> VideoViewModel {
+    private func toVideoViewModel(_ index: Int) -> VideoViewModel {
         controller.getItem(at: IndexPath(item: index, section: 0))
+    }
+    
+    private func updateVideo(url: URL, filterIndex: Int = 0) {
+        controller.updateModels(indexPaths: [IndexPath(item: 0, section: 0)]) { video in
+            video.first?.url = url
+            video.first?.index = Int16(filterIndex)
+        }
     }
     
     private func saveVideo(url: URL, filterIndex: Int = 0) {
@@ -135,7 +142,11 @@ extension HomeViewController: UIImagePickerControllerDelegate {
         dismiss(animated: true) {
             self.removeEmbeddedViewController()
             self.embed(VideoEditorViewController(url: url, index: 0, filters: self.app.filters))
-            self.saveVideo(url: url)
+            if self.controller.numberOfItems(in: 0) > 0 {
+                self.updateVideo(url: url)
+            } else {
+                self.saveVideo(url: url)
+            }
         }
     }
 }
