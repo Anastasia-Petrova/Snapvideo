@@ -19,7 +19,7 @@ final class VideoEditorViewController: UIViewController {
     var topExportConstraint = NSLayoutConstraint()
     let looksViewController: LooksViewController
     var topLooksConstraint = NSLayoutConstraint()
-    var selectedFilter: AnyFilter = AnyFilter(PassthroughFilter())
+    var selectedFilter: AnyFilter
     var selectedFilterIndex: Int
     var pendingFilterIndex: Int?
     var topVimeoConstraint = NSLayoutConstraint()
@@ -118,6 +118,7 @@ final class VideoEditorViewController: UIViewController {
         self.url = url
         asset = AVAsset(url: url)
         selectedFilterIndex = index
+        selectedFilter = filters[index]
         videoViewController = VideoViewController(asset: asset)
         looksViewController = LooksViewController(itemSize: itemSize, selectedFilterIndex: index, filters: filters)
         super.init(nibName: nil, bundle: nil)
