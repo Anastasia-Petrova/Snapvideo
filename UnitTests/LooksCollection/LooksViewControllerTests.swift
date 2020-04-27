@@ -15,7 +15,7 @@ final class LooksViewControllerTests: XCTestCase {
         let expectedItemSize = CGSize(width: 60, height: 76)
         let expectedFilters = [AnyFilter(PassthroughFilter())]
         //When
-        let vc = LooksViewController(itemSize: expectedItemSize, filters: expectedFilters) {_,_ in }
+        let vc = LooksViewController(itemSize: expectedItemSize, selectedFilterIndex: 0, filters: expectedFilters)
         let dataSource = vc.dataSource
         let layout = vc.collectionView.collectionViewLayout
         let collectionView = vc.collectionView
@@ -35,17 +35,21 @@ final class LooksViewControllerTests: XCTestCase {
     func test_didSelect_calls_filterIndexChangeCallback() {
         //Given
         let expectedIndexPath = IndexPath(item: 1, section: 0)
+        let expectedFilters = [AnyFilter(PassthroughFilter())]
         var actualSelectedIndex: Int?
         var actualPreviousIndex: Int?
-        let vc = LooksViewController(itemSize: .zero, filters: []) { selectedIndex, previousIndex in
+        let vc = LooksViewController(
+            itemSize: .zero,
+            selectedFilterIndex: 0,
+            filters: expectedFilters
+        )
+        vc.filterIndexChangeCallback = { selectedIndex, previousIndex in
             actualSelectedIndex = selectedIndex
             actualPreviousIndex = previousIndex
         }
-        
         //When
         vc.collectionView(vc.collectionView, didSelectItemAt: expectedIndexPath)
         //Then
-        XCTAssertEqual(vc.selectedFilterIndex, actualSelectedIndex)
         XCTAssertEqual(expectedIndexPath.row, actualSelectedIndex)
         XCTAssertEqual(0, actualPreviousIndex)
     }
@@ -53,7 +57,12 @@ final class LooksViewControllerTests: XCTestCase {
     func test_didSelect_when_indexPathRow_notZero_calls_collectionView_scrollToItem() {
         //Given
         let expectedIndexPath = IndexPath(item: 1, section: 0)
-        let vc = LooksViewController(itemSize: .zero, filters: []) {_,_ in }
+        let expectedFilters = [AnyFilter(PassthroughFilter())]
+        let vc = LooksViewController(
+            itemSize: .zero,
+            selectedFilterIndex: 0,
+            filters: expectedFilters
+        )
         let spy = CollectionViewSpy()
         //When
         vc.collectionView(spy, didSelectItemAt: expectedIndexPath)
@@ -66,7 +75,12 @@ final class LooksViewControllerTests: XCTestCase {
     func test_didSelect_when_indexPathRow_isZero_doesnt_call_collectionView_scrollToItem() {
         //Given
         let expectedIndexPath = IndexPath(item: 0, section: 0)
-        let vc = LooksViewController(itemSize: .zero, filters: []) {_,_ in }
+        let expectedFilters = [AnyFilter(PassthroughFilter())]
+        let vc = LooksViewController(
+            itemSize: .zero,
+            selectedFilterIndex: 0,
+            filters: expectedFilters
+        ) 
         let spy = CollectionViewSpy()
         //When
         vc.collectionView(spy, didSelectItemAt: expectedIndexPath)
@@ -76,14 +90,19 @@ final class LooksViewControllerTests: XCTestCase {
         XCTAssertNil(spy.scrollToItemAnimated)
     }
     
-    func test_deselectFilter_calls_deselectItem_and_selectItem_and_didSelectItem() {
+    func test_deselectFilter_calls_deselectItem_and_selects_originalFilter() {
         //Given
         let collectionSpy = CollectionViewSpy()
         let delegateSpy = CollectionViewDelegateSpy()
-        let vc = LooksViewController(itemSize: .zero, filters: App.unitTests.filters, collectionView: collectionSpy) {_,_ in }
+        let vc = LooksViewController(
+            itemSize: .zero,
+            selectedFilterIndex: 0,
+            filters: App.unitTests.filters,
+            collectionView: collectionSpy
+        )
         collectionSpy.delegate = delegateSpy
         let expectedDeselectedIndex = 2
-        vc.selectedFilterIndex = expectedDeselectedIndex
+        vc.collectionView(vc.collectionView, didSelectItemAt: IndexPath(item: expectedDeselectedIndex, section: 0))
         //When
         vc.deselectFilter()
         //Then

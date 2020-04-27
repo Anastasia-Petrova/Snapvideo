@@ -19,7 +19,7 @@ final class VideoEditorViewControllerTests: XCTestCase {
             return
         }
         let url = URL(fileURLWithPath: path)
-        let vc = VideoEditorViewController(url: url, filters: filters, tools: [])
+        let vc = VideoEditorViewController(url: url, index: 0, filters: filters)
         
         vc.openLooks()
         XCTAssertEqual(
@@ -34,29 +34,6 @@ final class VideoEditorViewControllerTests: XCTestCase {
         )
     }
     
-    func test_openTools_and_closeTools_setCorrect_topToolsConstraint_constant() {
-        let filters = [
-            AnyFilter(PassthroughFilter())
-        ]
-        guard let path = Bundle.unitTests.path(forResource: "videoTest", ofType:"MOV") else {
-            XCTFail("testVideo.MOV not found")
-            return
-        }
-        let url = URL(fileURLWithPath: path)
-        let vc = VideoEditorViewController(url: url, filters: filters, tools: [AnyTool(WarmthTool())])
-        
-        vc.openTools()
-        XCTAssertEqual(
-            vc.topToolsConstraint.constant,
-            vc.toolsViewController.view.frame.height + vc.tabBar.frame.height
-        )
-        
-        vc.closeTools()
-        XCTAssertEqual(
-            vc.topToolsConstraint.constant,
-            -vc.view.safeAreaInsets.bottom
-        )
-    }
     
     func test_openExportMenu_and_closeExportMenu_setCorrect_topExportMenuConstraint_constant() {
         let filters = [
@@ -67,7 +44,7 @@ final class VideoEditorViewControllerTests: XCTestCase {
             return
         }
         let url = URL(fileURLWithPath: path)
-        let vc = VideoEditorViewController(url: url, filters: filters, tools: [])
+        let vc = VideoEditorViewController(url: url, index: 0, filters: filters)
         
         vc.openExportMenu()
         XCTAssertEqual(

@@ -47,7 +47,6 @@ final class LooksViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpCollectionView()
-//        collectionView.selectItem(at: IndexPath(item: selectedFilterIndex, section: 0), animated: true, scrollPosition: .centeredHorizontally)
         collectionView.delegate?.collectionView?(collectionView, didSelectItemAt: IndexPath(item: selectedFilterIndex, section: 0))
     }
     
