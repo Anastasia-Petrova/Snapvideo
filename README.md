@@ -5,15 +5,13 @@
 Video Editing application for iOS, inspired by [Snapseed](https://apps.apple.com/gb/app/snapseed/id439438619).
 
 ![Preview](https://i.imgur.com/mMbPeZC.gif)
-![Preview2](https://i.imgur.com/3hOg0Yd.gif)
-![Preview3](https://i.imgur.com/FpJKQCw.gif)
+![Preview](https://i.imgur.com/j8xEtw2.gif)
 
 ### Features
 
-- [x] Open Video from Photo library
-- [x] Apply Looks (predefined filters)
-- [x] Play/Pause/Seek Video
-- [x] Export edited Video
-- [ ] Apply Tools (granular adjustments)
-- [ ] Enter full screen mode
-- [ ] Tap-and-Hold to compare edited Video to original
+- [x] Select video from Photo library
+- [x] Apply filters to video
+- [x] Export edited video to Photo Library
+- [x] Upload video to Vimeo
+- [x] Fetch videos from Vimeo
+- [x] Local storage for the last edited video and selected filter
