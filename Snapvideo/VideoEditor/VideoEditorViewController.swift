@@ -437,7 +437,6 @@ final class VideoEditorViewController: UIViewController {
     public func closeLooks() {
         self.view.layoutIfNeeded()
         topLooksConstraint.constant = -view.safeAreaInsets.bottom
-//        resetToDefaultFilter()
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
@@ -488,8 +487,8 @@ final class VideoEditorViewController: UIViewController {
             self.showCoverView(isShown: true)
             self.videoViewController.indicatorSwitcher = true
         }
+        
         guard let playerItem = videoViewController.player.currentItem else { return }
-//        guard let filter = selecterFilter else { return }
         VideoEditor.saveEditedVideo(
             choosenFilter: selectedFilter,
             asset: playerItem.asset
@@ -526,7 +525,6 @@ final class VideoEditorViewController: UIViewController {
         view.layoutIfNeeded()
         tabBar.isHidden = false
         topLooksConstraint.constant = 146
-//        resetToDefaultFilter()
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
@@ -546,7 +544,6 @@ final class VideoEditorViewController: UIViewController {
             self.videoViewController.indicatorSwitcher = true
         }
         guard let playerItem = videoViewController.player.currentItem else { return }
-//        guard let filter = selecterFilter else { return }
         
         VideoEditor.composeVideo(
             choosenFilter: selectedFilter,
@@ -617,11 +614,15 @@ extension VideoEditorViewController {
     func performUploadRequest(data: Data, link: String) {
         VimeoUploadClient.performUploadRequest(uploadLink: link, videoData: data) { response in
             switch response {
-            case .success(let response):
-                VimeoUploadClient.performHeadUploadRequest(uploadLink: link) { (result) in
+            case .success:
+                VimeoUploadClient.performHeadUploadRequest(uploadLink: link) { [weak self] (result) in
                     switch result {
-                    case let .success(response):
-                        print(response)
+                    case .success:
+                        DispatchQueue.main.async {
+                            let dataSource = self?.vimeoViewController.videoDataSource
+                            dataSource?.headerView?.setActivityIndicatorOn(false)
+                            dataSource?.fetchVideos()
+                        }
                     case let .failure(error):
                         print(error)
                     }

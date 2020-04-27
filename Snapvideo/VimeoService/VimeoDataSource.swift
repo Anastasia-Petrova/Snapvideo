@@ -14,6 +14,7 @@ final class VimeoDataSource: NSObject {
     let cellIndentifier = "VideoCell"
     let collectionView: UICollectionView
     let headerCallback: () -> Void
+    var headerView: VimeoCollectionHeader?
     
     init(collectionView: UICollectionView, headerCallback: @escaping () -> Void) {
         self.collectionView = collectionView
@@ -69,6 +70,7 @@ extension VimeoDataSource: UICollectionViewDataSource {
         case UICollectionView.elementKindSectionHeader:
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "VimeoCollectionHeader", for: indexPath) as! VimeoCollectionHeader
             headerView.callback = headerCallback
+            self.headerView = headerView
             return headerView
             
         default:  fatalError("Unexpected element kind")
