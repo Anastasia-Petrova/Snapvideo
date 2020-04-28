@@ -618,14 +618,15 @@ extension VideoEditorViewController {
         VimeoUploadClient.performGetUploadLinkRequest(
             accessToken: token,
             size: data.count
-        ) { response in
+        ) { [weak self] response in
             switch response {
             case .success(let response):
                 let link = response.upload.uploadLink
-                self.performUploadRequest(data: data, link: link)
+                self?.performUploadRequest(data: data, link: link)
             case .failure(let error):
                 DispatchQueue.main.async {
-                    self.presentAlert(title: "Error!", message: error.localizedDescription)
+                    self?.hideLoadingIndicator()
+                    self?.presentAlert(title: "Error!", message: error.localizedDescription)
                 }
             }
         }
@@ -638,6 +639,7 @@ extension VideoEditorViewController {
                 self?.performHeadRequest(uploadLink: link)
             case .failure(let error):
                 DispatchQueue.main.async {
+                    self?.hideLoadingIndicator()
                     self?.presentAlert(title: "Error!", message: error.localizedDescription)
                 }
             }
@@ -646,19 +648,21 @@ extension VideoEditorViewController {
     
     func performHeadRequest(uploadLink: String) {
         VimeoUploadClient.performHeadUploadRequest(uploadLink: uploadLink) { [weak self] (result) in
-            switch result {
-            case .success:
-                DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                self?.hideLoadingIndicator()
+                switch result {
+                case .success:
                     let dataSource = self?.vimeoViewController.videoDataSource
-                    dataSource?.headerView?.setActivityIndicatorOn(false)
                     dataSource?.fetchVideos()
-                }
-            case let .failure(error):
-                DispatchQueue.main.async {
+                case let .failure(error):
                     self?.presentAlert(title: "Error!", message: error.localizedDescription)
                 }
             }
         }
+    }
+    
+    private func hideLoadingIndicator() {
+        self.vimeoViewController.videoDataSource.headerView?.setActivityIndicatorOn(false)
     }
 }
 
