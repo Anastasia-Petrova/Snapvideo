@@ -10,6 +10,27 @@ import Foundation
 import VimeoNetworking
 
 final class VimeoUploadClient {
+    enum HTTPMethod {
+        static let POST = "POST"
+        static let PATCH = "PATCH"
+        static let HEAD = "HEAD"
+    }
+    enum Header {
+        enum Key {
+            static let auth = "Authorization"
+            static let contentType = "Content-Type"
+            static let accept = "Accept"
+            static let uploadOffset = "Upload-Offset"
+            static let tusResumable = "Tus-Resumable"
+        }
+        enum Value {
+            static func auth(_ token: String) -> String { "Bearer \(token)"}
+            static let contentJSON = "application/json"
+            static let contentVimeoJSON = "application/vnd.vimeo.*+json;version=3.4"
+            static let contentStream = "application/offset+octet-stream"
+            static let tusVersion = "1.0.0"
+        }
+    }
     enum Endpoints {
         static let base = "https://api.vimeo.com/me/videos"
     }
@@ -27,10 +48,10 @@ final class VimeoUploadClient {
     
     class func getUploadLinkRequest(accessToken: String, size: Int) -> URLRequest {
         var request = URLRequest(url: URL(string: Endpoints.base)!)
-        request.httpMethod = "POST"
-        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("application/vnd.vimeo.*+json;version=3.4", forHTTPHeaderField: "Accept")
+        request.httpMethod = HTTPMethod.POST
+        request.setValue(Header.Value.auth(accessToken), forHTTPHeaderField: Header.Key.auth)
+        request.addValue(Header.Value.contentJSON, forHTTPHeaderField: Header.Key.contentType)
+        request.addValue(Header.Value.contentVimeoJSON, forHTTPHeaderField: Header.Key.accept)
         let body = UploadBody(upload: .init(approach: "tus", size: "\(size)"))
         request.httpBody = try! JSONEncoder().encode(body)
         return request
@@ -72,11 +93,11 @@ final class VimeoUploadClient {
     
     class func getUploadRequest(uploadLink: String, uploadOffset: Int) -> URLRequest {
         var request = URLRequest(url: URL(string: uploadLink)!)
-        request.httpMethod = "PATCH"
-        request.addValue("1.0.0", forHTTPHeaderField: "Tus-Resumable")
-        request.addValue("\(uploadOffset)", forHTTPHeaderField: "Upload-Offset")
-        request.addValue("application/offset+octet-stream", forHTTPHeaderField: "Content-Type")
-        request.addValue("application/vnd.vimeo.*+json;version=3.4", forHTTPHeaderField: "Accept")
+        request.httpMethod = HTTPMethod.PATCH
+        request.addValue(Header.Value.tusVersion, forHTTPHeaderField: Header.Key.tusResumable)
+        request.addValue("\(uploadOffset)", forHTTPHeaderField: Header.Key.uploadOffset)
+        request.addValue(Header.Value.contentStream, forHTTPHeaderField: Header.Key.contentType)
+        request.addValue(Header.Value.contentVimeoJSON, forHTTPHeaderField: Header.Key.accept)
         return request
     }
     
@@ -114,8 +135,8 @@ final class VimeoUploadClient {
     class func getHeadUploadRequest(uploadLink: String) -> URLRequest {
         var request = URLRequest(url: URL(string: uploadLink)!)
         request.httpMethod = "HEAD"
-        request.addValue("1.0.0", forHTTPHeaderField: "Tus-Resumable")
-        request.addValue("application/vnd.vimeo.*+json;version=3.4", forHTTPHeaderField: "Accept")
+        request.addValue(Header.Value.tusVersion, forHTTPHeaderField: Header.Key.tusResumable)
+        request.addValue(Header.Value.contentVimeoJSON, forHTTPHeaderField: Header.Key.accept)
         return request
     }
     
