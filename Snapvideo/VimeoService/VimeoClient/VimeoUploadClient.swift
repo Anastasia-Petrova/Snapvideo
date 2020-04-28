@@ -54,7 +54,6 @@ final class VimeoUploadClient {
                 let uploadResponse = try JSONDecoder().decode(VimeoUploadLinkResponse.self, from: data)
                 completion(.success(uploadResponse))
             } catch {
-//                let json = try! JSONSerialization.jsonObject(with: data, options: .allowFragments)
                 completion(.failure(error))
             }
         }

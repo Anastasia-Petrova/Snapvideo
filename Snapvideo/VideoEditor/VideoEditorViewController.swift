@@ -481,7 +481,7 @@ final class VideoEditorViewController: UIViewController {
         looksViewController.deselectFilter()
     }
     
-    func saveVideoToPhotos() {
+    private func saveVideoToPhotos() {
         DispatchQueue.main.async {
             self.isExportViewShown = false
             self.showCoverView(isShown: true)
@@ -500,11 +500,27 @@ final class VideoEditorViewController: UIViewController {
         }
     }
     
-    func showCoverView(isShown: Bool) {
+    private func showCoverView(isShown: Bool) {
         coverView.isHidden = !isShown
         coverButton.isEnabled = !isShown
         tabBar.isUserInteractionEnabled = !isShown
         progressView.isHidden = !isShown
+    }
+    
+    private func presentAlert(title: String, message: String) {
+        let alert = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert
+        )
+        alert.addAction(
+            UIAlertAction(
+                title: "OK",
+                style: .default,
+                handler: nil
+            )
+        )
+        present(alert, animated: true, completion: nil)
     }
     
     @objc func closeVimeoView() {
@@ -571,7 +587,7 @@ final class VideoEditorViewController: UIViewController {
             case .authorized:
                 self?.saveVideoToPhotos()
             default:
-                print("Photos permissions not granted.")
+                self?.presentAlert(title: "Error!", message: "Photos permissions not granted.")
                 return
             }
         }
@@ -606,29 +622,33 @@ extension VideoEditorViewController {
                 let link = response.upload.uploadLink
                 self.performUploadRequest(data: data, link: link)
             case .failure(let error):
-                print(error)
+                self.presentAlert(title: "Error!", message: error.localizedDescription)
             }
         }
     }
     
     func performUploadRequest(data: Data, link: String) {
-        VimeoUploadClient.performUploadRequest(uploadLink: link, videoData: data) { response in
+        VimeoUploadClient.performUploadRequest(uploadLink: link, videoData: data) { [weak self] response in
             switch response {
             case .success:
-                VimeoUploadClient.performHeadUploadRequest(uploadLink: link) { [weak self] (result) in
-                    switch result {
-                    case .success:
-                        DispatchQueue.main.async {
-                            let dataSource = self?.vimeoViewController.videoDataSource
-                            dataSource?.headerView?.setActivityIndicatorOn(false)
-                            dataSource?.fetchVideos()
-                        }
-                    case let .failure(error):
-                        print(error)
-                    }
-                }
+                self?.performHeadRequest(uploadLink: link)
             case .failure(let error):
-                print(error)
+                self?.presentAlert(title: "Error!", message: error.localizedDescription)
+            }
+        }
+    }
+    
+    func performHeadRequest(uploadLink: String) {
+        VimeoUploadClient.performHeadUploadRequest(uploadLink: uploadLink) { [weak self] (result) in
+            switch result {
+            case .success:
+                DispatchQueue.main.async {
+                    let dataSource = self?.vimeoViewController.videoDataSource
+                    dataSource?.headerView?.setActivityIndicatorOn(false)
+                    dataSource?.fetchVideos()
+                }
+            case let .failure(error):
+                self?.presentAlert(title: "Error!", message: error.localizedDescription)
             }
         }
     }
