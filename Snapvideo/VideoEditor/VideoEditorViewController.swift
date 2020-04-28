@@ -587,7 +587,9 @@ final class VideoEditorViewController: UIViewController {
             case .authorized:
                 self?.saveVideoToPhotos()
             default:
-                self?.presentAlert(title: "Error!", message: "Photos permissions not granted.")
+                DispatchQueue.main.async {
+                    self?.presentAlert(title: "Error!", message: "Photos permissions not granted.")
+                }
                 return
             }
         }
@@ -622,7 +624,9 @@ extension VideoEditorViewController {
                 let link = response.upload.uploadLink
                 self.performUploadRequest(data: data, link: link)
             case .failure(let error):
-                self.presentAlert(title: "Error!", message: error.localizedDescription)
+                DispatchQueue.main.async {
+                    self.presentAlert(title: "Error!", message: error.localizedDescription)
+                }
             }
         }
     }
@@ -633,7 +637,9 @@ extension VideoEditorViewController {
             case .success:
                 self?.performHeadRequest(uploadLink: link)
             case .failure(let error):
-                self?.presentAlert(title: "Error!", message: error.localizedDescription)
+                DispatchQueue.main.async {
+                    self?.presentAlert(title: "Error!", message: error.localizedDescription)
+                }
             }
         }
     }
@@ -648,7 +654,9 @@ extension VideoEditorViewController {
                     dataSource?.fetchVideos()
                 }
             case let .failure(error):
-                self?.presentAlert(title: "Error!", message: error.localizedDescription)
+                DispatchQueue.main.async {
+                    self?.presentAlert(title: "Error!", message: error.localizedDescription)
+                }
             }
         }
     }
