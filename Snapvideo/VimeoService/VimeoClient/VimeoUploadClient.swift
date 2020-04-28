@@ -31,7 +31,7 @@ final class VimeoUploadClient {
         request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/vnd.vimeo.*+json;version=3.4", forHTTPHeaderField: "Accept")
-        let body = UploadBody(name: "Hello!", upload: .init(approach: "tus", size: "\(size)"))
+        let body = UploadBody(upload: .init(approach: "tus", size: "\(size)"))
         request.httpBody = try! JSONEncoder().encode(body)
         return request
     }
@@ -74,7 +74,6 @@ final class VimeoUploadClient {
         var request = URLRequest(url: URL(string: uploadLink)!)
         request.httpMethod = "PATCH"
         request.addValue("1.0.0", forHTTPHeaderField: "Tus-Resumable")
-//TODO: 0 for the initial request; the stated upload offset for subsequent requests???
         request.addValue("\(uploadOffset)", forHTTPHeaderField: "Upload-Offset")
         request.addValue("application/offset+octet-stream", forHTTPHeaderField: "Content-Type")
         request.addValue("application/vnd.vimeo.*+json;version=3.4", forHTTPHeaderField: "Accept")
@@ -92,18 +91,11 @@ final class VimeoUploadClient {
                 completion(.failure(error))
                 return
             }
-            guard let response = response as? HTTPURLResponse, let data = data else {
+            guard let response = response as? HTTPURLResponse,  data != nil else {
                 completion(.failure(NetworkError.wrongAPIResponse))
                 return
             }
-            do {
-//                let uploadResponse = try JSONDecoder().decode(VimeoUploadResponse.self, from: data)
                 completion(.success(response))
-            } catch {
-                let json = try! JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                completion(.failure(error))
-            }
-            
         }
     }
     
@@ -137,16 +129,11 @@ final class VimeoUploadClient {
                 completion(.failure(error))
                 return
             }
-            guard let response = response as? HTTPURLResponse, let data = data else {
+            guard let response = response as? HTTPURLResponse, data != nil else {
                 completion(.failure(NetworkError.wrongAPIResponse))
                 return
             }
-            do {
-                completion(.success(response))
-            } catch {
-                //                let json = try! JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                completion(.failure(error))
-            }
+            completion(.success(response))
         }
     }
     
@@ -165,6 +152,5 @@ struct UploadBody: Codable {
         let approach: String
         let size: String
     }
-    let name: String
     let upload: Upload
 }
