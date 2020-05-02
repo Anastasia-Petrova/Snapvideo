@@ -17,3 +17,9 @@ Video Editing application for iOS, inspired by [Snapseed](https://apps.apple.com
 - [ ] Apply Tools (granular adjustments)
 - [ ] Enter full screen mode
 - [ ] Tap-and-Hold to compare edited Video to original
+
+### License
+
+GNU General Public License v3.0 or later
+
+See [LICENSE](https://github.com/Anastasia-Petrova/Snapvideo/blob/master/LICENSE.md) to see the full text.
