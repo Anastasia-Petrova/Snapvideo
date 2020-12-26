@@ -6,28 +6,28 @@
 //  Copyright © 2020 Anastasia Petrova. All rights reserved.
 //
 
-import Foundation
 import AVFoundation
 import UIKit
 
 struct AssetImageGenerator {
-    static func getThumbnailImageFromVideoAsset(asset: AVAsset, maximumSize: CGSize = .zero, completion: @escaping (UIImage?) -> Void) {
-        DispatchQueue.global().async {
-            let avAssetImageGenerator = AVAssetImageGenerator(asset: asset)
-            avAssetImageGenerator.maximumSize = maximumSize
-            avAssetImageGenerator.appliesPreferredTrackTransform = true
-            let thumnailTime = CMTimeMake(value: 2, timescale: 1)
+    static func getThumbnailImageFromVideoAsset(
+        asset: AVAsset,
+        maximumSize: CGSize = .zero,
+        queue: DispatchQueue = .global(),
+        completion: @escaping (UIImage?) -> Void
+    ) {
+        let avAssetImageGenerator = AVAssetImageGenerator(asset: asset)
+        avAssetImageGenerator.maximumSize = maximumSize
+        avAssetImageGenerator.appliesPreferredTrackTransform = true
+        avAssetImageGenerator.requestedTimeToleranceBefore = .zero
+        
+        queue.async {
             do {
-                let cgThumbImage = try avAssetImageGenerator.copyCGImage(at: thumnailTime, actualTime: nil)
+                let cgThumbImage = try avAssetImageGenerator.copyCGImage(at: .zero, actualTime: nil)
                 let thumbImage = UIImage(cgImage: cgThumbImage)
-                DispatchQueue.main.async {
-                    completion(thumbImage)
-                }
+                completion(thumbImage)
             } catch {
-                print(error.localizedDescription)
-                DispatchQueue.main.async {
-                    completion(nil) 
-                }
+                completion(nil)
             }
         }
     }

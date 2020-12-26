@@ -141,7 +141,9 @@ final class VideoEditorViewController: UIViewController {
             asset: videoFileAsset,
             maximumSize: itemSize.applying(.init(scaleX: UIScreen.main.scale, y: UIScreen.main.scale)),
             completion: { [weak self] image in
-                self?.previewImage = image
+                DispatchQueue.main.async {                
+                    self?.previewImage = image
+                }
             }
         )
         
