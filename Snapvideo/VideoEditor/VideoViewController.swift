@@ -17,7 +17,7 @@ final class VideoViewController: UIViewController {
     var playerRateObservation: NSKeyValueObservation?
     let activityIndicator = UIActivityIndicatorView()
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
-    let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+    lazy var tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
     
     var isActivityIndicatorVisible: Bool = false {
         didSet {
@@ -35,11 +35,11 @@ final class VideoViewController: UIViewController {
         playerItem.add(outputBG)
         playerView = VideoView(
             videoOutput: output,
-            videoOrientation: self.asset.videoOrientation
+            videoOrientation: asset.videoOrientation
         )
         backgroundVideoView = VideoView(
             videoOutput: outputBG,
-            videoOrientation: self.asset.videoOrientation,
+            videoOrientation: asset.videoOrientation,
             contentsGravity: .resizeAspectFill,
             filter: AnyFilter(BlurFilter(blurRadius: 100))
         )
@@ -128,13 +128,11 @@ final class VideoViewController: UIViewController {
         //2 Подписка на изменение рейта плейера - (играю/не играю)
         playerRateObservation = player.observe(\.rate) { [weak self] (_, _) in
             guard let self = self else { return }
-            let isPlaying = self.player.rate > 0
-            self.resumeImageView.isHidden = isPlaying
-            isPlaying ? self.playerView.play() :  self.playerView.pause()
+            self.resumeImageView.isHidden = self.player.rate > 0
         }
     }
     
-    @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
+    @objc func handleTap(_ sender: UITapGestureRecognizer?) {
         if player.rate == 0 {
             player.play()
         } else {
@@ -144,7 +142,7 @@ final class VideoViewController: UIViewController {
     
     @objc func playerItemDidReachEnd(notification: Notification) {
         if let playerItem = notification.object as? AVPlayerItem {
-            playerItem.seek(to: CMTime.zero, completionHandler: nil)
+            playerItem.seek(to: .zero, completionHandler: nil)
         }
     }
 }

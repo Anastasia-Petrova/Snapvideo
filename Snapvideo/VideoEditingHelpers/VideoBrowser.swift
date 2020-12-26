@@ -11,7 +11,10 @@ import MobileCoreServices
 import UIKit
 
 enum VideoBrowser {
-  static func startMediaBrowser(delegate: UIViewController & UINavigationControllerDelegate & UIImagePickerControllerDelegate, sourceType: UIImagePickerController.SourceType) {
+  static func startMediaBrowser(
+    delegate: UIViewController & UINavigationControllerDelegate & UIImagePickerControllerDelegate,
+    sourceType: UIImagePickerController.SourceType
+  ) {
     guard UIImagePickerController.isSourceTypeAvailable(sourceType) else {
       return
     }
