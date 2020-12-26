@@ -13,7 +13,7 @@ final class VideoViewController: UIViewController {
     let asset: AVAsset
     let player: AVPlayer
     let playerView: VideoView
-    let bgVideoView: VideoView
+    let backgroundVideoView: VideoView
     var playerRateObservation: NSKeyValueObservation?
     let activityIndicator = UIActivityIndicatorView()
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
@@ -37,7 +37,7 @@ final class VideoViewController: UIViewController {
             videoOutput: output,
             videoOrientation: self.asset.videoOrientation
         )
-        bgVideoView = VideoView(
+        backgroundVideoView = VideoView(
             videoOutput: outputBG,
             videoOrientation: self.asset.videoOrientation,
             contentsGravity: .resizeAspectFill,
@@ -52,7 +52,7 @@ final class VideoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(bgVideoView)
+        view.addSubview(backgroundVideoView)
         view.addSubview(playerView)
         setUpBackgroundView()
         setUpPlayerView()
@@ -65,12 +65,12 @@ final class VideoViewController: UIViewController {
     }
     
     func setUpBackgroundView() {
-        bgVideoView.translatesAutoresizingMaskIntoConstraints = false
+        backgroundVideoView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            view.leftAnchor.constraint(equalTo: bgVideoView.leftAnchor),
-            view.rightAnchor.constraint(equalTo: bgVideoView.rightAnchor),
-            bgVideoView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            bgVideoView.topAnchor.constraint(equalTo: view.topAnchor)])
+            view.leftAnchor.constraint(equalTo: backgroundVideoView.leftAnchor),
+            view.rightAnchor.constraint(equalTo: backgroundVideoView.rightAnchor),
+            backgroundVideoView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            backgroundVideoView.topAnchor.constraint(equalTo: view.topAnchor)])
     }
     
     func setUpPlayerView() {

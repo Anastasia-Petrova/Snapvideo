@@ -11,9 +11,9 @@ import AVKit
 import MobileCoreServices
 
 final class HomeViewController: UIViewController {
-    var addVideoButton = UIButton()
-    let app = App.shared
-    var childViewController: UIViewController?
+    private let app = App.shared
+    private var addVideoButton = UIButton()
+    private var videoEditorViewController: VideoEditorViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,8 +75,8 @@ final class HomeViewController: UIViewController {
          VideoBrowser.startMediaBrowser(delegate: self, sourceType: .savedPhotosAlbum)
     }
     
-    private func embed(_ videoEditorVC: UIViewController) {
-        self.childViewController = videoEditorVC
+    private func embed(_ videoEditorVC: VideoEditorViewController) {
+        self.videoEditorViewController = videoEditorVC
         videoEditorVC.view.translatesAutoresizingMaskIntoConstraints = false
         addChild(videoEditorVC)
         view.addSubview(videoEditorVC.view)
@@ -95,7 +95,7 @@ final class HomeViewController: UIViewController {
     }
     
     func removeEmbeddedViewController() {
-        guard let childVC = childViewController else { return }
+        guard let childVC = videoEditorViewController else { return }
         childVC.removeFromParent()
         childVC.view.removeFromSuperview()
     }

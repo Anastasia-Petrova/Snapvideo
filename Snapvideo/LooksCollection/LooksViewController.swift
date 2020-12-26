@@ -19,12 +19,12 @@ final class LooksViewController: UIViewController {
         dataSource.filters[selectedFilterIndex]
     }
 
-    convenience init(itemSize: CGSize, filters: [AnyFilter], callback: @escaping Callback) {
+    convenience init(itemSize: CGSize, filters: [AnyFilter], didSelectLook: @escaping Callback) {
         let collectionView = UICollectionView(
             frame: .zero,
             collectionViewLayout: LooksCollectionViewLayout(itemSize: itemSize)
         )
-        self.init(itemSize: itemSize, filters: filters, collectionView: collectionView, callback: callback)
+        self.init(itemSize: itemSize, filters: filters, collectionView: collectionView, callback: didSelectLook)
     }
     
     init(itemSize: CGSize, filters: [AnyFilter], collectionView: UICollectionView, callback: @escaping Callback) {

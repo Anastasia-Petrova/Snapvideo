@@ -11,21 +11,28 @@ import AVFoundation
 import Photos
 
 final class VideoEditorViewController: UIViewController {
-    let asset: AVAsset
-    let url: URL
-    let videoViewController: VideoViewController
-    let looksContainerView = UIView()
-    let exportView = UIView()
-    var topExportConstraint = NSLayoutConstraint()
-    let looksViewController: LooksViewController
+    let videoFileAsset: AVAsset
+    
+    let looksPanel = UIView()
+    let exportPanel = UIView()
+    
+    var topExportPanelConstraint = NSLayoutConstraint()
     var topLooksConstraint = NSLayoutConstraint()
-    let tabBar = TabBar(items: "LOOKS", "TOOLS", "EXPORT")
-    let toolsViewController: ToolsViewController
     var topToolsConstraint = NSLayoutConstraint()
+    
+    //child view controllers
+    let videoViewController: VideoViewController
+    let looksViewController: LooksViewController
+    let toolsViewController: ToolsViewController
+    
+    let tabBar = TabBar(items: "LOOKS", "TOOLS", "EXPORT")
     var cancelButton = LooksViewButton(imageName: "cancel-solid")
     var doneButton = LooksViewButton(imageName: "done-solid")
+    
+    //TODO: extract to own View Controller
     var saveCopyButton = SaveCopyVideoButton()
     var shareButton = SaveCopyVideoButton()
+    
     var spacerHeight = CGFloat()
     let shareStackView = UIStackView()
     let saveCopyStackView = UIStackView()
@@ -96,24 +103,25 @@ final class VideoEditorViewController: UIViewController {
     }
     
     init(url: URL, filters: [AnyFilter], tools: [ToolEnum]) {
-        self.url = url
-        asset = AVAsset(url: url)
-        videoViewController = VideoViewController(asset: asset)
-        looksViewController = LooksViewController(itemSize: itemSize, filters: filters) {
-            [
-            weak videoViewController,
-            weak doneButton,
-            weak tabBar
-            ] newIndex, previousIndex in
-            videoViewController?.playerView.filter = filters[newIndex]
-            videoViewController?.bgVideoView.filter = filters[newIndex] + AnyFilter(BlurFilter(blurRadius: 100))
-            doneButton?.isEnabled = newIndex != 0
-            tabBar?.isHidden = newIndex != 0
-            guard newIndex != previousIndex && newIndex != 0 else { return }
-            videoViewController?.player.play()
-        }
+        videoFileAsset = AVAsset(url: url)
+        videoViewController = VideoViewController(asset: videoFileAsset)
         toolsViewController = ToolsViewController(tools: tools)
+        looksViewController = LooksViewController(
+            itemSize: itemSize,
+            filters: filters,
+            didSelectLook: { [weak videoViewController, weak doneButton, weak tabBar] newIndex, previousIndex in
+                let newFilter = filters[newIndex]
+                videoViewController?.playerView.filter = newFilter
+                videoViewController?.backgroundVideoView.filter = newFilter + AnyFilter(BlurFilter(blurRadius: 100))
+                doneButton?.isEnabled = newIndex != 0
+                tabBar?.isHidden = newIndex != 0
+                guard newIndex != previousIndex && newIndex != 0 else { return }
+                videoViewController?.player.play()
+            }
+        )
+        
         super.init(nibName: nil, bundle: nil)
+        
         addChild(looksViewController)
         looksViewController.didMove(toParent: self)
         
@@ -143,7 +151,7 @@ final class VideoEditorViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         AssetImageGenerator.getThumbnailImageFromVideoAsset(
-            asset: asset,
+            asset: videoFileAsset,
             maximumSize: itemSize.applying(.init(scaleX: UIScreen.main.scale, y: UIScreen.main.scale)),
             completion: { [weak self] image in
                 self?.previewImage = image
@@ -151,9 +159,9 @@ final class VideoEditorViewController: UIViewController {
         )
         
         view.addSubview(videoViewController.view)
-        view.addSubview(looksContainerView)
+        view.addSubview(looksPanel)
         view.addSubview(toolsViewController.view)
-        view.addSubview(exportView)
+        view.addSubview(exportPanel)
         view.addSubview(tabBar)
         
         setUpVideoViewController()
@@ -193,16 +201,16 @@ final class VideoEditorViewController: UIViewController {
     }
    
     func setUpLooksView() {
-        looksContainerView.translatesAutoresizingMaskIntoConstraints = false
-        looksContainerView.backgroundColor = .white
-        topLooksConstraint = view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: looksContainerView.topAnchor, constant: -view.safeAreaInsets.bottom)
+        looksPanel.translatesAutoresizingMaskIntoConstraints = false
+        looksPanel.backgroundColor = .white
+        topLooksConstraint = view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: looksPanel.topAnchor, constant: -view.safeAreaInsets.bottom)
         let looksViewHeight: CGFloat = 100.0
-        let bottomConstraint = looksContainerView.topAnchor.constraint(equalTo: videoViewController.view.bottomAnchor)
+        let bottomConstraint = looksPanel.topAnchor.constraint(equalTo: videoViewController.view.bottomAnchor)
         bottomConstraint.priority = .defaultLow
         NSLayoutConstraint.activate ([
-            looksContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            looksContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            looksContainerView.heightAnchor.constraint(equalTo: tabBar.heightAnchor, constant: looksViewHeight),
+            looksPanel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            looksPanel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            looksPanel.heightAnchor.constraint(equalTo: tabBar.heightAnchor, constant: looksViewHeight),
             bottomConstraint,
             topLooksConstraint
         ])
@@ -216,7 +224,7 @@ final class VideoEditorViewController: UIViewController {
         collectionStackView.translatesAutoresizingMaskIntoConstraints = false
         collectionStackView.axis = .vertical
         
-        looksContainerView.addSubview(collectionStackView)
+        looksPanel.addSubview(collectionStackView)
         collectionStackView.addArrangedSubview(looksViewController.view)
         
         let line = UIView()
@@ -229,10 +237,10 @@ final class VideoEditorViewController: UIViewController {
         collectionStackView.addArrangedSubview(buttonsStackView)
         
         NSLayoutConstraint.activate ([
-            collectionStackView.trailingAnchor.constraint(equalTo: looksContainerView.trailingAnchor),
-            collectionStackView.leadingAnchor.constraint(equalTo: looksContainerView.leadingAnchor),
-            collectionStackView.topAnchor.constraint(equalTo: looksContainerView.topAnchor),
-            collectionStackView.bottomAnchor.constraint(equalTo: looksContainerView.bottomAnchor),
+            collectionStackView.trailingAnchor.constraint(equalTo: looksPanel.trailingAnchor),
+            collectionStackView.leadingAnchor.constraint(equalTo: looksPanel.leadingAnchor),
+            collectionStackView.topAnchor.constraint(equalTo: looksPanel.topAnchor),
+            collectionStackView.bottomAnchor.constraint(equalTo: looksPanel.bottomAnchor),
             looksViewController.view.heightAnchor.constraint(equalToConstant: looksViewHeight),
             line.heightAnchor.constraint(equalToConstant: 0.4)
         ])
@@ -251,28 +259,28 @@ final class VideoEditorViewController: UIViewController {
     }
     
     func setUpExportView() {
-        exportView.translatesAutoresizingMaskIntoConstraints = false
-        exportView.backgroundColor = .white
-        topExportConstraint = view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: exportView.topAnchor, constant: -view.safeAreaInsets.bottom)
+        exportPanel.translatesAutoresizingMaskIntoConstraints = false
+        exportPanel.backgroundColor = .white
+        topExportPanelConstraint = view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: exportPanel.topAnchor, constant: -view.safeAreaInsets.bottom)
         
         NSLayoutConstraint.activate ([
-            exportView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            exportView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            exportView.heightAnchor.constraint(equalToConstant: 100),
-            topExportConstraint
+            exportPanel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            exportPanel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            exportPanel.heightAnchor.constraint(equalToConstant: 100),
+            topExportPanelConstraint
         ])
         
         let exportStackView = UIStackView()
         exportStackView.translatesAutoresizingMaskIntoConstraints = false
         exportStackView.axis = .vertical
         exportStackView.distribution = .fillEqually
-        exportView.addSubview(exportStackView)
+        exportPanel.addSubview(exportStackView)
         
         NSLayoutConstraint.activate ([
-            exportStackView.trailingAnchor.constraint(equalTo: exportView.trailingAnchor),
-            exportStackView.leadingAnchor.constraint(equalTo: exportView.leadingAnchor),
-            exportStackView.topAnchor.constraint(equalTo: exportView.topAnchor),
-            exportStackView.bottomAnchor.constraint(equalTo: exportView.bottomAnchor)
+            exportStackView.trailingAnchor.constraint(equalTo: exportPanel.trailingAnchor),
+            exportStackView.leadingAnchor.constraint(equalTo: exportPanel.leadingAnchor),
+            exportStackView.topAnchor.constraint(equalTo: exportPanel.topAnchor),
+            exportStackView.bottomAnchor.constraint(equalTo: exportPanel.bottomAnchor)
         ])
         shareStackView.translatesAutoresizingMaskIntoConstraints = false
         shareStackView.axis = .horizontal
@@ -420,7 +428,7 @@ final class VideoEditorViewController: UIViewController {
     public func openExportMenu() {
         self.view.layoutIfNeeded()
         isExportViewShown = true
-        topExportConstraint.constant = exportView.frame.height + tabBar.frame.height
+        topExportPanelConstraint.constant = exportPanel.frame.height + tabBar.frame.height
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
@@ -428,7 +436,7 @@ final class VideoEditorViewController: UIViewController {
     
     public func closeExportMenu() {
         self.view.layoutIfNeeded()
-        topExportConstraint.constant = -self.view.safeAreaInsets.bottom
+        topExportPanelConstraint.constant = -self.view.safeAreaInsets.bottom
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }

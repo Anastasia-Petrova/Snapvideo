@@ -23,11 +23,6 @@ final class LooksCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        previewImageView.image = UIImage(named: "placeholder")
-    }
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         stackView.translatesAutoresizingMaskIntoConstraints = false
