@@ -13,7 +13,7 @@ final class LooksViewController: UIViewController {
     
     let dataSource: LooksCollectionDataSource
     let collectionView: UICollectionView
-    let filterIndexChangeCallback: Callback
+    private let didSelectLook: Callback
     var selectedFilterIndex = 0
     var selectedFilter: AnyFilter {
         dataSource.filters[selectedFilterIndex]
@@ -24,11 +24,11 @@ final class LooksViewController: UIViewController {
             frame: .zero,
             collectionViewLayout: LooksCollectionViewLayout(itemSize: itemSize)
         )
-        self.init(itemSize: itemSize, filters: filters, collectionView: collectionView, callback: didSelectLook)
+        self.init(itemSize: itemSize, filters: filters, collectionView: collectionView, didSelectLook: didSelectLook)
     }
     
-    init(itemSize: CGSize, filters: [AnyFilter], collectionView: UICollectionView, callback: @escaping Callback) {
-        filterIndexChangeCallback = callback
+    init(itemSize: CGSize, filters: [AnyFilter], collectionView: UICollectionView, didSelectLook: @escaping Callback) {
+        self.didSelectLook = didSelectLook
         self.collectionView = collectionView
         self.dataSource = LooksCollectionDataSource(
             collectionView: collectionView,
@@ -78,7 +78,7 @@ extension LooksViewController: UICollectionViewDelegate {
         let previousIndex = selectedFilterIndex
         selectedFilterIndex = indexPath.row
         
-        filterIndexChangeCallback(selectedFilterIndex, previousIndex)
+        didSelectLook(selectedFilterIndex, previousIndex)
         
         if selectedFilterIndex != 0 {
             collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)

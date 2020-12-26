@@ -125,21 +125,8 @@ final class VideoEditorViewController: UIViewController {
         addChild(looksViewController)
         looksViewController.didMove(toParent: self)
         
-        toolsViewController.didSelectToolCallback = { [weak self] toolIndex in
-            func presentVC<T: Tool>(for tool: T) {
-                let vc = AdjustmentsViewController(url: url, tool: tool)
-                vc.modalTransitionStyle = .crossDissolve
-                vc.modalPresentationStyle = .overCurrentContext
-                self?.present(vc, animated: true, completion: nil)
-                self?.isToolsViewShown = false
-            }
-            
-            switch tools[toolIndex] {
-            case let .vignette(tool),
-                 let .bright(tool),
-                 let .blur(tool):
-                presentVC(for: tool)
-            }
+        toolsViewController.didSelectToolCallback = { [weak self] index in
+            self?.presentAdjustmentsScreen(url: url, tool: tools[index])
         }
     }
     
@@ -459,32 +446,41 @@ final class VideoEditorViewController: UIViewController {
         }
     }
     
+    private func presentAdjustmentsScreen(url: URL, tool: ToolEnum) {
+        switch tool {
+        case let .vignette(tool),
+             let .bright(tool),
+             let .blur(tool):
+            let vc = AdjustmentsViewController(url: url, tool: tool)
+            vc.modalTransitionStyle = .crossDissolve
+            vc.modalPresentationStyle = .overCurrentContext
+            present(vc, animated: true, completion: nil)
+            isToolsViewShown = false
+        }
+    }
+    
     private func resetToDefaultFilter() {
         looksViewController.deselectFilter()
     }
     
     @objc func openActivityView() {
-        DispatchQueue.main.async {
-            self.isExportViewShown = false
-            self.videoViewController.indicatorSwitcher = true
-        }
+        self.isExportViewShown = false
+        self.videoViewController.isActivityIndicatorVisible = true
+        
         guard let playerItem = videoViewController.player.currentItem else { return }
-        //        guard let filter = selecterFilter else { return }
+        
         VideoEditor.composeVideo(
             choosenFilter: looksViewController.selectedFilter,
             asset: playerItem.asset
         ) { url in
             DispatchQueue.main.async {
-                guard let fileURL = url else {
-                    self.videoViewController.indicatorSwitcher = false
-                    return
-                }
-                let objectToImport = [fileURL as NSURL]
-                let activityVC = UIActivityViewController(activityItems: objectToImport, applicationActivities: nil)
+                self.videoViewController.isActivityIndicatorVisible = false
+                guard let fileURL = url as NSURL? else { return }
+                
+                let activityVC = UIActivityViewController(activityItems: [fileURL], applicationActivities: nil)
                 activityVC.setValue("Video", forKey: "subject")
                 activityVC.excludedActivityTypes = [.addToReadingList, .assignToContact]
                 self.present(activityVC, animated: true, completion: nil)
-                self.videoViewController.indicatorSwitcher = false
             }
         }
     }
@@ -506,8 +502,11 @@ final class VideoEditorViewController: UIViewController {
         PHPhotoLibrary.requestAuthorization { [weak self] status in
             switch status {
             case .authorized:
-                self?.saveVideoToPhotos()
+                DispatchQueue.main.async {
+                    self?.saveVideoToPhotos()
+                }
             default:
+                //TODO: properly handle this. Show error, send to settings, etc.
                 print("Photos permissions not granted.")
                 return
             }
@@ -515,17 +514,15 @@ final class VideoEditorViewController: UIViewController {
     }
     
     func saveVideoToPhotos() {
-        DispatchQueue.main.async {
-            self.isExportViewShown = false
-            self.videoViewController.indicatorSwitcher = true
-        }
+        isExportViewShown = false
+        videoViewController.isActivityIndicatorVisible = true
         guard let playerItem = videoViewController.player.currentItem else { return }
         VideoEditor.saveEditedVideo(
             choosenFilter: looksViewController.selectedFilter,
             asset: playerItem.asset
         ) {
             DispatchQueue.main.async {
-                self.videoViewController.indicatorSwitcher = false
+                self.videoViewController.isActivityIndicatorVisible = false
             }
         }
     }    

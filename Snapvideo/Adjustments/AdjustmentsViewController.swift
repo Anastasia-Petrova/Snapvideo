@@ -13,7 +13,12 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
     let toolBar = UIToolbar(
         frame: CGRect(origin: .zero, size: CGSize(width: 320, height: 44))
     )
-    let parameterListItem = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"), style: .plain, target: self, action: #selector(showParameterList))
+    let parameterListItem = UIBarButtonItem(
+        image: UIImage(systemName: "slider.horizontal.3"),
+        style: .plain,
+        target: self,
+        action: #selector(showParameterList)
+    )
     let asset: AVAsset
     let videoViewController: VideoViewController
     let tool: SelectedTool
@@ -35,7 +40,7 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
     
     var previousTranslation: CGPoint = .zero
-    var condition = false
+    var isVerticalPan = false
     
     lazy var panGestureRecognizer = UIPanGestureRecognizer(
         target: self,
@@ -139,35 +144,43 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
          
         if recognizer.state == .began {
             let velocity = recognizer.velocity(in: self.view)
-            condition = abs(velocity.y) > abs(velocity.x) ? true : false
+            isVerticalPan = abs(velocity.y) > abs(velocity.x) ? true : false
         }
-        if condition {
-            let deltaY = previousTranslation.y - translation.y
-            previousTranslation.y = translation.y
-            parameterlistView.translateY(deltaY)
-            switch recognizer.state {
-            case .began:
-                parameterlistView.setHiddenAnimated(false, duration: 0.3)
-            case .ended:
-                parameterlistView.setHiddenAnimated(true, duration: 0.2)
-                previousTranslation = .zero
-                parameterListItem.tintColor = .darkGray
-            default: break
-            }
+        if isVerticalPan {
+            updateParameterList(translation: translation, state: recognizer.state)
         } else {
-            let deltaX = previousTranslation.x - translation.x
-            previousTranslation.x = translation.x
-            sliderView.setProgress(sliderView.percent - deltaX/sliderView.k)
-            switch recognizer.state {
-            case .ended:
-                previousTranslation = .zero
-            default: break
-            }
+            updateSlider(translation: translation, state: recognizer.state)
+        }
+    }
+    
+    private func updateParameterList(translation: CGPoint, state: UIGestureRecognizer.State) {
+        let deltaY = previousTranslation.y - translation.y
+        previousTranslation.y = translation.y
+        parameterlistView.translateY(deltaY)
+        switch state {
+        case .began:
+            parameterlistView.setHiddenAnimated(false, duration: 0.3)
+        case .ended:
+            parameterlistView.setHiddenAnimated(true, duration: 0.2)
+            previousTranslation = .zero
+            parameterListItem.tintColor = .darkGray
+        default: break
+        }
+    }
+    
+    private func updateSlider(translation: CGPoint, state: UIGestureRecognizer.State) {
+        let deltaX = previousTranslation.x - translation.x
+        previousTranslation.x = translation.x
+        sliderView.setProgress(sliderView.percent - deltaX/sliderView.k)
+        switch state {
+        case .ended:
+            previousTranslation = .zero
+        default: break
         }
     }
     
     @objc func cancelAdjustment() {
-        self.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     @objc func showParameterList() {
@@ -177,6 +190,6 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
     }
     
     @objc func applyAdjustment() {
-        
+        //TODO: apply
     }
 }

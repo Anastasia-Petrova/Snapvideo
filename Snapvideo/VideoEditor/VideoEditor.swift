@@ -12,7 +12,7 @@ import Photos
 
 struct VideoEditor {
     static func setUpComposition(choosenFilter: AnyFilter, asset: AVAsset ) -> AVVideoComposition {
-        return AVVideoComposition(asset: asset) { (request) in
+        return AVVideoComposition(asset: asset) { request in
             let source = request.sourceImage.clampedToExtent()
             let filteredImage = choosenFilter
                 .apply(source)
@@ -36,13 +36,16 @@ struct VideoEditor {
         PHPhotoLibrary.shared().performChanges({
             PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: exportUrl)
         }) { saved, error in
-            if saved {
-                let appDelegate = AppDelegate()
-                appDelegate.scheduleNotification(title: "Success!", body: "Video was saved.")
+            let title: String
+            let body: String
+            if saved && error == nil {
+                title = "Success!"
+                body = "Video was saved."
             } else {
-                let appDelegate = AppDelegate()
-                appDelegate.scheduleNotification(title: "Error!", body: "Video was not saved. Try again.")
+                title = "Error!"
+                body = "Video was not saved. Try again."
             }
+            AppDelegate().scheduleNotification(title: title, body: body)
             completion()
         }
     }

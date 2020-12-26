@@ -19,9 +19,9 @@ final class VideoViewController: UIViewController {
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
     let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
     
-    var indicatorSwitcher: Bool = false {
+    var isActivityIndicatorVisible: Bool = false {
         didSet {
-            setActivityIndicatorOn(indicatorSwitcher)
+            setActivityIndicatorVisible(isActivityIndicatorVisible)
         }
     }
     
@@ -106,7 +106,7 @@ final class VideoViewController: UIViewController {
         //        activityIndicator.alpha = 0
     }
     
-    private func setActivityIndicatorOn(_ isOn: Bool) {
+    private func setActivityIndicatorVisible(_ isOn: Bool) {
         tap.isEnabled = !isOn
         resumeImageView.isHidden = isOn
         if isOn {
