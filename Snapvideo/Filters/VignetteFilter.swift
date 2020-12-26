@@ -11,8 +11,8 @@ import CoreImage
 
 struct VignetteFilter: Filter {
     let name: String = "Vignette"
-    var radius: Double
-    var intensity: Double
+    var radius: Double = 0
+    var intensity: Double = 0.1
     
     private let filter = CIFilter(name: "CIVignetteEffect", parameters: nil)
     
@@ -26,13 +26,6 @@ struct VignetteFilter: Filter {
     
     func apply(image: CIImage) -> CIImage {
         filter?.createOutputImage(for: parameters(with: image)) ?? image
-    }
-}
-
-extension VignetteFilter {
-    init() {
-        radius = 0
-        intensity = 0.1
     }
 }
 

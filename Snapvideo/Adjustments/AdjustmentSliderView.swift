@@ -9,9 +9,7 @@
 import UIKit
 
 final class AdjustmentSliderView: UIView {
-    private let sliderLayer = CAShapeLayer()
     let separatorLayer = CAShapeLayer()
-    private let valueLabel = UILabel()
     
     var k: CGFloat { bounds.width/2.0/100.0 }
     
@@ -23,6 +21,8 @@ final class AdjustmentSliderView: UIView {
     let maxPercent: CGFloat = 100.0
     let minPersent: CGFloat = -100.0
     
+    private let sliderLayer = CAShapeLayer()
+    private let valueLabel = UILabel()
     private var progress: CGFloat {
         return percent * k
     }
