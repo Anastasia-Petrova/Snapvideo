@@ -65,7 +65,7 @@ final class LooksCollectionDataSourceTests: XCTestCase {
         
         //Then 
         let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: "LooksCollectionViewCell",
+            withReuseIdentifier: LooksCollectionDataSource.reusableIdentifier,
             for: .init()
         )
         
@@ -168,24 +168,6 @@ final class LooksCollectionDataSourceTests: XCTestCase {
         wait(for: [expectation], timeout: 5)
     }
     
-    func test_cell_name_is_filter_name() {
-        //Given
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
-        let filter = AnyFilter(BlurFilter(blurRadius: 10))
-        let sut = LooksCollectionDataSource(collectionView: collectionView, filters: [filter], context: context)
-        
-        //When
-        let cell = sut.collectionView(collectionView, cellForItemAt: IndexPath(item: 0, section: 0))
-        
-        //Then
-        guard let filterCell = cell as? LooksCollectionViewCell else {
-            XCTFail("expected LooksCollectionViewCell, got \(cell.self)")
-            return
-        }
-        
-        XCTAssertEqual(filter.name, filterCell.filterName.text)
-    }
-    
     func test_cellPreviewImage_is_taken_from_cache() {
         //Given
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
@@ -208,6 +190,24 @@ final class LooksCollectionDataSourceTests: XCTestCase {
         )
     }
     
+    func test_cell_name_is_filter_name() {
+        //Given
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
+        let filter = AnyFilter(BlurFilter(blurRadius: 10))
+        let sut = LooksCollectionDataSource(collectionView: collectionView, filters: [filter], context: context)
+        
+        //When
+        let cell = sut.collectionView(collectionView, cellForItemAt: IndexPath(item: 0, section: 0))
+        
+        //Then
+        guard let filterCell = cell as? LooksCollectionViewCell else {
+            XCTFail("expected LooksCollectionViewCell, got \(cell.self)")
+            return
+        }
+        
+        XCTAssertEqual(filter.name, filterCell.filterName.text)
+    }
+    
     func test_adding_filtered_images_to_cache() {
         //Given
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
@@ -218,7 +218,6 @@ final class LooksCollectionDataSourceTests: XCTestCase {
         let expectedImage = UIImage(cgImage: filteredCGImage)
         let sut = LooksCollectionDataSource(collectionView: collectionView, filters: [filter], context: context)
         sut.image = UIImage(named: "testImage", in: .unitTests, with: nil)!
-
         
         //When
         let expectation = XCTestExpectation(description: "added filtered image to cache")

@@ -23,7 +23,7 @@ final class ParameterListViewTests: XCTestCase {
         XCTAssertEqual(view.parameters, expected)
     }
     
-    func test_callback() {
+    func test_init_assigns_callback() {
         let expected = Parameter(name: "Foo", value: 1)
         var actual: Parameter?
         
@@ -60,6 +60,24 @@ final class ParameterListViewTests: XCTestCase {
         XCTAssertEqual(ParameterListView.calculateSelectedRowIndex(offset: 100, rowHeight: rowHeight), 1)
         XCTAssertEqual(ParameterListView.calculateSelectedRowIndex(offset: 150, rowHeight: rowHeight), 1)
         XCTAssertEqual(ParameterListView.calculateSelectedRowIndex(offset: 151, rowHeight: rowHeight), 2)
+    }
+    
+    func test_callback() {
+        let expected1 = Parameter(name: "Foo", value: 1)
+        let expected2 = Parameter(name: "Bar", value: 2)
+        var actual: Parameter?
+        
+        let view = ParameterListView(parameters: [expected1, expected2]) { actual = $0 }
+        add(view, on: UIViewController())
+        let translation = view.rowHeight/2.0 + 1
+        
+        view.translateY(translation)
+        view.layoutSubviews()
+        XCTAssertEqual(expected2, actual)
+        
+        view.translateY(-translation)
+        view.layoutSubviews()
+        XCTAssertEqual(expected1, actual)
     }
     
     func add(_ view: UIView, on vc: UIViewController) {

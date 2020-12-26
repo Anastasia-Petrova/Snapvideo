@@ -13,7 +13,7 @@ final class LooksCollectionDataSource: NSObject, UICollectionViewDataSource {
     var unitTestCallback: (() -> Void)?
     #endif
     
-    private static let reusableIdentifier = "LooksCollectionViewCell"
+    static let reusableIdentifier = "LooksCollectionViewCell"
     weak var collectionView: UICollectionView?
     let filters: [AnyFilter]
     var filteredImages: [String: UIImage] = [:]
