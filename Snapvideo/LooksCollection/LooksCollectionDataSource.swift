@@ -9,6 +9,7 @@
 import UIKit
 
 final class LooksCollectionDataSource: NSObject, UICollectionViewDataSource {
+    private static let reusableIdentifier = "LooksCollectionViewCell"
     weak var collectionView: UICollectionView?
     let filters: [AnyFilter]
     var filteredImages: [String: UIImage] = [:]
@@ -18,7 +19,7 @@ final class LooksCollectionDataSource: NSObject, UICollectionViewDataSource {
         }
     }
     
-    let context: CIContext
+    private let context: CIContext
     
     init(collectionView: UICollectionView, filters: [AnyFilter], context: CIContext) {
         self.filters = filters
@@ -40,32 +41,35 @@ final class LooksCollectionDataSource: NSObject, UICollectionViewDataSource {
         return 1
     }
     
-    var cellForItemCallback: (() -> Void)?
+    #if TEST
+    var unitTestCallback: (() -> Void)?
+    #endif
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let reusableIdentifier = "LooksCollectionViewCell"
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reusableIdentifier, for: indexPath) as! LooksCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Self.reusableIdentifier, for: indexPath) as! LooksCollectionViewCell
         cell.filterName.text = filters[indexPath.row].name
         
         if let filteredImage = filteredImages[filters[indexPath.row].name] {
             cell.previewImageView.image = filteredImage
-        } else {
-            if let image = image {
-                filterAsync(image: image, indexPath: indexPath) { [weak self] (filteredImage) in
-                    DispatchQueue.main.async {
-                        guard let self = self else { return }
-                        self.filteredImages[self.filters[indexPath.row].name] = filteredImage
-                        collectionView.reloadItems(at: [indexPath])
-                        self.cellForItemCallback?()
-                    }
+        } else if let image = image {
+            applyFilter(on: image, at: indexPath) { [weak self] (filteredImage) in
+                DispatchQueue.main.async {
+                    guard let self = self else { return }
+                    self.filteredImages[self.filters[indexPath.row].name] = filteredImage
+                    collectionView.reloadItems(at: [indexPath])
+                    #if TEST
+                    self.unitTestCallback?()
+                    #endif
                 }
             }
+        } else {
+            cell.previewImageView.image = UIImage(named: "placeholder")
         }
         
         return cell
     }
     
-    func filterAsync(image: UIImage, indexPath: IndexPath, callback: @escaping (UIImage?) -> Void) {
+    func applyFilter(on image: UIImage, at indexPath: IndexPath, callback: @escaping (UIImage?) -> Void) {
         guard let cgImage = image.cgImage else {
             callback(nil)
             return

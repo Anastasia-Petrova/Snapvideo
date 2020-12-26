@@ -154,7 +154,7 @@ final class LooksCollectionDataSourceTests: XCTestCase {
         //When
         let _ = sut.collectionView(collectionView, cellForItemAt: IndexPath(item: 0, section: 0))
         
-        sut.cellForItemCallback = {
+        sut.unitTestCallback = {
             //Then
             let cell = sut.collectionView(collectionView, cellForItemAt: IndexPath(item: 0, section: 0))
             guard let filterCell = cell as? LooksCollectionViewCell else {
@@ -224,7 +224,7 @@ final class LooksCollectionDataSourceTests: XCTestCase {
         let expectation = XCTestExpectation(description: "added filtered image to cache")
         let _ = sut.collectionView(collectionView, cellForItemAt: IndexPath(item: 0, section: 0))
         
-        sut.cellForItemCallback = {
+        sut.unitTestCallback = {
             //Then
             guard let actualImage = sut.filteredImages["Blur"] else {
                 XCTFail("expected to get image from filteredImages cache")
@@ -250,7 +250,7 @@ final class LooksCollectionDataSourceTests: XCTestCase {
         
         //When
         let expectation = XCTestExpectation(description: "finished filtering image")
-        sut.filterAsync(image: image, indexPath: IndexPath(row: 0, section: 0)) { (actualImage) in
+        sut.applyFilter(on: image, at: IndexPath(row: 0, section: 0)) { (actualImage) in
             //Then
             guard let actualImage = actualImage else {
                 XCTFail("expected to get image with filterAsync callback")
