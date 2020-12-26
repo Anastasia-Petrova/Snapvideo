@@ -315,7 +315,6 @@
 			isa = PBXGroup;
 			children = (
 				6D96B85123D08FD600C1C6D5 /* ExportViewСomponents */,
-				6D96B85423D0960000C1C6D5 /* LooksViewСomponents */,
 				6D05022523B9154100036D60 /* VideoEditorViewController.swift */,
 				6DD4192C23F9A77B005A2706 /* VideoViewController.swift */,
 				6D19954523C7AA3C000A76B1 /* VideoEditor.swift */,
@@ -449,17 +448,10 @@
 			path = "ExportViewСomponents";
 			sourceTree = "<group>";
 		};
-		6D96B85423D0960000C1C6D5 /* LooksViewСomponents */ = {
-			isa = PBXGroup;
-			children = (
-				6D96B85723D0969E00C1C6D5 /* LooksViewButton.swift */,
-			);
-			path = "LooksViewСomponents";
-			sourceTree = "<group>";
-		};
 		6D9874AC23CB9DBA00EC83DC /* LooksCollection */ = {
 			isa = PBXGroup;
 			children = (
+				6D96B85723D0969E00C1C6D5 /* LooksViewButton.swift */,
 				6D01E03723BFA3D600B558E8 /* LooksCollectionDataSource.swift */,
 				6D01E03523BFA2F900B558E8 /* LooksCollectionViewCell.swift */,
 				6DBA80D323ED931B005A585E /* LooksCollectionViewLayout.swift */,
