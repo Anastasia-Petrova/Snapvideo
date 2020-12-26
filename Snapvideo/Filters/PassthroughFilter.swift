@@ -12,7 +12,5 @@ import CoreImage
 struct PassthroughFilter: Filter {
     let name: String = "Original"
     
-    func apply(image: CIImage) -> CIImage {
-        return image
-    }
+    func apply(image: CIImage) -> CIImage { image }
 }

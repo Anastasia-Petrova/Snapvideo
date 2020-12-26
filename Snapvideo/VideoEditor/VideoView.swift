@@ -16,14 +16,6 @@ final class VideoView: UIView {
     var filter: AnyFilter
     let videoOrientation: CGImagePropertyOrientation
     
-    func play() {
-//        self.displayLink?.isPaused = false
-    }
-    
-    func pause() {
-//        self.displayLink?.isPaused = true
-    }
-    
     init(
         videoOutput: AVPlayerItemVideoOutput,
         videoOrientation: CGImagePropertyOrientation,
@@ -35,10 +27,10 @@ final class VideoView: UIView {
         self.videoOutput = videoOutput
         self.filter = filter
         super.init(frame: .zero)
-        self.displayLink = CADisplayLink(target: self, selector: #selector(displayLinkDidUpdate))
-        self.displayLink?.preferredFramesPerSecond = preferredFramesPerSecond
-        self.displayLink?.add(to: .main, forMode: .common)
-        self.layer.contentsGravity = contentsGravity
+        displayLink = CADisplayLink(target: self, selector: #selector(updateCurrentFrame))
+        displayLink?.preferredFramesPerSecond = preferredFramesPerSecond
+        displayLink?.add(to: .main, forMode: .common)
+        layer.contentsGravity = contentsGravity
     }
     
     required init?(coder: NSCoder) {
@@ -46,14 +38,14 @@ final class VideoView: UIView {
     }
     
     deinit {
-        self.displayLink?.invalidate()
+        displayLink?.invalidate()
     }
     
-    @objc func displayLinkDidUpdate() {
+    @objc func updateCurrentFrame() {
         let time = videoOutput.itemTime(forHostTime: CACurrentMediaTime())
         guard videoOutput.hasNewPixelBuffer(forItemTime: time) else { return }
         
-        self.layer.contents = videoOutput
+        layer.contents = videoOutput
             .copyPixelBuffer(forItemTime: time, itemTimeForDisplay: nil)
             .map { CIImage(cvPixelBuffer: $0) }
             .map { $0.oriented(self.videoOrientation) }
