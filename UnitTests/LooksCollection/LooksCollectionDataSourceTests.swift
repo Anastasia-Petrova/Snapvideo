@@ -250,7 +250,7 @@ final class LooksCollectionDataSourceTests: XCTestCase {
         
         //When
         let expectation = XCTestExpectation(description: "finished filtering image")
-        sut.applyFilter(on: image, at: IndexPath(row: 0, section: 0)) { (actualImage) in
+        sut.applyFilter(filter, on: image) { (actualImage) in
             //Then
             guard let actualImage = actualImage else {
                 XCTFail("expected to get image with filterAsync callback")
