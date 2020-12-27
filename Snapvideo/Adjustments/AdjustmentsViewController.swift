@@ -13,31 +13,21 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
     let toolBar = UIToolbar(
         frame: CGRect(origin: .zero, size: CGSize(width: 320, height: 44))
     )
-    let parameterListItem = UIBarButtonItem(
+    lazy var parameterListItem = UIBarButtonItem(
         image: UIImage(systemName: "slider.horizontal.3"),
         style: .plain,
         target: self,
         action: #selector(showParameterList)
     )
     let asset: AVAsset
-    let videoViewController: VideoViewController
     let tool: SelectedTool
     
-    lazy var parameterlistView = ParameterListView(parameters: [
-        ParameterListView.Parameter(name: "Brightness", value: 10),
-        ParameterListView.Parameter(name: "Contrast", value: 25),
-        ParameterListView.Parameter(name: "Saturation", value: 40),
-        ParameterListView.Parameter(name: "Ambience", value: -23),
-        ParameterListView.Parameter(name: "Highlight", value: 10),
-        ParameterListView.Parameter(name: "Shadows", value: 3),
-        ParameterListView.Parameter(name: "Warms", value: -5),
-    ]) { [weak self] parameter in
-        self?.sliderView.name = parameter.name
-        self?.sliderView.percent = CGFloat(parameter.value)
-    }
+    let videoViewController: VideoViewController
+    let parameterlistView: ParameterListView
+    let sliderView: AdjustmentSliderView
     
-    let sliderView = AdjustmentSliderView(name: "Brightness", value: 0)
-    lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
+    lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?
+                                            .withRenderingMode(.alwaysTemplate))
     
     var previousTranslation: CGPoint = .zero
     var isVerticalPan = false
@@ -58,7 +48,25 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
         asset = AVAsset(url: url)
         self.tool = tool
         videoViewController = VideoViewController(asset: asset)
+        
+        let names = tool.allParameters.map(\.description)
+        let values = tool.allParameters.map(tool.value)
+        
+        let parameters = zip(names, values).map {
+            ParameterListView.Parameter(name: $0.0, value: $0.1)
+        }
+        parameterlistView = ParameterListView(parameters: parameters)
+        sliderView = AdjustmentSliderView(
+            name: names.first ?? "",
+            value: CGFloat(values.first ?? 0) //TODO: Use NonEmpty
+        )
+       
         super.init(nibName: nil, bundle: nil)
+        
+        parameterlistView.didSelectParameter = { [weak self] parameter in
+            self?.sliderView.name = parameter.name
+            self?.sliderView.percent = CGFloat(parameter.value)
+        }
     }
     
     required init?(coder: NSCoder) {

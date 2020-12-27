@@ -26,11 +26,11 @@ final class ParameterListView: UIView {
             selectionFeedbackGenerator.selectionChanged()
             updateParameterLabelsVisibility(selectedIndex: selectedParameterIndex, deselectedIndex: oldValue)
             selectedParameterRow.setParameter(parameter)
-            callback(parameter)
+            didSelectParameter?(parameter)
         }
     }
     
-    let callback: DidSelectParameterCallback
+    var didSelectParameter: DidSelectParameterCallback?
     private var topConstraint: NSLayoutConstraint?
     private var bottomConstraint: NSLayoutConstraint?
     
@@ -48,9 +48,8 @@ final class ParameterListView: UIView {
         container.frame.height - rowHeight - borderHeight * 2.0
     }
     
-    init(parameters: [Parameter], callback: @escaping DidSelectParameterCallback) {
+    init(parameters: [Parameter]) {
         self.parameters = parameters
-        self.callback = callback
         selectedParameterRow = ParameterRow(parameter: parameters[selectedParameterIndex])
         super.init(frame: .zero)
         setUpStackView()
@@ -152,7 +151,7 @@ final class ParameterListView: UIView {
 extension ParameterListView {
     struct Parameter: Equatable {
         let name: String
-        var value: Int
+        var value: Double
     }
 }
 

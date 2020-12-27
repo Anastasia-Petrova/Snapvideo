@@ -46,7 +46,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             ParameterListView.Parameter(name: "World World World", value: 20),
             ParameterListView.Parameter(name: "Hello", value: 10),
             ParameterListView.Parameter(name: "World World World", value: 20),
-        ]) { _ in }
+        ])
         view.backgroundColor = .red
         view.translatesAutoresizingMaskIntoConstraints = false
         vc.view.addSubview(view)

@@ -10,15 +10,14 @@ import Foundation
 
 protocol Parameterized {
     associatedtype Parameter: CustomStringConvertible
-    associatedtype Value: CustomStringConvertible
     
     var allParameters: [Parameter] { get }
     
-    func value(for parameter: Parameter) -> Value
+    func value(for parameter: Parameter) -> Double
     
-    func minValue(for parameter: Parameter) -> Value
+    func minValue(for parameter: Parameter) -> Double
     
-    func maxValue(for parameter: Parameter) -> Value
+    func maxValue(for parameter: Parameter) -> Double
     
-    mutating func setValue(value: Value, for parameter: Parameter)
+    mutating func setValue(value: Double, for parameter: Parameter)
 }

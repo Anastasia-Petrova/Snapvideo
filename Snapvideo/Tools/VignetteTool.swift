@@ -21,8 +21,6 @@ struct VignetteTool: Tool {
 }
 
 extension VignetteTool: Parameterized {
-    typealias Value = Double
-    
     var allParameters: [Parameter] { Parameter.allCases }
     
     func value(for parameter: Parameter) -> Double {
