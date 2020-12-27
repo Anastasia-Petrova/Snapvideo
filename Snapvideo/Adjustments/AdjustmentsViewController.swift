@@ -48,14 +48,16 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
         
         let names = tool.allParameters.map(\.description)
         let values = tool.allParameters.map(tool.value)
+        let minValues = tool.allParameters.map(tool.minValue)
         
-        let parameters = zip(names, values).map {
-            ParameterListView.Parameter(name: $0.0, value: $0.1)
+        let parameters = zip(zip(names, values), minValues).map {
+            Parameter(name: $0.0.0, value: $0.0.1, minPercent: $0.1)
         }
         parameterlistView = ParameterListView(parameters: parameters)
         sliderView = AdjustmentSliderView(
             name: names.first ?? "",
-            value: values.first ?? 0.0 //TODO: Use NonEmpty
+            value: values.first ?? 0.0, //TODO: Use NonEmpty
+            minPercent: minValues.first ?? 0.0
         )
        
         super.init(nibName: nil, bundle: nil)
@@ -163,12 +165,14 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
     private func setValueForSelectedParameter(_ value: Double) {
         guard let parameter = SelectedTool.Parameter(string: sliderView.name) else { return }
         tool.setValue(value: value, for: parameter)
-        parameterlistView.setParameter(ParameterListView.Parameter(name: parameter.description, value: value))
+        let param = Parameter(name: parameter.description, value: value, minPercent: tool.minValue(for: parameter))
+        parameterlistView.setParameter(param)
     }
     
-    private func selectParameter(_ parameter: ParameterListView.Parameter) {
+    private func selectParameter(_ parameter: Parameter) {
         sliderView.name = parameter.name
         sliderView.percent = parameter.value
+        sliderView.minPercent = parameter.minPercent
     }
     
     private func updateParameterList(translation: CGPoint, state: UIGestureRecognizer.State) {

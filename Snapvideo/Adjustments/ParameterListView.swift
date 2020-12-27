@@ -160,11 +160,10 @@ final class ParameterListView: UIView {
     }
 }
 
-extension ParameterListView {
-    struct Parameter: Equatable {
-        let name: String
-        var value: Double
-    }
+struct Parameter: Equatable {
+    let name: String
+    var value: Double
+    let minPercent: Double
 }
 
 extension ParameterListView {

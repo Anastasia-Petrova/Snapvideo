@@ -23,17 +23,22 @@ final class AdjustmentSliderView: UIView {
     }
     var isPositive: Bool { percent >= 0 }
     
-    let maxPercent: Double = 100.0
-    let minPersent: Double = -100.0
+    var maxPercent: Double = 100.0
+    var minPercent: Double {
+        didSet {
+            setNeedsLayout()
+        }
+    }
     
     private let sliderLayer = CAShapeLayer()
     private let valueLabel = UILabel()
     private var progress: CGFloat { CGFloat(percent) * k }
     var didChangeValue: DidChangeValueCallback?
     
-    init(name: String, value: Double) {
+    init(name: String, value: Double, minPercent: Double) {
         self.name = name
         self.percent = value
+        self.minPercent = minPercent
         super.init(frame: .zero)
         backgroundColor = .clear
         setUpViews()
@@ -100,8 +105,8 @@ final class AdjustmentSliderView: UIView {
     private func setProgress(_ percent: Double) {
         if percent > maxPercent {
             self.percent = maxPercent
-        } else if percent < minPersent {
-            self.percent = minPersent
+        } else if percent < minPercent {
+            self.percent = minPercent
         } else {
             self.percent = percent
         }

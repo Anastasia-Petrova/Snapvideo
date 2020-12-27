@@ -42,10 +42,10 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         vc.view.backgroundColor = .black
         let navigationController = UINavigationController(rootViewController: vc)
         let view = ParameterListView(parameters: [
-            ParameterListView.Parameter(name: "Hello", value: 10),
-            ParameterListView.Parameter(name: "World World World", value: 20),
-            ParameterListView.Parameter(name: "Hello", value: 10),
-            ParameterListView.Parameter(name: "World World World", value: 20),
+            Parameter(name: "Hello", value: 10, minPercent: 0.0),
+            Parameter(name: "World World World", value: 20, minPercent: 0.0),
+            Parameter(name: "Hello", value: 10, minPercent: 0.0),
+            Parameter(name: "World World World", value: 20, minPercent: 0.0),
         ])
         view.backgroundColor = .red
         view.translatesAutoresizingMaskIntoConstraints = false
