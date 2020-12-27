@@ -14,7 +14,7 @@ struct VignetteFilter: Filter {
     var radius: Double = 0
     var intensity: Double = 0.1
     
-    private let filter = CIFilter(name: "CIVignetteEffect", parameters: nil)
+    private let filter = CIFilter(name: "CIVignette", parameters: nil)
     
     func parameters(with image: CIImage) -> [String : Any] {
         [

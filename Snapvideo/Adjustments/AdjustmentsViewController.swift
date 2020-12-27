@@ -20,7 +20,11 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
         action: #selector(showParameterList)
     )
     let asset: AVAsset
-    var tool: SelectedTool
+    var tool: SelectedTool {
+        didSet {
+            videoViewController.playerView.filter = AnyFilter(tool.filter)
+        }
+    }
     
     let videoViewController: VideoViewController
     let parameterlistView: ParameterListView
@@ -36,13 +40,6 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
         target: self,
         action: #selector(handlePanGesture)
     )
-    
-    var trackDuration: Float {
-        guard let trackDuration = videoViewController.player.currentItem?.asset.duration else {
-            return 0
-        }
-        return Float(CMTimeGetSeconds(trackDuration))
-    }
     
     init(url: URL, tool: SelectedTool) {
         asset = AVAsset(url: url)
@@ -62,16 +59,12 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
         )
        
         super.init(nibName: nil, bundle: nil)
+        videoViewController.playerView.filter = AnyFilter(tool.filter)
         sliderView.didChangeValue = { [weak self] value in
-            guard let self = self,
-                  let parameter = SelectedTool.Parameter(string: self.sliderView.name) else { return }
-            
-            self.tool.setValue(value: value, for: parameter)
-            self.parameterlistView.setParameter(ParameterListView.Parameter(name: parameter.description, value: value))
+            self?.setValueForSelectedParameter(value)
         }
         parameterlistView.didSelectParameter = { [weak self] parameter in
-            self?.sliderView.name = parameter.name
-            self?.sliderView.percent = parameter.value
+            self?.selectParameter(parameter)
         }
     }
     
@@ -153,7 +146,7 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
         videoViewController.view.addGestureRecognizer(panGestureRecognizer)
     }
     
-    @objc func handlePanGesture(_ recognizer: UIPanGestureRecognizer) {
+    @objc private func handlePanGesture(_ recognizer: UIPanGestureRecognizer) {
         let translation = recognizer.translation(in: videoViewController.view)
          
         if recognizer.state == .began {
@@ -165,6 +158,17 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
         } else {
             updateSlider(translation: translation, state: recognizer.state)
         }
+    }
+    
+    private func setValueForSelectedParameter(_ value: Double) {
+        guard let parameter = SelectedTool.Parameter(string: sliderView.name) else { return }
+        tool.setValue(value: value, for: parameter)
+        parameterlistView.setParameter(ParameterListView.Parameter(name: parameter.description, value: value))
+    }
+    
+    private func selectParameter(_ parameter: ParameterListView.Parameter) {
+        sliderView.name = parameter.name
+        sliderView.percent = parameter.value
     }
     
     private func updateParameterList(translation: CGPoint, state: UIGestureRecognizer.State) {
@@ -193,17 +197,17 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
         }
     }
     
-    @objc func cancelAdjustment() {
+    @objc private func cancelAdjustment() {
         dismiss(animated: true, completion: nil)
     }
     
-    @objc func showParameterList() {
+    @objc private func showParameterList() {
         parameterListItem.tintColor = parameterlistView.isHidden ? .systemBlue : .darkGray
         let duration = parameterlistView.isHidden ? 0.3 : 0.2
         parameterlistView.setHiddenAnimated(!parameterlistView.isHidden, duration: duration)
     }
     
-    @objc func applyAdjustment() {
+    @objc private func applyAdjustment() {
         //TODO: apply
     }
 }

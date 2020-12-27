@@ -199,8 +199,8 @@ extension ParameterListView {
         private func setUpLabels(_ button: UIButton) {
             nameLabel.font = .systemFont(ofSize: 15)
             valueLabel.font = .systemFont(ofSize: 15)
-            nameLabel.textColor = UIColor.init(white: 80.0/255.0, alpha: 1)
-            valueLabel.textColor = UIColor.init(white: 80.0/255.0, alpha: 1)
+            nameLabel.textColor = UIColor(white: 80.0/255.0, alpha: 1)
+            valueLabel.textColor = UIColor(white: 80.0/255.0, alpha: 1)
             
             let stackView = UIStackView(arrangedSubviews: [nameLabel, valueLabel])
             stackView.distribution = .equalSpacing

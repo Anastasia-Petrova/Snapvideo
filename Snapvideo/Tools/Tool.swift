@@ -12,7 +12,9 @@ import CoreImage
 
 protocol Tool: CustomStringConvertible, Equatable, Parameterized {
     associatedtype Icon: ImageAssets
+    associatedtype F: Filter
     
+    var filter: F { get }
     var icon: Icon { get }
     
     func apply(image: CIImage) -> CIImage

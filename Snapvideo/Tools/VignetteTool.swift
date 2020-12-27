@@ -13,7 +13,7 @@ import CoreImage
 struct VignetteTool: Tool {
     let icon = ImageAsset.Tools.vignette
     
-    private var filter = VignetteFilter(radius: 0, intensity: 0)
+    private(set) var filter = VignetteFilter(radius: 0, intensity: 0)
     
     func apply(image: CIImage) -> CIImage {
         filter.apply(image: image)
