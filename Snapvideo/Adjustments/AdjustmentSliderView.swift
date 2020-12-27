@@ -156,7 +156,7 @@ final class AdjustmentSliderView: UIView {
         
         separatorLayer.lineWidth = 0.0
         separatorLayer.strokeColor = UIColor.clear.cgColor
-        separatorLayer.fillColor = UIColor.red.cgColor
+        separatorLayer.fillColor = UIColor.darkGray.cgColor
         sliderView.layer.addSublayer(separatorLayer)
         
         return sliderView
