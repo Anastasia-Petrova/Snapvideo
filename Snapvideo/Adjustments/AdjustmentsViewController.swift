@@ -20,7 +20,7 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
         action: #selector(showParameterList)
     )
     let asset: AVAsset
-    let tool: SelectedTool
+    var tool: SelectedTool
     
     let videoViewController: VideoViewController
     let parameterlistView: ParameterListView
@@ -58,14 +58,20 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
         parameterlistView = ParameterListView(parameters: parameters)
         sliderView = AdjustmentSliderView(
             name: names.first ?? "",
-            value: CGFloat(values.first ?? 0) //TODO: Use NonEmpty
+            value: values.first ?? 0.0 //TODO: Use NonEmpty
         )
        
         super.init(nibName: nil, bundle: nil)
-        
+        sliderView.didChangeValue = { [weak self] value in
+            guard let self = self,
+                  let parameter = SelectedTool.Parameter(string: self.sliderView.name) else { return }
+            
+            self.tool.setValue(value: value, for: parameter)
+            self.parameterlistView.setParameter(ParameterListView.Parameter(name: parameter.description, value: value))
+        }
         parameterlistView.didSelectParameter = { [weak self] parameter in
             self?.sliderView.name = parameter.name
-            self?.sliderView.percent = CGFloat(parameter.value)
+            self?.sliderView.percent = parameter.value
         }
     }
     
@@ -179,7 +185,7 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
     private func updateSlider(translation: CGPoint, state: UIGestureRecognizer.State) {
         let deltaX = previousTranslation.x - translation.x
         previousTranslation.x = translation.x
-        sliderView.setProgress(sliderView.percent - deltaX/sliderView.k)
+        sliderView.setDelta(deltaX)
         switch state {
         case .ended:
             previousTranslation = .zero

@@ -64,6 +64,19 @@ final class ParameterListView: UIView {
         selectedParameterIndex = Self.calculateSelectedRowIndex(offset: Int(verticalOffset - ParameterListView.minOffset), rowHeight: Int(rowHeight))
     }
     
+    func setParameter(_ parameter: Parameter) {
+        guard let index = parameters.firstIndex(where: { $0.name == parameter.name }) else { return }
+        parameters[index] = parameter
+        if index + 1 < stackView.arrangedSubviews.count - 1,
+           let row = stackView.arrangedSubviews[index + 1] as? ParameterRow {
+            row.setParameter(parameter)
+        }
+        
+        if selectedParameterIndex == index {
+            selectedParameterRow.setParameter(parameter)
+        }
+    }
+    
     func translateY(_ translationY: CGFloat) {
         let newVerticalOffset = verticalOffset + translationY
         
@@ -84,7 +97,6 @@ final class ParameterListView: UIView {
             .map(ParameterRow.init)
             .forEach(stackView.addArrangedSubview)
         stackView.addArrangedSubview(BorderView(direction: .down))
-        
         container.layer.cornerRadius = 3.0
         container.backgroundColor = UIColor.white.withAlphaComponent(0.7)
         container.translatesAutoresizingMaskIntoConstraints = false
@@ -179,7 +191,7 @@ extension ParameterListView {
         
         func setParameter(_ parameter: Parameter) {
             nameLabel.setText(parameter.name, animationDuration: 0.2)
-            var valueText = String(parameter.value)
+            var valueText = String(Int(parameter.value))
             valueText = parameter.value > 0 ? "+" + valueText : valueText
             valueLabel.setText(valueText, animationDuration: 0.2)
         }

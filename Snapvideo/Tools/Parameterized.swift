@@ -8,8 +8,12 @@
 
 import Foundation
 
+protocol ExpressibleByString {
+    init?(string: String)
+}
+
 protocol Parameterized {
-    associatedtype Parameter: CustomStringConvertible
+    associatedtype Parameter: CustomStringConvertible & ExpressibleByString
     
     var allParameters: [Parameter] { get }
     

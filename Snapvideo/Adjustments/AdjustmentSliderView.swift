@@ -9,45 +9,29 @@
 import UIKit
 
 final class AdjustmentSliderView: UIView {
+    typealias DidChangeValueCallback = (Double) -> Void
     let separatorLayer = CAShapeLayer()
     
     var k: CGFloat { bounds.width/2.0/100.0 }
     
-    var name: String {
+    var name: String { didSet { setNeedsLayout() } }
+    var percent: Double {
         didSet {
+            didChangeValue?(percent)
             setNeedsLayout()
         }
     }
-    let maxPercent: CGFloat = 100.0
-    let minPersent: CGFloat = -100.0
+    var isPositive: Bool { percent >= 0 }
+    
+    let maxPercent: Double = 100.0
+    let minPersent: Double = -100.0
     
     private let sliderLayer = CAShapeLayer()
     private let valueLabel = UILabel()
-    private var progress: CGFloat {
-        return percent * k
-    }
+    private var progress: CGFloat { CGFloat(percent) * k }
+    var didChangeValue: DidChangeValueCallback?
     
-    func setProgress(_ percent: CGFloat) {
-        if percent > maxPercent {
-            self.percent = maxPercent
-        } else if percent < minPersent {
-            self.percent = minPersent
-        } else {
-            self.percent = percent
-        }
-    }
-    
-    var percent: CGFloat {
-        didSet {
-            setNeedsLayout()
-        }
-    }
-    
-    var isPositive: Bool {
-        percent >= 0
-    }
-    
-    init(name: String, value: CGFloat) {
+    init(name: String, value: Double) {
         self.name = name
         self.percent = value
         super.init(frame: .zero)
@@ -107,6 +91,20 @@ final class AdjustmentSliderView: UIView {
             stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+    }
+    
+    func setDelta(_ deltaX: CGFloat) {
+        setProgress(percent - Double(deltaX/k))
+    }
+    
+    private func setProgress(_ percent: Double) {
+        if percent > maxPercent {
+            self.percent = maxPercent
+        } else if percent < minPersent {
+            self.percent = minPersent
+        } else {
+            self.percent = percent
+        }
     }
     
     private func updateValueSlider() {

@@ -87,3 +87,9 @@ extension VignetteTool {
 extension VignetteTool.Parameter: CustomStringConvertible {
     var description: String { rawValue.capitalized }
 }
+
+extension VignetteTool.Parameter: ExpressibleByString {
+    init?(string: String) {
+        self.init(rawValue: string.lowercased())
+    }
+}

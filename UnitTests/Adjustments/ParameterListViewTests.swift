@@ -19,25 +19,15 @@ final class ParameterListViewTests: XCTestCase {
             Parameter(name: "Foo", value: 1),
             Parameter(name: "Bar", value: 2)
         ]
-        let view = ParameterListView(parameters: expected) { _ in }
+        let view = ParameterListView(parameters: expected)
         XCTAssertEqual(view.parameters, expected)
-    }
-    
-    func test_init_assigns_callback() {
-        let expected = Parameter(name: "Foo", value: 1)
-        var actual: Parameter?
-        
-        let view = ParameterListView(parameters: [expected]) { actual = $0 }
-        view.callback(expected)
-        
-        XCTAssertEqual(expected, actual)
     }
     
     func test_translateY_boundries() {
         let view = ParameterListView(parameters: [
             Parameter(name: "", value: 1),
             Parameter(name: "", value: 1)
-        ]) { _ in }
+        ])
         add(view, on: UIViewController())
         
         XCTAssertEqual(view.verticalOffset, ParameterListView.minOffset)
@@ -67,7 +57,8 @@ final class ParameterListViewTests: XCTestCase {
         let expected2 = Parameter(name: "Bar", value: 2)
         var actual: Parameter?
         
-        let view = ParameterListView(parameters: [expected1, expected2]) { actual = $0 }
+        let view = ParameterListView(parameters: [expected1, expected2])
+        view.didSelectParameter = { actual = $0 }
         add(view, on: UIViewController())
         let translation = view.rowHeight/2.0 + 1
         
