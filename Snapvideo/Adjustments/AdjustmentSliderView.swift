@@ -12,7 +12,10 @@ final class AdjustmentSliderView: UIView {
     typealias DidChangeValueCallback = (Double) -> Void
     let separatorLayer = CAShapeLayer()
     
-    var k: CGFloat { bounds.width/2.0/100.0 }
+    var k: CGFloat {
+        let divider: CGFloat = minPercent == 0 ? 1 : 2
+        return bounds.width/divider/100.0
+    }
     
     var name: String { didSet { setNeedsLayout() } }
     var percent: Double {
@@ -28,6 +31,10 @@ final class AdjustmentSliderView: UIView {
         didSet {
             setNeedsLayout()
         }
+    }
+    
+    var centerX: CGFloat {
+        minPercent == 0 ? 0 : bounds.width/2.0
     }
     
     private let sliderLayer = CAShapeLayer()
@@ -122,9 +129,9 @@ final class AdjustmentSliderView: UIView {
                 )
             )
         ).cgPath
-        let center = bounds.width/2.0
+        
         let position = CGPoint(
-            x: isPositive ? center : center - -progress,
+            x: isPositive ? centerX : centerX - -progress,
             y: 0
         )
         CATransaction.begin()
@@ -165,9 +172,8 @@ final class AdjustmentSliderView: UIView {
                 )
             )
         ).cgPath
-        let center = bounds.width/2.0
         let position = CGPoint(
-            x: center,
+            x: centerX,
             y: 0
         )
         CATransaction.begin()
