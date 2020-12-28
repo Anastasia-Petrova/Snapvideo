@@ -18,7 +18,7 @@ struct VideoEditor {
         }
     }
     
-    static func saveEditedVideo(choosenFilter: AnyFilter, asset: AVAsset, completion: @escaping () -> Void ) {
+    static func saveEditedVideo(choosenFilter: AnyFilter, asset: AVAsset, completion: @escaping () -> Void) {
         let composition = setUpComposition(choosenFilter: choosenFilter, asset: asset)
         performExport(asset: asset, composition: composition) { exportUrl in
             guard let exportUrl = exportUrl else {

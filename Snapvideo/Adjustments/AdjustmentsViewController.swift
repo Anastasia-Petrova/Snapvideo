@@ -31,6 +31,7 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
     let parameterlistView: ParameterListView
     let sliderView: AdjustmentSliderView
     
+    let completion: (URL?) -> Void
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?
                                             .withRenderingMode(.alwaysTemplate))
     
@@ -42,7 +43,8 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
         action: #selector(handlePanGesture)
     )
     
-    init(url: URL, tool: SelectedTool) {
+    init(url: URL, tool: SelectedTool, completion: @escaping (URL?) -> Void) {
+        self.completion = completion
         asset = AVAsset(url: url)
         self.tool = tool
         videoViewController = VideoViewController(asset: asset)
@@ -235,13 +237,13 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
     func saveVideoToPhotos() {
         videoViewController.isActivityIndicatorVisible = true
         guard let playerItem = videoViewController.player.currentItem else { return }
-        VideoEditor.saveEditedVideo(
-            choosenFilter: AnyFilter(tool.filter),
-            asset: playerItem.asset
-        ) {
+        let asset = playerItem.asset
+        let composition = VideoEditor.setUpComposition(choosenFilter: AnyFilter(tool.filter), asset: asset)
+        VideoEditor.performExport(asset: asset, composition: composition) { url in
             DispatchQueue.main.async {
-                self.videoViewController.isActivityIndicatorVisible = false
-                self.dismiss(animated: true, completion: nil)
+                self.dismiss(animated: true) {
+                    self.completion(url)
+                }
             }
         }
     }

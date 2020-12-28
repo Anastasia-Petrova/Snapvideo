@@ -10,7 +10,11 @@ import AVFoundation
 import UIKit
 
 final class VideoViewController: UIViewController {
-    let asset: AVAsset
+    var asset: AVAsset {
+        didSet {
+            resetPlayerItem()
+        }
+    }
     let player: AVPlayer
     let playerView: VideoView
     let backgroundVideoView: VideoView
@@ -144,5 +148,16 @@ final class VideoViewController: UIViewController {
         if let playerItem = notification.object as? AVPlayerItem {
             playerItem.seek(to: .zero, completionHandler: nil)
         }
+    }
+    
+    private func resetPlayerItem() {
+        let playerItem = AVPlayerItem(asset: asset)
+        player.replaceCurrentItem(with: playerItem)
+        let output = AVPlayerItemVideoOutput(outputSettings: nil)
+        let outputBG = AVPlayerItemVideoOutput(outputSettings: nil)
+        playerItem.add(output)
+        playerItem.add(outputBG)
+        playerView.videoOutput = output
+        backgroundVideoView.videoOutput = outputBG
     }
 }

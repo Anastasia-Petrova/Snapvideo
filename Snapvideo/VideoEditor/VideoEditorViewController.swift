@@ -11,7 +11,12 @@ import AVFoundation
 import Photos
 
 final class VideoEditorViewController: UIViewController {
-    let videoFileAsset: AVAsset
+    var videoFileAsset: AVAsset {
+        didSet {
+            videoViewController.asset = videoFileAsset
+            generatePreviewImages()
+        }
+    }
     
     let looksPanel = UIView()
     let exportPanel = UIView()
@@ -146,15 +151,7 @@ final class VideoEditorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-        AssetImageGenerator.getThumbnailImageFromVideoAsset(
-            asset: videoFileAsset,
-            maximumSize: itemSize.applying(.init(scaleX: UIScreen.main.scale, y: UIScreen.main.scale)),
-            completion: { [weak self] image in
-                DispatchQueue.main.async {                
-                    self?.previewImage = image
-                }
-            }
-        )
+        generatePreviewImages()
         
         view.addSubview(videoViewController.view)
         view.addSubview(looksPanel)
@@ -173,6 +170,18 @@ final class VideoEditorViewController: UIViewController {
         setUpShareButton()
         setUpSaveCopyButton()
         setUpTabBar()
+    }
+    
+    private func generatePreviewImages() {
+        AssetImageGenerator.getThumbnailImageFromVideoAsset(
+            asset: videoFileAsset,
+            maximumSize: itemSize.applying(.init(scaleX: UIScreen.main.scale, y: UIScreen.main.scale)),
+            completion: { [weak self] image in
+                DispatchQueue.main.async {
+                    self?.previewImage = image
+                }
+            }
+        )
     }
     
     private func setUpTabBar() {
@@ -461,7 +470,10 @@ final class VideoEditorViewController: UIViewController {
         case let .vignette(tool),
              let .bright(tool),
              let .blur(tool):
-            let vc = AdjustmentsViewController(url: url, tool: tool)
+            let vc = AdjustmentsViewController(url: url, tool: tool) { [weak self] url in
+                guard let self = self, let url = url else { return }
+                self.videoFileAsset = AVAsset(url: url)
+            }
             vc.modalTransitionStyle = .crossDissolve
             vc.modalPresentationStyle = .overCurrentContext
             present(vc, animated: true, completion: nil)
