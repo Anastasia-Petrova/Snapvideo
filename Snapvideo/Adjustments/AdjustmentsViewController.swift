@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import Photos
 
 final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
     let toolBar = UIToolbar(
@@ -213,5 +214,35 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
     
     @objc private func applyAdjustment() {
         //TODO: apply
+        saveVideoCopy()
+    }
+    
+    func saveVideoCopy() {
+        PHPhotoLibrary.requestAuthorization { [weak self] status in
+            switch status {
+            case .authorized:
+                DispatchQueue.main.async {
+                    self?.saveVideoToPhotos()
+                }
+            default:
+                //TODO: properly handle this. Show error, send to settings, etc.
+                print("Photos permissions not granted.")
+                return
+            }
+        }
+    }
+    
+    func saveVideoToPhotos() {
+        videoViewController.isActivityIndicatorVisible = true
+        guard let playerItem = videoViewController.player.currentItem else { return }
+        VideoEditor.saveEditedVideo(
+            choosenFilter: AnyFilter(tool.filter),
+            asset: playerItem.asset
+        ) {
+            DispatchQueue.main.async {
+                self.videoViewController.isActivityIndicatorVisible = false
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
     }
 }

@@ -11,8 +11,8 @@ import CoreImage
 
 struct VignetteFilter: Filter {
     let name: String = "Vignette"
-    var radius: Double = 0
-    var intensity: Double = 0.1
+    var radius: Double = 2
+    var intensity: Double = 1
     
     private let filter = CIFilter(name: "CIVignette", parameters: nil)
     
