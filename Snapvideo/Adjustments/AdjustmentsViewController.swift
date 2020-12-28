@@ -215,26 +215,6 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
     }
     
     @objc private func applyAdjustment() {
-        //TODO: apply
-        saveVideoCopy()
-    }
-    
-    func saveVideoCopy() {
-        PHPhotoLibrary.requestAuthorization { [weak self] status in
-            switch status {
-            case .authorized:
-                DispatchQueue.main.async {
-                    self?.saveVideoToPhotos()
-                }
-            default:
-                //TODO: properly handle this. Show error, send to settings, etc.
-                print("Photos permissions not granted.")
-                return
-            }
-        }
-    }
-    
-    func saveVideoToPhotos() {
         videoViewController.isActivityIndicatorVisible = true
         guard let playerItem = videoViewController.player.currentItem else { return }
         let asset = playerItem.asset
