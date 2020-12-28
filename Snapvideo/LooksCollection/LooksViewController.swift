@@ -10,26 +10,29 @@ import UIKit
 
 final class LooksViewController: UIViewController {
     typealias Callback = (Int, Int) -> Void
-    
     let dataSource: LooksCollectionDataSource
     let collectionView: UICollectionView
-    private let didSelectLook: Callback
-    var selectedFilterIndex = 0
+    var didSelectLook: Callback?
+    var pendingFilterIndex: Int?
+    var selectedFilterIndex: Int
+    
     var selectedFilter: AnyFilter {
         dataSource.filters[selectedFilterIndex]
     }
 
-    convenience init(itemSize: CGSize, filters: [AnyFilter], didSelectLook: @escaping Callback) {
+    convenience init(itemSize: CGSize, selectedFilterIndex: Int, filters: [AnyFilter]) {
         let collectionView = UICollectionView(
             frame: .zero,
             collectionViewLayout: LooksCollectionViewLayout(itemSize: itemSize)
         )
-        self.init(itemSize: itemSize, filters: filters, collectionView: collectionView, didSelectLook: didSelectLook)
+
+        self.init(itemSize: itemSize, selectedFilterIndex: selectedFilterIndex, filters: filters, collectionView: collectionView)
     }
     
-    init(itemSize: CGSize, filters: [AnyFilter], collectionView: UICollectionView, didSelectLook: @escaping Callback) {
-        self.didSelectLook = didSelectLook
+    init(itemSize: CGSize, selectedFilterIndex: Int, filters: [AnyFilter], collectionView: UICollectionView) {
+        self.selectedFilterIndex = selectedFilterIndex
         self.collectionView = collectionView
+        
         self.dataSource = LooksCollectionDataSource(
             collectionView: collectionView,
             filters: filters,
@@ -47,6 +50,8 @@ final class LooksViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpCollectionView()
+        collectionView.selectItem(at: IndexPath(item: selectedFilterIndex, section: 0), animated: true, scrollPosition: .centeredHorizontally)
+        collectionView.delegate?.collectionView?(collectionView, didSelectItemAt: IndexPath(item: selectedFilterIndex, section: 0))
     }
     
     func setUpCollectionView() {
@@ -66,21 +71,25 @@ final class LooksViewController: UIViewController {
     }
     
     func deselectFilter() {
-        collectionView.deselectItem(at: IndexPath(item: selectedFilterIndex, section: 0), animated: false)
-        let indexPath = IndexPath(row: 0, section: 0)
+        if let pendingFilterIndex = pendingFilterIndex {
+            collectionView.deselectItem(at: IndexPath(item: pendingFilterIndex, section: 0), animated: false)
+        }
+        let indexPath = IndexPath(row: selectedFilterIndex, section: 0)
         collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .top)
         collectionView.delegate?.collectionView?(collectionView, didSelectItemAt: indexPath)
+        pendingFilterIndex = nil
     }
 }
 
 extension LooksViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let previousIndex = selectedFilterIndex
-        selectedFilterIndex = indexPath.row
+        let pendingFilterIndex = indexPath.row
+        self.pendingFilterIndex = pendingFilterIndex
         
-        didSelectLook(selectedFilterIndex, previousIndex)
+        didSelectLook?(pendingFilterIndex, previousIndex)
         
-        if selectedFilterIndex != 0 {
+        if pendingFilterIndex != 0 {
             collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         }
     }

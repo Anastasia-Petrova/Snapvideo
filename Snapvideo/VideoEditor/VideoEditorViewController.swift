@@ -23,16 +23,21 @@ final class VideoEditorViewController: UIViewController {
     //child view controllers
     let videoViewController: VideoViewController
     let looksViewController: LooksViewController
+
     let toolsViewController: ToolsViewController
     
     let tabBar = TabBar(items: "LOOKS", "TOOLS", "EXPORT")
+    var selectedFilter: AnyFilter = AnyFilter(PassthroughFilter())
+    var selectedFilterIndex: Int
+    var pendingFilterIndex: Int?
+    let coverView = UIView()
+
     var cancelButton = LooksViewButton(imageName: "cancel-solid")
     var doneButton = LooksViewButton(imageName: "done-solid")
-    
     //TODO: extract to own View Controller
     var saveCopyButton = SaveCopyVideoButton()
     var shareButton = SaveCopyVideoButton()
-    
+
     var spacerHeight = CGFloat()
     let shareStackView = UIStackView()
     let saveCopyStackView = UIStackView()
@@ -102,29 +107,33 @@ final class VideoEditorViewController: UIViewController {
         return Float(CMTimeGetSeconds(trackDuration))
     }
     
-    init(url: URL, filters: [AnyFilter], tools: [ToolEnum]) {
+
+    init(url: URL, index: Int, filters: [AnyFilter], tools: [ToolEnum]) {
         videoFileAsset = AVAsset(url: url)
+        selectedFilterIndex = index
         videoViewController = VideoViewController(asset: videoFileAsset)
         toolsViewController = ToolsViewController(tools: tools)
         looksViewController = LooksViewController(
             itemSize: itemSize,
-            filters: filters,
-            didSelectLook: { [weak videoViewController, weak doneButton, weak tabBar] newIndex, previousIndex in
-                let newFilter = filters[newIndex]
-                videoViewController?.playerView.filter = newFilter
-                videoViewController?.backgroundVideoView.filter = newFilter + AnyFilter(BlurFilter(blurRadius: 100))
-                doneButton?.isEnabled = newIndex != 0
-                tabBar?.isHidden = newIndex != 0
-                guard newIndex != previousIndex && newIndex != 0 else { return }
-                videoViewController?.player.play()
-            }
+            selectedFilterIndex: index,
+            filters: filters
         )
         
         super.init(nibName: nil, bundle: nil)
-        
         addChild(looksViewController)
         looksViewController.didMove(toParent: self)
-        
+        looksViewController.didSelectLook = { [weak self] newIndex, previousIndex in
+            guard let self = self else { return }
+            let hasChangedSelectedFilter = newIndex != self.selectedFilterIndex
+            self.videoViewController.playerView.filter = filters[newIndex]
+            self.videoViewController.backgroundVideoView.filter = filters[newIndex] + AnyFilter(BlurFilter(blurRadius: 100))
+            self.doneButton.isEnabled = hasChangedSelectedFilter
+            self.tabBar.isHidden = hasChangedSelectedFilter
+            guard newIndex != previousIndex && hasChangedSelectedFilter else { return }
+            self.videoViewController.player.play()
+            self.selectedFilter = filters[newIndex]
+            self.pendingFilterIndex = newIndex
+        }
         toolsViewController.didSelectToolCallback = { [weak self] index in
             self?.presentAdjustmentsScreen(url: url, tool: tools[index])
         }
@@ -408,7 +417,6 @@ final class VideoEditorViewController: UIViewController {
     public func closeLooks() {
         self.view.layoutIfNeeded()
         topLooksConstraint.constant = -view.safeAreaInsets.bottom
-        resetToDefaultFilter()
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
@@ -462,6 +470,7 @@ final class VideoEditorViewController: UIViewController {
     }
     
     private func resetToDefaultFilter() {
+        pendingFilterIndex = nil
         looksViewController.deselectFilter()
     }
     
@@ -492,12 +501,18 @@ final class VideoEditorViewController: UIViewController {
     }
     
     @objc func saveFilter() {
-        self.view.layoutIfNeeded()
+        view.layoutIfNeeded()
+        tabBar.isHidden = false
         topLooksConstraint.constant = 146
-        resetToDefaultFilter()
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
+        if let pendingFilterIndex = looksViewController.pendingFilterIndex {
+            selectedFilterIndex = pendingFilterIndex
+            looksViewController.selectedFilterIndex = pendingFilterIndex
+        }
+        looksViewController.pendingFilterIndex = nil
+        pendingFilterIndex = nil
     }
     
     @objc func saveVideoCopy() {
