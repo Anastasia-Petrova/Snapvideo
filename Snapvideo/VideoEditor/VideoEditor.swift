@@ -13,10 +13,7 @@ import Photos
 struct VideoEditor {
     static func setUpComposition(choosenFilter: AnyFilter, asset: AVAsset ) -> AVVideoComposition {
         return AVVideoComposition(asset: asset) { request in
-            let source = request.sourceImage.clampedToExtent()
-            let filteredImage = choosenFilter
-                .apply(source)
-                .cropped(to: request.sourceImage.extent)
+            let filteredImage = choosenFilter.apply(request.sourceImage)
             request.finish(with: filteredImage, context: nil)
         }
     }
