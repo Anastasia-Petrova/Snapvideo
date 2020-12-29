@@ -13,8 +13,21 @@ final class VideoView: UIView {
     var videoOutput: AVPlayerItemVideoOutput
     var displayLink: CADisplayLink?
     var context: CIContext = CIContext(options: [CIContextOption.workingColorSpace : NSNull()])
-    var filter: AnyFilter
+    var filter: AnyFilter {
+        didSet  {
+            currentFrame = initialFrame
+                .map(filter.apply)
+                .flatMap { context.createCGImage($0, from: $0.extent) }
+
+        }
+    }
     let videoOrientation: CGImagePropertyOrientation
+    var initialFrame: CIImage?
+    var currentFrame: CGImage? {
+        didSet {
+            layer.contents = currentFrame
+        }
+    }
     
     init(
         videoOutput: AVPlayerItemVideoOutput,
@@ -44,12 +57,15 @@ final class VideoView: UIView {
     @objc func updateCurrentFrame() {
         let time = videoOutput.itemTime(forHostTime: CACurrentMediaTime())
         guard videoOutput.hasNewPixelBuffer(forItemTime: time) else { return }
-        
-        layer.contents = videoOutput
+        let image = videoOutput
             .copyPixelBuffer(forItemTime: time, itemTimeForDisplay: nil)
             .map { CIImage(cvPixelBuffer: $0) }
             .map { $0.oriented(self.videoOrientation) }
+        
+        currentFrame = image
             .map(filter.apply)
             .flatMap { context.createCGImage($0, from: $0.extent) }
+        
+        initialFrame = image
     }
 }
