@@ -34,7 +34,7 @@ extension App {
             AnyFilter(MonochromeFilter()),
             AnyFilter(NoirFilter())
         ],
-        tools: [.vignette(tool: VignetteTool())]
+        tools: [.vignette(tool: VignetteTool()), .colourCorrection(tool: ColourCorrectionTool())]
     )
     
     private static let many = App(

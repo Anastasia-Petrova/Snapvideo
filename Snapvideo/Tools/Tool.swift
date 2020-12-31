@@ -26,14 +26,15 @@ extension Tool {
 
 enum ToolEnum: Equatable {
     case vignette(tool: VignetteTool)
-    case bright(tool: VignetteTool)
+    case colourCorrection(tool: ColourCorrectionTool)
     case blur(tool: VignetteTool)
     
     var name: String {
         switch self {
         case let .vignette(tool),
-             let .bright(tool),
              let .blur(tool):
+            return tool.description
+        case let .colourCorrection(tool):
             return tool.description
         }
     }
@@ -41,8 +42,9 @@ enum ToolEnum: Equatable {
     var icon: UIImage {
         switch self {
         case let .vignette(tool),
-             let .bright(tool),
              let .blur(tool):
+            return tool.icon.image()
+        case let .colourCorrection(tool):
             return tool.icon.image()
         }
     }
