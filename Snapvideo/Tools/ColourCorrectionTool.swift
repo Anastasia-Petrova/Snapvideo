@@ -37,6 +37,12 @@ extension ColourCorrectionTool: Parameterized {
     
     func value(for parameter: Parameter) -> Double {
         switch parameter {
+        case .brightness:
+            return Double(colourControlFilter.inputBrightness) / parameter.k
+        case .contrast:
+            return Double(colourControlFilter.inputContrast) / parameter.k
+        case .saturation:
+            return Double(colourControlFilter.inputSaturation) / parameter.k
         case .warmth:
             return Double(temperatureFilter.inputNeutral) / parameter.k
         }
@@ -44,34 +50,61 @@ extension ColourCorrectionTool: Parameterized {
     
     func minValue(for parameter: Parameter) -> Double {
         switch parameter {
+        case .brightness:
+            return -1.0
+        case .contrast:
+            return 0.0
+        case .saturation:
+            return 0.0
         case .warmth:
-            return 0
+            return 0.0
         }
     }
     
     func maxValue(for parameter: Parameter) -> Double {
         switch parameter {
+        case .brightness:
+            return parameter.k * 100.0
+        case .contrast:
+            return parameter.k * 100.0
+        case .saturation:
+            return parameter.k * 100.0
         case .warmth:
             return parameter.k * 100.0
         }
     }
     
     mutating func setValue(value: Double, for parameter: Parameter) {
+        let newValue = value * parameter.k
         switch parameter {
         case .warmth:
-            let newValue = CGFloat(value * parameter.k)
-            temperatureFilter.inputNeutral = newValue
-            temperatureFilter.targetNeutral = newValue
+            temperatureFilter.inputNeutral = CGFloat(newValue)
+            temperatureFilter.targetNeutral = CGFloat(newValue)
+        case .saturation:
+            colourControlFilter.inputSaturation = newValue
+        case .brightness:
+            colourControlFilter.inputBrightness = newValue
+        case .contrast:
+            colourControlFilter.inputContrast = newValue
         }
     }
 }
 
 extension ColourCorrectionTool {
     enum Parameter: String, CaseIterable {
+        case brightness
+        case contrast
+        case saturation
         case warmth
         
         var k: Double {
             switch self {
+            case .brightness:
+                return 0.01
+            case .contrast:
+                return 0.01
+            case .saturation:
+                return 0.01
             case .warmth:
                 return 65.0
             }
