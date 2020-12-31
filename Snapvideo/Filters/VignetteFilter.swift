@@ -14,7 +14,7 @@ struct VignetteFilter: Filter {
     var radius: Double = 2
     var intensity: Double = 1
     
-    private let filter = CIFilter(name: "CIVignette", parameters: nil)
+    private let filter = CIFilter(name: "CIVignette", parameters: nil)!
     
     func parameters(with image: CIImage) -> [String : Any] {
         [
@@ -25,7 +25,7 @@ struct VignetteFilter: Filter {
     }
     
     func apply(image: CIImage) -> CIImage {
-        filter?.createOutputImage(for: parameters(with: image)) ?? image
+        filter.createOutputImage(for: parameters(with: image)) ?? image
     }
 }
 
