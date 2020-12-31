@@ -10,11 +10,21 @@ import Foundation
 import CoreImage
 
 struct ColourCorrectionTool: Tool {
-    let icon = ImageAsset.Tools.vignette
+    let icon = ImageAsset.Tools.tune
     
-    private(set) var filter = TemperatureAndTintFilter(
+    var filter: CompositeFilter {
+        temperatureFilter + colourControlFilter
+    }
+    
+    private(set) var temperatureFilter = TemperatureAndTintFilter(
         inputNeutral: 6500,
         targetNeutral: 4500
+    )
+    
+    private(set) var colourControlFilter = ColorControlFilter(
+        inputSaturation: 0.0,
+        inputBrightness: 0.0,
+        inputContrast: 0.0
     )
     
     func apply(image: CIImage) -> CIImage {
@@ -28,7 +38,7 @@ extension ColourCorrectionTool: Parameterized {
     func value(for parameter: Parameter) -> Double {
         switch parameter {
         case .warmth:
-            return Double(filter.inputNeutral) / parameter.k
+            return Double(temperatureFilter.inputNeutral) / parameter.k
         }
     }
     
@@ -50,8 +60,8 @@ extension ColourCorrectionTool: Parameterized {
         switch parameter {
         case .warmth:
             let newValue = CGFloat(value * parameter.k)
-            filter.inputNeutral = newValue
-            filter.targetNeutral = newValue
+            temperatureFilter.inputNeutral = newValue
+            temperatureFilter.targetNeutral = newValue
         }
     }
 }

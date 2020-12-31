@@ -41,6 +41,10 @@ struct CompositeFilter: Filter {
         self.filter2 = filter2
     }
     
+    init<F1: Filter, F2: Filter>(filter1: F1, filter2: F2) {
+        self.init(filter1: AnyFilter(filter1), filter2: AnyFilter(filter2))
+    }
+    
     func apply(image: CIImage) -> CIImage {
         let filteredImage = filter1.apply(image)
         return filter2.apply(filteredImage)
@@ -49,4 +53,8 @@ struct CompositeFilter: Filter {
 
 func + (filter1: AnyFilter, filter2: AnyFilter) -> AnyFilter {
     AnyFilter(CompositeFilter(filter1: filter1, filter2: filter2))
+}
+
+func + <F1: Filter, F2: Filter>(filter1: F1, filter2: F2) -> CompositeFilter {
+    CompositeFilter(filter1: filter1, filter2: filter2)
 }
