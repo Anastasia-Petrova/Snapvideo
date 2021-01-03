@@ -39,7 +39,7 @@ extension ColourCorrectionTool: Parameterized {
     func value(for parameter: Parameter) -> Double {
         switch parameter {
         case .brightness:
-            return Double(colourControlFilter.inputBrightness) / parameter.k
+            return Double(colourControlFilter.inputBrightness) * parameter.k
         case .contrast:
             let value = colourControlFilter.inputContrast
             switch value {
@@ -62,7 +62,7 @@ extension ColourCorrectionTool: Parameterized {
     func minValue(for parameter: Parameter) -> Double {
         switch parameter {
         case .brightness:
-            return -100.0
+            return -1.0 * parameter.k
         case .contrast:
             return -100.0
         case .saturation:
@@ -75,7 +75,7 @@ extension ColourCorrectionTool: Parameterized {
     func maxValue(for parameter: Parameter) -> Double {
         switch parameter {
         case .brightness:
-            return parameter.k * 100.0
+            return 1.0 * parameter.k
         case .contrast:
             return 100.0
         case .saturation:
@@ -86,15 +86,14 @@ extension ColourCorrectionTool: Parameterized {
     }
     
     mutating func setValue(value: Double, for parameter: Parameter) {
-        let newValue = value * parameter.k
         switch parameter {
         case .warmth:
-            temperatureFilter.inputNeutral = CGFloat(newValue)
-            temperatureFilter.targetNeutral = CGFloat(newValue)
+            temperatureFilter.inputNeutral = CGFloat(value * parameter.k)
+            temperatureFilter.targetNeutral = CGFloat(value * parameter.k)
         case .saturation:
-            colourControlFilter.inputSaturation = newValue
+            colourControlFilter.inputSaturation = value * parameter.k
         case .brightness:
-            colourControlFilter.inputBrightness = newValue
+            colourControlFilter.inputBrightness = value / parameter.k
         case .contrast:
             if value == 0 {
                 colourControlFilter.inputContrast = 1
@@ -117,7 +116,7 @@ extension ColourCorrectionTool {
         var k: Double {
             switch self {
             case .brightness:
-                return 0.01
+                return 100.0
             case .contrast:
                 fatalError("should be implemented")
             case .saturation:
