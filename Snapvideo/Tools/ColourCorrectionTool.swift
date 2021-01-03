@@ -13,7 +13,8 @@ struct ColourCorrectionTool: Tool {
     let icon = ImageAsset.Tools.tune
     
     var filter: CompositeFilter {
-        temperatureFilter + colourControlFilter
+        temperatureFilter +
+            colourControlFilter
     }
     
     private(set) var temperatureFilter = TemperatureAndTintFilter(
@@ -22,9 +23,9 @@ struct ColourCorrectionTool: Tool {
     )
     
     private(set) var colourControlFilter = ColorControlFilter(
-        inputSaturation: 0.0,
+        inputSaturation: 1.0,
         inputBrightness: 0.0,
-        inputContrast: 0.0
+        inputContrast: 1.0
     )
     
     func apply(image: CIImage) -> CIImage {
@@ -40,7 +41,17 @@ extension ColourCorrectionTool: Parameterized {
         case .brightness:
             return Double(colourControlFilter.inputBrightness) / parameter.k
         case .contrast:
-            return Double(colourControlFilter.inputContrast) / parameter.k
+            let value = colourControlFilter.inputContrast
+            switch value {
+            case 1:
+                return 0
+            case 0..<1:
+                return -100 + value * 100.0
+            case 1...2:
+                return value * 100.0 - 100
+            default:
+                fatalError("shouldn't be allowed. Check your logic")
+            }
         case .saturation:
             return Double(colourControlFilter.inputSaturation) / parameter.k
         case .warmth:
@@ -51,9 +62,9 @@ extension ColourCorrectionTool: Parameterized {
     func minValue(for parameter: Parameter) -> Double {
         switch parameter {
         case .brightness:
-            return -1.0
+            return -100.0
         case .contrast:
-            return 0.0
+            return -100.0
         case .saturation:
             return 0.0
         case .warmth:
@@ -66,7 +77,7 @@ extension ColourCorrectionTool: Parameterized {
         case .brightness:
             return parameter.k * 100.0
         case .contrast:
-            return parameter.k * 100.0
+            return 100.0
         case .saturation:
             return parameter.k * 100.0
         case .warmth:
@@ -85,7 +96,13 @@ extension ColourCorrectionTool: Parameterized {
         case .brightness:
             colourControlFilter.inputBrightness = newValue
         case .contrast:
-            colourControlFilter.inputContrast = newValue
+            if value == 0 {
+                colourControlFilter.inputContrast = 1
+            } else if value > 0 {
+                colourControlFilter.inputContrast = 1 + value / 100.0
+            } else {
+                colourControlFilter.inputContrast = 1 + value / 100.0
+            }
         }
     }
 }
@@ -102,7 +119,7 @@ extension ColourCorrectionTool {
             case .brightness:
                 return 0.01
             case .contrast:
-                return 0.01
+                fatalError("should be implemented")
             case .saturation:
                 return 0.01
             case .warmth:
