@@ -10,10 +10,14 @@ import Foundation
 import CoreImage
 
 struct TemperatureAndTintFilter: Filter {
+    static let min: Double = 2000.0
+    static let mid: Double = 6500.0
+    static let max: Double = 10000.0
+    
     let name: String = "Temperature and Tint"
     private let filter = CIFilter(name: "CITemperatureAndTint")!
-    var inputNeutral: CGFloat
-    var targetNeutral: CGFloat
+    var inputNeutral: CGFloat = CGFloat(Self.mid)
+    var targetNeutral: CGFloat = CGFloat(Self.mid)
     
     func parameters(with image: CIImage) -> [String : Any] {
         [

@@ -17,10 +17,7 @@ struct ColourCorrectionTool: Tool {
             colourControlFilter
     }
     
-    private(set) var temperatureFilter = TemperatureAndTintFilter(
-        inputNeutral: 6500,
-        targetNeutral: 6500
-    )
+    private(set) var temperatureFilter = TemperatureAndTintFilter()
     
     private(set) var colourControlFilter = ColorControlFilter(
         inputSaturation: 1.0,
@@ -67,19 +64,26 @@ extension ColourCorrectionTool: Parameterized {
             //return Double(colourControlFilter.inputSaturation) / parameter.k
         case .warmth:
             let value = Double(temperatureFilter.targetNeutral)
-            let min = 2000.0
-            let mid = 6500.0
-            let max = 10000.0
+            let start: Double
+            let divident: Double
+            let divisor: Double
+            
             switch value {
-            case mid:
-                return 0
-            case min...mid:
-                return -100 + ((value - min) / (mid/100.0 - min/100.0))
-            case mid...max:
-                return ((value - mid) / (max/100.0 - mid/100.0))
+            case TemperatureAndTintFilter.min...TemperatureAndTintFilter.mid:
+                divident = value - TemperatureAndTintFilter.min
+                divisor = (TemperatureAndTintFilter.mid/100.0 - TemperatureAndTintFilter.min/100.0)
+                start = -100
+                
+            case TemperatureAndTintFilter.mid...TemperatureAndTintFilter.max:
+                divident = value - TemperatureAndTintFilter.mid
+                divisor = (TemperatureAndTintFilter.max/100.0 - TemperatureAndTintFilter.mid/100.0)
+                start = 0
+                
             default:
                 fatalError("shouldn't be allowed. Check your logic")
             }
+            
+            return start + divident / divisor
         }
     }
     
@@ -112,16 +116,21 @@ extension ColourCorrectionTool: Parameterized {
     mutating func setValue(value: Double, for parameter: Parameter) {
         switch parameter {
         case .warmth:
+            let upper: Double
+            let lower: Double
             switch value {
-            case 0:
-                temperatureFilter.targetNeutral = 6500.0
             case 0...100:
-                temperatureFilter.targetNeutral = 6500.0 + ((10000.0 - 6500.0) / 100) * CGFloat(value)
+                upper = TemperatureAndTintFilter.max
+                lower = TemperatureAndTintFilter.mid
+                
             case -100...0:
-                temperatureFilter.targetNeutral = 6500.0 + ((6500.0 - 2000.0) / 100) * CGFloat(value)
+                upper = TemperatureAndTintFilter.mid
+                lower = TemperatureAndTintFilter.min
             default:
                 fatalError("shouldn't be allowed. Check your logic")
             }
+            temperatureFilter.targetNeutral = CGFloat(TemperatureAndTintFilter.mid + (upper - lower) / 100.0 * value)
+            
         case .saturation:
             if value == 0 {
                 colourControlFilter.inputSaturation = 1
