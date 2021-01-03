@@ -53,7 +53,18 @@ extension ColourCorrectionTool: Parameterized {
                 fatalError("shouldn't be allowed. Check your logic")
             }
         case .saturation:
-            return Double(colourControlFilter.inputSaturation) / parameter.k
+            let value = colourControlFilter.inputContrast
+            switch value {
+            case 1:
+                return 0
+            case 0..<1:
+                return -100 + value * 100.0
+            case 1...2:
+                return value * 100.0 - 100
+            default:
+                fatalError("shouldn't be allowed. Check your logic")
+            }
+            //return Double(colourControlFilter.inputSaturation) / parameter.k
         case .warmth:
             return Double(temperatureFilter.inputNeutral) / parameter.k
         }
@@ -66,7 +77,7 @@ extension ColourCorrectionTool: Parameterized {
         case .contrast:
             return -100.0
         case .saturation:
-            return 0.0
+            return -100.0
         case .warmth:
             return 0.0
         }
@@ -79,7 +90,7 @@ extension ColourCorrectionTool: Parameterized {
         case .contrast:
             return 100.0
         case .saturation:
-            return parameter.k * 100.0
+            return 100.0
         case .warmth:
             return parameter.k * 100.0
         }
@@ -91,7 +102,13 @@ extension ColourCorrectionTool: Parameterized {
             temperatureFilter.inputNeutral = CGFloat(value * parameter.k)
             temperatureFilter.targetNeutral = CGFloat(value * parameter.k)
         case .saturation:
-            colourControlFilter.inputSaturation = value * parameter.k
+            if value == 0 {
+                colourControlFilter.inputSaturation = 1
+            } else if value > 0 {
+                colourControlFilter.inputSaturation = 1 + value / 100.0
+            } else {
+                colourControlFilter.inputSaturation = 1 + value / 100.0
+            }
         case .brightness:
             colourControlFilter.inputBrightness = value / parameter.k
         case .contrast:
@@ -120,7 +137,7 @@ extension ColourCorrectionTool {
             case .contrast:
                 fatalError("should be implemented")
             case .saturation:
-                return 0.01
+                fatalError("should be implemented")
             case .warmth:
                 return 65.0
             }
