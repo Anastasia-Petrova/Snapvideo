@@ -4,13 +4,13 @@ jobs:
   build:
 
     macos: 
-      xcode: 11.3.0
+      xcode: 12.4.0
     working_directory: /Users/distiller/project
     steps: 
       - checkout
       - run:
           name: Run Unit Tests
-          command: xcodebuild test -scheme Snapvideo -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.3'
+          command: xcodebuild test -scheme Snapvideo -destination 'platform=iOS Simulator,name=iPhone 11,OS=14.4'
           environment:
             SNAPSHOT_ARTIFACTS: /tmp/__SnapshotArtifacts__
       - store_artifacts:
