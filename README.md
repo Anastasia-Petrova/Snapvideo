@@ -14,7 +14,7 @@ Video Editing application for iOS, inspired by [Snapseed](https://apps.apple.com
 - [x] Apply Looks (predefined filters)
 - [x] Play/Pause/Seek Video
 - [x] Export edited Video
-- [ ] Apply Tools (granular adjustments)
+- [x] Apply Tools (granular adjustments). Vignette, Brightness, Contrast, Saturation, Warmth.
 - [ ] Enter full screen mode
 - [ ] Tap-and-Hold to compare edited Video to original
 
