@@ -19,7 +19,7 @@ final class VideoEditorViewControllerSnapshotTests: XCTestCase {
             return
         }
         let url = URL(fileURLWithPath: path)
-        let vc = VideoEditorViewController(url: url, filters: filters, tools: tools)
+        let vc = VideoEditorViewController(url: url, selectedFilterIndex: 0, filters: filters, tools: tools)
         
         assertSnapshot(matching: vc, as: .wait(for: 2, on: .image))
     }
@@ -32,7 +32,7 @@ final class VideoEditorViewControllerSnapshotTests: XCTestCase {
             return
         }
         let url = URL(fileURLWithPath: path)
-        let vc = VideoEditorViewController(url: url, filters: filters, tools: tools)
+        let vc = VideoEditorViewController(url: url, selectedFilterIndex: 0, filters: filters, tools: tools)
         
         vc.openLooks()
         assertSnapshot(matching: vc, as: .wait(for: 5, on: .image))
@@ -49,7 +49,7 @@ final class VideoEditorViewControllerSnapshotTests: XCTestCase {
             return
         }
         let url = URL(fileURLWithPath: path)
-        let vc = VideoEditorViewController(url: url, filters: filters, tools: tools)
+        let vc = VideoEditorViewController(url: url, selectedFilterIndex: 0, filters: filters, tools: tools)
 
         vc.openTools()
         assertSnapshot(matching: vc, as: .wait(for: 5, on: .image))
@@ -66,7 +66,7 @@ final class VideoEditorViewControllerSnapshotTests: XCTestCase {
             return
         }
         let url = URL(fileURLWithPath: path)
-        let vc = VideoEditorViewController(url: url, filters: filters, tools: tools)
+        let vc = VideoEditorViewController(url: url, selectedFilterIndex: 0, filters: filters, tools: tools)
         
         vc.openExportMenu()
         assertSnapshot(matching: vc, as: .wait(for: 5, on: .image))

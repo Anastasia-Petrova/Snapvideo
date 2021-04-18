@@ -43,7 +43,7 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
         action: #selector(handlePanGesture)
     )
     
-    init(url: URL, tool: SelectedTool, completion: @escaping (URL?) -> Void) {
+    init(url: URL, tool: SelectedTool, didFinishWithVideoURL completion: @escaping (URL?) -> Void) {
         self.completion = completion
         asset = AVAsset(url: url)
         self.tool = tool

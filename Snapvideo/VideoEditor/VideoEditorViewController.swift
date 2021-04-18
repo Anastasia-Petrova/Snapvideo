@@ -112,14 +112,14 @@ final class VideoEditorViewController: UIViewController {
     }
     
 
-    init(url: URL, index: Int, filters: [AnyFilter], tools: [ToolEnum]) {
+    init(url: URL, selectedFilterIndex: Int, filters: [AnyFilter], tools: [ToolEnum]) {
         videoFileAsset = AVAsset(url: url)
-        selectedFilterIndex = index
+        self.selectedFilterIndex = selectedFilterIndex
         videoViewController = VideoViewController(asset: videoFileAsset)
         toolsViewController = ToolsViewController(tools: tools)
         looksViewController = LooksViewController(
             itemSize: itemSize,
-            selectedFilterIndex: index,
+            selectedFilterIndex: selectedFilterIndex,
             filters: filters
         )
         
@@ -525,11 +525,11 @@ final class VideoEditorViewController: UIViewController {
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
-        if let pendingFilterIndex = looksViewController.pendingFilterIndex {
+        if let pendingFilterIndex = looksViewController.currentlySelectedFilterIndex {
             selectedFilterIndex = pendingFilterIndex
-            looksViewController.selectedFilterIndex = pendingFilterIndex
+            looksViewController.initiallySelectedFilterIndex = pendingFilterIndex
         }
-        looksViewController.pendingFilterIndex = nil
+        looksViewController.currentlySelectedFilterIndex = nil
         pendingFilterIndex = nil
     }
     

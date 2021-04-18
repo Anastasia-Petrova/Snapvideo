@@ -12,12 +12,12 @@ import UIKit
 import XCTest
 
 final class ParameterListViewTests: XCTestCase {
-    private typealias Parameter = ParameterListView.Parameter
+    
     
     func test_init_assigns_parameters() {
         let expected = [
-            Parameter(name: "Foo", value: 1),
-            Parameter(name: "Bar", value: 2)
+            Parameter(name: "Foo", value: 1, minPercent: 0),
+            Parameter(name: "Bar", value: 2, minPercent: 0)
         ]
         let view = ParameterListView(parameters: expected)
         XCTAssertEqual(view.parameters, expected)
@@ -25,8 +25,8 @@ final class ParameterListViewTests: XCTestCase {
     
     func test_translateY_boundries() {
         let view = ParameterListView(parameters: [
-            Parameter(name: "", value: 1),
-            Parameter(name: "", value: 1)
+            Parameter(name: "", value: 1, minPercent: 0),
+            Parameter(name: "", value: 1, minPercent: 0)
         ])
         add(view, on: UIViewController())
         
@@ -53,8 +53,8 @@ final class ParameterListViewTests: XCTestCase {
     }
     
     func test_callback() {
-        let expected1 = Parameter(name: "Foo", value: 1)
-        let expected2 = Parameter(name: "Bar", value: 2)
+        let expected1 = Parameter(name: "Foo", value: 1, minPercent: 0)
+        let expected2 = Parameter(name: "Bar", value: 2, minPercent: 0)
         var actual: Parameter?
         
         let view = ParameterListView(parameters: [expected1, expected2])
