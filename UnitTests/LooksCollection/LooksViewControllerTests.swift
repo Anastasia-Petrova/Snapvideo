@@ -13,7 +13,7 @@ final class LooksViewControllerTests: XCTestCase {
     func test_init_assigns_properties() {
         //Given
         let expectedItemSize = CGSize(width: 60, height: 76)
-        let expectedFilters = [AnyFilter(PassthroughFilter())]
+        let expectedFilters: [Filter] = [PassthroughFilter()]
         //When
         let vc = LooksViewController(itemSize: expectedItemSize, selectedFilterIndex: 0, filters: expectedFilters)
         let dataSource = vc.dataSource
@@ -26,7 +26,7 @@ final class LooksViewControllerTests: XCTestCase {
         }
         XCTAssertEqual(vc.initiallySelectedFilterIndex, 0)
         XCTAssertEqual(looksLayout.itemSize, expectedItemSize)
-        XCTAssertEqual(dataSource.filters, expectedFilters)
+        XCTAssertEqual(dataSource.filters.map(\.name), expectedFilters.map(\.name))
         XCTAssertEqual(dataSource.collectionView, collectionView)
         XCTAssertEqual(collectionView.delegate?.isEqual(vc), true)
         XCTAssertEqual(collectionView.dataSource?.isEqual(dataSource), true)

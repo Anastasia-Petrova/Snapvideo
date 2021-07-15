@@ -12,7 +12,7 @@ import XCTest
 final class VideoEditorViewControllerTests: XCTestCase {
     func test_openLooks_and_closeLooks_setCorrect_topLooksConstraint_constant() {
         let filters = [
-            AnyFilter(PassthroughFilter())
+            PassthroughFilter()
         ]
         guard let path = Bundle.unitTests.path(forResource: "videoTest", ofType:"MOV") else {
             XCTFail("testVideo.MOV not found")
@@ -36,7 +36,7 @@ final class VideoEditorViewControllerTests: XCTestCase {
     
     func test_openTools_and_closeTools_setCorrect_topToolsConstraint_constant() {
         let filters = [
-            AnyFilter(PassthroughFilter())
+            PassthroughFilter()
         ]
         guard let path = Bundle.unitTests.path(forResource: "videoTest", ofType:"MOV") else {
             XCTFail("testVideo.MOV not found")
@@ -60,7 +60,7 @@ final class VideoEditorViewControllerTests: XCTestCase {
     
     func test_openExportMenu_and_closeExportMenu_setCorrect_topExportMenuConstraint_constant() {
         let filters = [
-            AnyFilter(PassthroughFilter())
+            PassthroughFilter()
         ]
         guard let path = Bundle.unitTests.path(forResource: "videoTest", ofType:"MOV") else {
             XCTFail("testVideo.MOV not found")

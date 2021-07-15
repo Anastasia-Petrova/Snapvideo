@@ -34,14 +34,14 @@ final class LooksCollectionDataSourceTests: XCTestCase {
         //Given
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
         let filters = [
-            AnyFilter(PassthroughFilter())
+            PassthroughFilter()
         ]
         
         //When
         let sut = LooksCollectionDataSource(collectionView: collectionView, filters: filters, context: context)
         
         //Then
-        XCTAssertEqual(sut.filters, filters)
+        XCTAssertEqual(sut.filters.map(\.name), filters.map(\.name))
         XCTAssertEqual(sut.collectionView, collectionView)
     }
     
@@ -76,7 +76,7 @@ final class LooksCollectionDataSourceTests: XCTestCase {
         //Given
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
         let filters = [
-            AnyFilter(PassthroughFilter())
+            PassthroughFilter()
         ]
         
         //When
@@ -104,7 +104,7 @@ final class LooksCollectionDataSourceTests: XCTestCase {
         //Given
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
         let filters = [
-            AnyFilter(PassthroughFilter())
+            PassthroughFilter()
         ]
         
         //When
@@ -120,7 +120,7 @@ final class LooksCollectionDataSourceTests: XCTestCase {
         //Given
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
         let filters = [
-            AnyFilter(PassthroughFilter())
+            PassthroughFilter()
         ]
         let placeholder = UIImage(named: "placeholder")!
         let sut = LooksCollectionDataSource(collectionView: collectionView, filters: filters, context: context)
@@ -140,10 +140,10 @@ final class LooksCollectionDataSourceTests: XCTestCase {
     func test_when_originalImage_cell_previewImage_is_filteredOriginalImage() {
         //Given
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
-        let filter = AnyFilter(BlurFilter(blurRadius: 10))
+        let filter = BlurFilter(blurRadius: 10)
         let image = UIImage(named: "testImage", in: .unitTests, with: nil)!
         
-        let filteredCIImage = filter.apply(CIImage(cgImage: image.cgImage!))
+      let filteredCIImage = filter.apply(image: CIImage(cgImage: image.cgImage!))
         let filteredCGImage = context.createCGImage(filteredCIImage, from: filteredCIImage.extent)!
         let expectedImage = UIImage(cgImage: filteredCGImage)
         
@@ -171,7 +171,7 @@ final class LooksCollectionDataSourceTests: XCTestCase {
     func test_cellPreviewImage_is_taken_from_cache() {
         //Given
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
-        let filter = AnyFilter(BlurFilter(blurRadius: 10))
+        let filter = BlurFilter(blurRadius: 10)
         let sut = LooksCollectionDataSource(collectionView: collectionView, filters: [filter], context: context)
         sut.image = nil
         let expectedImage = UIImage(named: "testImage", in: .unitTests, with: nil)!
@@ -193,7 +193,7 @@ final class LooksCollectionDataSourceTests: XCTestCase {
     func test_cell_name_is_filter_name() {
         //Given
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
-        let filter = AnyFilter(BlurFilter(blurRadius: 10))
+        let filter = BlurFilter(blurRadius: 10)
         let sut = LooksCollectionDataSource(collectionView: collectionView, filters: [filter], context: context)
         
         //When
@@ -211,9 +211,9 @@ final class LooksCollectionDataSourceTests: XCTestCase {
     func test_adding_filtered_images_to_cache() {
         //Given
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
-        let filter = AnyFilter(BlurFilter(blurRadius: 10))
+        let filter = BlurFilter(blurRadius: 10)
         let image = UIImage(named: "testImage", in: .unitTests, with: nil)!
-        let filteredCIImage = filter.apply(CIImage(cgImage: image.cgImage!))
+        let filteredCIImage = filter.apply(image: CIImage(cgImage: image.cgImage!))
         let filteredCGImage = context.createCGImage(filteredCIImage, from: filteredCIImage.extent)!
         let expectedImage = UIImage(cgImage: filteredCGImage)
         let sut = LooksCollectionDataSource(collectionView: collectionView, filters: [filter], context: context)
@@ -238,10 +238,10 @@ final class LooksCollectionDataSourceTests: XCTestCase {
     func test_filterAsync() {
         //Given
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
-        let filter = AnyFilter(BlurFilter(blurRadius: 10))
+        let filter = BlurFilter(blurRadius: 10)
         let image = UIImage(named: "testImage", in: .unitTests, with: nil)!
         
-        let filteredCIImage = filter.apply(CIImage(cgImage: image.cgImage!))
+        let filteredCIImage = filter.apply(image: CIImage(cgImage: image.cgImage!))
         let filteredCGImage = context.createCGImage(filteredCIImage, from: filteredCIImage.extent)!
         let expectedImage = UIImage(cgImage: filteredCGImage)
         

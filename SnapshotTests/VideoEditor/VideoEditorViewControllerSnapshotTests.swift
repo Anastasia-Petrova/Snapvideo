@@ -12,7 +12,7 @@ import SnapshotTesting
 
 final class VideoEditorViewControllerSnapshotTests: XCTestCase {
     func DISABLED_testVideoEditorViewController() {
-        let filters = [AnyFilter(PassthroughFilter())]
+        let filters = [PassthroughFilter()]
         let tools: Array<ToolEnum> = [.vignette(tool: VignetteTool())]
         guard let path = Bundle.snapshotTests.path(forResource: "videoTest", ofType:"MOV") else {
             XCTFail("testVideo.MOV not found")
@@ -25,7 +25,7 @@ final class VideoEditorViewControllerSnapshotTests: XCTestCase {
     }
     
     func DISABLED_testVideoEditorViewController_openLooks_and_closeLooks_set_correct_constraints() {
-        let filters = [AnyFilter(PassthroughFilter())]
+        let filters = [PassthroughFilter()]
         let tools: Array<ToolEnum> = [.vignette(tool: VignetteTool())]
         guard let path = Bundle.snapshotTests.path(forResource: "videoTest", ofType:"MOV") else {
             XCTFail("testVideo.MOV not found")
@@ -42,7 +42,7 @@ final class VideoEditorViewControllerSnapshotTests: XCTestCase {
     }
     
     func DISABLED_testVideoEditorViewController_openTools_and_closeTools_set_correct_constraints() {
-        let filters = [AnyFilter(PassthroughFilter())]
+        let filters = [PassthroughFilter()]
         let tools: Array<ToolEnum> = [.vignette(tool: VignetteTool())]
         guard let path = Bundle.snapshotTests.path(forResource: "videoTest", ofType:"MOV") else {
             XCTFail("testVideo.MOV not found")
@@ -59,7 +59,7 @@ final class VideoEditorViewControllerSnapshotTests: XCTestCase {
     }
     
     func DISABLED_testVideoEditorViewController_openExportMenu_and_closeExportMenu_set_correct_constraints() {
-        let filters = [AnyFilter(PassthroughFilter())]
+        let filters = [PassthroughFilter()]
         let tools: Array<ToolEnum> = [.vignette(tool: VignetteTool())]
         guard let path = Bundle.snapshotTests.path(forResource: "videoTest", ofType:"MOV") else {
             XCTFail("testVideo.MOV not found")
