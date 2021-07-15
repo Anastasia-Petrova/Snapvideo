@@ -13,7 +13,7 @@ final class VideoView: UIView {
     var videoOutput: AVPlayerItemVideoOutput
     var displayLink: CADisplayLink?
     var context: CIContext = CIContext(options: [CIContextOption.workingColorSpace : NSNull()])
-    var filter: AnyFilter {
+    var filter: Filter {
         didSet  {
             currentFrame = initialFrame
                 .map(filter.apply)
@@ -34,7 +34,7 @@ final class VideoView: UIView {
         videoOrientation: CGImagePropertyOrientation,
         preferredFramesPerSecond: Int = 30,
         contentsGravity: CALayerContentsGravity = .resizeAspect,
-        filter: AnyFilter = AnyFilter(PassthroughFilter())
+        filter: Filter = PassthroughFilter()
     ) {
         self.videoOrientation = videoOrientation
         self.videoOutput = videoOutput

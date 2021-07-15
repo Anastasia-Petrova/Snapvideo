@@ -31,7 +31,7 @@ final class VideoEditorViewController: UIViewController {
     let toolsViewController: ToolsViewController
     
     let tabBar = TabBar(items: "LOOKS", "TOOLS", "EXPORT")
-    var selectedFilter: AnyFilter = AnyFilter(PassthroughFilter())
+  var selectedFilter: Filter = PassthroughFilter()
     var selectedFilterIndex: Int
     var pendingFilterIndex: Int?
     let coverView = UIView()
@@ -112,7 +112,7 @@ final class VideoEditorViewController: UIViewController {
     }
     
 
-    init(url: URL, selectedFilterIndex: Int, filters: [AnyFilter], tools: [ToolEnum]) {
+    init(url: URL, selectedFilterIndex: Int, filters: [Filter], tools: [ToolEnum]) {
         videoFileAsset = AVAsset(url: url)
         self.selectedFilterIndex = selectedFilterIndex
         videoViewController = VideoViewController(asset: videoFileAsset)
@@ -130,7 +130,7 @@ final class VideoEditorViewController: UIViewController {
             guard let self = self else { return }
             let hasChangedSelectedFilter = newIndex != self.selectedFilterIndex
             self.videoViewController.playerView.filter = filters[newIndex]
-            self.videoViewController.backgroundVideoView.filter = filters[newIndex] + AnyFilter(BlurFilter(blurRadius: 100))
+            self.videoViewController.backgroundVideoView.filter = filters[newIndex] + BlurFilter(blurRadius: 100)
             self.doneButton.isEnabled = hasChangedSelectedFilter
             self.tabBar.isHidden = hasChangedSelectedFilter
             guard newIndex != previousIndex && hasChangedSelectedFilter else { return }

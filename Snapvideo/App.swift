@@ -9,7 +9,7 @@
 import Foundation
 
 struct App {
-    let filters: [AnyFilter]
+    let filters: [Filter]
     let tools: Array<ToolEnum>
     public static let shared = `default`
 }
@@ -17,88 +17,88 @@ struct App {
 extension App {
     private static let `default` = App(
         filters: [
-            AnyFilter(PassthroughFilter()),
-            AnyFilter(SharpAndWarmFilter(inputSharpness: 0.7)),
-            AnyFilter(VignetteFilter()),
-            AnyFilter(SepiaFilter()),
-            AnyFilter(VintageFilter()),
-            AnyFilter(ClampFilter()),
-            AnyFilter(RetroFilter()),
-            AnyFilter(ProcessFilter()),
-            AnyFilter(ComicFilter()),
-            AnyFilter(ColorInvertFilter()),
-            AnyFilter(HalfToneFilter()),
-            AnyFilter(BlurFilter(blurRadius: 30)),
-            AnyFilter(TonalFilter()),
-            AnyFilter(MonoFilter()),
-            AnyFilter(MonochromeFilter()),
-            AnyFilter(NoirFilter())
+            PassthroughFilter(),
+            SharpAndWarmFilter(inputSharpness: 0.7),
+            VignetteFilter(),
+            SepiaFilter(),
+            VintageFilter(),
+            ClampFilter(),
+            RetroFilter(),
+            ProcessFilter(),
+            ComicFilter(),
+            ColorInvertFilter(),
+            HalfToneFilter(),
+            BlurFilter(blurRadius: 30),
+            TonalFilter(),
+            MonoFilter(),
+            MonochromeFilter(),
+            NoirFilter()
         ],
         tools: [.vignette(tool: VignetteTool()), .colourCorrection(tool: ColourCorrectionTool())]
     )
     
     private static let many = App(
         filters: [
-            AnyFilter(PassthroughFilter()),
-            AnyFilter(ComicFilter()),
-            AnyFilter(BlurFilter(blurRadius: 50)),
-            AnyFilter(OldFilmFilter()),
-            AnyFilter(SharpAndWarmFilter(inputSharpness: 0.7)),
-            AnyFilter(VignetteFilter()),
-            AnyFilter(ComicFilter()),
-            AnyFilter(BlurFilter(blurRadius: 50)),
-            AnyFilter(OldFilmFilter()),
-            AnyFilter(SharpAndWarmFilter(inputSharpness: 0.7)),
-            AnyFilter(VignetteFilter()),
-            AnyFilter(ComicFilter()),
-            AnyFilter(BlurFilter(blurRadius: 50)),
-            AnyFilter(OldFilmFilter()),
-            AnyFilter(SharpAndWarmFilter(inputSharpness: 0.7)),
-            AnyFilter(VignetteFilter()),
-            AnyFilter(ComicFilter()),
-            AnyFilter(BlurFilter(blurRadius: 50)),
-            AnyFilter(OldFilmFilter()),
-            AnyFilter(SharpAndWarmFilter(inputSharpness: 0.7)),
-            AnyFilter(VignetteFilter()),
-            AnyFilter(ClampFilter())
+            PassthroughFilter(),
+            ComicFilter(),
+            BlurFilter(blurRadius: 50),
+            OldFilmFilter(),
+            SharpAndWarmFilter(inputSharpness: 0.7),
+            VignetteFilter(),
+            ComicFilter(),
+            BlurFilter(blurRadius: 50),
+            OldFilmFilter(),
+            SharpAndWarmFilter(inputSharpness: 0.7),
+            VignetteFilter(),
+            ComicFilter(),
+            BlurFilter(blurRadius: 50),
+            OldFilmFilter(),
+            SharpAndWarmFilter(inputSharpness: 0.7),
+            VignetteFilter(),
+            ComicFilter(),
+            BlurFilter(blurRadius: 50),
+            OldFilmFilter(),
+            SharpAndWarmFilter(inputSharpness: 0.7),
+            VignetteFilter(),
+            ClampFilter()
         ],
         tools: [.vignette(tool: VignetteTool())]
     )
     
     private static let variant2 = App(
         filters: [
-            AnyFilter(PassthroughFilter()),
-            AnyFilter(ComicFilter())
+            PassthroughFilter(),
+            ComicFilter()
         ],
         tools: [.vignette(tool: VignetteTool())]
     )
     
     private static let composite = App(
         filters: [
-            AnyFilter(PassthroughFilter()),
-            AnyFilter(OldFilmFilter()) + AnyFilter(VignetteFilter()),
-            AnyFilter(BlurFilter(blurRadius: 20)) + AnyFilter(SharpAndWarmFilter(inputSharpness: 0.7)),
-            AnyFilter(ClampFilter()) + AnyFilter(VignetteFilter()),
-            AnyFilter(ComicFilter()) + AnyFilter(VignetteFilter()),
+            PassthroughFilter(),
+            OldFilmFilter() + VignetteFilter(),
+            BlurFilter(blurRadius: 20) + SharpAndWarmFilter(inputSharpness: 0.7),
+            ClampFilter() + VignetteFilter(),
+            ComicFilter() + VignetteFilter()
         ],
         tools: [.vignette(tool: VignetteTool())]
     )
     
     private static let slowFilter = App(
         filters: [
-            AnyFilter(PassthroughFilter()),
-            AnyFilter(ClampFilter()) +
-            AnyFilter(VignetteFilter()) +
-            AnyFilter(SharpAndWarmFilter(inputSharpness: 0.7)) +
-            AnyFilter(ClampFilter()) +
-            AnyFilter(VignetteFilter()) +
-            AnyFilter(SharpAndWarmFilter(inputSharpness: 0.7)) +
-            AnyFilter(ClampFilter()) +
-            AnyFilter(VignetteFilter()) +
-            AnyFilter(SharpAndWarmFilter(inputSharpness: 0.7)) +
-            AnyFilter(ClampFilter()) +
-            AnyFilter(VignetteFilter()) +
-            AnyFilter(SharpAndWarmFilter(inputSharpness: 0.7))
+            PassthroughFilter(),
+            ClampFilter() +
+            VignetteFilter() +
+            SharpAndWarmFilter(inputSharpness: 0.7) +
+            ClampFilter() +
+            VignetteFilter() +
+            SharpAndWarmFilter(inputSharpness: 0.7) +
+            ClampFilter() +
+            VignetteFilter() +
+            SharpAndWarmFilter(inputSharpness: 0.7) +
+            ClampFilter() +
+            VignetteFilter() +
+            SharpAndWarmFilter(inputSharpness: 0.7)
         ],
         tools: [.vignette(tool: VignetteTool())]
     )
@@ -107,31 +107,31 @@ extension App {
 extension App {
     static let snapshotTests = App(
         filters: [
-            AnyFilter(PassthroughFilter()),
-            AnyFilter(SharpAndWarmFilter(inputSharpness: 0.7)),
-            AnyFilter(VignetteFilter()),
-            AnyFilter(SepiaFilter()),
-            AnyFilter(VintageFilter()),
-            AnyFilter(ClampFilter()),
-            AnyFilter(RetroFilter()),
-            AnyFilter(ProcessFilter()),
-            AnyFilter(ComicFilter()),
-            AnyFilter(ColorInvertFilter()),
-            AnyFilter(HalfToneFilter()),
-            AnyFilter(BlurFilter(blurRadius: 30)),
-            AnyFilter(TonalFilter()),
-            AnyFilter(MonoFilter()),
-            AnyFilter(MonochromeFilter()),
-            AnyFilter(NoirFilter())
+            PassthroughFilter(),
+            SharpAndWarmFilter(inputSharpness: 0.7),
+            VignetteFilter(),
+            SepiaFilter(),
+            VintageFilter(),
+            ClampFilter(),
+            RetroFilter(),
+            ProcessFilter(),
+            ComicFilter(),
+            ColorInvertFilter(),
+            HalfToneFilter(),
+            BlurFilter(blurRadius: 30),
+            TonalFilter(),
+            MonoFilter(),
+            MonochromeFilter(),
+            NoirFilter()
         ],
         tools: [.vignette(tool: VignetteTool())]
     )
     
     static let unitTests = App(
         filters: [
-            AnyFilter(PassthroughFilter()),
-            AnyFilter(SharpAndWarmFilter(inputSharpness: 0.7)),
-            AnyFilter(VignetteFilter()),
+            PassthroughFilter(),
+            SharpAndWarmFilter(inputSharpness: 0.7),
+            VignetteFilter()
         ],
         tools: [.vignette(tool: VignetteTool())]
     )

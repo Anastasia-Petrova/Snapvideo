@@ -16,11 +16,11 @@ final class LooksViewController: UIViewController {
     var currentlySelectedFilterIndex: Int?
     var initiallySelectedFilterIndex: Int
     
-    var selectedFilter: AnyFilter {
+    var selectedFilter: Filter {
         dataSource.filters[initiallySelectedFilterIndex]
     }
 
-    convenience init(itemSize: CGSize, selectedFilterIndex: Int, filters: [AnyFilter]) {
+    convenience init(itemSize: CGSize, selectedFilterIndex: Int, filters: [Filter]) {
         let collectionView = UICollectionView(
             frame: .zero,
             collectionViewLayout: LooksCollectionViewLayout(itemSize: itemSize)
@@ -29,7 +29,7 @@ final class LooksViewController: UIViewController {
         self.init(itemSize: itemSize, selectedFilterIndex: selectedFilterIndex, filters: filters, collectionView: collectionView)
     }
     
-    init(itemSize: CGSize, selectedFilterIndex: Int, filters: [AnyFilter], collectionView: UICollectionView) {
+    init(itemSize: CGSize, selectedFilterIndex: Int, filters: [Filter], collectionView: UICollectionView) {
         self.initiallySelectedFilterIndex = selectedFilterIndex
         self.currentlySelectedFilterIndex = selectedFilterIndex
         self.collectionView = collectionView

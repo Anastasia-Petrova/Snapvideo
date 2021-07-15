@@ -11,14 +11,14 @@ import AVFoundation
 import Photos
 
 struct VideoEditor {
-    static func setUpComposition(choosenFilter: AnyFilter, asset: AVAsset ) -> AVVideoComposition {
+    static func setUpComposition(choosenFilter: Filter, asset: AVAsset ) -> AVVideoComposition {
         return AVVideoComposition(asset: asset) { request in
-            let filteredImage = choosenFilter.apply(request.sourceImage)
+          let filteredImage = choosenFilter.apply(image: request.sourceImage)
             request.finish(with: filteredImage, context: nil)
         }
     }
     
-    static func saveEditedVideo(choosenFilter: AnyFilter, asset: AVAsset, completion: @escaping () -> Void) {
+    static func saveEditedVideo(choosenFilter: Filter, asset: AVAsset, completion: @escaping () -> Void) {
         let composition = setUpComposition(choosenFilter: choosenFilter, asset: asset)
         performExport(asset: asset, composition: composition) { exportUrl in
             guard let exportUrl = exportUrl else {
@@ -47,7 +47,7 @@ struct VideoEditor {
         }
     }
     
-    static func composeVideo(choosenFilter: AnyFilter, asset: AVAsset, completion: @escaping (URL?) -> Void ) {
+    static func composeVideo(choosenFilter: Filter, asset: AVAsset, completion: @escaping (URL?) -> Void ) {
         let composition = setUpComposition(choosenFilter: choosenFilter, asset: asset)
         performExport(asset: asset, composition: composition) { exportPath in
             completion(exportPath)

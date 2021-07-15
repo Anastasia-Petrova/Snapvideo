@@ -11,6 +11,10 @@ import UIKit
 import CoreImage
 
 struct VignetteTool: Tool {
+    static func == (lhs: VignetteTool, rhs: VignetteTool) -> Bool {
+      lhs.icon == rhs.icon
+    }
+  
     let icon = ImageAsset.Tools.vignette
     
     private(set) var filter = VignetteFilter(radius: 0, intensity: 0)

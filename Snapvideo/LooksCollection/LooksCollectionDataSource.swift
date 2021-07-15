@@ -15,7 +15,7 @@ final class LooksCollectionDataSource: NSObject, UICollectionViewDataSource {
     
     static let reusableIdentifier = "LooksCollectionViewCell"
     weak var collectionView: UICollectionView?
-    let filters: [AnyFilter]
+    let filters: [Filter]
     var filteredImages: [String: UIImage] = [:]
     var image: UIImage? {
         didSet {
@@ -25,7 +25,7 @@ final class LooksCollectionDataSource: NSObject, UICollectionViewDataSource {
     
     private let context: CIContext
     
-    init(collectionView: UICollectionView, filters: [AnyFilter], context: CIContext) {
+    init(collectionView: UICollectionView, filters: [Filter], context: CIContext) {
         self.filters = filters
         self.collectionView = collectionView
         self.context = context
@@ -69,7 +69,7 @@ final class LooksCollectionDataSource: NSObject, UICollectionViewDataSource {
         return cell
     }
     
-    func applyFilter(_ filter: AnyFilter, on image: UIImage, callback: @escaping (UIImage?) -> Void) {
+    func applyFilter(_ filter: Filter, on image: UIImage, callback: @escaping (UIImage?) -> Void) {
         guard let cgImage = image.cgImage else {
             callback(nil)
             return
@@ -77,7 +77,7 @@ final class LooksCollectionDataSource: NSObject, UICollectionViewDataSource {
         
         DispatchQueue.global().async {
             let ciImage = CIImage(cgImage: cgImage)
-            let filteredCIImage = filter.apply(ciImage)
+          let filteredCIImage = filter.apply(image: ciImage)
             if let filteredCGImage = self.context.createCGImage(filteredCIImage, from: filteredCIImage.extent) {
                 callback(UIImage(cgImage: filteredCGImage))
             } else {

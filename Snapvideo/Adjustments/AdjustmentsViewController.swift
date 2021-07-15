@@ -23,7 +23,7 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
     let asset: AVAsset
     var tool: SelectedTool {
         didSet {
-            videoViewController.playerView.filter = AnyFilter(tool.filter)
+            videoViewController.playerView.filter = tool.filter
         }
     }
     
@@ -64,7 +64,7 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
         )
        
         super.init(nibName: nil, bundle: nil)
-        videoViewController.playerView.filter = AnyFilter(tool.filter)
+        videoViewController.playerView.filter = tool.filter
         sliderView.didChangeValue = { [weak self] value in
             self?.setValueForSelectedParameter(value)
         }
@@ -218,7 +218,7 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
         videoViewController.isActivityIndicatorVisible = true
         guard let playerItem = videoViewController.player.currentItem else { return }
         let asset = playerItem.asset
-        let composition = VideoEditor.setUpComposition(choosenFilter: AnyFilter(tool.filter), asset: asset)
+        let composition = VideoEditor.setUpComposition(choosenFilter: tool.filter, asset: asset)
         VideoEditor.performExport(asset: asset, composition: composition) { url in
             DispatchQueue.main.async {
                 self.dismiss(animated: true) {

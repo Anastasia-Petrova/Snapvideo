@@ -9,7 +9,7 @@
 import Foundation
 import CoreImage
 
-struct ColorControlFilter: Filter {
+struct ColorControlFilter: Filter, Equatable {
     let name: String = "Color Control"
     private let filter = CIFilter(name: "CIColorControls")!
     var inputSaturation: Double

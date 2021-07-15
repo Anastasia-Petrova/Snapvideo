@@ -9,7 +9,7 @@
 import Foundation
 import CoreImage
 
-struct TemperatureAndTintFilter: Filter {
+struct TemperatureAndTintFilter: Filter, Equatable {
     static let min: Double = 2000.0
     static let mid: Double = 6500.0
     static let max: Double = 10000.0

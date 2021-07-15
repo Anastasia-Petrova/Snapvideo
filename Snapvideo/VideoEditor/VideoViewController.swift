@@ -45,7 +45,7 @@ final class VideoViewController: UIViewController {
             videoOutput: outputBG,
             videoOrientation: asset.videoOrientation,
             contentsGravity: .resizeAspectFill,
-            filter: AnyFilter(BlurFilter(blurRadius: 100))
+            filter: BlurFilter(blurRadius: 100)
         )
         super.init(nibName: nil, bundle: nil)
     }
