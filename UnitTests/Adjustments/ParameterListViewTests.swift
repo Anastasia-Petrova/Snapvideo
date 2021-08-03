@@ -12,8 +12,6 @@ import UIKit
 import XCTest
 
 final class ParameterListViewTests: XCTestCase {
-    
-    
     func test_init_assigns_parameters() {
         let expected = [
             Parameter(name: "Foo", value: 1, minPercent: 0),
@@ -52,7 +50,7 @@ final class ParameterListViewTests: XCTestCase {
         XCTAssertEqual(ParameterListView.calculateSelectedRowIndex(offset: 151, rowHeight: rowHeight), 2)
     }
     
-    func test_callback() {
+    func test_didSelectParameter_callback() {
         let expected1 = Parameter(name: "Foo", value: 1, minPercent: 0)
         let expected2 = Parameter(name: "Bar", value: 2, minPercent: 0)
         var actual: Parameter?
