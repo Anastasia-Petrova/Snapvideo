@@ -81,6 +81,7 @@
 		6DB988BC23F1E20F00F5F684 /* videoTest.MOV in Resources */ = {isa = PBXBuildFile; fileRef = 6DB988BB23F1E20F00F5F684 /* videoTest.MOV */; };
 		6DBA80D423ED931B005A585E /* LooksCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBA80D323ED931B005A585E /* LooksCollectionViewLayout.swift */; };
 		6DBA80D823EDA2AC005A585E /* ToolsCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBA80D723EDA2AC005A585E /* ToolsCollectionViewLayout.swift */; };
+		6DBAF668271F520900986045 /* ExportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBAF667271F520900986045 /* ExportViewController.swift */; };
 		6DD4192D23F9A77B005A2706 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD4192C23F9A77B005A2706 /* VideoViewController.swift */; };
 		6DD4193023F9A7FF005A2706 /* VideoViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD4192F23F9A7FF005A2706 /* VideoViewControllerSnapshotTests.swift */; };
 		6DD4193223F9AB05005A2706 /* videoTest.MOV in Resources */ = {isa = PBXBuildFile; fileRef = 6DD4193123F9AB05005A2706 /* videoTest.MOV */; };
@@ -204,6 +205,7 @@
 		6DBA80D523EDA155005A585E /* ToolsCollectionViewCellSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsCollectionViewCellSnapshotTests.swift; sourceTree = "<group>"; };
 		6DBA80D723EDA2AC005A585E /* ToolsCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsCollectionViewLayout.swift; sourceTree = "<group>"; };
 		6DBA80D923EDA839005A585E /* LooksCollectionViewCellSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LooksCollectionViewCellSnapshotTests.swift; sourceTree = "<group>"; };
+		6DBAF667271F520900986045 /* ExportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportViewController.swift; sourceTree = "<group>"; };
 		6DC05F9823EC337C00A96B76 /* ToolsViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		6DC05F9B23EC350200A96B76 /* VideoEditorViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoEditorViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		6DD4192C23F9A77B005A2706 /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
@@ -297,6 +299,7 @@
 		6D17A7DF23ABB39100C70542 /* Snapvideo */ = {
 			isa = PBXGroup;
 			children = (
+				6DBAF666271F51B700986045 /* Export */,
 				6DA974552402BB95008BCDA8 /* Adjustments */,
 				6D2E8A0523CA6F9400917E25 /* Assets */,
 				6D0C29C223C2A8B5006E7C40 /* Extenstions */,
@@ -320,7 +323,6 @@
 		6D17A80523AD4EB100C70542 /* VideoEditor */ = {
 			isa = PBXGroup;
 			children = (
-				6D96B85123D08FD600C1C6D5 /* ExportViewСomponents */,
 				6D05022523B9154100036D60 /* VideoEditorViewController.swift */,
 				6DD4192C23F9A77B005A2706 /* VideoViewController.swift */,
 				6D19954523C7AA3C000A76B1 /* VideoEditor.swift */,
@@ -512,6 +514,15 @@
 				6DB988B923F1E0FC00F5F684 /* VideoEditorViewControllerTests.swift */,
 			);
 			path = VideoEditor;
+			sourceTree = "<group>";
+		};
+		6DBAF666271F51B700986045 /* Export */ = {
+			isa = PBXGroup;
+			children = (
+				6D96B85123D08FD600C1C6D5 /* ExportViewСomponents */,
+				6DBAF667271F520900986045 /* ExportViewController.swift */,
+			);
+			path = Export;
 			sourceTree = "<group>";
 		};
 		6DC05F9523EC30FA00A96B76 /* Frameworks */ = {
@@ -764,6 +775,7 @@
 				6D4B0190242F915200832581 /* AdjustmentSliderView.swift in Sources */,
 				6DD4192D23F9A77B005A2706 /* VideoViewController.swift in Sources */,
 				6DA0B28023E71A8900D23CAD /* ToolsCollectionViewCell.swift in Sources */,
+				6DBAF668271F520900986045 /* ExportViewController.swift in Sources */,
 				6D1D491D23D7903C00ECACE5 /* VintageFilter.swift in Sources */,
 				6D1D490B23D777F000ECACE5 /* BodyExportLabel.swift in Sources */,
 				6D1D491323D788B800ECACE5 /* HalfToneFilter.swift in Sources */,
