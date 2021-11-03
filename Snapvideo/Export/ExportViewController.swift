@@ -71,57 +71,39 @@ final class ExportViewController: UIViewController {
   }
   
   func setUpShareStackView() {
-    shareStackView.spacing = 16
-    shareStackView.alignment = .center
-    let imageView = ExportImageView(systemName: "square.and.arrow.up")
-    let leftSpacer = UIView()
-    let rightSpacer = UIView()
-    let labelsStackView = UIStackView()
-    labelsStackView.translatesAutoresizingMaskIntoConstraints = false
-    labelsStackView.axis = .vertical
-    
-    shareStackView.addArrangedSubview(leftSpacer)
-    shareStackView.addArrangedSubview(imageView)
-    shareStackView.addArrangedSubview(labelsStackView)
-    shareStackView.addArrangedSubview(rightSpacer)
-    shareStackView.setCustomSpacing(0, after: leftSpacer)
-    shareStackView.setCustomSpacing(0, after: labelsStackView)
-    
-    NSLayoutConstraint.activate ([
-      leftSpacer.widthAnchor.constraint(equalToConstant: 16),
-      rightSpacer.widthAnchor.constraint(equalTo: leftSpacer.widthAnchor),
-      imageView.widthAnchor.constraint(equalToConstant: 20)
-    ])
-    
-    let header = HeaderExportLabel()
-    header.text = "Share"
-    
-    let body = BodyExportLabel()
-    body.text = "Posts video to social media sites or sends it via email or SMS."
-    
-    labelsStackView.addArrangedSubview(header)
-    labelsStackView.addArrangedSubview(body)
-    labelsStackView.layoutMargins = .init(top: 8, left: 0, bottom: 8, right: 0)
-    labelsStackView.isLayoutMarginsRelativeArrangement = true
+    setUpStackView(
+      stackView: shareStackView,
+      imageName: "square.and.arrow.up",
+      headerText: "Share",
+      bodyText: "Posts video to social media sites or sends it via email or SMS."
+    )
   }
   
   func setUpSaveCopyStackView() {
-    saveCopyStackView.spacing = 16
-    saveCopyStackView.alignment = .center
-    let imageView = ExportImageView(systemName: "doc.on.doc")
+    setUpStackView(
+      stackView: saveCopyStackView,
+      imageName: "doc.on.doc",
+      headerText: "Save a copy",
+      bodyText: "Creates a copy with changes that you can not undo."
+    )
+  }
+  
+  func setUpStackView(stackView: UIStackView, imageName: String, headerText: String, bodyText: String) {
+    stackView.spacing = 16
+    stackView.alignment = .center
+    let imageView = ExportImageView(systemName: imageName)
     let leftSpacer = UIView()
     let rightSpacer = UIView()
     let labelsStackView = UIStackView()
     labelsStackView.translatesAutoresizingMaskIntoConstraints = false
     labelsStackView.axis = .vertical
     
-    saveCopyStackView.addArrangedSubview(leftSpacer)
-    saveCopyStackView.addArrangedSubview(imageView)
-    saveCopyStackView.addArrangedSubview(labelsStackView)
-    saveCopyStackView.addArrangedSubview(rightSpacer)
-    
-    saveCopyStackView.setCustomSpacing(0, after: leftSpacer)
-    saveCopyStackView.setCustomSpacing(0, after: labelsStackView)
+    stackView.addArrangedSubview(leftSpacer)
+    stackView.addArrangedSubview(imageView)
+    stackView.addArrangedSubview(labelsStackView)
+    stackView.addArrangedSubview(rightSpacer)
+    stackView.setCustomSpacing(0, after: leftSpacer)
+    stackView.setCustomSpacing(0, after: labelsStackView)
     
     NSLayoutConstraint.activate ([
       leftSpacer.widthAnchor.constraint(equalToConstant: 16),
@@ -130,10 +112,10 @@ final class ExportViewController: UIViewController {
     ])
     
     let header = HeaderExportLabel()
-    header.text = "Save a copy"
+    header.text = headerText
     
     let body = BodyExportLabel()
-    body.text = "Creates a copy with changes that you can not undo."
+    body.text = bodyText
     
     labelsStackView.addArrangedSubview(header)
     labelsStackView.addArrangedSubview(body)
