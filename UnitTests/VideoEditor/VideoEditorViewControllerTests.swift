@@ -71,13 +71,13 @@ final class VideoEditorViewControllerTests: XCTestCase {
         
         vc.openExportMenu()
         XCTAssertEqual(
-            vc.topExportPanelConstraint.constant,
-            vc.exportPanel.frame.height + vc.tabBar.frame.height
+          vc.exportViewController.topExportPanelConstraint.constant,
+          vc.exportViewController.exportPanel.frame.height + vc.tabBar.frame.height
         )
         
         vc.closeExportMenu()
         XCTAssertEqual(
-            vc.topExportPanelConstraint.constant,
+          vc.exportViewController.topExportPanelConstraint.constant,
             -vc.view.safeAreaInsets.bottom
         )
     }
