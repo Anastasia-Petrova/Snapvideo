@@ -31,11 +31,45 @@ final class ExportViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     view.addSubview(exportPanel)
-    setUpExportView()
     setUpShareStackView()
     setUpSaveCopyStackView()
     setUpShareButton()
     setUpSaveCopyButton()
+    setUpExportView()
+  }
+  
+  func setUpShareStackView() {
+    setUpStackView(
+      stackView: shareStackView,
+      imageName: "square.and.arrow.up",
+      headerText: "Share",
+      bodyText: "Posts video to social media sites or sends it via email or SMS."
+    )
+  }
+  
+  private func setUpSaveCopyStackView() {
+    setUpStackView(
+      stackView: saveCopyStackView,
+      imageName: "doc.on.doc",
+      headerText: "Save a copy",
+      bodyText: "Creates a copy with changes that you can not undo."
+    )
+  }
+  
+  private func setUpShareButton() {
+    setUpButton(
+      stackView: shareStackView,
+      button: shareButton,
+      action: #selector(self.openActivityView)
+    )
+  }
+  
+  private func setUpSaveCopyButton() {
+    setUpButton(
+      stackView: saveCopyStackView,
+      button: saveCopyButton,
+      action: #selector(self.saveVideoCopy)
+    )
   }
   
   private func setUpExportView() {
@@ -62,33 +96,13 @@ final class ExportViewController: UIViewController {
       exportStackView.topAnchor.constraint(equalTo: exportPanel.topAnchor),
       exportStackView.bottomAnchor.constraint(equalTo: exportPanel.bottomAnchor)
     ])
-    shareStackView.translatesAutoresizingMaskIntoConstraints = false
-    shareStackView.axis = .horizontal
-    saveCopyStackView.translatesAutoresizingMaskIntoConstraints = false
-    saveCopyStackView.axis = .horizontal
     exportStackView.addArrangedSubview(shareStackView)
     exportStackView.addArrangedSubview(saveCopyStackView)
   }
   
-  func setUpShareStackView() {
-    setUpStackView(
-      stackView: shareStackView,
-      imageName: "square.and.arrow.up",
-      headerText: "Share",
-      bodyText: "Posts video to social media sites or sends it via email or SMS."
-    )
-  }
-  
-  func setUpSaveCopyStackView() {
-    setUpStackView(
-      stackView: saveCopyStackView,
-      imageName: "doc.on.doc",
-      headerText: "Save a copy",
-      bodyText: "Creates a copy with changes that you can not undo."
-    )
-  }
-  
-  func setUpStackView(stackView: UIStackView, imageName: String, headerText: String, bodyText: String) {
+  private func setUpStackView(stackView: UIStackView, imageName: String, headerText: String, bodyText: String) {
+    stackView.translatesAutoresizingMaskIntoConstraints = false
+    stackView.axis = .horizontal
     stackView.spacing = 16
     stackView.alignment = .center
     let imageView = ExportImageView(systemName: imageName)
@@ -123,27 +137,19 @@ final class ExportViewController: UIViewController {
     labelsStackView.isLayoutMarginsRelativeArrangement = true
   }
   
-  private func setUpSaveCopyButton() {
-    saveCopyButton.translatesAutoresizingMaskIntoConstraints = false
-    saveCopyButton.addTarget(self, action: #selector(self.saveVideoCopy), for: .touchUpInside)
-    saveCopyStackView.addSubview(saveCopyButton)
+  private func setUpButton(
+    stackView: UIStackView,
+    button: UIButton,
+    action: Selector
+  ) {
+    button.translatesAutoresizingMaskIntoConstraints = false
+    button.addTarget(self, action: action, for: .touchUpInside)
+    stackView.addSubview(button)
     NSLayoutConstraint.activate ([
-      saveCopyButton.trailingAnchor.constraint(equalTo: saveCopyStackView.trailingAnchor),
-      saveCopyButton.leadingAnchor.constraint(equalTo: saveCopyStackView.leadingAnchor),
-      saveCopyButton.topAnchor.constraint(equalTo: saveCopyStackView.topAnchor),
-      saveCopyButton.bottomAnchor.constraint(equalTo: saveCopyStackView.bottomAnchor)
-    ])
-  }
-  
-  private func setUpShareButton() {
-    shareButton.translatesAutoresizingMaskIntoConstraints = false
-    shareButton.addTarget(self, action: #selector(self.openActivityView), for: .touchUpInside)
-    shareStackView.addSubview(shareButton)
-    NSLayoutConstraint.activate ([
-      shareButton.trailingAnchor.constraint(equalTo: shareStackView.trailingAnchor),
-      shareButton.leadingAnchor.constraint(equalTo: shareStackView.leadingAnchor),
-      shareButton.topAnchor.constraint(equalTo: shareStackView.topAnchor),
-      shareButton.bottomAnchor.constraint(equalTo: shareStackView.bottomAnchor)
+      button.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
+      button.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+      button.topAnchor.constraint(equalTo: stackView.topAnchor),
+      button.bottomAnchor.constraint(equalTo: stackView.bottomAnchor)
     ])
   }
   
