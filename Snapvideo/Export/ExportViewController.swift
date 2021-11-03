@@ -27,6 +27,7 @@ final class ExportViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    view.addSubview(exportPanel)
     setUpExportView()
     setUpShareStackView()
     setUpSaveCopyStackView()
