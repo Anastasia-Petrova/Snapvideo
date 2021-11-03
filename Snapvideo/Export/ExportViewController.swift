@@ -10,12 +10,15 @@ import Photos
 import UIKit
 
 final class ExportViewController: UIViewController {
+  typealias Callback = () -> Void
   var saveCopyButton = SaveCopyVideoButton()
   var shareButton = SaveCopyVideoButton()
   let shareStackView = UIStackView()
   let saveCopyStackView = UIStackView()
   let exportPanel = UIView()
   var topExportPanelConstraint = NSLayoutConstraint()
+  var didTapShareButton: Callback?
+  var didTapSaveButton: Callback?
   
   init() {
     super.init(nibName: nil, bundle: nil)
@@ -163,53 +166,10 @@ final class ExportViewController: UIViewController {
   }
   
   @objc func openActivityView() {
-    //self.isExportViewShown = false
-    //self.videoViewController.isActivityIndicatorVisible = true
-    
-    //    guard let playerItem = videoViewController.player.currentItem else { return }
-    
-    //    VideoEditor.composeVideo(
-    //      choosenFilter: looksViewController.selectedFilter,
-    //      asset: playerItem.asset
-    //    ) { url in
-    //      DispatchQueue.main.async {
-    //        self.videoViewController.isActivityIndicatorVisible = false
-    //        guard let fileURL = url as NSURL? else { return }
-    //        
-    //        let activityVC = UIActivityViewController(activityItems: [fileURL], applicationActivities: nil)
-    //        activityVC.setValue("Video", forKey: "subject")
-    //        activityVC.excludedActivityTypes = [.addToReadingList, .assignToContact]
-    //        self.present(activityVC, animated: true, completion: nil)
-    //      }
-    //    }
+    didTapShareButton?()
   }
   
   @objc func saveVideoCopy() {
-    PHPhotoLibrary.requestAuthorization { [weak self] status in
-      switch status {
-      case .authorized:
-        DispatchQueue.main.async {
-          self?.saveVideoToPhotos()
-        }
-      default:
-        //TODO: properly handle this. Show error, send to settings, etc.
-        print("Photos permissions not granted.")
-        return
-      }
-    }
-  }
-  
-  func saveVideoToPhotos() {
-    //isExportViewShown = false
-    //    videoViewController.isActivityIndicatorVisible = true
-    //    guard let playerItem = videoViewController.player.currentItem else { return }
-    //    VideoEditor.saveEditedVideo(
-    //        choosenFilter: looksViewController.selectedFilter,
-    //        asset: playerItem.asset
-    //    ) {
-    //        DispatchQueue.main.async {
-    //            self.videoViewController.isActivityIndicatorVisible = false
-    //        }
-    //    }
+    didTapSaveButton?()
   }
 }
