@@ -139,11 +139,13 @@ final class VideoEditorViewController: UIViewController {
         toolsViewController.didSelectToolCallback = { [weak self] index in
             self?.presentAdjustmentsScreen(url: url, tool: tools[index])
         }
-        exportViewController.didTapShareButton = { [weak self] in
+        exportViewController.didTapEportViewButton = { [weak self] action in
+          switch action {
+          case .openActivityView:
             self?.openActivityView()
-        }
-        exportViewController.didTapSaveButton = { [weak self] in
+          case .saveVideoCopy:
             self?.saveVideoCopy()
+          }
         }
     }
     

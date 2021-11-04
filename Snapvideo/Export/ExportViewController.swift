@@ -10,15 +10,14 @@ import Photos
 import UIKit
 
 final class ExportViewController: UIViewController {
-  typealias Callback = () -> Void
+  typealias Callback = (ExportAction) -> Void
   var saveCopyButton = SaveCopyVideoButton()
   var shareButton = SaveCopyVideoButton()
   let shareStackView = UIStackView()
   let saveCopyStackView = UIStackView()
   let exportPanel = UIView()
   var topExportPanelConstraint = NSLayoutConstraint()
-  var didTapShareButton: Callback?
-  var didTapSaveButton: Callback?
+  var didTapEportViewButton: Callback?
   
   init() {
     super.init(nibName: nil, bundle: nil)
@@ -154,10 +153,15 @@ final class ExportViewController: UIViewController {
   }
   
   @objc func openActivityView() {
-    didTapShareButton?()
+    didTapEportViewButton?(.openActivityView)
   }
   
   @objc func saveVideoCopy() {
-    didTapSaveButton?()
+    didTapEportViewButton?(.saveVideoCopy)
   }
+}
+
+internal enum ExportAction {
+  case openActivityView
+  case saveVideoCopy
 }
