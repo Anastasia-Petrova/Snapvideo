@@ -36,6 +36,7 @@
 		6D1D492123D793C500ECACE5 /* SepiaFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1D492023D793C500ECACE5 /* SepiaFilter.swift */; };
 		6D1D492B23DB71EA00ECACE5 /* LooksCollectionDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1D492A23DB71EA00ECACE5 /* LooksCollectionDataSourceTests.swift */; };
 		6D1D493323DC687200ECACE5 /* VideoBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1D493223DC687200ECACE5 /* VideoBrowser.swift */; };
+		6D1F221A27330E0E00F3BF21 /* ExportViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1F221927330E0E00F3BF21 /* ExportViewControllerSnapshotTests.swift */; };
 		6D2E412D23F04B0000B499F0 /* LooksViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2E412C23F04B0000B499F0 /* LooksViewControllerTests.swift */; };
 		6D2E8A0323CA671A00917E25 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2E89FE23CA5AC700917E25 /* TabBar.swift */; };
 		6D2E8A0423CA673A00917E25 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2E8A0023CA5DEA00917E25 /* TabBarItem.swift */; };
@@ -162,6 +163,7 @@
 		6D1D492A23DB71EA00ECACE5 /* LooksCollectionDataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LooksCollectionDataSourceTests.swift; sourceTree = "<group>"; };
 		6D1D492C23DB71EA00ECACE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6D1D493223DC687200ECACE5 /* VideoBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoBrowser.swift; sourceTree = "<group>"; };
+		6D1F221927330E0E00F3BF21 /* ExportViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		6D2E412C23F04B0000B499F0 /* LooksViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LooksViewControllerTests.swift; sourceTree = "<group>"; };
 		6D2E89FE23CA5AC700917E25 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		6D2E8A0023CA5DEA00917E25 /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
@@ -346,6 +348,14 @@
 			path = UnitTests;
 			sourceTree = "<group>";
 		};
+		6D1F221827330DDE00F3BF21 /* Export */ = {
+			isa = PBXGroup;
+			children = (
+				6D1F221927330E0E00F3BF21 /* ExportViewControllerSnapshotTests.swift */,
+			);
+			path = Export;
+			sourceTree = "<group>";
+		};
 		6D2E8A0223CA65BD00917E25 /* TabBar */ = {
 			isa = PBXGroup;
 			children = (
@@ -387,6 +397,7 @@
 			children = (
 				6D3ED568240312670072BC29 /* Adjustments */,
 				6DB0699123EF53310088F4B7 /* Assets */,
+				6D1F221827330DDE00F3BF21 /* Export */,
 				6D66488423EE02CC002AAF2E /* LooksCollection */,
 				6D66488523EE02DA002AAF2E /* ToolsCollection */,
 				6D66488623EE02EC002AAF2E /* VideoEditor */,
@@ -835,6 +846,7 @@
 			files = (
 				6D66487A23EDFC9C002AAF2E /* LooksCollectionViewCellSnapshotTests.swift in Sources */,
 				6D66487E23EDFD34002AAF2E /* Bundle.swift in Sources */,
+				6D1F221A27330E0E00F3BF21 /* ExportViewControllerSnapshotTests.swift in Sources */,
 				6D66487723EDFC9C002AAF2E /* WaitExtension.swift in Sources */,
 				6DB0698C23EE11460088F4B7 /* LooksViewControllerSnapshotTests.swift in Sources */,
 				6D66487823EDFC9C002AAF2E /* ToolsViewControllerSnapshotTests.swift in Sources */,
