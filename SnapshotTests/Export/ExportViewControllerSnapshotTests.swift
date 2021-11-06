@@ -15,7 +15,7 @@ final class ExportViewControllerSnapshotTests: XCTestCase {
         let vc = ExportViewController()
         vc.view.layer.borderColor = UIColor.red.cgColor
         vc.view.layer.borderWidth = 4
-        vc.topExportPanelConstraint.constant = 100
+        vc.view.heightAnchor.constraint(equalToConstant: 100).isActive = true
         assertSnapshot(matching: vc, as: .image)
     }
 }

@@ -16,7 +16,6 @@ final class ExportViewController: UIViewController {
   let shareStackView = UIStackView()
   let saveCopyStackView = UIStackView()
   let exportPanel = UIView()
-  var topExportPanelConstraint = NSLayoutConstraint()
   var didTapEportViewButton: Callback?
   
   init() {
@@ -74,13 +73,12 @@ final class ExportViewController: UIViewController {
   private func setUpExportView() {
     exportPanel.translatesAutoresizingMaskIntoConstraints = false
     exportPanel.backgroundColor = .white
-    topExportPanelConstraint = view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: exportPanel.topAnchor, constant: -view.safeAreaInsets.bottom)
     
     NSLayoutConstraint.activate ([
       exportPanel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
       exportPanel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-      exportPanel.heightAnchor.constraint(equalToConstant: 100),
-      topExportPanelConstraint
+      exportPanel.topAnchor.constraint(equalTo: view.topAnchor),
+      exportPanel.bottomAnchor.constraint(equalTo: view.bottomAnchor)
     ])
     
     let exportStackView = UIStackView()

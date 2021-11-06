@@ -19,9 +19,8 @@ final class VideoEditorViewController: UIViewController {
     }
     
     let looksPanel = UIView()
-    //let exportPanel = UIView() //TODO: SHOULD IT BE IN EXPORTVC?
     
-    //var topExportPanelConstraint = NSLayoutConstraint() //TODO: SHOULD IT BE IN EXPORTVC?
+    var topExportConstraint = NSLayoutConstraint()
     var topLooksConstraint = NSLayoutConstraint()
     var topToolsConstraint = NSLayoutConstraint()
     
@@ -169,6 +168,7 @@ final class VideoEditorViewController: UIViewController {
         setUpCancelButton()
         setUpDoneButton()
         setUpToolsView()
+        setUpExportView()
         setUpTabBar()
     }
     
@@ -264,6 +264,18 @@ final class VideoEditorViewController: UIViewController {
             topToolsConstraint
         ])
     }
+  
+    func setUpExportView() {
+      exportViewController.view.translatesAutoresizingMaskIntoConstraints = false
+      topExportConstraint = view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: exportViewController.view.topAnchor, constant: -view.safeAreaInsets.bottom)
+      
+      NSLayoutConstraint.activate ([
+        exportViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        exportViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+        exportViewController.view.heightAnchor.constraint(equalToConstant: 100),
+        topExportConstraint
+      ])
+  }
     
     func setUpCancelButton() {
         cancelButton.imageEdgeInsets = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
@@ -307,7 +319,7 @@ final class VideoEditorViewController: UIViewController {
     public func openExportMenu() {
         self.view.layoutIfNeeded()
         isExportViewShown = true
-        exportViewController.topExportPanelConstraint.constant = exportViewController.exportPanel.frame.height + tabBar.frame.height
+        topExportConstraint.constant = exportViewController.view.frame.height + tabBar.frame.height
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
@@ -315,7 +327,7 @@ final class VideoEditorViewController: UIViewController {
     
     public func closeExportMenu() {
         self.view.layoutIfNeeded()
-        exportViewController.topExportPanelConstraint.constant = -self.view.safeAreaInsets.bottom
+        topExportConstraint.constant = -self.view.safeAreaInsets.bottom
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
