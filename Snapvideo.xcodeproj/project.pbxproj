@@ -97,7 +97,6 @@
 		6DDE026A23C12B2A002D7942 /* BlurFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDE026923C12B2A002D7942 /* BlurFilter.swift */; };
 		6DDFFB6B23E9D2CD00093675 /* ToolsCollectionDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDFFB6923E9CF2000093675 /* ToolsCollectionDataSourceTests.swift */; };
 		6DE189FD23F2DE6A0018C944 /* Tool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE189FC23F2DE6A0018C944 /* Tool.swift */; };
-		6DE189FF23F2DF130018C944 /* BrightTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE189FE23F2DF130018C944 /* BrightTool.swift */; };
 		6DE18A0123F2F4C00018C944 /* CropTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE18A0023F2F4C00018C944 /* CropTool.swift */; };
 		6DE18A0323F2F8790018C944 /* TuneColorTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE18A0223F2F8790018C944 /* TuneColorTool.swift */; };
 		6DE18A0523F2F8AE0018C944 /* SpeedUpTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE18A0423F2F8AE0018C944 /* SpeedUpTool.swift */; };
@@ -108,9 +107,7 @@
 		6DE18A0F23F2FC990018C944 /* ShadowsTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE18A0E23F2FC990018C944 /* ShadowsTool.swift */; };
 		6DE18A1323F300640018C944 /* FadeTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE18A1223F300640018C944 /* FadeTool.swift */; };
 		6DE18A1523F300B00018C944 /* HighlightsTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE18A1423F300B00018C944 /* HighlightsTool.swift */; };
-		6DE18A1723F300EC0018C944 /* SaturationTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE18A1623F300EC0018C944 /* SaturationTool.swift */; };
 		6DE18A1923F301360018C944 /* TiltShiftTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE18A1823F301360018C944 /* TiltShiftTool.swift */; };
-		6DE18A1B23F301810018C944 /* WarmthTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE18A1A23F301810018C944 /* WarmthTool.swift */; };
 		6DEA248D23C2038B00D7595A /* ComicFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEA248C23C2038B00D7595A /* ComicFilter.swift */; };
 		6DFF1AE023C3BEC7009BCAE2 /* OldFilmFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFF1ADF23C3BEC7009BCAE2 /* OldFilmFilter.swift */; };
 /* End PBXBuildFile section */
@@ -228,7 +225,6 @@
 		6DDFFB6923E9CF2000093675 /* ToolsCollectionDataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsCollectionDataSourceTests.swift; sourceTree = "<group>"; };
 		6DDFFB6D23EC281D00093675 /* HomeViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		6DE189FC23F2DE6A0018C944 /* Tool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tool.swift; sourceTree = "<group>"; };
-		6DE189FE23F2DF130018C944 /* BrightTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrightTool.swift; sourceTree = "<group>"; };
 		6DE18A0023F2F4C00018C944 /* CropTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropTool.swift; sourceTree = "<group>"; };
 		6DE18A0223F2F8790018C944 /* TuneColorTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TuneColorTool.swift; sourceTree = "<group>"; };
 		6DE18A0423F2F8AE0018C944 /* SpeedUpTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedUpTool.swift; sourceTree = "<group>"; };
@@ -239,9 +235,7 @@
 		6DE18A0E23F2FC990018C944 /* ShadowsTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowsTool.swift; sourceTree = "<group>"; };
 		6DE18A1223F300640018C944 /* FadeTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FadeTool.swift; sourceTree = "<group>"; };
 		6DE18A1423F300B00018C944 /* HighlightsTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightsTool.swift; sourceTree = "<group>"; };
-		6DE18A1623F300EC0018C944 /* SaturationTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaturationTool.swift; sourceTree = "<group>"; };
 		6DE18A1823F301360018C944 /* TiltShiftTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiltShiftTool.swift; sourceTree = "<group>"; };
-		6DE18A1A23F301810018C944 /* WarmthTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmthTool.swift; sourceTree = "<group>"; };
 		6DEA248C23C2038B00D7595A /* ComicFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicFilter.swift; sourceTree = "<group>"; };
 		6DFF1ADF23C3BEC7009BCAE2 /* OldFilmFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldFilmFilter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -572,6 +566,7 @@
 			children = (
 				6DDE026923C12B2A002D7942 /* BlurFilter.swift */,
 				6DB6C14023C4E82C00E256A4 /* ClampFilter.swift */,
+				6D49386C259E37CE0066C123 /* ColorControlFilter.swift */,
 				6D1D491023D785FB00ECACE5 /* ColorInvertFilter.swift */,
 				6DEA248C23C2038B00D7595A /* ComicFilter.swift */,
 				6D82F24E2739C801003A70BC /* ExposureFilter.swift */,
@@ -580,7 +575,6 @@
 				6D1D490E23D7842F00ECACE5 /* MonochromeFilter.swift */,
 				6D1D491E23D791EC00ECACE5 /* MonoFilter.swift */,
 				6D1D491423D78ADC00ECACE5 /* NoirFilter.swift */,
-				6D49386C259E37CE0066C123 /* ColorControlFilter.swift */,
 				6DFF1ADF23C3BEC7009BCAE2 /* OldFilmFilter.swift */,
 				6DDE026623C12A9D002D7942 /* PassthroughFilter.swift */,
 				6D1D491623D78C4A00ECACE5 /* ProcessFilter.swift */,
@@ -588,10 +582,10 @@
 				6D1D492023D793C500ECACE5 /* SepiaFilter.swift */,
 				6DB6C13C23C4D65D00E256A4 /* SharpAndWarmFilter.swift */,
 				6D82F2492739C3D0003A70BC /* SharpFilter.swift */,
+				6D493867259E2F4E0066C123 /* TemperatureAndTintFilter.swift */,
 				6D1D491A23D78EDA00ECACE5 /* TonalFilter.swift */,
 				6DB6C13E23C4D8A700E256A4 /* VignetteFilter.swift */,
 				6D1D491C23D7903C00ECACE5 /* VintageFilter.swift */,
-				6D493867259E2F4E0066C123 /* TemperatureAndTintFilter.swift */,
 			);
 			path = Filters;
 			sourceTree = "<group>";
@@ -599,24 +593,21 @@
 		6DE189FB23F2DE3A0018C944 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
-				6DE189FE23F2DF130018C944 /* BrightTool.swift */,
+				6D493862259E2EA30066C123 /* ColourCorrectionTool.swift */,
 				6DE18A0023F2F4C00018C944 /* CropTool.swift */,
 				6DE18A0823F2F9000018C944 /* CutTool.swift */,
-				6DE18A1223F300640018C944 /* FadeTool.swift */,
 				6D82F2532739CA55003A70BC /* ExposureTool.swift */,
+				6DE18A1223F300640018C944 /* FadeTool.swift */,
 				6DE18A1423F300B00018C944 /* HighlightsTool.swift */,
-				6DE18A1623F300EC0018C944 /* SaturationTool.swift */,
+				6D18009C24439715001E9764 /* Parameterized.swift */,
 				6DE18A0E23F2FC990018C944 /* ShadowsTool.swift */,
 				6DE18A0A23F2FAE40018C944 /* SharpenTool.swift */,
 				6DE18A0623F2F8D00018C944 /* SlowTool.swift */,
 				6DE18A0423F2F8AE0018C944 /* SpeedUpTool.swift */,
 				6DE18A1823F301360018C944 /* TiltShiftTool.swift */,
 				6DE189FC23F2DE6A0018C944 /* Tool.swift */,
-				6D18009C24439715001E9764 /* Parameterized.swift */,
 				6DE18A0223F2F8790018C944 /* TuneColorTool.swift */,
 				6DE18A0C23F2FB180018C944 /* VignetteTool.swift */,
-				6D493862259E2EA30066C123 /* ColourCorrectionTool.swift */,
-				6DE18A1A23F301810018C944 /* WarmthTool.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -784,7 +775,6 @@
 				6D2E8A0423CA673A00917E25 /* TabBarItem.swift in Sources */,
 				6D0C29C123C28CA5006E7C40 /* App.swift in Sources */,
 				6D493863259E2EA30066C123 /* ColourCorrectionTool.swift in Sources */,
-				6DE189FF23F2DF130018C944 /* BrightTool.swift in Sources */,
 				6D1D491F23D791EC00ECACE5 /* MonoFilter.swift in Sources */,
 				6D82F2542739CA55003A70BC /* ExposureTool.swift in Sources */,
 				6DDE026523C12A44002D7942 /* Filter.swift in Sources */,
@@ -792,7 +782,6 @@
 				6DA0B27D23E71A1000D23CAD /* ToolsCollectionDataSource.swift in Sources */,
 				6D1D491923D78DA600ECACE5 /* RetroFilter.swift in Sources */,
 				6D49386D259E37CE0066C123 /* ColorControlFilter.swift in Sources */,
-				6DE18A1723F300EC0018C944 /* SaturationTool.swift in Sources */,
 				6DE18A0523F2F8AE0018C944 /* SpeedUpTool.swift in Sources */,
 				6D493868259E2F4E0066C123 /* TemperatureAndTintFilter.swift in Sources */,
 				6D1D491523D78ADC00ECACE5 /* NoirFilter.swift in Sources */,
@@ -835,7 +824,6 @@
 				6D01E03623BFA2F900B558E8 /* LooksCollectionViewCell.swift in Sources */,
 				6D82F24A2739C3D0003A70BC /* SharpFilter.swift in Sources */,
 				6D96B85823D0969E00C1C6D5 /* LooksViewButton.swift in Sources */,
-				6DE18A1B23F301810018C944 /* WarmthTool.swift in Sources */,
 				6D2E8A0323CA671A00917E25 /* TabBar.swift in Sources */,
 				6DFF1AE023C3BEC7009BCAE2 /* OldFilmFilter.swift in Sources */,
 				6D0C29C423C2A8C1006E7C40 /* AVAsset.swift in Sources */,
