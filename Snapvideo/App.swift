@@ -37,7 +37,8 @@ extension App {
       tools: [
         .vignette(tool: VignetteTool()),
         .colourCorrection(tool: ColourCorrectionTool()),
-        .sharpenTool(tool: SharpenTool())
+        .sharpenTool(tool: SharpenTool()),
+        .exposureTool(tool: ExposureTool())
       ]
     )
     

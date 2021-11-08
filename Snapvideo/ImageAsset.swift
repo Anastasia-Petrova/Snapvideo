@@ -40,7 +40,7 @@ enum ImageAsset: String, ImageAssets, Equatable {
 extension ImageAsset {
     enum Tools: String, ImageAssets, Equatable {
         case bright
-        case contrast
+        case exposure
         case crop
         case cut
         case fade
