@@ -28,6 +28,7 @@ enum ToolEnum: Equatable {
     case vignette(tool: VignetteTool)
     case colourCorrection(tool: ColourCorrectionTool)
     case blur(tool: VignetteTool)
+    case sharpenTool(tool: SharpenTool)
     
     var name: String {
         switch self {
@@ -36,6 +37,8 @@ enum ToolEnum: Equatable {
             return tool.description
         case let .colourCorrection(tool):
             return tool.description
+        case let .sharpenTool(tool):
+          return tool.description
         }
     }
     
@@ -46,6 +49,8 @@ enum ToolEnum: Equatable {
             return tool.icon.image()
         case let .colourCorrection(tool):
             return tool.icon.image()
+        case let .sharpenTool(tool):
+          return tool.icon.image()
         }
     }
 }
