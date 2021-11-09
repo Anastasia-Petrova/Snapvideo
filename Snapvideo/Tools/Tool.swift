@@ -33,6 +33,7 @@ enum ToolEnum: Equatable {
     case noiseReductionTool(tool: NoiseReductionTool)
     case highlightShadowTool(tool: HighlightShadowTool)
     case vibranceTool(tool: VibranceTool)
+    case straightenTool(tool: StraightenTool)
     
     var name: String {
         switch self {
@@ -50,6 +51,8 @@ enum ToolEnum: Equatable {
         case let .highlightShadowTool(tool):
             return tool.description
         case let .vibranceTool(tool):
+            return tool.description
+        case let .straightenTool(tool):
             return tool.description
         }
     }
@@ -70,6 +73,8 @@ enum ToolEnum: Equatable {
         case let .highlightShadowTool(tool):
             return tool.icon.image()
         case let .vibranceTool(tool):
+            return tool.icon.image()
+        case let .straightenTool(tool):
             return tool.icon.image()
         }
     }

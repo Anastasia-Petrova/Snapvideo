@@ -40,7 +40,8 @@ extension App {
         .exposureTool(tool: ExposureTool()),
         .noiseReductionTool(tool: NoiseReductionTool()),
         .highlightShadowTool(tool: HighlightShadowTool()),
-        .vibranceTool(tool: VibranceTool())
+        .vibranceTool(tool: VibranceTool()),
+        .straightenTool(tool: StraightenTool())
       ]
     )
     

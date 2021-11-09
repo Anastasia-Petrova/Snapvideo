@@ -54,5 +54,6 @@ extension ImageAsset {
         case tune
         case vignette
         case warmth
+        case straighten
     }
 }
