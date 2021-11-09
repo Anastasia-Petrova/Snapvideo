@@ -38,7 +38,8 @@ extension App {
         .vignette(tool: VignetteTool()),
         .colourCorrection(tool: ColourCorrectionTool()),
         .exposureTool(tool: ExposureTool()),
-        .noiseReductionTool(tool: NoiseReductionTool())
+        .noiseReductionTool(tool: NoiseReductionTool()),
+        .highlightShadowTool(tool: HighlightShadowTool())
       ]
     )
     
