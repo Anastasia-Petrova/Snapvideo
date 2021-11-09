@@ -1,32 +1,36 @@
 //
-//  SharpenTool.swift
+//  NoiseReductionTool.swift
 //  Snapvideo
 //
-//  Created by Anastasia Petrova on 11/02/2020.
-//  Copyright © 2020 Anastasia Petrova. All rights reserved.
+//  Created by Anastasia Petrova on 09/11/2021.
+//  Copyright © 2021 Anastasia Petrova. All rights reserved.
 //
 
+import Foundation
+import UIKit
 import CoreImage
 
-struct SharpenTool: Tool {
-    static func == (lhs: SharpenTool, rhs: SharpenTool) -> Bool {
+struct NoiseReductionTool: Tool {
+    static func == (lhs: NoiseReductionTool, rhs: NoiseReductionTool) -> Bool {
       lhs.icon == rhs.icon
     }
   
     let icon = ImageAsset.Tools.details
     
-    private(set) var filter = SharpFilter(sharpness: 0)
+    private(set) var filter = NoiseReductionFilter(noise: 0, sharpness: 0)
     
     func apply(image: CIImage) -> CIImage {
         filter.apply(image: image)
     }
 }
 
-extension SharpenTool: Parameterized {
+extension NoiseReductionTool: Parameterized {
     var allParameters: [Parameter] { Parameter.allCases }
     
     func value(for parameter: Parameter) -> Double {
         switch parameter {
+        case .noise:
+            return filter.noise * parameter.k
         case .sharpness:
             return filter.sharpness * parameter.k
         }
@@ -34,6 +38,8 @@ extension SharpenTool: Parameterized {
     
     mutating func setValue(value: Double, for parameter: Parameter) {
         switch parameter {
+        case .noise:
+            filter.noise = value / parameter.k
         case .sharpness:
             filter.sharpness = value / parameter.k
         }
@@ -41,14 +47,14 @@ extension SharpenTool: Parameterized {
     
     func minValue(for parameter: Parameter) -> Double {
         switch parameter {
-        case .sharpness:
+        case .noise, .sharpness:
             return 0.0 * parameter.k
         }
     }
     
     func maxValue(for parameter: Parameter) -> Double {
         switch parameter {
-        case .sharpness:
+        case .noise, .sharpness:
             return 2.0 * parameter.k
         }
     }
@@ -62,25 +68,27 @@ extension SharpenTool: Parameterized {
     }
 }
 
-extension SharpenTool {
+extension NoiseReductionTool {
     enum Parameter: String, CaseIterable {
+        case noise
         case sharpness
         
         var k: Double {
             switch self {
-            case .sharpness:
-              return 50.0
+            case .noise, .sharpness:
+                return 50.0
             }
         }
     }
 }
 
-extension SharpenTool.Parameter: CustomStringConvertible {
+extension NoiseReductionTool.Parameter: CustomStringConvertible {
     var description: String { rawValue.capitalized }
 }
 
-extension SharpenTool.Parameter: ExpressibleByString {
+extension NoiseReductionTool.Parameter: ExpressibleByString {
     init?(string: String) {
         self.init(rawValue: string.lowercased())
     }
 }
+
