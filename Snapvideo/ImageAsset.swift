@@ -46,7 +46,7 @@ extension ImageAsset {
         case fade
         case highlights
         case saturation
-        case shadows
+        case vibrance
         case details
         case slowDown
         case speedUp

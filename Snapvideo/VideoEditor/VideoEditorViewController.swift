@@ -407,6 +407,15 @@ final class VideoEditorViewController: UIViewController {
           vc.modalPresentationStyle = .overCurrentContext
           present(vc, animated: true, completion: nil)
           isToolsViewShown = false
+        case let .vibranceTool(tool):
+          let vc = AdjustmentsViewController(url: url, tool: tool) { [weak self] url in
+              guard let self = self, let url = url else { return }
+              self.videoFileAsset = AVAsset(url: url)
+          }
+          vc.modalTransitionStyle = .crossDissolve
+          vc.modalPresentationStyle = .overCurrentContext
+          present(vc, animated: true, completion: nil)
+          isToolsViewShown = false
         }
     }
     

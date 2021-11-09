@@ -39,7 +39,8 @@ extension App {
         .colourCorrection(tool: ColourCorrectionTool()),
         .exposureTool(tool: ExposureTool()),
         .noiseReductionTool(tool: NoiseReductionTool()),
-        .highlightShadowTool(tool: HighlightShadowTool())
+        .highlightShadowTool(tool: HighlightShadowTool()),
+        .vibranceTool(tool: VibranceTool())
       ]
     )
     
