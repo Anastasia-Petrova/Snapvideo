@@ -69,6 +69,7 @@
 		6D82F28F273AC809003A70BC /* VibranceTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D82F28E273AC809003A70BC /* VibranceTool.swift */; };
 		6D82F2AD273AD5A6003A70BC /* StraightenFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D82F2AC273AD5A6003A70BC /* StraightenFilter.swift */; };
 		6D82F2B2273AD601003A70BC /* StraightenTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D82F2B1273AD601003A70BC /* StraightenTool.swift */; };
+		6D82F2BC273AE18A003A70BC /* SpeedControllBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D82F2BB273AE18A003A70BC /* SpeedControllBar.swift */; };
 		6D8BB64023F5B23D00BDF601 /* ToolsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8BB63F23F5B23D00BDF601 /* ToolsViewControllerTests.swift */; };
 		6D8C283C23F5FA8B008700C3 /* AdjustViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8BB64323F5CFBC00BDF601 /* AdjustViewControllerSnapshotTests.swift */; };
 		6D8C283D23F5FC88008700C3 /* AdjustmentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8BB64123F5B76E00BDF601 /* AdjustmentsViewController.swift */; };
@@ -196,6 +197,7 @@
 		6D82F28E273AC809003A70BC /* VibranceTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VibranceTool.swift; sourceTree = "<group>"; };
 		6D82F2AC273AD5A6003A70BC /* StraightenFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StraightenFilter.swift; sourceTree = "<group>"; };
 		6D82F2B1273AD601003A70BC /* StraightenTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StraightenTool.swift; sourceTree = "<group>"; };
+		6D82F2BB273AE18A003A70BC /* SpeedControllBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedControllBar.swift; sourceTree = "<group>"; };
 		6D8BB63F23F5B23D00BDF601 /* ToolsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsViewControllerTests.swift; sourceTree = "<group>"; };
 		6D8BB64123F5B76E00BDF601 /* AdjustmentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustmentsViewController.swift; sourceTree = "<group>"; };
 		6D8BB64323F5CFBC00BDF601 /* AdjustViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
@@ -524,6 +526,7 @@
 				6D8BB64123F5B76E00BDF601 /* AdjustmentsViewController.swift */,
 				6D4B018F242F915200832581 /* AdjustmentSliderView.swift */,
 				6DA974562402BC1B008BCDA8 /* ParameterListView.swift */,
+				6D82F2BB273AE18A003A70BC /* SpeedControllBar.swift */,
 			);
 			path = Adjustments;
 			sourceTree = "<group>";
@@ -793,6 +796,7 @@
 				6D1D491F23D791EC00ECACE5 /* MonoFilter.swift in Sources */,
 				6D82F2542739CA55003A70BC /* ExposureTool.swift in Sources */,
 				6DDE026523C12A44002D7942 /* Filter.swift in Sources */,
+				6D82F2BC273AE18A003A70BC /* SpeedControllBar.swift in Sources */,
 				6D82F278273A9842003A70BC /* NoiseReductionFilter.swift in Sources */,
 				6D1D491723D78C4A00ECACE5 /* ProcessFilter.swift in Sources */,
 				6DA0B27D23E71A1000D23CAD /* ToolsCollectionDataSource.swift in Sources */,
