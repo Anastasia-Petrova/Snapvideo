@@ -79,4 +79,74 @@ struct VideoEditor {
         }
         return data.count
     }
+  
+  static func setUpMutableComposition(
+    asset: AVAsset,
+    mode: SpeedMode
+  ) -> AVMutableComposition? {
+    let scaledVideoDuration = getScaledVideoDuration(asset: asset, mode: mode)
+    let timeRange = CMTimeRangeMake(start: CMTime.zero, duration: asset.duration)
+    guard let videoTrack = asset.tracks(withMediaType: AVMediaType.video).first else {
+      return nil
+    }
+    
+    let mixComposition = AVMutableComposition()
+    let compositionVideoTrack = mixComposition.addMutableTrack(withMediaType: AVMediaType.video, preferredTrackID: kCMPersistentTrackID_Invalid)
+    let audioTracks = asset.tracks(withMediaType: AVMediaType.audio)
+    
+    if let audioTrack = audioTracks.first {
+      let compositionAudioTrack = mixComposition.addMutableTrack(withMediaType: AVMediaType.audio, preferredTrackID: kCMPersistentTrackID_Invalid)
+      do {
+        try compositionAudioTrack?.insertTimeRange(timeRange, of: audioTrack, at: CMTime.zero)
+        compositionAudioTrack?.scaleTimeRange(timeRange, toDuration: scaledVideoDuration)
+      } catch {
+        print(error.localizedDescription)
+        return nil
+      }
+    }
+    
+    do {
+      try compositionVideoTrack?.insertTimeRange(timeRange, of: videoTrack, at: CMTime.zero)
+      compositionVideoTrack?.scaleTimeRange(timeRange, toDuration: scaledVideoDuration)
+      compositionVideoTrack?.preferredTransform = videoTrack.preferredTransform
+    } catch let error {
+      print(error.localizedDescription)
+      return nil
+    }
+    return mixComposition
+  }
+  
+  static func getScaledVideoDuration(asset: AVAsset, mode: SpeedMode) -> CMTime {
+    let videoDuration: Int64
+    switch mode {
+    case let .slowDown(scale):
+      videoDuration = asset.duration.value * scale
+    case let .speedUp(scale):
+      videoDuration = asset.duration.value / scale
+    }
+    return CMTimeMake(value: videoDuration, timescale: asset.duration.timescale)
+  }
+  
+  static func performExportWithMutableComposition(
+      asset: AVAsset,
+      composition: AVMutableComposition,
+      completion: @escaping (URL?) -> Void
+  ) {
+      guard let export = AVAssetExportSession(asset: composition, presetName: AVAssetExportPresetHighestQuality) else {
+          completion(nil)
+          return
+      }
+      export.outputFileType = AVFileType.mov
+      let exportPath = NSTemporaryDirectory().appendingFormat("/\(UUID().uuidString).mov")
+      let exportUrl = URL(fileURLWithPath: exportPath)
+      export.outputURL = exportUrl
+      export.exportAsynchronously {
+          completion(exportUrl)
+      }
+  }
+}
+
+enum SpeedMode {
+  case slowDown(scale: Int64)
+  case speedUp(scale: Int64)
 }
