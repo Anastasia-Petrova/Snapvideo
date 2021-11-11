@@ -70,6 +70,7 @@
 		6D82F2AD273AD5A6003A70BC /* StraightenFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D82F2AC273AD5A6003A70BC /* StraightenFilter.swift */; };
 		6D82F2B2273AD601003A70BC /* StraightenTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D82F2B1273AD601003A70BC /* StraightenTool.swift */; };
 		6D82F2BC273AE18A003A70BC /* SpeedControllBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D82F2BB273AE18A003A70BC /* SpeedControllBar.swift */; };
+		6D82F2C4273D7F1A003A70BC /* CropFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D82F2C3273D7F1A003A70BC /* CropFilter.swift */; };
 		6D8BB64023F5B23D00BDF601 /* ToolsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8BB63F23F5B23D00BDF601 /* ToolsViewControllerTests.swift */; };
 		6D8C283C23F5FA8B008700C3 /* AdjustViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8BB64323F5CFBC00BDF601 /* AdjustViewControllerSnapshotTests.swift */; };
 		6D8C283D23F5FC88008700C3 /* AdjustmentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8BB64123F5B76E00BDF601 /* AdjustmentsViewController.swift */; };
@@ -198,6 +199,7 @@
 		6D82F2AC273AD5A6003A70BC /* StraightenFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StraightenFilter.swift; sourceTree = "<group>"; };
 		6D82F2B1273AD601003A70BC /* StraightenTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StraightenTool.swift; sourceTree = "<group>"; };
 		6D82F2BB273AE18A003A70BC /* SpeedControllBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedControllBar.swift; sourceTree = "<group>"; };
+		6D82F2C3273D7F1A003A70BC /* CropFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropFilter.swift; sourceTree = "<group>"; };
 		6D8BB63F23F5B23D00BDF601 /* ToolsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsViewControllerTests.swift; sourceTree = "<group>"; };
 		6D8BB64123F5B76E00BDF601 /* AdjustmentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustmentsViewController.swift; sourceTree = "<group>"; };
 		6D8BB64323F5CFBC00BDF601 /* AdjustViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
@@ -582,6 +584,7 @@
 				6D49386C259E37CE0066C123 /* ColorControlFilter.swift */,
 				6D1D491023D785FB00ECACE5 /* ColorInvertFilter.swift */,
 				6DEA248C23C2038B00D7595A /* ComicFilter.swift */,
+				6D82F2C3273D7F1A003A70BC /* CropFilter.swift */,
 				6D82F24E2739C801003A70BC /* ExposureFilter.swift */,
 				6DDE026423C12A44002D7942 /* Filter.swift */,
 				6D1D491223D788B800ECACE5 /* HalfToneFilter.swift */,
@@ -835,6 +838,7 @@
 				6D1D491123D785FB00ECACE5 /* ColorInvertFilter.swift in Sources */,
 				6D1D491B23D78EDA00ECACE5 /* TonalFilter.swift in Sources */,
 				6DE18A0723F2F8D00018C944 /* SlowTool.swift in Sources */,
+				6D82F2C4273D7F1A003A70BC /* CropFilter.swift in Sources */,
 				6D17A7F523ABB6E000C70542 /* HomeViewController.swift in Sources */,
 				6DE18A1323F300640018C944 /* FadeTool.swift in Sources */,
 				6D82F2B2273AD601003A70BC /* StraightenTool.swift in Sources */,

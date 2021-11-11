@@ -41,7 +41,8 @@ extension App {
         .noiseReductionTool(tool: NoiseReductionTool()),
         .highlightShadowTool(tool: HighlightShadowTool()),
         .vibranceTool(tool: VibranceTool()),
-        .straightenTool(tool: StraightenTool())
+        .straightenTool(tool: StraightenTool()),
+        .cropTool(tool: CropTool())
       ]
     )
     
