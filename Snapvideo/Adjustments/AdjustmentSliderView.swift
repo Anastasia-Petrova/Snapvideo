@@ -64,29 +64,8 @@ final class AdjustmentSliderView: UIView {
     
     private func setUpViews() {
         let sliderView = makeSliderView()
-        
-        valueLabel.font = .systemFont(ofSize: 14, weight: .medium)
-        valueLabel.textColor = .darkGray
-        valueLabel.numberOfLines = 1
-        valueLabel.textAlignment = .center
-        
-        let labelContainer = UIView()
-        labelContainer.backgroundColor = UIColor.white.withAlphaComponent(0.7)
-        labelContainer.addSubview(valueLabel)
-        labelContainer.layer.cornerRadius = 12.0
-        labelContainer.layer.masksToBounds = true
-        
-        valueLabel.translatesAutoresizingMaskIntoConstraints = false
-        let verticalOffset: CGFloat = 6
-        let horizontalOffset: CGFloat = 12
-        NSLayoutConstraint.activate ([
-            valueLabel.leadingAnchor.constraint(equalTo: labelContainer.leadingAnchor, constant: horizontalOffset),
-            valueLabel.trailingAnchor.constraint(equalTo: labelContainer.trailingAnchor, constant: -horizontalOffset),
-            valueLabel.topAnchor.constraint(equalTo: labelContainer.topAnchor, constant: verticalOffset),
-            valueLabel.bottomAnchor.constraint(equalTo: labelContainer.bottomAnchor, constant: -verticalOffset)
-        ])
-        
-        let labelStackView = UIStackView(arrangedSubviews: [labelContainer])
+        let parameterValueView = ParameterValueView(label: valueLabel)
+        let labelStackView = UIStackView(arrangedSubviews: [parameterValueView])
         labelStackView.axis = .vertical
         labelStackView.alignment = .center
         

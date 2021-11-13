@@ -1,5 +1,5 @@
 //
-//  SpeedAdjustmentViewController.swift
+//  SpeedViewController.swift
 //  Snapvideo
 //
 //  Created by Anastasia Petrova on 13/11/2021.
@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import Photos
 
-final class SpeedAdjustmentViewController: UIViewController {
+final class SpeedViewController: UIViewController {
   let toolBar = UIToolbar(
     frame: CGRect(origin: .zero, size: CGSize(width: 320, height: 44))
   )
@@ -108,32 +108,13 @@ final class SpeedAdjustmentViewController: UIViewController {
   }
   
   private func setUpSpeedLabel() {
-    speedLabel.translatesAutoresizingMaskIntoConstraints = false
-    speedLabel.font = .systemFont(ofSize: 14, weight: .medium)
-    speedLabel.textColor = .darkGray
-    speedLabel.numberOfLines = 1
-    speedLabel.textAlignment = .center
-    
-    let labelContainer = UIView()
-    labelContainer.translatesAutoresizingMaskIntoConstraints = false
-    labelContainer.backgroundColor = UIColor.white.withAlphaComponent(0.7)
-    labelContainer.addSubview(speedLabel)
-    labelContainer.layer.cornerRadius = 12.0
-    labelContainer.layer.masksToBounds = true
-    
-    let verticalOffset: CGFloat = 6
-    let horizontalOffset: CGFloat = 12
-    NSLayoutConstraint.activate ([
-      speedLabel.leadingAnchor.constraint(equalTo: labelContainer.leadingAnchor, constant: horizontalOffset),
-      speedLabel.trailingAnchor.constraint(equalTo: labelContainer.trailingAnchor, constant: -horizontalOffset),
-      speedLabel.topAnchor.constraint(equalTo: labelContainer.topAnchor, constant: verticalOffset),
-      speedLabel.bottomAnchor.constraint(equalTo: labelContainer.bottomAnchor, constant: -verticalOffset)
-    ])
-    view.addSubview(labelContainer)
+    let speedValueView = ParameterValueView(label: speedLabel)
+    speedValueView.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(speedValueView)
     
     NSLayoutConstraint.activate ([
-      labelContainer.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
-      labelContainer.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
+      speedValueView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+      speedValueView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
     ])
   }
   

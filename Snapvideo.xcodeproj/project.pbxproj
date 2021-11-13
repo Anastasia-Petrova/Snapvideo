@@ -70,7 +70,8 @@
 		6D82F2AD273AD5A6003A70BC /* StraightenFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D82F2AC273AD5A6003A70BC /* StraightenFilter.swift */; };
 		6D82F2B2273AD601003A70BC /* StraightenTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D82F2B1273AD601003A70BC /* StraightenTool.swift */; };
 		6D82F2C4273D7F1A003A70BC /* CropFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D82F2C3273D7F1A003A70BC /* CropFilter.swift */; };
-		6D82F2CC273FC91E003A70BC /* SpeedAdjustmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D82F2CB273FC91E003A70BC /* SpeedAdjustmentViewController.swift */; };
+		6D82F2CC273FC91E003A70BC /* SpeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D82F2CB273FC91E003A70BC /* SpeedViewController.swift */; };
+		6D82F2D727401C47003A70BC /* ParameterValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D82F2D627401C47003A70BC /* ParameterValueView.swift */; };
 		6D8BB64023F5B23D00BDF601 /* ToolsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8BB63F23F5B23D00BDF601 /* ToolsViewControllerTests.swift */; };
 		6D8C283C23F5FA8B008700C3 /* AdjustViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8BB64323F5CFBC00BDF601 /* AdjustViewControllerSnapshotTests.swift */; };
 		6D8C283D23F5FC88008700C3 /* AdjustmentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8BB64123F5B76E00BDF601 /* AdjustmentsViewController.swift */; };
@@ -199,7 +200,8 @@
 		6D82F2AC273AD5A6003A70BC /* StraightenFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StraightenFilter.swift; sourceTree = "<group>"; };
 		6D82F2B1273AD601003A70BC /* StraightenTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StraightenTool.swift; sourceTree = "<group>"; };
 		6D82F2C3273D7F1A003A70BC /* CropFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropFilter.swift; sourceTree = "<group>"; };
-		6D82F2CB273FC91E003A70BC /* SpeedAdjustmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedAdjustmentViewController.swift; sourceTree = "<group>"; };
+		6D82F2CB273FC91E003A70BC /* SpeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedViewController.swift; sourceTree = "<group>"; };
+		6D82F2D627401C47003A70BC /* ParameterValueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterValueView.swift; sourceTree = "<group>"; };
 		6D8BB63F23F5B23D00BDF601 /* ToolsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsViewControllerTests.swift; sourceTree = "<group>"; };
 		6D8BB64123F5B76E00BDF601 /* AdjustmentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustmentsViewController.swift; sourceTree = "<group>"; };
 		6D8BB64323F5CFBC00BDF601 /* AdjustViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
@@ -528,7 +530,8 @@
 				6D8BB64123F5B76E00BDF601 /* AdjustmentsViewController.swift */,
 				6D4B018F242F915200832581 /* AdjustmentSliderView.swift */,
 				6DA974562402BC1B008BCDA8 /* ParameterListView.swift */,
-				6D82F2CB273FC91E003A70BC /* SpeedAdjustmentViewController.swift */,
+				6D82F2CB273FC91E003A70BC /* SpeedViewController.swift */,
+				6D82F2D627401C47003A70BC /* ParameterValueView.swift */,
 			);
 			path = Adjustments;
 			sourceTree = "<group>";
@@ -829,7 +832,8 @@
 				6D01E03823BFA3D600B558E8 /* LooksCollectionDataSource.swift in Sources */,
 				6DB0698A23EE0EAE0088F4B7 /* LooksViewController.swift in Sources */,
 				6DE18A0123F2F4C00018C944 /* CropTool.swift in Sources */,
-				6D82F2CC273FC91E003A70BC /* SpeedAdjustmentViewController.swift in Sources */,
+				6D82F2D727401C47003A70BC /* ParameterValueView.swift in Sources */,
+				6D82F2CC273FC91E003A70BC /* SpeedViewController.swift in Sources */,
 				6DDE026323C11659002D7942 /* VideoView.swift in Sources */,
 				6D82F28A273AC799003A70BC /* VibranceFilter.swift in Sources */,
 				6DB6C13F23C4D8A700E256A4 /* VignetteFilter.swift in Sources */,
