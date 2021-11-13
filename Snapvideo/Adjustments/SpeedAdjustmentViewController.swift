@@ -30,21 +30,21 @@ final class SpeedAdjustmentViewController: UIViewController {
   let minSpeed = 0.25
   let step = 0.25
   
-  var speed: Double = 1.0 {
+  var currentSpeed: Double = 1.0 {
     didSet {
-      speedLabel.text = "\(speed)"
+      speedLabel.text = "Speed: \(currentSpeed)"
       slowDownItem.isEnabled = isSlowDownEnabled
       speedUpItem.isEnabled = isSpeedUpEnabled
-      doneItem.isEnabled = speed != defaultSpeed
+      doneItem.isEnabled = currentSpeed != defaultSpeed
     }
   }
 
   var isSpeedUpEnabled: Bool {
-    speed < maxSpeed
+    currentSpeed < maxSpeed
   }
   
   var isSlowDownEnabled: Bool {
-    speed > minSpeed
+    currentSpeed > minSpeed
   }
   
   init(url: URL, didFinishWithVideoURL completion: @escaping (URL?) -> Void) {
@@ -67,6 +67,8 @@ final class SpeedAdjustmentViewController: UIViewController {
     
     setUpVideoViewController()
     setUpToolBar()
+    setUpSpeedLabel()
+    currentSpeed = defaultSpeed
   }
   
   deinit {
@@ -105,6 +107,36 @@ final class SpeedAdjustmentViewController: UIViewController {
     )
   }
   
+  private func setUpSpeedLabel() {
+    speedLabel.translatesAutoresizingMaskIntoConstraints = false
+    speedLabel.font = .systemFont(ofSize: 14, weight: .medium)
+    speedLabel.textColor = .darkGray
+    speedLabel.numberOfLines = 1
+    speedLabel.textAlignment = .center
+    
+    let labelContainer = UIView()
+    labelContainer.translatesAutoresizingMaskIntoConstraints = false
+    labelContainer.backgroundColor = UIColor.white.withAlphaComponent(0.7)
+    labelContainer.addSubview(speedLabel)
+    labelContainer.layer.cornerRadius = 12.0
+    labelContainer.layer.masksToBounds = true
+    
+    let verticalOffset: CGFloat = 6
+    let horizontalOffset: CGFloat = 12
+    NSLayoutConstraint.activate ([
+      speedLabel.leadingAnchor.constraint(equalTo: labelContainer.leadingAnchor, constant: horizontalOffset),
+      speedLabel.trailingAnchor.constraint(equalTo: labelContainer.trailingAnchor, constant: -horizontalOffset),
+      speedLabel.topAnchor.constraint(equalTo: labelContainer.topAnchor, constant: verticalOffset),
+      speedLabel.bottomAnchor.constraint(equalTo: labelContainer.bottomAnchor, constant: -verticalOffset)
+    ])
+    view.addSubview(labelContainer)
+    
+    NSLayoutConstraint.activate ([
+      labelContainer.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+      labelContainer.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
+    ])
+  }
+  
   private func setUpVideoViewController() {
     videoViewController.view.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate ([
@@ -131,12 +163,12 @@ final class SpeedAdjustmentViewController: UIViewController {
   
   @objc func speedUp() {
     guard isSpeedUpEnabled else { return }
-    speed += step
+    currentSpeed += step
   }
   
   @objc func slowDown() {
     guard isSlowDownEnabled else { return }
-    speed -= step
+    currentSpeed -= step
   }
   
   @objc private func applySpeedUp() {
@@ -145,7 +177,7 @@ final class SpeedAdjustmentViewController: UIViewController {
     let asset = playerItem.asset
     guard let mutableComposition = VideoEditor.setUpMutableComposition(
       asset: asset,
-      mode: getSpeedMode(speed)
+      mode: getSpeedMode(currentSpeed)
     ) else {
       return
     }
