@@ -138,6 +138,10 @@ final class SpeedViewController: UIViewController {
     }
   }
   
+  private func updatePlayerRate() {
+    videoViewController.setPlayerRate(Float(currentSpeed))
+  }
+  
   @objc private func cancelAdjustment() {
     dismiss(animated: true, completion: nil)
   }
@@ -145,11 +149,13 @@ final class SpeedViewController: UIViewController {
   @objc func speedUp() {
     guard isSpeedUpEnabled else { return }
     currentSpeed += step
+    updatePlayerRate()
   }
   
   @objc func slowDown() {
     guard isSlowDownEnabled else { return }
     currentSpeed -= step
+    updatePlayerRate()
   }
   
   @objc private func applySpeedUp() {

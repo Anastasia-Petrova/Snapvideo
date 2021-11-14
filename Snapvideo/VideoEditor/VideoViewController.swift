@@ -135,6 +135,10 @@ final class VideoViewController: UIViewController {
             self.resumeImageView.isHidden = self.player.rate > 0
         }
     }
+  
+    func setPlayerRate(_ rate: Float) {
+      player.rate = rate
+    }
     
     @objc func handleTap(_ sender: UITapGestureRecognizer?) {
         if player.rate == 0 {
