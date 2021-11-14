@@ -49,7 +49,7 @@ extension ImageAsset {
         case vibrance
         case details
         case slowDown
-        case speedUp
+        case speed
         case tiltShift
         case tune
         case vignette
