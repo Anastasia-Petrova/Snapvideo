@@ -108,8 +108,6 @@
 		6DDFFB6B23E9D2CD00093675 /* ToolsCollectionDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDFFB6923E9CF2000093675 /* ToolsCollectionDataSourceTests.swift */; };
 		6DE189FD23F2DE6A0018C944 /* Tool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE189FC23F2DE6A0018C944 /* Tool.swift */; };
 		6DE18A0123F2F4C00018C944 /* CropTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE18A0023F2F4C00018C944 /* CropTool.swift */; };
-		6DE18A0723F2F8D00018C944 /* SlowTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE18A0623F2F8D00018C944 /* SlowTool.swift */; };
-		6DE18A0923F2F9000018C944 /* CutTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE18A0823F2F9000018C944 /* CutTool.swift */; };
 		6DE18A0B23F2FAE40018C944 /* SharpenTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE18A0A23F2FAE40018C944 /* SharpenTool.swift */; };
 		6DE18A0D23F2FB180018C944 /* VignetteTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE18A0C23F2FB180018C944 /* VignetteTool.swift */; };
 		6DE18A1323F300640018C944 /* FadeTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE18A1223F300640018C944 /* FadeTool.swift */; };
@@ -243,8 +241,6 @@
 		6DDFFB6D23EC281D00093675 /* HomeViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		6DE189FC23F2DE6A0018C944 /* Tool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tool.swift; sourceTree = "<group>"; };
 		6DE18A0023F2F4C00018C944 /* CropTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropTool.swift; sourceTree = "<group>"; };
-		6DE18A0623F2F8D00018C944 /* SlowTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlowTool.swift; sourceTree = "<group>"; };
-		6DE18A0823F2F9000018C944 /* CutTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CutTool.swift; sourceTree = "<group>"; };
 		6DE18A0A23F2FAE40018C944 /* SharpenTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharpenTool.swift; sourceTree = "<group>"; };
 		6DE18A0C23F2FB180018C944 /* VignetteTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VignetteTool.swift; sourceTree = "<group>"; };
 		6DE18A1223F300640018C944 /* FadeTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FadeTool.swift; sourceTree = "<group>"; };
@@ -528,7 +524,6 @@
 				6D8BB64123F5B76E00BDF601 /* AdjustmentsViewController.swift */,
 				6D4B018F242F915200832581 /* AdjustmentSliderView.swift */,
 				6DA974562402BC1B008BCDA8 /* ParameterListView.swift */,
-				6D82F2CB273FC91E003A70BC /* SpeedViewController.swift */,
 				6D82F2D627401C47003A70BC /* ParameterValueView.swift */,
 			);
 			path = Adjustments;
@@ -616,14 +611,12 @@
 			children = (
 				6D493862259E2EA30066C123 /* ColourCorrectionTool.swift */,
 				6DE18A0023F2F4C00018C944 /* CropTool.swift */,
-				6DE18A0823F2F9000018C944 /* CutTool.swift */,
 				6D82F2532739CA55003A70BC /* ExposureTool.swift */,
 				6DE18A1223F300640018C944 /* FadeTool.swift */,
 				6DE18A1423F300B00018C944 /* HighlightShadowTool.swift */,
 				6D82F27C273AA54D003A70BC /* NoiseReductionTool.swift */,
 				6D18009C24439715001E9764 /* Parameterized.swift */,
 				6DE18A0A23F2FAE40018C944 /* SharpenTool.swift */,
-				6DE18A0623F2F8D00018C944 /* SlowTool.swift */,
 				6D82F2B1273AD601003A70BC /* StraightenTool.swift */,
 				6DE18A1823F301360018C944 /* TiltShiftTool.swift */,
 				6DE189FC23F2DE6A0018C944 /* Tool.swift */,
@@ -784,7 +777,6 @@
 				6D82F24F2739C801003A70BC /* ExposureFilter.swift in Sources */,
 				6DE189FD23F2DE6A0018C944 /* Tool.swift in Sources */,
 				6D8C284323F60697008700C3 /* String.swift in Sources */,
-				6DE18A0923F2F9000018C944 /* CutTool.swift in Sources */,
 				6D1D493323DC687200ECACE5 /* VideoBrowser.swift in Sources */,
 				6DDE026A23C12B2A002D7942 /* BlurFilter.swift in Sources */,
 				6D96B85023D08E5E00C1C6D5 /* HeaderExportLabel.swift in Sources */,
@@ -837,7 +829,6 @@
 				6DE18A0D23F2FB180018C944 /* VignetteTool.swift in Sources */,
 				6D1D491123D785FB00ECACE5 /* ColorInvertFilter.swift in Sources */,
 				6D1D491B23D78EDA00ECACE5 /* TonalFilter.swift in Sources */,
-				6DE18A0723F2F8D00018C944 /* SlowTool.swift in Sources */,
 				6D82F2C4273D7F1A003A70BC /* CropFilter.swift in Sources */,
 				6D17A7F523ABB6E000C70542 /* HomeViewController.swift in Sources */,
 				6DE18A1323F300640018C944 /* FadeTool.swift in Sources */,
