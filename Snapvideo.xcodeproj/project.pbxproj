@@ -108,7 +108,6 @@
 		6DDFFB6B23E9D2CD00093675 /* ToolsCollectionDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDFFB6923E9CF2000093675 /* ToolsCollectionDataSourceTests.swift */; };
 		6DE189FD23F2DE6A0018C944 /* Tool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE189FC23F2DE6A0018C944 /* Tool.swift */; };
 		6DE18A0123F2F4C00018C944 /* CropTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE18A0023F2F4C00018C944 /* CropTool.swift */; };
-		6DE18A0523F2F8AE0018C944 /* SpeedUpTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE18A0423F2F8AE0018C944 /* SpeedUpTool.swift */; };
 		6DE18A0723F2F8D00018C944 /* SlowTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE18A0623F2F8D00018C944 /* SlowTool.swift */; };
 		6DE18A0923F2F9000018C944 /* CutTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE18A0823F2F9000018C944 /* CutTool.swift */; };
 		6DE18A0B23F2FAE40018C944 /* SharpenTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE18A0A23F2FAE40018C944 /* SharpenTool.swift */; };
@@ -244,7 +243,6 @@
 		6DDFFB6D23EC281D00093675 /* HomeViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		6DE189FC23F2DE6A0018C944 /* Tool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tool.swift; sourceTree = "<group>"; };
 		6DE18A0023F2F4C00018C944 /* CropTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropTool.swift; sourceTree = "<group>"; };
-		6DE18A0423F2F8AE0018C944 /* SpeedUpTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedUpTool.swift; sourceTree = "<group>"; };
 		6DE18A0623F2F8D00018C944 /* SlowTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlowTool.swift; sourceTree = "<group>"; };
 		6DE18A0823F2F9000018C944 /* CutTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CutTool.swift; sourceTree = "<group>"; };
 		6DE18A0A23F2FAE40018C944 /* SharpenTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharpenTool.swift; sourceTree = "<group>"; };
@@ -626,7 +624,6 @@
 				6D18009C24439715001E9764 /* Parameterized.swift */,
 				6DE18A0A23F2FAE40018C944 /* SharpenTool.swift */,
 				6DE18A0623F2F8D00018C944 /* SlowTool.swift */,
-				6DE18A0423F2F8AE0018C944 /* SpeedUpTool.swift */,
 				6D82F2B1273AD601003A70BC /* StraightenTool.swift */,
 				6DE18A1823F301360018C944 /* TiltShiftTool.swift */,
 				6DE189FC23F2DE6A0018C944 /* Tool.swift */,
@@ -807,7 +804,6 @@
 				6DA0B27D23E71A1000D23CAD /* ToolsCollectionDataSource.swift in Sources */,
 				6D1D491923D78DA600ECACE5 /* RetroFilter.swift in Sources */,
 				6D49386D259E37CE0066C123 /* ColorControlFilter.swift in Sources */,
-				6DE18A0523F2F8AE0018C944 /* SpeedUpTool.swift in Sources */,
 				6D493868259E2F4E0066C123 /* TemperatureAndTintFilter.swift in Sources */,
 				6D1D491523D78ADC00ECACE5 /* NoirFilter.swift in Sources */,
 				6D19954623C7AA3C000A76B1 /* VideoEditor.swift in Sources */,
