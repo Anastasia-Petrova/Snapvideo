@@ -8,7 +8,6 @@
 
 import Foundation
 @testable import Snapvideo
-//import UIKit
 import XCTest
 
 final class SpeedViewControllerTests: XCTestCase {
