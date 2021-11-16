@@ -13,7 +13,6 @@ import SnapshotTesting
 final class HomeViewControllerSnapshotTests: XCTestCase {
     func testHomeViewController() {
       let vc = HomeViewController()
-
       assertSnapshot(matching: vc, as: .image)
     }
 }

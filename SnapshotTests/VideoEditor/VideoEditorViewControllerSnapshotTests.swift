@@ -11,58 +11,59 @@ import SnapshotTesting
 @testable import Snapvideo
 
 final class VideoEditorViewControllerSnapshotTests: XCTestCase {
-  var filters: [Filter]!
-  var tools: Array<ToolEnum>!
-  var url: URL!
+  var vc: VideoEditorViewController!
   
-  override func setUp() {
-    filters = [PassthroughFilter()]
-    tools = [.vignette(tool: VignetteTool())]
-    guard let path = Bundle.snapshotTests.path(forResource: "videoTest", ofType:"MOV") else {
-        XCTFail("testVideo.MOV not found")
-        return
-    }
-    url = URL(fileURLWithPath: path)
+  override func setUpWithError() throws {
+    vc = try XCTUnwrap(makeVideoEditorViewController())
   }
   
   override func tearDown() {
-    filters = nil
-    tools = nil
-    url = nil
+    vc = nil
   }
   
-  func DISABLED_testVideoEditorViewController() {
-    let vc = VideoEditorViewController(url: url, selectedFilterIndex: 0, filters: filters, tools: tools)
-    assertSnapshot(matching: vc, as: .wait(for: 2, on: .image))
+  func testVideoEditorViewController() {
+    vc.view.backgroundColor = .red
+    assertSnapshot(matching: vc, as: .image)
   }
   
-  func DISABLED_testVideoEditorViewController_openLooks_and_closeLooks_set_correct_constraints() {
-    let vc = VideoEditorViewController(url: url, selectedFilterIndex: 0, filters: filters, tools: tools)
+  func testVideoEditorViewController_openLooks_and_closeLooks_set_correct_constraints() {
+    vc.view.backgroundColor = .red
     
     vc.openLooks()
-    assertSnapshot(matching: vc, as: .wait(for: 3, on: .image))
+    assertSnapshot(matching: vc, as: .image)
     
     vc.closeLooks()
-    assertSnapshot(matching: vc, as: .wait(for: 3, on: .image))
+    assertSnapshot(matching: vc, as: .image)
   }
   
-  func DISABLED_testVideoEditorViewController_openTools_and_closeTools_set_correct_constraints() {
-    let vc = VideoEditorViewController(url: url, selectedFilterIndex: 0, filters: filters, tools: tools)
+  func testVideoEditorViewController_openTools_and_closeTools_set_correct_constraints() {
+    vc.view.backgroundColor = .red
     
     vc.openTools()
-    assertSnapshot(matching: vc, as: .wait(for: 3, on: .image))
+    assertSnapshot(matching: vc, as: .image)
     
     vc.closeTools()
-    assertSnapshot(matching: vc, as: .wait(for: 3, on: .image))
+    assertSnapshot(matching: vc, as: .image)
   }
   
-  func DISABLED_testVideoEditorViewController_openExportMenu_and_closeExportMenu_set_correct_constraints() {
-    let vc = VideoEditorViewController(url: url, selectedFilterIndex: 0, filters: filters, tools: tools)
+  func testVideoEditorViewController_openExportMenu_and_closeExportMenu_set_correct_constraints() {
+    vc.view.backgroundColor = .red
     
     vc.openExportMenu()
-    assertSnapshot(matching: vc, as: .wait(for: 5, on: .image))
+    assertSnapshot(matching: vc, as: .image)
     
     vc.closeExportMenu()
-    assertSnapshot(matching: vc, as: .wait(for: 5, on: .image))
+    assertSnapshot(matching: vc, as: .image)
+  }
+  
+  func makeVideoEditorViewController() throws -> VideoEditorViewController {
+    let path = try XCTUnwrap(Bundle.snapshotTests.path(forResource: "videoTest", ofType:"MOV"))
+    let url = URL(fileURLWithPath: path)
+    return VideoEditorViewController(
+      url: url,
+      selectedFilterIndex: 0,
+      filters: [PassthroughFilter()],
+      tools: [.vignette(tool: VignetteTool())]
+    )
   }
 }
