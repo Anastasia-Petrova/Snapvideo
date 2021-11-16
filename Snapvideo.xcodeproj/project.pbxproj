@@ -75,6 +75,7 @@
 		6D82F2D727401C47003A70BC /* ParameterValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D82F2D627401C47003A70BC /* ParameterValueView.swift */; };
 		6D82F2ED27411407003A70BC /* TrimViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D82F2EC27411407003A70BC /* TrimViewController.swift */; };
 		6D82F30B27438C9D003A70BC /* SpeedViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D82F30A27438C9D003A70BC /* SpeedViewControllerSnapshotTests.swift */; };
+		6D82F31327438F1A003A70BC /* ParameterValueViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D82F31227438F1A003A70BC /* ParameterValueViewSnapshotTests.swift */; };
 		6D8BB64023F5B23D00BDF601 /* ToolsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8BB63F23F5B23D00BDF601 /* ToolsViewControllerTests.swift */; };
 		6D8C283C23F5FA8B008700C3 /* AdjustViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8BB64323F5CFBC00BDF601 /* AdjustViewControllerSnapshotTests.swift */; };
 		6D8C283D23F5FC88008700C3 /* AdjustmentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8BB64123F5B76E00BDF601 /* AdjustmentsViewController.swift */; };
@@ -205,6 +206,7 @@
 		6D82F2D627401C47003A70BC /* ParameterValueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterValueView.swift; sourceTree = "<group>"; };
 		6D82F2EC27411407003A70BC /* TrimViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrimViewController.swift; sourceTree = "<group>"; };
 		6D82F30A27438C9D003A70BC /* SpeedViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
+		6D82F31227438F1A003A70BC /* ParameterValueViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterValueViewSnapshotTests.swift; sourceTree = "<group>"; };
 		6D8BB63F23F5B23D00BDF601 /* ToolsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsViewControllerTests.swift; sourceTree = "<group>"; };
 		6D8BB64123F5B76E00BDF601 /* AdjustmentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustmentsViewController.swift; sourceTree = "<group>"; };
 		6D8BB64323F5CFBC00BDF601 /* AdjustViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
@@ -405,6 +407,7 @@
 			children = (
 				6D8BB64323F5CFBC00BDF601 /* AdjustViewControllerSnapshotTests.swift */,
 				6D3ED5692403127C0072BC29 /* ParameterListViewSnapshotTests.swift */,
+				6D82F31227438F1A003A70BC /* ParameterValueViewSnapshotTests.swift */,
 				6D82F30A27438C9D003A70BC /* SpeedViewControllerSnapshotTests.swift */,
 			);
 			path = Adjustments;
@@ -882,6 +885,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D82F31327438F1A003A70BC /* ParameterValueViewSnapshotTests.swift in Sources */,
 				6D66487A23EDFC9C002AAF2E /* LooksCollectionViewCellSnapshotTests.swift in Sources */,
 				6D0A0D732743B5EC00D5FA09 /* AddViewExtension.swift in Sources */,
 				6D66487E23EDFD34002AAF2E /* Bundle.swift in Sources */,
