@@ -12,16 +12,17 @@ import SnapshotTesting
 import XCTest
 
 final class VideoViewControllerSnapshotTests: XCTestCase {
-    override func setUp() {
-//        record = true
-    }
-
-    func DISABLED_test() {
-        let url = Bundle.snapshotTests.url(forResource: "videoTest", withExtension: "mp4")!
-        print("videoTest:" + url.absoluteString)
-        let asset = AVAsset(url: url)
-        let vc = VideoViewController(asset: asset)
-        vc.viewDidLoad()
-        assertSnapshot(matching: vc, as: .wait(for: 5, on: .image))
-    }
+  var asset: AVAsset!
+  
+  override func setUp() {
+    let url = Bundle.snapshotTests.url(forResource: "videoTest", withExtension: "mp4")!
+    print("videoTest:" + url.absoluteString)
+    asset = AVAsset(url: url)
+  }
+  
+  func testVideoViewController() {
+    let vc = VideoViewController(asset: asset)
+    vc.viewDidLoad()
+    assertSnapshot(matching: vc, as: .wait(for: 5, on: .image))
+  }
 }
