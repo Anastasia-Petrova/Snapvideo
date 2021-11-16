@@ -31,12 +31,12 @@ final class VideoEditorViewControllerSnapshotTests: XCTestCase {
     url = nil
   }
   
-  func testVideoEditorViewController() {
+  func DISABLED_testVideoEditorViewController() {
     let vc = VideoEditorViewController(url: url, selectedFilterIndex: 0, filters: filters, tools: tools)
     assertSnapshot(matching: vc, as: .wait(for: 2, on: .image))
   }
   
-  func testVideoEditorViewController_openLooks_and_closeLooks_set_correct_constraints() {
+  func DISABLED_testVideoEditorViewController_openLooks_and_closeLooks_set_correct_constraints() {
     let vc = VideoEditorViewController(url: url, selectedFilterIndex: 0, filters: filters, tools: tools)
     
     vc.openLooks()
@@ -46,7 +46,7 @@ final class VideoEditorViewControllerSnapshotTests: XCTestCase {
     assertSnapshot(matching: vc, as: .wait(for: 3, on: .image))
   }
   
-  func testVideoEditorViewController_openTools_and_closeTools_set_correct_constraints() {
+  func DISABLED_testVideoEditorViewController_openTools_and_closeTools_set_correct_constraints() {
     let vc = VideoEditorViewController(url: url, selectedFilterIndex: 0, filters: filters, tools: tools)
     
     vc.openTools()
@@ -56,7 +56,7 @@ final class VideoEditorViewControllerSnapshotTests: XCTestCase {
     assertSnapshot(matching: vc, as: .wait(for: 3, on: .image))
   }
   
-  func testVideoEditorViewController_openExportMenu_and_closeExportMenu_set_correct_constraints() {
+  func DISABLED_testVideoEditorViewController_openExportMenu_and_closeExportMenu_set_correct_constraints() {
     let vc = VideoEditorViewController(url: url, selectedFilterIndex: 0, filters: filters, tools: tools)
     
     vc.openExportMenu()

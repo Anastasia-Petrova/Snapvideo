@@ -20,7 +20,7 @@ final class VideoViewControllerSnapshotTests: XCTestCase {
     asset = AVAsset(url: url)
   }
   
-  func testVideoViewController() {
+  func DISABLED_testVideoViewController() {
     let vc = VideoViewController(asset: asset)
     vc.viewDidLoad()
     assertSnapshot(matching: vc, as: .wait(for: 2, on: .image))
