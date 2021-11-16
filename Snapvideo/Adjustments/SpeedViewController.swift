@@ -128,7 +128,7 @@ final class SpeedViewController: UIViewController {
     ])
   }
   
-  private func getSpeedMode(_ speed: Double) -> SpeedMode {
+  func getSpeedMode(_ speed: Double) -> SpeedMode {
     if speed > defaultSpeed {
       let scale = Int64((speed - defaultSpeed) / step)
       return .speedUp(scale: scale)

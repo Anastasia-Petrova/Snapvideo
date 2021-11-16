@@ -62,5 +62,13 @@ final class SpeedViewControllerTests: XCTestCase {
     XCTAssertFalse(vc.isSlowDownEnabled)
   }
   
+  func test_getSpeedMode_when_speed_isLowerThanDefaultSpeed() {
+    let vc = SpeedViewController(url: url) { _ in }
+    XCTAssertEqual(vc.getSpeedMode(0.25), .slowDown(scale: 3))
+  }
   
+  func test_getSpeedMode_when_speed_isHigherThanDefaultSpeed() {
+    let vc = SpeedViewController(url: url) { _ in }
+    XCTAssertEqual(vc.getSpeedMode(1.25), .speedUp(scale: 1))
+  }
 }
