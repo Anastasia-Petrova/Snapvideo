@@ -12,16 +12,19 @@ import SnapshotTesting
 import XCTest
 
 final class VideoViewControllerSnapshotTests: XCTestCase {
-  var asset: AVAsset!
+  var vc: VideoViewController!
   
-  override func setUp() {
-    let url = Bundle.snapshotTests.url(forResource: "videoTest", withExtension: "MOV")!
-    print("videoTest:" + url.absoluteString)
-    asset = AVAsset(url: url)
+  override func setUpWithError() throws {
+    let url = try XCTUnwrap(Bundle.snapshotTests.url(forResource: "videoTest", withExtension: "MOV"))
+    vc = VideoViewController(asset: AVAsset(url: url))
+  }
+  
+  override func tearDown() {
+    vc = nil
   }
   
   func testVideoViewController() {
-    let vc = VideoViewController(asset: asset)
+    vc.view.backgroundColor = .red
     vc.viewDidLoad()
     assertSnapshot(matching: vc, as: .image)
   }
