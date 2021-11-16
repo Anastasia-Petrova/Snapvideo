@@ -15,7 +15,7 @@ final class VideoViewControllerSnapshotTests: XCTestCase {
   var asset: AVAsset!
   
   override func setUp() {
-    let url = Bundle.snapshotTests.url(forResource: "videoTest", withExtension: "mp4")!
+    let url = Bundle.snapshotTests.url(forResource: "videoTest", withExtension: "MOV")!
     print("videoTest:" + url.absoluteString)
     asset = AVAsset(url: url)
   }
@@ -23,6 +23,6 @@ final class VideoViewControllerSnapshotTests: XCTestCase {
   func testVideoViewController() {
     let vc = VideoViewController(asset: asset)
     vc.viewDidLoad()
-    assertSnapshot(matching: vc, as: .wait(for: 5, on: .image))
+    assertSnapshot(matching: vc, as: .wait(for: 2, on: .image))
   }
 }
