@@ -7,10 +7,11 @@ jobs:
       xcode: 12.4.0
     working_directory: /Users/distiller/project
     steps:
-      - run: for ip in $(dig @8.8.8.8 github.com +short); do ssh-keyscan github.com,$ip; ssh-keyscan $ip; done 2>/dev/null >> ~/.ssh/known_hosts || true 
       - checkout
       - run: sudo defaults write com.apple.dt.Xcode IDEPackageSupportUseBuiltinSCM YES
-      - run: rm ~/.ssh/id_rsa || true
+      - run : rm ~/.ssh/id_rsa || true
+      - run: for ip in $(dig @8.8.8.8 bitbucket.org +short); do ssh-keyscan bitbucket.org,$ip; ssh-keyscan $ip; done 2>/dev/null >> ~/.ssh/known_hosts || true 
+      - run: for ip in $(dig @8.8.8.8 github.com +short); do ssh-keyscan github.com,$ip
       - run:
           name: Run Unit Tests
           command: xcodebuild test -scheme Snapvideo -destination 'platform=iOS Simulator,name=iPhone 11,OS=14.4'
