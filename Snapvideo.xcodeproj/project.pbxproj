@@ -13,6 +13,7 @@
 		6D05022623B9154100036D60 /* VideoEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D05022523B9154100036D60 /* VideoEditorViewController.swift */; };
 		6D0A0D732743B5EC00D5FA09 /* AddViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0A0D722743B5EC00D5FA09 /* AddViewExtension.swift */; };
 		6D0A0D792743FFDB00D5FA09 /* SpeedViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0A0D782743FFDB00D5FA09 /* SpeedViewControllerTests.swift */; };
+		6D0A0D8727478EC700D5FA09 /* TrimSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0A0D8627478EC700D5FA09 /* TrimSlider.swift */; };
 		6D0C29C123C28CA5006E7C40 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0C29C023C28CA5006E7C40 /* App.swift */; };
 		6D0C29C423C2A8C1006E7C40 /* AVAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0C29C323C2A8C1006E7C40 /* AVAsset.swift */; };
 		6D154AAE23DC72F900150E0A /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D154AAD23DC72F900150E0A /* Media.xcassets */; };
@@ -146,6 +147,7 @@
 		6D05022523B9154100036D60 /* VideoEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoEditorViewController.swift; sourceTree = "<group>"; };
 		6D0A0D722743B5EC00D5FA09 /* AddViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewExtension.swift; sourceTree = "<group>"; };
 		6D0A0D782743FFDB00D5FA09 /* SpeedViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedViewControllerTests.swift; sourceTree = "<group>"; };
+		6D0A0D8627478EC700D5FA09 /* TrimSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrimSlider.swift; sourceTree = "<group>"; };
 		6D0C29C023C28CA5006E7C40 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		6D0C29C323C2A8C1006E7C40 /* AVAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVAsset.swift; sourceTree = "<group>"; };
 		6D154AAD23DC72F900150E0A /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
@@ -541,6 +543,7 @@
 				6DA974562402BC1B008BCDA8 /* ParameterListView.swift */,
 				6D82F2D627401C47003A70BC /* ParameterValueView.swift */,
 				6D82F2CB273FC91E003A70BC /* SpeedViewController.swift */,
+				6D0A0D8627478EC700D5FA09 /* TrimSlider.swift */,
 			);
 			path = Adjustments;
 			sourceTree = "<group>";
@@ -804,6 +807,7 @@
 				6D2E8A0423CA673A00917E25 /* TabBarItem.swift in Sources */,
 				6D0C29C123C28CA5006E7C40 /* App.swift in Sources */,
 				6D493863259E2EA30066C123 /* ColourCorrectionTool.swift in Sources */,
+				6D0A0D8727478EC700D5FA09 /* TrimSlider.swift in Sources */,
 				6D1D491F23D791EC00ECACE5 /* MonoFilter.swift in Sources */,
 				6D82F2542739CA55003A70BC /* ExposureTool.swift in Sources */,
 				6DDE026523C12A44002D7942 /* Filter.swift in Sources */,
