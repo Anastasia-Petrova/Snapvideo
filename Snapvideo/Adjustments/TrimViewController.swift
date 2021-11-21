@@ -161,11 +161,23 @@ final class TrimViewController: UIViewController {
   
   @objc private func applyTrim() {
     videoViewController.isActivityIndicatorVisible = true
-    guard let asset = videoViewController.player.currentItem?.asset else { return }
-    VideoEditor.trimVideo(asset: asset, startTime: 0.0, endTime: 2.0) { url in
+    guard let asset = videoViewController.player.currentItem?.asset,
+          let session = VideoEditor.trimSession(asset: asset, startTime: 0.0, endTime: 2.0) else {
+      dismiss(animated: true) {
+        self.completion(nil)
+      }
+      return
+    }
+    
+    session.export { result in
       DispatchQueue.main.async {
         self.dismiss(animated: true) {
-          self.completion(url)
+          switch result {
+          case let .success(url):
+            self.completion(url)
+          case .failure:
+            self.completion(nil)
+          }
         }
       }
     }

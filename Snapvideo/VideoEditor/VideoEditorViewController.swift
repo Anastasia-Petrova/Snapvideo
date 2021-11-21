@@ -350,85 +350,86 @@ final class VideoEditorViewController: UIViewController {
         }
     }
     
+    private func handleAdjustmentsResult(_ result: Result<URL, AVAssetExportSession.Error>) {
+        switch result {
+        case let .success(url):
+          self.videoFileAsset = AVAsset(url: url)
+        
+        case let .failure(error):
+          print(error) //TODO: add proper handling
+        }
+    }
+  
     private func presentAdjustmentsScreen(url: URL, tool: ToolEnum) {
         switch tool {
         case let .vignette(tool),
              let .blur(tool):
-            let vc = AdjustmentsViewController(url: url, tool: tool) { [weak self] url in
-                guard let self = self, let url = url else { return }
-                self.videoFileAsset = AVAsset(url: url)
+            let vc = AdjustmentsViewController(url: url, tool: tool) { [weak self] result in
+                self?.handleAdjustmentsResult(result)
             }
             vc.modalTransitionStyle = .crossDissolve
             vc.modalPresentationStyle = .overCurrentContext
             present(vc, animated: true, completion: nil)
             isToolsViewShown = false
         case let .colourCorrection(tool):
-            let vc = AdjustmentsViewController(url: url, tool: tool) { [weak self] url in
-                guard let self = self, let url = url else { return }
-                self.videoFileAsset = AVAsset(url: url)
+            let vc = AdjustmentsViewController(url: url, tool: tool) { [weak self] result in
+                self?.handleAdjustmentsResult(result)
             }
             vc.modalTransitionStyle = .crossDissolve
             vc.modalPresentationStyle = .overCurrentContext
             present(vc, animated: true, completion: nil)
             isToolsViewShown = false
         case let .sharpenTool(tool):
-          let vc = AdjustmentsViewController(url: url, tool: tool) { [weak self] url in
-              guard let self = self, let url = url else { return }
-              self.videoFileAsset = AVAsset(url: url)
+          let vc = AdjustmentsViewController(url: url, tool: tool) { [weak self] result in
+              self?.handleAdjustmentsResult(result)
           }
           vc.modalTransitionStyle = .crossDissolve
           vc.modalPresentationStyle = .overCurrentContext
           present(vc, animated: true, completion: nil)
           isToolsViewShown = false
         case let .exposureTool(tool):
-          let vc = AdjustmentsViewController(url: url, tool: tool) { [weak self] url in
-              guard let self = self, let url = url else { return }
-              self.videoFileAsset = AVAsset(url: url)
+          let vc = AdjustmentsViewController(url: url, tool: tool) { [weak self] result in
+              self?.handleAdjustmentsResult(result)
           }
           vc.modalTransitionStyle = .crossDissolve
           vc.modalPresentationStyle = .overCurrentContext
           present(vc, animated: true, completion: nil)
           isToolsViewShown = false
         case let .noiseReductionTool(tool):
-          let vc = AdjustmentsViewController(url: url, tool: tool) { [weak self] url in
-              guard let self = self, let url = url else { return }
-              self.videoFileAsset = AVAsset(url: url)
+          let vc = AdjustmentsViewController(url: url, tool: tool) { [weak self] result in
+              self?.handleAdjustmentsResult(result)
           }
           vc.modalTransitionStyle = .crossDissolve
           vc.modalPresentationStyle = .overCurrentContext
           present(vc, animated: true, completion: nil)
           isToolsViewShown = false
          case let .highlightShadowTool(tool):
-          let vc = AdjustmentsViewController(url: url, tool: tool) { [weak self] url in
-              guard let self = self, let url = url else { return }
-              self.videoFileAsset = AVAsset(url: url)
+          let vc = AdjustmentsViewController(url: url, tool: tool) { [weak self] result in
+              self?.handleAdjustmentsResult(result)
           }
           vc.modalTransitionStyle = .crossDissolve
           vc.modalPresentationStyle = .overCurrentContext
           present(vc, animated: true, completion: nil)
           isToolsViewShown = false
         case let .vibranceTool(tool):
-          let vc = AdjustmentsViewController(url: url, tool: tool) { [weak self] url in
-              guard let self = self, let url = url else { return }
-              self.videoFileAsset = AVAsset(url: url)
+          let vc = AdjustmentsViewController(url: url, tool: tool) { [weak self] result in
+              self?.handleAdjustmentsResult(result)
           }
           vc.modalTransitionStyle = .crossDissolve
           vc.modalPresentationStyle = .overCurrentContext
           present(vc, animated: true, completion: nil)
           isToolsViewShown = false
         case let .straightenTool(tool):
-          let vc = AdjustmentsViewController(url: url, tool: tool) { [weak self] url in
-              guard let self = self, let url = url else { return }
-              self.videoFileAsset = AVAsset(url: url)
+          let vc = AdjustmentsViewController(url: url, tool: tool) { [weak self] result in
+              self?.handleAdjustmentsResult(result)
           }
           vc.modalTransitionStyle = .crossDissolve
           vc.modalPresentationStyle = .overCurrentContext
           present(vc, animated: true, completion: nil)
           isToolsViewShown = false
         case let .cropTool(tool):
-          let vc = AdjustmentsViewController(url: url, tool: tool) { [weak self] url in
-              guard let self = self, let url = url else { return }
-              self.videoFileAsset = AVAsset(url: url)
+          let vc = AdjustmentsViewController(url: url, tool: tool) { [weak self] result in
+              self?.handleAdjustmentsResult(result)
           }
           vc.modalTransitionStyle = .crossDissolve
           vc.modalPresentationStyle = .overCurrentContext
@@ -448,18 +449,20 @@ final class VideoEditorViewController: UIViewController {
 
         guard let playerItem = videoViewController.player.currentItem else { return }
 
-        VideoEditor.composeVideo(
-            choosenFilter: looksViewController.selectedFilter,
-            asset: playerItem.asset
-        ) { url in
+        VideoEditor
+          .exportSession(filter: looksViewController.selectedFilter, asset: playerItem.asset)?
+          .export { result in
             DispatchQueue.main.async {
                 self.videoViewController.isActivityIndicatorVisible = false
-                guard let fileURL = url as NSURL? else { return }
-
-                let activityVC = UIActivityViewController(activityItems: [fileURL], applicationActivities: nil)
+              switch result {
+              case let .success(url):
+                let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
                 activityVC.setValue("Video", forKey: "subject")
                 activityVC.excludedActivityTypes = [.addToReadingList, .assignToContact]
                 self.present(activityVC, animated: true, completion: nil)
+              case let .failure(error):
+                print(error) //TODO: add proper handling
+              }
             }
         }
     }
@@ -503,7 +506,7 @@ final class VideoEditorViewController: UIViewController {
         videoViewController.isActivityIndicatorVisible = true
         guard let playerItem = videoViewController.player.currentItem else { return }
         VideoEditor.saveEditedVideo(
-            choosenFilter: looksViewController.selectedFilter,
+            filter: looksViewController.selectedFilter,
             asset: playerItem.asset
         ) {
             DispatchQueue.main.async {

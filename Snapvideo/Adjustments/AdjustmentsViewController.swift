@@ -31,7 +31,7 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
     let parameterlistView: ParameterListView
     let sliderView: AdjustmentSliderView
     
-    let completion: (URL?) -> Void
+    let completion: (Result<URL, AVAssetExportSession.Error>) -> Void
     lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?
                                             .withRenderingMode(.alwaysTemplate))
     
@@ -43,7 +43,11 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
         action: #selector(handlePanGesture)
     )
     
-    init(url: URL, tool: SelectedTool, didFinishWithVideoURL completion: @escaping (URL?) -> Void) {
+    init(
+      url: URL,
+      tool: SelectedTool,
+      completion: @escaping (Result<URL, AVAssetExportSession.Error>
+      ) -> Void) {
         self.completion = completion
         asset = AVAsset(url: url)
         self.tool = tool
@@ -217,14 +221,14 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
     @objc private func applyAdjustment() {
         videoViewController.isActivityIndicatorVisible = true
         guard let playerItem = videoViewController.player.currentItem else { return }
-        let asset = playerItem.asset
-        let composition = VideoEditor.setUpComposition(choosenFilter: tool.filter, asset: asset)
-        VideoEditor.performExport(asset: asset, composition: composition) { url in
+        VideoEditor
+          .exportSession(filter: tool.filter, asset: playerItem.asset)?
+          .export { result in
             DispatchQueue.main.async {
-                self.dismiss(animated: true) {
-                    self.completion(url)
-                }
+              self.dismiss(animated: true) {
+                  self.completion(result)
+              }
             }
-        }
+          }
     }
 }

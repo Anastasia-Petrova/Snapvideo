@@ -22,7 +22,7 @@ final class SpeedViewController: UIViewController {
                                           .withRenderingMode(.alwaysTemplate))
   lazy var slowDownItem = getBarButtonItem("backward.fill", action: #selector(slowDown))
   lazy var speedUpItem = getBarButtonItem("forward.fill", action: #selector(speedUp))
-  lazy var doneItem = getBarButtonItem("checkmark", action: #selector(applySpeedUp))
+  lazy var doneItem = getBarButtonItem("checkmark", action: #selector(applySpeedAdjustment))
   let speedLabel = UILabel()
   
   let defaultSpeed = 1.0
@@ -158,20 +158,26 @@ final class SpeedViewController: UIViewController {
     updatePlayerRate()
   }
   
-  @objc private func applySpeedUp() {
-    videoViewController.isActivityIndicatorVisible = true
-    guard let playerItem = videoViewController.player.currentItem else { return }
-    let asset = playerItem.asset
-    guard let mutableComposition = VideoEditor.setUpMutableComposition(
-      asset: asset,
-      mode: getSpeedMode(currentSpeed)
-    ) else {
+  @objc private func applySpeedAdjustment() {
+    guard let playerItem = videoViewController.player.currentItem,
+          let assetWithAdjustedSpeed = playerItem.asset.adjustedSpeed(mode: getSpeedMode(currentSpeed)),
+          let session = VideoEditor.exportSession(asset: assetWithAdjustedSpeed) else {
+      //TODO: Add proper error handling. Result<T, E>
+      dismiss(animated: true) {
+        self.completion(nil)
+      }
       return
     }
-    VideoEditor.performExportWithMutableComposition(asset: asset, composition: mutableComposition) { url in
+    videoViewController.isActivityIndicatorVisible = true
+    session.export { result in
       DispatchQueue.main.async {
         self.dismiss(animated: true) {
-          self.completion(url)
+          switch result {
+          case let .success(url):
+            self.completion(url)
+          case .failure:
+            self.completion(nil)
+          }
         }
       }
     }
