@@ -11,6 +11,7 @@
 		6D01E03823BFA3D600B558E8 /* LooksCollectionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D01E03723BFA3D600B558E8 /* LooksCollectionDataSource.swift */; };
 		6D01E03A23BFC2FE00B558E8 /* AssetImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D01E03923BFC2FE00B558E8 /* AssetImageGenerator.swift */; };
 		6D05022623B9154100036D60 /* VideoEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D05022523B9154100036D60 /* VideoEditorViewController.swift */; };
+		6D0969C7274AD1B900BE0EA1 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 6D0969C6274AD1B900BE0EA1 /* SnapshotTesting */; };
 		6D0A0D732743B5EC00D5FA09 /* AddViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0A0D722743B5EC00D5FA09 /* AddViewExtension.swift */; };
 		6D0A0D792743FFDB00D5FA09 /* SpeedViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0A0D782743FFDB00D5FA09 /* SpeedViewControllerTests.swift */; };
 		6D0A0D8727478EC700D5FA09 /* TrimSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0A0D8627478EC700D5FA09 /* TrimSlider.swift */; };
@@ -60,7 +61,6 @@
 		6D66487B23EDFC9C002AAF2E /* ToolsCollectionViewCellSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBA80D523EDA155005A585E /* ToolsCollectionViewCellSnapshotTests.swift */; };
 		6D66487C23EDFC9C002AAF2E /* VideoEditorViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC05F9B23EC350200A96B76 /* VideoEditorViewControllerSnapshotTests.swift */; };
 		6D66487E23EDFD34002AAF2E /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D66487D23EDFD34002AAF2E /* Bundle.swift */; };
-		6D66488123EDFE7B002AAF2E /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 6D66488023EDFE7B002AAF2E /* SnapshotTesting */; };
 		6D73068423D06BE300226C77 /* SaveCopyVideoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D73068323D06BE300226C77 /* SaveCopyVideoButton.swift */; };
 		6D82F24A2739C3D0003A70BC /* SharpFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D82F2492739C3D0003A70BC /* SharpFilter.swift */; };
 		6D82F24F2739C801003A70BC /* ExposureFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D82F24E2739C801003A70BC /* ExposureFilter.swift */; };
@@ -281,7 +281,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D66488123EDFE7B002AAF2E /* SnapshotTesting in Frameworks */,
+				6D0969C7274AD1B900BE0EA1 /* SnapshotTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -669,6 +669,8 @@
 			dependencies = (
 			);
 			name = Snapvideo;
+			packageProductDependencies = (
+			);
 			productName = VideoTest;
 			productReference = 6D17A7DD23ABB39100C70542 /* Snapvideo.app */;
 			productType = "com.apple.product-type.application";
@@ -708,7 +710,7 @@
 			);
 			name = SnapshotTests;
 			packageProductDependencies = (
-				6D66488023EDFE7B002AAF2E /* SnapshotTesting */,
+				6D0969C6274AD1B900BE0EA1 /* SnapshotTesting */,
 			);
 			productName = SnapshotTests;
 			productReference = 6D66486D23EDF9A5002AAF2E /* SnapshotTests.xctest */;
@@ -747,7 +749,7 @@
 			);
 			mainGroup = 6D17A7D423ABB39100C70542;
 			packageReferences = (
-				6D66487F23EDFE7B002AAF2E /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
+				6D0969C5274AD1B900BE0EA1 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
 			);
 			productRefGroup = 6D17A7DE23ABB39100C70542 /* Products */;
 			projectDirPath = "";
@@ -1353,20 +1355,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		6D66487F23EDFE7B002AAF2E /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
+		6D0969C5274AD1B900BE0EA1 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.7.1;
+				minimumVersion = 1.9.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		6D66488023EDFE7B002AAF2E /* SnapshotTesting */ = {
+		6D0969C6274AD1B900BE0EA1 /* SnapshotTesting */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6D66487F23EDFE7B002AAF2E /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			package = 6D0969C5274AD1B900BE0EA1 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
 			productName = SnapshotTesting;
 		};
 /* End XCSwiftPackageProductDependency section */
