@@ -18,7 +18,7 @@ final class AdjustViewControllerSnapshotTests: XCTestCase {
       return
     }
     let url = URL(fileURLWithPath: path)
-    let vc = AdjustmentsViewController(url: url, tool: tool, didFinishWithVideoURL: { _ in })
+    let vc = AdjustmentsViewController(url: url, tool: tool) { _ in }
     vc.view.backgroundColor = .red
     assertSnapshot(matching: vc, as: .image)
   }

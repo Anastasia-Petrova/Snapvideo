@@ -11,11 +11,8 @@ import SnapshotTesting
 @testable import Snapvideo
 
 final class SpeedViewControllerSnapshotTests: XCTestCase {
-  func testSpeedViewController() {
-    guard let path = Bundle.snapshotTests.path(forResource: "videoTest", ofType:"MOV") else {
-        XCTFail("testVideo.MOV not found")
-        return
-    }
+  func testSpeedViewController() throws {
+    let path = try XCTUnwrap(Bundle.snapshotTests.path(forResource: "videoTest", ofType:"MOV"))
     let url = URL(fileURLWithPath: path)
     let vc = SpeedViewController(url: url) { _ in }
     vc.view.layer.borderColor = UIColor.red.cgColor
