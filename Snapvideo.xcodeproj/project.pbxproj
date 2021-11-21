@@ -288,6 +288,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6D0A0D8E274A718F00D5FA09 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				6DBA80C923EC4433005A585E /* WaitExtension.swift */,
+				6D0A0D722743B5EC00D5FA09 /* AddViewExtension.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		6D0C29C223C2A8B5006E7C40 /* Extenstions */ = {
 			isa = PBXGroup;
 			children = (
@@ -432,6 +441,7 @@
 				6D3ED568240312670072BC29 /* Adjustments */,
 				6DB0699123EF53310088F4B7 /* Assets */,
 				6D1F221827330DDE00F3BF21 /* Export */,
+				6D0A0D8E274A718F00D5FA09 /* Helpers */,
 				6D66488423EE02CC002AAF2E /* LooksCollection */,
 				6D66488523EE02DA002AAF2E /* ToolsCollection */,
 				6D66488623EE02EC002AAF2E /* VideoEditor */,
@@ -439,8 +449,6 @@
 				6DD4192F23F9A7FF005A2706 /* VideoViewControllerSnapshotTests.swift */,
 				6D66487D23EDFD34002AAF2E /* Bundle.swift */,
 				6D66487123EDF9A5002AAF2E /* Info.plist */,
-				6DBA80C923EC4433005A585E /* WaitExtension.swift */,
-				6D0A0D722743B5EC00D5FA09 /* AddViewExtension.swift */,
 			);
 			path = SnapshotTests;
 			sourceTree = "<group>";

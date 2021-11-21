@@ -13,11 +13,8 @@ import XCTest
 final class SpeedViewControllerTests: XCTestCase {
   var vc: SpeedViewController!
   
-  override func setUp() {
-    guard let path = Bundle.unitTests.path(forResource: "videoTest", ofType:"MOV") else {
-        XCTFail("testVideo.MOV not found")
-        return
-    }
+  override func setUpWithError() throws {
+    let path = try XCTUnwrap(Bundle.unitTests.path(forResource: "videoTest", ofType:"MOV"))
     vc = SpeedViewController(url: URL(fileURLWithPath: path)) { _ in }
   }
 
@@ -28,31 +25,37 @@ final class SpeedViewControllerTests: XCTestCase {
   func test_isSpeedUpEnabled_when_currentSpeed_isEqualToDefautSpeed() {
     vc.currentSpeed = 1.0
     XCTAssertTrue(vc.isSpeedUpEnabled)
+    XCTAssertTrue(vc.isSlowDownEnabled)
   }
   
   func test_isSpeedUpEnabled_when_currentSpeed_isLowerThanMaxSpeed() {
     vc.currentSpeed = 1.25
     XCTAssertTrue(vc.isSpeedUpEnabled)
+    XCTAssertTrue(vc.isSlowDownEnabled)
   }
   
   func test_isSpeedUpEnabled_when_currentSpeed_isHigherThanMaxSpeed() {
     vc.currentSpeed = 2.25
     XCTAssertFalse(vc.isSpeedUpEnabled)
+    XCTAssertTrue(vc.isSlowDownEnabled)
   }
   
   func test_isSlowDownEnabled_when_currentSpeed_isEqualToDefautSpeed() {
     vc.currentSpeed = 1.0
     XCTAssertTrue(vc.isSlowDownEnabled)
+    XCTAssertTrue(vc.isSpeedUpEnabled)
   }
   
   func test_isSlowDownEnabled_when_currentSpeed_isHigherThanMinSpeed() {
     vc.currentSpeed = 0.75
     XCTAssertTrue(vc.isSlowDownEnabled)
+    XCTAssertTrue(vc.isSpeedUpEnabled)
   }
   
   func test_isSlowDownEnabled_when_currentSpeed_isLowerThanMinSpeed() {
     vc.currentSpeed = 0.0
     XCTAssertFalse(vc.isSlowDownEnabled)
+    XCTAssertTrue(vc.isSpeedUpEnabled)
   }
   
   func test_getSpeedMode_when_speed_isLowerThanDefaultSpeed() {
@@ -67,7 +70,7 @@ final class SpeedViewControllerTests: XCTestCase {
     XCTAssertEqual(vc.currentSpeed, 1.0, "precondition")
     XCTAssertEqual(vc.videoViewController.player.rate, 0.0, "precondition")
     
-    _ = vc.speedUpItem.target?.perform(vc.speedUpItem.action)
+    vc.speedUpItem.tap()
     
     XCTAssertEqual(vc.currentSpeed, 1.25)
     XCTAssertEqual(vc.videoViewController.player.rate, 1.25)
@@ -77,7 +80,7 @@ final class SpeedViewControllerTests: XCTestCase {
     XCTAssertEqual(vc.videoViewController.player.rate, 0.0, "precondition")
     vc.currentSpeed = 2.0
     
-    _ = vc.speedUpItem.target?.perform(vc.speedUpItem.action)
+    vc.speedUpItem.tap()
     
     XCTAssertEqual(vc.currentSpeed, 2.0)
     XCTAssertEqual(vc.videoViewController.player.rate, 0.0)
@@ -87,7 +90,7 @@ final class SpeedViewControllerTests: XCTestCase {
     XCTAssertEqual(vc.currentSpeed, 1.0, "precondition")
     XCTAssertEqual(vc.videoViewController.player.rate, 0.0, "precondition")
     
-    _ = vc.slowDownItem.target?.perform(vc.slowDownItem.action)
+    vc.slowDownItem.tap()
     
     XCTAssertEqual(vc.currentSpeed, 0.75)
     XCTAssertEqual(vc.videoViewController.player.rate, 0.75)
@@ -97,7 +100,7 @@ final class SpeedViewControllerTests: XCTestCase {
     XCTAssertEqual(vc.videoViewController.player.rate, 0.0, "precondition")
     vc.currentSpeed = 0.25
     
-    _ = vc.speedUpItem.target?.perform(vc.slowDownItem.action)
+    vc.slowDownItem.tap()
     
     XCTAssertEqual(vc.currentSpeed, 0.25)
     XCTAssertEqual(vc.videoViewController.player.rate, 0.0)
