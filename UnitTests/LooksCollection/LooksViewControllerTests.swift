@@ -38,7 +38,10 @@ final class LooksViewControllerTests: XCTestCase {
         var actualSelectedIndex: Int?
         var actualPreviousIndex: Int?
         
-        let vc = LooksViewController(itemSize: .zero, selectedFilterIndex: 0, filters: [])
+        let vc = LooksViewController(itemSize: .zero, selectedFilterIndex: 0, filters: [
+            PassthroughFilter(),
+            PassthroughFilter()
+        ])
         vc.didSelectLook = { selectedIndex, previousIndex in
             actualSelectedIndex = selectedIndex
             actualPreviousIndex = previousIndex
