@@ -26,7 +26,7 @@ final class SpeedViewController: UIViewController {
   let speedLabel = UILabel()
   
   let defaultSpeed = 1.0
-  let maxSpeed = 2.00
+  let maxSpeed = 1.75
   let minSpeed = 0.25
   let step = 0.25
   
