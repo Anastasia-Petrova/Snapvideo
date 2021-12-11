@@ -26,7 +26,7 @@ extension Tool {
 
 enum ToolEnum: Equatable {
     case vignette(tool: VignetteTool)
-    case colourCorrection(tool: ColourCorrectionTool)
+    case colourCorrection(tool: LightTool)
     case blur(tool: VignetteTool)
     case sharpenTool(tool: SharpenTool)
     case exposureTool(tool: ExposureTool)

@@ -20,12 +20,44 @@ struct ColorControlFilter: Filter, Equatable {
         [
             kCIInputImageKey:  image,
             kCIInputSaturationKey : NSNumber(floatLiteral: inputSaturation),
-            kCIInputBrightnessKey : NSNumber(floatLiteral:inputBrightness),
-            kCIInputContrastKey : NSNumber(floatLiteral:inputContrast)
+            kCIInputBrightnessKey : NSNumber(floatLiteral: inputBrightness),
+            kCIInputContrastKey : NSNumber(floatLiteral: inputContrast)
         ]
     }
     
     func apply(image: CIImage) -> CIImage {
         filter.createOutputImage(for: parameters(with: image)) ?? image
+    }
+}
+
+struct LightFilter: Filter, Equatable {
+    let name: String = "Light Control"
+    
+    private var colorControlFilter = ColorControlFilter(
+        inputSaturation: 1.0,
+        inputBrightness: 0.0,
+        inputContrast: 1.0
+    )
+    
+    var inputBrightness: Double {
+        get {
+            colorControlFilter.inputBrightness
+        }
+        set {
+            colorControlFilter.inputBrightness = newValue
+        }
+    }
+    
+    var inputContrast: Double {
+        get {
+            colorControlFilter.inputContrast
+        }
+        set {
+            colorControlFilter.inputContrast = newValue
+        }
+    }
+    
+    func apply(image: CIImage) -> CIImage {
+        colorControlFilter.apply(image: image)
     }
 }

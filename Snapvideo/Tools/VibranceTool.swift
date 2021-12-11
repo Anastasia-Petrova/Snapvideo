@@ -17,7 +17,13 @@ struct VibranceTool: Tool {
   
     let icon = ImageAsset.Tools.vibrance
     
-    private(set) var filter = VibranceFilter(vibrance: 0)
+    var filter: CompositeFilter {
+        vibranceFilter + saturationFilter
+    }
+    
+    private(set) var vibranceFilter = VibranceFilter(vibrance: 0)
+    
+    private(set) var saturationFilter = SaturationFilter()
     
     func apply(image: CIImage) -> CIImage {
         filter.apply(image: image)
@@ -30,14 +36,18 @@ extension VibranceTool: Parameterized {
     func value(for parameter: Parameter) -> Double {
         switch parameter {
         case .vibrance:
-            return filter.vibrance * parameter.k
+            return vibranceFilter.vibrance * parameter.k
+        case .saturation:
+            return (saturationFilter.inputSaturation - 1) * parameter.k
         }
     }
     
     mutating func setValue(value: Double, for parameter: Parameter) {
         switch parameter {
         case .vibrance:
-            filter.vibrance = value / parameter.k
+            vibranceFilter.vibrance = value / parameter.k
+        case .saturation:
+            saturationFilter.inputSaturation = value / parameter.k + 1
         }
     }
     
@@ -45,12 +55,16 @@ extension VibranceTool: Parameterized {
         switch parameter {
         case .vibrance:
             return -1.0 * parameter.k
+        case .saturation:
+            return -1.0 * parameter.k
         }
     }
     
     func maxValue(for parameter: Parameter) -> Double {
         switch parameter {
         case .vibrance:
+            return 1.0 * parameter.k
+        case .saturation:
             return 1.0 * parameter.k
         }
     }
@@ -67,10 +81,13 @@ extension VibranceTool: Parameterized {
 extension VibranceTool {
     enum Parameter: String, CaseIterable {
         case vibrance
+        case saturation
         
         var k: Double {
             switch self {
             case .vibrance:
+                return 100.0
+            case .saturation:
                 return 100.0
             }
         }
