@@ -14,7 +14,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     let center = UNUserNotificationCenter.current()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        setupNotifications()
         return true
     }
     
@@ -24,7 +23,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
     
-    private func setupNotifications() {
+    func setupNotifications(_ completion: @escaping (Bool) -> Void) {
         center.delegate = self
         let options: UNAuthorizationOptions = [.alert, .sound]
         center.requestAuthorization(options: options) {
@@ -32,6 +31,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             if !granted {
                 print("Something went wrong")
             }
+            completion(granted)
         }
         center.getNotificationSettings { (settings) in
             if settings.authorizationStatus != .authorized {
@@ -84,3 +84,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 }
 
+var appDelegate: AppDelegate {
+    UIApplication.shared.delegate as! AppDelegate
+}

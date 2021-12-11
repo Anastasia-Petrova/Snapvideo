@@ -18,7 +18,6 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-//        self.navigationController?.navigationBar.backgroundColor = .white
         self.navigationController?.navigationBar.barTintColor = .white
         self.navigationController?.hideHairline()
         setUpStackView()

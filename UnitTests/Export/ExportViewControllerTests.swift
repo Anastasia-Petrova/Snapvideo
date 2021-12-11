@@ -22,7 +22,7 @@ class ExportViewControllerTests: XCTestCase {
   
   func test_saveVideoCopy() {
     var capturedActions: [ExportAction] = []
-    exportVC.didTapEportViewButton = { action in
+    exportVC.didTapExportViewButton = { action in
       capturedActions.append(action)
     }
     
@@ -34,7 +34,7 @@ class ExportViewControllerTests: XCTestCase {
   
   func test_openActivityView() {
     var capturedActions: [ExportAction] = []
-    exportVC.didTapEportViewButton = { action in
+    exportVC.didTapExportViewButton = { action in
       capturedActions.append(action)
     }
     

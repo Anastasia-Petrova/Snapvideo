@@ -16,7 +16,7 @@ final class ExportViewController: UIViewController {
   let shareStackView = UIStackView()
   let saveCopyStackView = UIStackView()
   let exportPanel = UIView()
-  var didTapEportViewButton: Callback?
+  var didTapExportViewButton: Callback?
   
   init() {
     super.init(nibName: nil, bundle: nil)
@@ -151,11 +151,11 @@ final class ExportViewController: UIViewController {
   }
   
   @objc func openActivityView() {
-    didTapEportViewButton?(.openActivityView)
+    didTapExportViewButton?(.openActivityView)
   }
   
   @objc func saveVideoCopy() {
-    didTapEportViewButton?(.saveVideoCopy)
+    didTapExportViewButton?(.saveVideoCopy)
   }
 }
 

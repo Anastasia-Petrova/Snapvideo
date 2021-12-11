@@ -138,7 +138,7 @@ final class VideoEditorViewController: UIViewController {
         toolsViewController.didSelectToolCallback = { [weak self] index in
             self?.presentAdjustmentsScreen(url: url, tool: tools[index])
         }
-        exportViewController.didTapEportViewButton = { [weak self] action in
+        exportViewController.didTapExportViewButton = { [weak self] action in
           switch action {
           case .openActivityView:
             self?.openActivityView()
@@ -487,16 +487,9 @@ final class VideoEditorViewController: UIViewController {
     }
     
     func saveVideoCopy() {
-        PHPhotoLibrary.requestAuthorization { [weak self] status in
-            switch status {
-            case .authorized:
-                DispatchQueue.main.async {
-                    self?.saveVideoToPhotos()
-                }
-            default:
-                //TODO: properly handle this. Show error, send to settings, etc.
-                print("Photos permissions not granted.")
-                return
+        appDelegate.setupNotifications { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.saveVideoToPhotos()
             }
         }
     }
