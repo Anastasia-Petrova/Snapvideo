@@ -133,7 +133,16 @@ extension App {
             MonochromeFilter(),
             NoirFilter()
         ],
-        tools: [.vignette(tool: VignetteTool())]
+        tools: [
+          .vignette(tool: VignetteTool()),
+          .colourCorrection(tool: LightTool()),
+          .exposureTool(tool: ExposureTool()),
+          .noiseReductionTool(tool: NoiseReductionTool()),
+          .highlightShadowTool(tool: HighlightShadowTool()),
+          .vibranceTool(tool: VibranceTool()),
+          .straightenTool(tool: StraightenTool()),
+          .speed
+        ]
     )
     
     static let unitTests = App(

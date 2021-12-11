@@ -65,7 +65,7 @@ extension ToolsViewController: UICollectionViewDelegate {
 extension ToolsViewController {
     func getContainerHeight(forWidth width: CGFloat) -> CGFloat {
         let itemSize = ToolsCollectionViewLayout.getItemSize(containerWidth: width)
-        let numberOfRows = dataSource.tools.count/ToolsCollectionViewLayout.numberOfItemsInRow
+        let numberOfRows = max(1, dataSource.tools.count/ToolsCollectionViewLayout.numberOfItemsInRow)
         return itemSize.height * CGFloat(numberOfRows) + ToolsCollectionViewLayout.spacing * 2
     }
 }

@@ -35,6 +35,14 @@ final class VideoEditorViewControllerSnapshotTests: XCTestCase {
     vc.closeLooks()
     assertSnapshot(matching: vc, as: .image)
   }
+    
+  func testVideoEditorViewController_openTools_withTwoRows() throws {
+    let vc = try makeVideoEditorViewController(tools: App.snapshotTests.tools)
+    vc.view.backgroundColor = .red
+    
+    vc.openTools()
+    assertSnapshot(matching: vc, as: .image)
+  }
   
   func testVideoEditorViewController_openTools_and_closeTools_set_correct_constraints() {
     vc.view.backgroundColor = .red
@@ -56,14 +64,16 @@ final class VideoEditorViewControllerSnapshotTests: XCTestCase {
     assertSnapshot(matching: vc, as: .image)
   }
   
-  func makeVideoEditorViewController() throws -> VideoEditorViewController {
+  func makeVideoEditorViewController(
+    tools: [ToolEnum] = [.vignette(tool: VignetteTool())]
+  ) throws -> VideoEditorViewController {
     let path = try XCTUnwrap(Bundle.snapshotTests.path(forResource: "videoTest", ofType:"MOV"))
     let url = URL(fileURLWithPath: path)
     return VideoEditorViewController(
       url: url,
       selectedFilterIndex: 0,
       filters: [PassthroughFilter()],
-      tools: [.vignette(tool: VignetteTool())]
+      tools: tools
     )
   }
 }
