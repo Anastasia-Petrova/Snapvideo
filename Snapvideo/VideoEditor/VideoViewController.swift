@@ -90,18 +90,18 @@ final class VideoViewController: UIViewController {
     
     func setUpResumeButton() {
         let stackView = UIStackView(arrangedSubviews: [resumeImageView, activityIndicator])
+        stackView.isUserInteractionEnabled = false
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         view.addSubview(stackView)
         
         NSLayoutConstraint.activate([
-            stackView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-            stackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             resumeImageView.heightAnchor.constraint(equalToConstant: 70),
             resumeImageView.widthAnchor.constraint(equalToConstant: 70)
         ])
         resumeImageView.tintColor = .white
-        resumeImageView.isUserInteractionEnabled = false
         resumeImageView.isHidden = false
         
         activityIndicator.color = .systemBlue
