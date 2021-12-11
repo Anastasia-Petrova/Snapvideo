@@ -200,9 +200,9 @@ final class VideoEditorViewController: UIViewController {
     func setUpVideoViewController() {
         videoViewController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate ([
-            videoViewController.view.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            videoViewController.view.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-            videoViewController.view.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            videoViewController.view.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            videoViewController.view.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            videoViewController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tabBar.topAnchor.constraint(greaterThanOrEqualTo: videoViewController.view.bottomAnchor)
         ])
     }

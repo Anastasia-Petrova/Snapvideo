@@ -71,8 +71,8 @@ final class VideoViewController: UIViewController {
     func setUpBackgroundView() {
         backgroundVideoView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            view.leftAnchor.constraint(equalTo: backgroundVideoView.leftAnchor),
-            view.rightAnchor.constraint(equalTo: backgroundVideoView.rightAnchor),
+            view.leadingAnchor.constraint(equalTo: backgroundVideoView.leadingAnchor),
+            view.trailingAnchor.constraint(equalTo: backgroundVideoView.trailingAnchor),
             backgroundVideoView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             backgroundVideoView.topAnchor.constraint(equalTo: view.topAnchor)])
     }

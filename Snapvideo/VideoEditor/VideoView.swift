@@ -44,6 +44,7 @@ final class VideoView: UIView {
         displayLink?.preferredFramesPerSecond = preferredFramesPerSecond
         displayLink?.add(to: .main, forMode: .common)
         layer.contentsGravity = contentsGravity
+        layer.masksToBounds = true
     }
     
     required init?(coder: NSCoder) {
