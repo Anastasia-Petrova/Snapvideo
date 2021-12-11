@@ -10,10 +10,6 @@ import Foundation
 import UIKit
 import CoreImage
 
-import Foundation
-import UIKit
-import CoreImage
-
 struct HighlightShadowTool: Tool {
     static func == (lhs: HighlightShadowTool, rhs: HighlightShadowTool) -> Bool {
       lhs.icon == rhs.icon
@@ -21,7 +17,7 @@ struct HighlightShadowTool: Tool {
   
     let icon = ImageAsset.Tools.highlights
     
-    private(set) var filter = HighlightShadowFilter(highlight: 0, shadow: 0)
+    private(set) var filter = HighlightShadowFilter(highlight: 1, shadow: 0, radius: 0)
     
     func apply(image: CIImage) -> CIImage {
         filter.apply(image: image)
@@ -35,6 +31,8 @@ extension HighlightShadowTool: Parameterized {
         switch parameter {
         case .highlight:
             return filter.highlight * parameter.k
+        case .radius:
+            return filter.radius * parameter.k
         case .shadow:
             return filter.shadow * parameter.k
         }
@@ -44,6 +42,8 @@ extension HighlightShadowTool: Parameterized {
         switch parameter {
         case .highlight:
             filter.highlight = value / parameter.k
+        case .radius:
+            filter.radius = value / parameter.k
         case .shadow:
             filter.shadow = value / parameter.k
         }
@@ -51,15 +51,20 @@ extension HighlightShadowTool: Parameterized {
     
     func minValue(for parameter: Parameter) -> Double {
         switch parameter {
-        case .highlight, .shadow:
+        case .highlight, .radius:
+            return 0.0 * parameter.k
+        case .shadow:
             return -1.0 * parameter.k
         }
     }
     
     func maxValue(for parameter: Parameter) -> Double {
         switch parameter {
-        case .highlight, .shadow:
+        case .highlight,
+                .shadow:
             return 1.0 * parameter.k
+        case .radius:
+            return 10.0 * parameter.k
         }
     }
     
@@ -76,11 +81,16 @@ extension HighlightShadowTool {
     enum Parameter: String, CaseIterable {
         case highlight
         case shadow
+        case radius
         
         var k: Double {
             switch self {
-            case .highlight, .shadow:
+            case .highlight,
+                    .shadow:
                 return 100.0
+                
+            case .radius:
+                return 10.0
             }
         }
     }

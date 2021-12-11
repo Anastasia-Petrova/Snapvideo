@@ -15,7 +15,7 @@ func assertEqual(_ image1: UIImage, _ image2: UIImage, file: StaticString = #fil
 }
 
 extension UIBarButtonItem {
-  @discardableResult func tap() {
-    target?.perform(action)
+  func tap() {
+    _ = target?.perform(action)
   }
 }

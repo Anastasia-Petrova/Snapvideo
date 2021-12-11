@@ -13,6 +13,7 @@ struct HighlightShadowFilter: Filter {
     let name: String = "HighlightShadow"
     var highlight: Double
     var shadow: Double
+    var radius: Double
     
     func apply(image: CIImage) -> CIImage {
         let optionalHighlightShadowFilter = CIFilter(name: "CIHighlightShadowAdjust")
@@ -20,8 +21,9 @@ struct HighlightShadowFilter: Filter {
             return image
         }
         highlightShadowFilter.setValue(image, forKey: kCIInputImageKey)
-        highlightShadowFilter.setValue(highlight, forKey:"inputHighlightAmount")
-        highlightShadowFilter.setValue(shadow, forKey:"inputShadowAmount")
+        highlightShadowFilter.setValue(highlight, forKey: "inputHighlightAmount")
+        highlightShadowFilter.setValue(shadow, forKey: "inputShadowAmount")
+        highlightShadowFilter.setValue(radius, forKey: kCIInputRadiusKey)
       
         return highlightShadowFilter.outputImage ?? image
     }
