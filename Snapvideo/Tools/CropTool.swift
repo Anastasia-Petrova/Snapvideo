@@ -16,8 +16,9 @@ struct CropTool: Tool {
     }
   
     let icon = ImageAsset.Tools.crop
+    let name = "Crop"
     
-  private(set) var filter = CropFilter(x: 0, y: 0, width: 700, height: 1400)
+    private(set) var filter = CropFilter(x: 0, y: 0, width: 700, height: 1400)
     
     func apply(image: CIImage) -> CIImage {
         filter.apply(image: image)

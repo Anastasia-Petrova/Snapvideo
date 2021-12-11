@@ -16,6 +16,7 @@ struct HighlightShadowTool: Tool {
     }
   
     let icon = ImageAsset.Tools.highlights
+    let name = "Tonal Contrast"
     
     private(set) var filter = HighlightShadowFilter(highlight: 1, shadow: 0, radius: 0)
     

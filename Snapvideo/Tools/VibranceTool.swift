@@ -16,6 +16,7 @@ struct VibranceTool: Tool {
     }
   
     let icon = ImageAsset.Tools.vibrance
+    let name = "Color"
     
     var filter: CompositeFilter {
         vibranceFilter + saturationFilter

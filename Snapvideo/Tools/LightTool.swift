@@ -11,6 +11,7 @@ import CoreImage
 
 struct LightTool: Tool {
     let icon = ImageAsset.Tools.tune
+    let name = "Light"
     
     var filter: CompositeFilter {
         temperatureFilter + lightFilter

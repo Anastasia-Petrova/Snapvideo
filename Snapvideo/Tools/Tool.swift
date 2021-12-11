@@ -16,12 +16,13 @@ protocol Tool: CustomStringConvertible, Equatable, Parameterized {
     
     var filter: F { get }
     var icon: Icon { get }
+    var name: String { get }
     
     func apply(image: CIImage) -> CIImage
 }
 
 extension Tool {
-    var description: String { icon.description }
+    var description: String { name }
 }
 
 enum ToolEnum: Equatable {
@@ -41,23 +42,23 @@ enum ToolEnum: Equatable {
         switch self {
         case let .vignette(tool),
              let .blur(tool):
-            return tool.description
+            return tool.name
         case let .colourCorrection(tool):
-            return tool.description
+            return tool.name
         case let .sharpenTool(tool):
-            return tool.description
+            return tool.name
         case let .exposureTool(tool):
-            return tool.description
+            return tool.name
         case let .noiseReductionTool(tool):
-            return tool.description
+            return tool.name
         case let .highlightShadowTool(tool):
-            return tool.description
+            return tool.name
         case let .vibranceTool(tool):
-            return tool.description
+            return tool.name
         case let .straightenTool(tool):
-            return tool.description
+            return tool.name
         case let .cropTool(tool):
-            return tool.description
+            return tool.name
         case .speed:
             return "Speed"
         }

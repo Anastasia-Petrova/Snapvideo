@@ -16,6 +16,7 @@ struct StraightenTool: Tool {
     }
   
     let icon = ImageAsset.Tools.straighten
+    let name = "Straighten"
     
     private(set) var filter = StraightenFilter(angle: 0)
     

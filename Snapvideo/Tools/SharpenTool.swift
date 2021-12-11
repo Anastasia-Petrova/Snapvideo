@@ -14,6 +14,7 @@ struct SharpenTool: Tool {
     }
   
     let icon = ImageAsset.Tools.details
+    let name = "Details"
     
     private(set) var filter = SharpFilter(sharpness: 0)
     

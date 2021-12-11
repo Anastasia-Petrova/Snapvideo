@@ -38,7 +38,7 @@ final class ToolsViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         if let toolsLayout = collectionView.collectionViewLayout as? ToolsCollectionViewLayout {
-            toolsLayout.setWidth(width: view.frame.width)
+            toolsLayout.setContainerWidth(view.frame.width)
         }
     }
     
@@ -59,5 +59,13 @@ final class ToolsViewController: UIViewController {
 extension ToolsViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         didSelectToolCallback?(indexPath.row)
+    }
+}
+
+extension ToolsViewController {
+    func getContainerHeight(forWidth width: CGFloat) -> CGFloat {
+        let itemSize = ToolsCollectionViewLayout.getItemSize(containerWidth: width)
+        let numberOfRows = dataSource.tools.count/ToolsCollectionViewLayout.numberOfItemsInRow
+        return itemSize.height * CGFloat(numberOfRows) + ToolsCollectionViewLayout.spacing * 2
     }
 }

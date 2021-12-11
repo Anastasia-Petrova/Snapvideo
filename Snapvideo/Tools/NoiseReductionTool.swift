@@ -16,6 +16,7 @@ struct NoiseReductionTool: Tool {
     }
   
     let icon = ImageAsset.Tools.details
+    let name = "Noise Reduction"
     
     private(set) var filter = NoiseReductionFilter(noise: 0, sharpness: 0)
     

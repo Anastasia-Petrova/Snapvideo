@@ -22,16 +22,15 @@ final class ToolsCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         let stackView = UIStackView(arrangedSubviews: [
             toolImageView,
-            toolName,
-            UIView()
+            toolName
         ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.addSubview(stackView)
+        contentView.addSubview(stackView)
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            stackView.bottomAnchor.constraint(greaterThanOrEqualTo: contentView.bottomAnchor),
             toolImageView.heightAnchor.constraint(equalTo: toolImageView.widthAnchor),
             toolImageView.widthAnchor.constraint(equalToConstant: frame.width * 0.5)
         ])
@@ -42,6 +41,7 @@ final class ToolsCollectionViewCell: UICollectionViewCell {
         toolName.font = UIFont.systemFont(ofSize: 14)
         toolName.numberOfLines = 0
         toolName.textAlignment = .center
+        toolName.lineBreakMode = .byWordWrapping
         toolImageView.contentMode = .scaleAspectFill
         toolImageView.clipsToBounds = true
     }

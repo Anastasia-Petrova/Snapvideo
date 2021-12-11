@@ -16,6 +16,7 @@ struct VignetteTool: Tool {
     }
   
     let icon = ImageAsset.Tools.vignette
+    let name = "Vignette"
     
     private(set) var filter = VignetteFilter(radius: 0, intensity: 0)
     

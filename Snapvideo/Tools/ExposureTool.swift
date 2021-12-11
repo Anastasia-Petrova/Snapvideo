@@ -14,6 +14,7 @@ struct ExposureTool: Tool {
     }
   
     let icon = ImageAsset.Tools.exposure
+    let name = "Exposure"
     
     private(set) var filter = ExposureFilter(exposure: 0)
     

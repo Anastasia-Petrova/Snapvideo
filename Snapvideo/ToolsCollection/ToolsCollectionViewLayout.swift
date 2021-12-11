@@ -10,26 +10,31 @@ import UIKit
 
 final class ToolsCollectionViewLayout: UICollectionViewFlowLayout {
     static let spacing: CGFloat = 20.0
+    static let numberOfItemsInRow: Int = 4
     
     override init() {
         super.init()
-        self.itemSize = .zero
-        self.sectionInset = UIEdgeInsets(
+        itemSize = .zero
+        sectionInset = UIEdgeInsets(
             top: Self.spacing,
             left: Self.spacing,
             bottom: Self.spacing,
             right: Self.spacing
         )
-        self.minimumLineSpacing = Self.spacing/2.0
-        self.scrollDirection = .vertical
+        minimumLineSpacing = Self.spacing/2.0
+        scrollDirection = .vertical
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setWidth(width: CGFloat) {
-        let itemWidth = (width - Self.spacing * 5)/4.0
-        self.itemSize = CGSize(width: itemWidth, height: itemWidth * 1.2)
+    func setContainerWidth(_ width: CGFloat) {
+        itemSize = Self.getItemSize(containerWidth: width)
+    }
+    
+    static func getItemSize(containerWidth width: CGFloat) -> CGSize {
+        let itemWidth = (width - spacing * 5)/CGFloat(numberOfItemsInRow)
+        return CGSize(width: itemWidth, height: itemWidth * 1.2)
     }
 }

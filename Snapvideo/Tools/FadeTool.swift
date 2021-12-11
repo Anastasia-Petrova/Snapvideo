@@ -12,9 +12,9 @@ import CoreImage
 
 struct FadeTool {
     let icon = ImageAsset.Tools.fade
+    let name = "Fade"
     
     func apply(image: CIImage) -> CIImage {
-        
         return image
     }
 }
