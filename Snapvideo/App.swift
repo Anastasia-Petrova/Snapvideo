@@ -42,7 +42,7 @@ extension App {
         .highlightShadowTool(tool: HighlightShadowTool()),
         .vibranceTool(tool: VibranceTool()),
         .straightenTool(tool: StraightenTool()),
-        .cropTool(tool: CropTool())
+        .speed
       ]
     )
     

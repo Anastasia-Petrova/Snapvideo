@@ -16,7 +16,7 @@ final class SpeedViewController: UIViewController {
   )
   let asset: AVAsset
   let videoViewController: VideoViewController
-  let completion: (URL?) -> Void
+  let completion: (Result<URL, AVAssetExportSession.Error>) -> Void
   
   lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?
                                           .withRenderingMode(.alwaysTemplate))
@@ -47,7 +47,7 @@ final class SpeedViewController: UIViewController {
     currentSpeed > minSpeed
   }
   
-  init(url: URL, didFinishWithVideoURL completion: @escaping (URL?) -> Void) {
+  init(url: URL, didFinishWithVideoURL completion: @escaping (Result<URL, AVAssetExportSession.Error>) -> Void) {
     self.completion = completion
     asset = AVAsset(url: url)
     videoViewController = VideoViewController(asset: asset)
@@ -162,9 +162,8 @@ final class SpeedViewController: UIViewController {
     guard let playerItem = videoViewController.player.currentItem,
           let assetWithAdjustedSpeed = playerItem.asset.adjustedSpeed(mode: getSpeedMode(currentSpeed)),
           let session = VideoEditor.exportSession(asset: assetWithAdjustedSpeed) else {
-      //TODO: Add proper error handling. Result<T, E>
       dismiss(animated: true) {
-        self.completion(nil)
+          self.completion(.failure(.unknown))
       }
       return
     }
@@ -172,12 +171,7 @@ final class SpeedViewController: UIViewController {
     session.export { result in
       DispatchQueue.main.async {
         self.dismiss(animated: true) {
-          switch result {
-          case let .success(url):
-            self.completion(url)
-          case .failure:
-            self.completion(nil)
-          }
+            self.completion(result)
         }
       }
     }

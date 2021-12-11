@@ -24,10 +24,6 @@
 	<true/>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Snapvideo would like to access to your Media Library.</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Snapvideo would like to use your camera.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Snapvideo would like to access your microphone.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Snapvideo would like to save to your Photo Library.</string>
 	<key>NSPhotoLibraryUsageDescription</key>

@@ -360,82 +360,43 @@ final class VideoEditorViewController: UIViewController {
         }
     }
   
+    func makeAdjustmentsViewController<T: Tool>(url: URL, tool: T) -> AdjustmentsViewController<T> {
+        AdjustmentsViewController(url: url, tool: tool) { [weak self] result in
+            self?.handleAdjustmentsResult(result)
+        }
+    }
+    
     private func presentAdjustmentsScreen(url: URL, tool: ToolEnum) {
+        let vc: UIViewController
         switch tool {
         case let .vignette(tool),
              let .blur(tool):
-            let vc = AdjustmentsViewController(url: url, tool: tool) { [weak self] result in
-                self?.handleAdjustmentsResult(result)
-            }
-            vc.modalTransitionStyle = .crossDissolve
-            vc.modalPresentationStyle = .overCurrentContext
-            present(vc, animated: true, completion: nil)
-            isToolsViewShown = false
+            vc = makeAdjustmentsViewController(url: url, tool: tool)
         case let .colourCorrection(tool):
-            let vc = AdjustmentsViewController(url: url, tool: tool) { [weak self] result in
+            vc = makeAdjustmentsViewController(url: url, tool: tool)
+        case let .sharpenTool(tool):
+            vc = makeAdjustmentsViewController(url: url, tool: tool)
+        case let .exposureTool(tool):
+            vc = makeAdjustmentsViewController(url: url, tool: tool)
+        case let .noiseReductionTool(tool):
+            vc = makeAdjustmentsViewController(url: url, tool: tool)
+         case let .highlightShadowTool(tool):
+            vc = makeAdjustmentsViewController(url: url, tool: tool)
+        case let .vibranceTool(tool):
+            vc = makeAdjustmentsViewController(url: url, tool: tool)
+        case let .straightenTool(tool):
+            vc = makeAdjustmentsViewController(url: url, tool: tool)
+        case let .cropTool(tool):
+            vc = makeAdjustmentsViewController(url: url, tool: tool)
+        case .speed:
+            vc = SpeedViewController(url: url) { [weak self] result in
                 self?.handleAdjustmentsResult(result)
             }
-            vc.modalTransitionStyle = .crossDissolve
-            vc.modalPresentationStyle = .overCurrentContext
-            present(vc, animated: true, completion: nil)
-            isToolsViewShown = false
-        case let .sharpenTool(tool):
-          let vc = AdjustmentsViewController(url: url, tool: tool) { [weak self] result in
-              self?.handleAdjustmentsResult(result)
-          }
-          vc.modalTransitionStyle = .crossDissolve
-          vc.modalPresentationStyle = .overCurrentContext
-          present(vc, animated: true, completion: nil)
-          isToolsViewShown = false
-        case let .exposureTool(tool):
-          let vc = AdjustmentsViewController(url: url, tool: tool) { [weak self] result in
-              self?.handleAdjustmentsResult(result)
-          }
-          vc.modalTransitionStyle = .crossDissolve
-          vc.modalPresentationStyle = .overCurrentContext
-          present(vc, animated: true, completion: nil)
-          isToolsViewShown = false
-        case let .noiseReductionTool(tool):
-          let vc = AdjustmentsViewController(url: url, tool: tool) { [weak self] result in
-              self?.handleAdjustmentsResult(result)
-          }
-          vc.modalTransitionStyle = .crossDissolve
-          vc.modalPresentationStyle = .overCurrentContext
-          present(vc, animated: true, completion: nil)
-          isToolsViewShown = false
-         case let .highlightShadowTool(tool):
-          let vc = AdjustmentsViewController(url: url, tool: tool) { [weak self] result in
-              self?.handleAdjustmentsResult(result)
-          }
-          vc.modalTransitionStyle = .crossDissolve
-          vc.modalPresentationStyle = .overCurrentContext
-          present(vc, animated: true, completion: nil)
-          isToolsViewShown = false
-        case let .vibranceTool(tool):
-          let vc = AdjustmentsViewController(url: url, tool: tool) { [weak self] result in
-              self?.handleAdjustmentsResult(result)
-          }
-          vc.modalTransitionStyle = .crossDissolve
-          vc.modalPresentationStyle = .overCurrentContext
-          present(vc, animated: true, completion: nil)
-          isToolsViewShown = false
-        case let .straightenTool(tool):
-          let vc = AdjustmentsViewController(url: url, tool: tool) { [weak self] result in
-              self?.handleAdjustmentsResult(result)
-          }
-          vc.modalTransitionStyle = .crossDissolve
-          vc.modalPresentationStyle = .overCurrentContext
-          present(vc, animated: true, completion: nil)
-          isToolsViewShown = false
-        case let .cropTool(tool):
-          let vc = AdjustmentsViewController(url: url, tool: tool) { [weak self] result in
-              self?.handleAdjustmentsResult(result)
-          }
-          vc.modalTransitionStyle = .crossDissolve
-          vc.modalPresentationStyle = .overCurrentContext
-          present(vc, animated: true, completion: nil)
-          isToolsViewShown = false
         }
+        vc.modalTransitionStyle = .crossDissolve
+        vc.modalPresentationStyle = .overCurrentContext
+        present(vc, animated: true, completion: nil)
+        isToolsViewShown = false
     }
     
     private func resetToDefaultFilter() {
