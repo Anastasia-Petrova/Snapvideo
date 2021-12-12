@@ -20,7 +20,6 @@ final class VideoViewController: UIViewController {
     let backgroundVideoView: VideoView
     var playerRateObservation: NSKeyValueObservation?
     let activityIndicator = UIActivityIndicatorView()
-    lazy var resumeImageView = UIImageView(image: UIImage(named: "playCircle")?.withRenderingMode(.alwaysTemplate))
     lazy var tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
     
     var isActivityIndicatorVisible: Bool = false {
@@ -89,7 +88,7 @@ final class VideoViewController: UIViewController {
     }
     
     func setUpResumeButton() {
-        let stackView = UIStackView(arrangedSubviews: [resumeImageView, activityIndicator])
+        let stackView = UIStackView(arrangedSubviews: [activityIndicator])
         stackView.isUserInteractionEnabled = false
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
@@ -98,21 +97,14 @@ final class VideoViewController: UIViewController {
         NSLayoutConstraint.activate([
             stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            resumeImageView.heightAnchor.constraint(equalToConstant: 70),
-            resumeImageView.widthAnchor.constraint(equalToConstant: 70)
         ])
-        resumeImageView.tintColor = .white
-        resumeImageView.isHidden = false
-        
         activityIndicator.color = .systemBlue
         activityIndicator.hidesWhenStopped = true
         activityIndicator.style = .large
-        //        activityIndicator.alpha = 0
     }
     
     private func setActivityIndicatorVisible(_ isOn: Bool) {
         tap.isEnabled = !isOn
-        resumeImageView.isHidden = isOn
         if isOn {
             activityIndicator.startAnimating()
         } else {
@@ -121,19 +113,12 @@ final class VideoViewController: UIViewController {
     }
     
     func setUpPlayer() {
-        //1 Подписка на событие достижения конца видео
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(playerItemDidReachEnd(notification:)),
             name: .AVPlayerItemDidPlayToEndTime,
             object: player.currentItem
         )
-        
-        //2 Подписка на изменение рейта плейера - (играю/не играю)
-        playerRateObservation = player.observe(\.rate) { [weak self] (_, _) in
-            guard let self = self else { return }
-            self.resumeImageView.isHidden = self.player.rate > 0
-        }
     }
   
     func setPlayerRate(_ rate: Float) {
