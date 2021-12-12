@@ -11,11 +11,8 @@ import AVFoundation
 import Photos
 
 final class VideoEditorViewController: UIViewController {
-    var videoFileAsset: AVAsset {
-        didSet {
-            videoViewController.asset = videoFileAsset
-            generatePreviewImages()
-        }
+    var videoFileAsset: AVURLAsset {
+        videoViewController.asset
     }
     
     let looksPanel = UIView()
@@ -110,9 +107,8 @@ final class VideoEditorViewController: UIViewController {
     
 
     init(url: URL, selectedFilterIndex: Int, filters: [Filter], tools: [ToolEnum]) {
-        videoFileAsset = AVAsset(url: url)
         self.selectedFilterIndex = selectedFilterIndex
-        videoViewController = VideoViewController(asset: videoFileAsset)
+        videoViewController = VideoViewController(asset: AVURLAsset(url: url))
         toolsViewController = ToolsViewController(tools: tools)
         looksViewController = LooksViewController(
             itemSize: itemSize,
@@ -136,7 +132,8 @@ final class VideoEditorViewController: UIViewController {
             self.pendingFilterIndex = newIndex
         }
         toolsViewController.didSelectToolCallback = { [weak self] index in
-            self?.presentAdjustmentsScreen(url: url, tool: tools[index])
+            guard let self = self else { return }
+            self.presentAdjustmentsScreen(url: self.videoFileAsset.url, tool: tools[index])
         }
         exportViewController.didTapExportViewButton = { [weak self] action in
           switch action {
@@ -353,13 +350,16 @@ final class VideoEditorViewController: UIViewController {
     private func handleAdjustmentsResult(_ result: Result<URL, AVAssetExportSession.Error>) {
         switch result {
         case let .success(url):
-          self.videoFileAsset = AVAsset(url: url)
-        
+            videoViewController.setAsset(AVURLAsset(url: url)) { [weak self] in
+                guard let self = self else { return }
+                self.generatePreviewImages()
+                self.dismiss(animated: true, completion: nil)
+            }
         case let .failure(error):
           print(error) //TODO: add proper handling
         }
     }
-  
+    
     func makeAdjustmentsViewController<T: Tool>(url: URL, tool: T) -> AdjustmentsViewController<T> {
         AdjustmentsViewController(url: url, tool: tool) { [weak self] result in
             self?.handleAdjustmentsResult(result)

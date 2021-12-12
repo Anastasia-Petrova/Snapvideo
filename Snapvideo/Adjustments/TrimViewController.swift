@@ -15,7 +15,7 @@ final class TrimViewController: UIViewController {
     frame: CGRect(origin: .zero, size: CGSize(width: 320, height: 44))
   )
   
-  let asset: AVAsset
+  let asset: AVURLAsset
   let maxVideoDuration: Double
   let videoViewController: VideoViewController
   let sliderView: AdjustmentSliderView
@@ -47,7 +47,7 @@ final class TrimViewController: UIViewController {
   
   init(url: URL, didFinishWithVideoURL completion: @escaping (URL?) -> Void) {
     self.completion = completion
-    asset = AVAsset(url: url)
+    asset = AVURLAsset(url: url)
     videoViewController = VideoViewController(asset: asset)
     maxVideoDuration = asset.duration.seconds
     sliderView = AdjustmentSliderView(

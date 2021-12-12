@@ -10,16 +10,16 @@ import AVFoundation
 import UIKit
 
 final class VideoViewController: UIViewController {
-    var asset: AVAsset {
-        didSet {
-            resetPlayerItem()
-        }
-    }
+    private typealias AssetReadinessCompletion = () -> Void
+    
+    private(set) var asset: AVURLAsset
     let player: AVPlayer
     let playerView: VideoView
     let backgroundVideoView: VideoView
     var playerRateObservation: NSKeyValueObservation?
     let activityIndicator = UIActivityIndicatorView()
+    private var assetReadinessCompletion: AssetReadinessCompletion?
+    
     lazy var tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
     
     var isActivityIndicatorVisible: Bool = false {
@@ -28,7 +28,7 @@ final class VideoViewController: UIViewController {
         }
     }
     
-    init(asset: AVAsset) {
+    init(asset: AVURLAsset) {
         self.asset = asset
         let playerItem = AVPlayerItem(asset: asset)
         player = AVPlayer(playerItem: playerItem)
@@ -120,7 +120,7 @@ final class VideoViewController: UIViewController {
             object: player.currentItem
         )
     }
-  
+    
     func setPlayerRate(_ rate: Float) {
       player.rate = rate
     }
@@ -139,8 +139,13 @@ final class VideoViewController: UIViewController {
         }
     }
     
-    private func resetPlayerItem() {
+    func setAsset(_ asset: AVURLAsset, completion: @escaping () -> Void) {
+        self.asset = asset
+        assetReadinessCompletion = completion
+        
         let playerItem = AVPlayerItem(asset: asset)
+        playerItem.addObserver(self, forKeyPath: "status", options: [.new], context: nil)
+        
         player.replaceCurrentItem(with: playerItem)
         let output = AVPlayerItemVideoOutput(outputSettings: nil)
         let outputBG = AVPlayerItemVideoOutput(outputSettings: nil)
@@ -148,5 +153,23 @@ final class VideoViewController: UIViewController {
         playerItem.add(outputBG)
         playerView.videoOutput = output
         backgroundVideoView.videoOutput = outputBG
+    }
+    
+    override func observeValue(
+        forKeyPath keyPath: String?,
+        of object: Any?,
+        change: [NSKeyValueChangeKey : Any]?,
+        context: UnsafeMutableRawPointer?
+    ) {
+        if let playerItem = object as? AVPlayerItem,
+           keyPath == "status" {
+            switch playerItem.status {
+            case .readyToPlay:
+                assetReadinessCompletion?()
+                assetReadinessCompletion = nil
+            default:
+                break
+            }
+        }
     }
 }

@@ -14,7 +14,7 @@ final class SpeedViewController: UIViewController {
   let toolBar = UIToolbar(
     frame: CGRect(origin: .zero, size: CGSize(width: 320, height: 44))
   )
-  let asset: AVAsset
+  let asset: AVURLAsset
   let videoViewController: VideoViewController
   let completion: (Result<URL, AVAssetExportSession.Error>) -> Void
   
@@ -49,7 +49,7 @@ final class SpeedViewController: UIViewController {
   
   init(url: URL, didFinishWithVideoURL completion: @escaping (Result<URL, AVAssetExportSession.Error>) -> Void) {
     self.completion = completion
-    asset = AVAsset(url: url)
+    asset = AVURLAsset(url: url)
     videoViewController = VideoViewController(asset: asset)
     
     super.init(nibName: nil, bundle: nil)

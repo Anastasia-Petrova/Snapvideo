@@ -20,7 +20,7 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
         target: self,
         action: #selector(showParameterList)
     )
-    let asset: AVAsset
+    let asset: AVURLAsset
     var tool: SelectedTool {
         didSet {
             videoViewController.playerView.filter = tool.filter
@@ -49,7 +49,7 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
       completion: @escaping (Result<URL, AVAssetExportSession.Error>
       ) -> Void) {
         self.completion = completion
-        asset = AVAsset(url: url)
+        asset = AVURLAsset(url: url)
         self.tool = tool
         videoViewController = VideoViewController(asset: asset)
         
@@ -225,9 +225,7 @@ final class AdjustmentsViewController<SelectedTool: Tool>: UIViewController {
           .exportSession(filter: tool.filter, asset: playerItem.asset)?
           .export { result in
             DispatchQueue.main.async {
-              self.dismiss(animated: true) {
-                  self.completion(result)
-              }
+                self.completion(result)
             }
           }
     }
