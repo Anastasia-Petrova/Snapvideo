@@ -180,6 +180,8 @@
 		6D1D493223DC687200ECACE5 /* VideoBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoBrowser.swift; sourceTree = "<group>"; };
 		6D1F22102733051400F3BF21 /* ExportViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportViewControllerTests.swift; sourceTree = "<group>"; };
 		6D1F221927330E0E00F3BF21 /* ExportViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
+		6D2807412766A69C0041769F /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		6D2807422766A69C0041769F /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		6D2E412C23F04B0000B499F0 /* LooksViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LooksViewControllerTests.swift; sourceTree = "<group>"; };
 		6D2E89FE23CA5AC700917E25 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		6D2E8A0023CA5DEA00917E25 /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
@@ -313,6 +315,7 @@
 		6D17A7D423ABB39100C70542 = {
 			isa = PBXGroup;
 			children = (
+				6D2807402766A69C0041769F /* Configs */,
 				6D17A7DF23ABB39100C70542 /* Snapvideo */,
 				6D1D492923DB71EA00ECACE5 /* UnitTests */,
 				6D66486E23EDF9A5002AAF2E /* SnapshotTests */,
@@ -396,6 +399,15 @@
 				6D1F221927330E0E00F3BF21 /* ExportViewControllerSnapshotTests.swift */,
 			);
 			path = Export;
+			sourceTree = "<group>";
+		};
+		6D2807402766A69C0041769F /* Configs */ = {
+			isa = PBXGroup;
+			children = (
+				6D2807412766A69C0041769F /* Debug.xcconfig */,
+				6D2807422766A69C0041769F /* Release.xcconfig */,
+			);
+			path = Configs;
 			sourceTree = "<group>";
 		};
 		6D2E8A0223CA65BD00917E25 /* TabBar */ = {
@@ -1015,6 +1027,7 @@
 		};
 		6D0F13E92597A01E00E26F15 /* Test */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6D2807412766A69C0041769F /* Debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -1026,7 +1039,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.petrova.anastasia.Snapvideo.debug;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG TEST";
@@ -1194,6 +1207,7 @@
 		};
 		6D17A7F223ABB39600C70542 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6D2807412766A69C0041769F /* Debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -1205,7 +1219,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.petrova.anastasia.Snapvideo.debug;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -1215,6 +1229,7 @@
 		};
 		6D17A7F323ABB39600C70542 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6D2807422766A69C0041769F /* Release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -1226,7 +1241,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.petrova.anastasia.Snapvideo.debug;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
