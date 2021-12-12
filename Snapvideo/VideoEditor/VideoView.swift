@@ -12,7 +12,7 @@ import AVFoundation
 final class VideoView: UIView {
     var videoOutput: AVPlayerItemVideoOutput
     var displayLink: CADisplayLink?
-    var context: CIContext = CIContext(options: [CIContextOption.workingColorSpace : NSNull()])
+    var context: CIContext = CIContext()
     var filter: Filter {
         didSet  {
             currentFrame = initialFrame
