@@ -16,4 +16,4 @@
 - Crop & Trim
 
 ## Contacts
-For feedback and suggestions please send email at [feedback.snapvideo@gmail.com](feedback.snapvideo@gmail.com)
+For feedback and suggestions please send email to [feedback.snapvideo@gmail.com](feedback.snapvideo@gmail.com)
