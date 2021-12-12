@@ -30,11 +30,11 @@ struct VideoEditor {
       let title: String
       let body: String
       if saved && error == nil {
-        title = "Success!"
-        body = "Video was saved."
+        title = "Saved Successfully"
+        body = "Tap to open"
       } else {
-        title = "Error!"
-        body = "Video was not saved. Try again."
+        title = "Couldn't save the video"
+        body = "Please try again"
       }
       AppDelegate().scheduleNotification(title: title, body: body)
       completion()
