@@ -16,7 +16,7 @@ final class VideoViewControllerSnapshotTests: XCTestCase {
   
   override func setUpWithError() throws {
     let url = try XCTUnwrap(Bundle.snapshotTests.url(forResource: "videoTest", withExtension: "MOV"))
-    vc = VideoViewController(asset: AVAsset(url: url))
+    vc = VideoViewController(asset: AVURLAsset(url: url))
   }
   
   override func tearDown() {
